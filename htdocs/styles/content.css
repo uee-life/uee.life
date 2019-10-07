@@ -1,0 +1,27 @@
+.content {
+    position: absolute;
+    top:50px;
+    left:0;
+    padding:15px;
+    width:100%;
+    height:calc(100% - 50px);
+  }
+
+.org {
+    width: 60%;
+    max-width: 1140px;
+    position:relative;
+}
+
+.org-logo {
+    position:absolute;
+    left: 1%;
+    top: 40%;
+    width: 15%;
+    max-width: 175px;
+}
+
+.org-banner {
+    overflow: hidden;
+    width:100%;
+}
