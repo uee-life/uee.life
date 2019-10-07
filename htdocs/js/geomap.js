@@ -42,9 +42,7 @@ function applyRotationGizmoTransformations()
 }
 
 Vue.component('planet', {
-    props: {
-        location: String
-    },
+    props: [location],
     template: `
         <div>
             <div class="planet-info">
