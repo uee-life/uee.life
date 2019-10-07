@@ -42,11 +42,11 @@ function applyRotationGizmoTransformations()
 }
 
 Vue.component('planet', {
-    props: [location],
+    props: [locName],
     template: `
         <div>
             <div class="planet-info">
-                <h3>Planet: {{ location }}</h3>
+                <h3>Planet: {{ locName }}</h3>
             </div>
             <div id="map" class="map">
                 <x3d id="x3d" width='600px' height='600px'> 
@@ -115,7 +115,7 @@ Vue.component('planet', {
     },
     computed: {
         texture() {
-            return './images/textures/' + this.location + '.jpg'
+            return './images/textures/' + this.locName + '.jpg'
         }
     }
 });

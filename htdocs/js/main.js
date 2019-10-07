@@ -29,6 +29,6 @@ Vue.component('org', {
 var app = new Vue({
     el: '#app',
     data: {
-        location: 'Daymar'
+        locName: 'Daymar'
     }
 });
