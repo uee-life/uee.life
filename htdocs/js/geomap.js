@@ -51,7 +51,7 @@ Vue.component('planet', {
     template: `
         <div>
             <div class="planet-info">
-                <h3>Planet: {{ name }}</h3>
+                <h3>Planet: {{ location }}</h3>
             </div>
             <div id="map" class="map">
                 <x3d id="x3d" width='600px' height='600px'> 
