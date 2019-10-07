@@ -42,6 +42,12 @@ function applyRotationGizmoTransformations()
 }
 
 Vue.component('planet', {
+    props: {
+        location: {
+            type: String,
+            required: true
+        }
+    },
     template: `
         <div>
             <div class="planet-info">
@@ -114,7 +120,7 @@ Vue.component('planet', {
     },
     computed: {
         texture() {
-            return './images/textures/' + this.name + '.jpg'
+            return './images/textures/' + this.location + '.jpg'
         }
     }
 });
