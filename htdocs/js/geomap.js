@@ -43,7 +43,7 @@ function applyRotationGizmoTransformations()
 
 Vue.component('planet', {
     props: {
-        name: {
+        test: {
             type: String,
             required: true,
             default: "Daymar"
@@ -52,7 +52,7 @@ Vue.component('planet', {
     template: `
         <div>
             <div class="planet-info">
-                <h3>Planet: {{ name }}</h3>
+                <h3>Planet: {{ test }}</h3>
             </div>
             <div id="map" class="map">
                 <x3d id="x3d" width='600px' height='600px'> 
