@@ -121,7 +121,7 @@ Vue.component('planet', {
     },
     computed: {
         texture() {
-            return './images/textures/' + this.name + '.jpg'
+            return './images/textures/' + this.test + '.jpg'
         }
     }
 });
