@@ -42,7 +42,13 @@ function applyRotationGizmoTransformations()
 }
 
 Vue.component('planet', {
-    props: [name],
+    props: {
+        name: {
+            type: String,
+            required: true,
+            default: "Daymar"
+        }
+    },
     template: `
         <div>
             <div class="planet-info">
