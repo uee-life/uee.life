@@ -2,16 +2,15 @@ var apiURL = 'https://www.capnflint.com:4443'
 
 Vue.component('planet', {
     props: {
-        test: {
+        name: {
             type: String,
-            required: true,
-            default: "Daymar"
+            required: true
         }
     },
     template: `
         <div>
             <div class="planet-info">
-                <h3>Planet: {{ test }}</h3>
+                <h3>Planet: {{ name }}</h3>
             </div>
             <div id="map" class="map">
                 <x3d id="x3d" width='600px' height='600px'> 
@@ -74,18 +73,19 @@ Vue.component('planet', {
                 console.log(self.data)
             }
         },
-        loadLocation(data) {
+        loadLocation: function(data) {
 
         }
     },
     computed: {
         texture() {
-            return './images/textures/' + this.test + '.jpg'
+            return './images/textures/' + this.name + '.jpg'
         }
     }
 });
 
 Vue.component('org', {
+    props: ['name'],
     template: `
         <div class="org">
             <img class="org-banner" :src="banner">
@@ -93,6 +93,7 @@ Vue.component('org', {
             <div class="org-name">{{name}}</div>
             <div class="members">Members: {{count}}</div>
             <div class="bio" v-html="bio"></div>
+            {{name}}
         </div>
     `,
     data() {
@@ -114,6 +115,6 @@ Vue.component('org', {
 var app = new Vue({
     el: '#app',
     data: {
-        test: 'Hurston'
+        name: 'Hurston',
     }
 });

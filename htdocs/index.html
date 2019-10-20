@@ -9,7 +9,7 @@
         <link rel="stylesheet" type="text/css" href="styles/nav.css">
         <link rel="stylesheet" type="text/css" href="styles/content.css">
 
-        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <script src="https://vuejs.org/js/vue.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -37,7 +37,7 @@
         <div class="content">
             <h1>A portal to your life in the UEE!</h1>
             <div id="app">
-                <planet></planet>
+                <org :name='name'></org>
             </div>
         </div>
         <script src="js/geomap.js"></script>

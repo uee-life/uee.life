@@ -1,0 +1,128 @@
+<!--
+
+ "Daymar": {
+            "id": 2,
+            "name": "Daymar",
+            "designation": "Stanton IIc",
+            "description": "Dusty Moon",
+            "type": "Sattelite",
+            "subtype": "Moon",
+            "parent": "Crusader",
+            "habitable": 0,
+            "msl": 295.5,
+            "atmo": 29.5,
+            "om_radius": 464.9,
+            "sattelites": [],
+            "POIs": [
+                {
+                    "id": 3,
+                    "system": "Stanton",
+                    "location": "Daymar",
+                    "name": "Wolf Point",
+                    "owner": "Unknown",
+                    "type": "Mining",
+                    "altitude": 0,
+                    "coords": {"x":276.443536,"y":-9.384236,"z":103.100625},
+                    "facilities": "",
+                }
+            ]
+        },
+
+-->
+
+<template>
+    <div id="location-data" class="location-data">
+        <div class="location-info">
+            <div class="location-name"><b>Location:</b> {{ location.name }} ({{ location.designation }})</div>
+            <div class="location-type"><b>Type:</b> {{ location.type }}</div>
+            <div class="location-hab"><b>Habitable:</b> {{ is_habitable }}</div>
+            <div class="location-description-title"><b>Description:</b></div>
+            <p class="location-description">{{ location.description }}</p>
+            <div class="location-poi-title"><b>Points of Interest:</b></div>
+            <p class="location-poi-list">
+                <ul v-for="poi in location.POIs" :key="poi.id">
+                    <li class="location-poi-name">{{ poi.name }}</li>
+                </ul>
+            </p>
+        </div>
+        <img :src="location.image" class="location-image" />
+    </div>
+</template>
+
+<script>
+  export default {
+    name: 'location-data',
+    props: {},
+    data() {
+        return {
+            location: {
+                id: 2,
+                name: "Daymar",
+                designation: "Stanton IIc",
+                description: "Dusty Moon",
+                type: "Sattelite",
+                subtype: "Moon",
+                parent: "Crusader",
+                habitable: 0,
+                msl: 295.5,
+                atmo: 29.5,
+                om_radius: 464.9,
+                image: "images/logo.png",
+                sattelites: [],
+                POIs: [
+                    {
+                        id: 3,
+                        system: "Stanton",
+                        location: "Daymar",
+                        name: "Wolf Point",
+                        owner: "Unknown",
+                        type: "Mining",
+                        altitude: 0,
+                        coords: {"x":276.443536,"y":-9.384236,"z":103.100625},
+                        facilities: [],
+                    }
+                ]
+            }
+        }
+    },
+    methods: {
+        
+    },
+    computed: {
+        is_habitable: function() {
+            if(this.habitable) {
+                return "Yes"
+            } else {
+                return "No"
+            }
+        }
+    }
+  }
+</script>
+
+<style scoped>
+    .location-data {
+        display: flex;
+        justify-content: space-between;
+        text-align: left !important;
+        margin: 15px;
+        max-width: 800px;
+    }
+    .location-info {
+        display: flex;
+        flex-direction: column;
+
+    }
+    .description {
+        margin-left: 20px;
+    }
+    .location-image {
+        position: relative;
+        top: 0;
+        right: 0;
+        width: 300px;
+        height: 300px;
+        border: 1px solid black;
+        margin: 5px;
+    }
+</style>
