@@ -105,4 +105,29 @@ button {
 .small-container {
   max-width: 100%;
 }
+    .corner.top {
+        top: -2px;
+        border-top: 2px solid white;
+    }
+
+    .corner.bottom {
+        bottom: -2px;
+        border-bottom: 2px solid white;
+    }
+
+    .corner.left {
+        left: -2px;
+        border-left: 2px solid white;
+    }
+
+    .corner.right {
+        right: -2px;
+        border-right: 2px solid white;
+    }
+
+    .corner {
+        height: 25px;
+        width: 25px;
+        position: absolute;
+    }
 </style>

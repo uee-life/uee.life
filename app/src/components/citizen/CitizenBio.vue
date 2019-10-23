@@ -2,8 +2,13 @@
   <div class="citizen-bio" id="citizen-bio">
       Bio:
       <div class="bio">
-          This is a bio...
-        </div>
+          Bio Text...
+          <span class="corner top left"></span>
+          <span class="corner top right"></span>
+          <span class="corner bottom left"></span>
+          <span class="corner bottom right"></span>
+      </div>
+        
   </div>
 </template>
 
@@ -15,8 +20,12 @@ export default {
 
 <style>
     .bio {
+        display: block;
+        position: relative;
         width: 100%;
         height: 200px;
-        border: 1px solid white;
+        border: 1px solid grey;
+        padding: 5px;
+        background: url('/images/fading-bars.png') repeat;
     }
 </style>

@@ -6,6 +6,10 @@
           <div>Model: {{ ship.model }}</div>
           <div>Name: {{ ship.name }}</div>
       </div>
+                <span class="corner top left"></span>
+          <span class="corner top right"></span>
+          <span class="corner bottom left"></span>
+          <span class="corner bottom right"></span>
   </div>
 </template>
 
@@ -25,7 +29,6 @@ export default {
     img {
         width: 170px;
         margin-left: 1px;
-        border-radius: 15px 0 0 15px;
     }
 
     .ship-summary {
@@ -34,7 +37,9 @@ export default {
         min-width: 400px;
         margin: 5px;
         padding: 9px;
-        background-image: url('/images/ship_box.png');
+        border: 1px solid grey;
+        position: relative;
+        background: url('/images/fading-bars.png') repeat;
     }
 
     .ship-info {
