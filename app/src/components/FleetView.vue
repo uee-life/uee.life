@@ -30,9 +30,9 @@ export default {
                 },
                 {
                     id: 2,
-                    manufacturer: "RSI",
-                    make: "Constellation",
-                    model: "Aquila",
+                    manufacturer: "Aegis",
+                    make: "Avenger",
+                    model: "Titan",
                     name: "Guppy",
                 },
                 {
