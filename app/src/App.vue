@@ -1,17 +1,23 @@
 <template>
-  <div id="app" class="small-contaienr">
-    <img alt="Vue logo" src="@/assets/logo.png">
-    <location-data />
+  <div id="app" class="small-container">
+    <!--img alt="Vue logo" src="@/assets/logo.png"-->
+    <main-header />
+    <nav-bar />
+    <citizen />
   </div>
 </template>
 
 <script>
-import LocationData from '@/components/LocationData.vue'
+import MainHeader from '@/components/MainHeader.vue'
+import NavBar from '@/components/NavBar.vue'
+import Citizen from '@/components/Citizen.vue'
 
 export default {
   name: 'app',
   components: {
-    LocationData
+    MainHeader,
+    NavBar,
+    Citizen
   },
   data() {
     return {
@@ -80,20 +86,23 @@ export default {
 </script>
 
 <style>
-
+body {
+        background: black;
+        color: gainsboro;
+    }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: gainsboro;
+  padding: 0;
+  background: url("/images/gridbg_glow.png") repeat center top;
 }
 button {
   background: #009435;
   border: 1px solid #009435;
 }
-.small-contaienr {
-  max-width: 680px;
+.small-container {
+  max-width: 100%;
 }
 </style>
