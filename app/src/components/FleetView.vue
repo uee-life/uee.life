@@ -23,7 +23,7 @@ export default {
                     id: 1,
                     manufacturer: "Anvil",
                     make: "Hornet",
-                    model: "F7c",
+                    model: "F7a",
                     name: "Bulldog",
                     size: "Light",
                     crew: 8
