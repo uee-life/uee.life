@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import { TimelineLite } from "gsap"
+
 export default {
     name: "citizen-info",
     data() {
@@ -34,6 +36,13 @@ export default {
                 portrait: "https://robertsspaceindustries.com/media/lb0drmasxlhcyr/heap_infobox/Grog_fallout.png",
             }
         }
+    },
+    mounted() {
+        const timeline = new TimelineLite()
+
+        timeline.to(".portrait", 1, {width: "150px", height: "150px"})
+        timeline.to(".portrait img", 1, {opacity: 1})
+        timeline.to(".citizen-info .info", 1, {opacity: 1})
     }
 }
 </script>
@@ -45,8 +54,8 @@ export default {
         height: 250px;
     }
     .portrait{
-        width: 150px;
-        height: 150px;
+        width: 50px;
+        height: 50px;
         border: 1px solid grey;
         padding: 7px;
         margin-right: 20px;
@@ -57,9 +66,11 @@ export default {
     .portrait img {
         width: 136px;
         height: 136px;
+        opacity: 0;
     }
     .info {
         width: 220px;
+        opacity: 0;
     }
     .line-item {
         display: flex;

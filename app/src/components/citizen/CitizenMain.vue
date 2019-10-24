@@ -9,7 +9,7 @@
 <script>
 import CitizenInfo from '@/components/citizen/CitizenInfo.vue'
 import CitizenBio from '@/components/citizen/CitizenBio.vue'
-import FleetView from '@/components/FleetView.vue'
+import FleetView from '@/components/fleet/FleetView.vue'
 
 export default {
     name: "citizen-main",

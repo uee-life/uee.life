@@ -1,24 +1,22 @@
 <template>
-  <div id="app" class="small-container">
+  <div id="app" class="container">
     <link href="//fonts.googleapis.com/css?family=Electrolize|Orbitron:400,500,700|Share+Tech+Mono" rel="stylesheet" type="text/css">
     <!--img alt="Vue logo" src="@/assets/logo.png"-->
     <main-header />
     <nav-bar />
-    <citizen />
+    <router-view />
   </div>
 </template>
 
 <script>
 import MainHeader from '@/components/MainHeader.vue'
 import NavBar from '@/components/NavBar.vue'
-import Citizen from '@/components/Citizen.vue'
 
 export default {
   name: 'app',
   components: {
     MainHeader,
-    NavBar,
-    Citizen
+    NavBar
   },
   data() {
     return {
@@ -99,13 +97,24 @@ body {
   color: #39ced8;
   text-shadow: 0px 0px 15px rgba(57, 206, 216, 0.5);
   padding: 0;
-  background: url("/images/gridbg_glow.png") repeat center top;
+  background: url("./assets/gridbg_glow.png") repeat center top;
+}
+.container::after {
+  position: fixed;
+  content: "";
+  background: url("./assets/nebula.jpg") repeat;
+  opacity: 0.5;
+  top:0;
+  left:0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
 }
 button {
   background: #009435;
   border: 1px solid #009435;
 }
-.small-container {
+.container {
   max-width: 100%;
 }
     .corner.top {

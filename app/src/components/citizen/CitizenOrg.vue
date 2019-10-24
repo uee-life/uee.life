@@ -1,5 +1,6 @@
 <template>
-  <div class="citizen-org" id="citizen-org">
+  <div refs="org" class="citizen-org" id="citizen-org">
+    <div class="content">
       <img class="logo" :src="logo" />
       <div class="org-name">
         McBane Enterprises
@@ -7,6 +8,7 @@
       <div class="org-title">
         Title: Director
       </div>
+    </div>
     <span class="corner top left"></span>
     <span class="corner top right"></span>
     <span class="corner bottom left"></span>
@@ -15,25 +17,38 @@
 </template>
 
 <script>
+import { TimelineLite } from "gsap"
+
 export default {
   name: "citizen-org",
   data() {
     return {
       logo: "https://robertsspaceindustries.com/media/2weountodg09pr/heap_infobox/MCBANE-Logo.png"
     }
-  }
+  },
+      mounted() {
+        const timeline = new TimelineLite()
+
+        timeline.to(".citizen-org", 1, {width: "100%", height: "290px"})
+        timeline.to(".citizen-org .content", 1, {opacity: 1})
+    }
 }
 </script>
 
 <style>
   .citizen-org {
+    position: relative;
+    padding: 15px;
+    height: 50px;
+    width: 50px;
+    border: 1px solid grey;
+    background: url('/images/fading-bars.png') repeat;
+  }
+  .content{
     display: flex;
     flex-direction: Column;
     justify-content: center;
-    position: relative;
-    padding: 15px;
-    border: 1px solid grey;
-    background: url('/images/fading-bars.png') repeat;
+    opacity: 0;
   }
   .logo {
     width: 165px;

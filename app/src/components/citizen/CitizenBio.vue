@@ -1,8 +1,8 @@
 <template>
   <div class="citizen-bio" id="citizen-bio">
       Bio:
-      <div class="bio">
-          Bio Text...
+      <div ref="bio" class="bio">
+          <div class="content">{{ bio }}</div>
           <span class="corner top left"></span>
           <span class="corner top right"></span>
           <span class="corner bottom left"></span>
@@ -13,20 +13,43 @@
 </template>
 
 <script>
+import { TimelineLite } from 'gsap'
+
 export default {
-    name: "citizen-bio"
+    name: "citizen-bio",
+    data() {
+        return {
+            bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        }
+    },
+    mounted() {
+        const {bio} = this.$refs
+        const timeline = new TimelineLite()
+
+        timeline.to(bio, 1, {width: "100%", height: "200px"})
+        timeline.to(".bio .content", 1, {opacity: 1})
+    }
 }
 </script>
 
-<style>
+<style scoped>
     .bio {
         display: block;
         position: relative;
-        width: 100%;
-        height: 200px;
+        width: 50px;
+        height: 50px;
         border: 1px solid grey;
         padding: 5px;
         background: url('/images/fading-bars.png') repeat;
         margin-bottom: 20px;
+    }
+    .bio .content {
+        display: flex;
+        justify-content: flex-start;
+        position: relative;
+        height: 100%;
+        opacity: 0;
+        overflow: hidden;
+        align-self: flex-start;
     }
 </style>

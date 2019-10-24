@@ -1,9 +1,9 @@
 <template>
   <div class="nav-bar" id="nav-bar">
       <div class="nav-left">
-        <div class="nav-button">My Profile</div>
-        <div class="nav-button">My Org</div>
-        <div class="nav-button">My Home</div>
+        <div class="nav-button"><router-link to="/citizen">My Profile</router-link></div>
+        <div class="nav-button"><router-link to="/org">My Org</router-link></div>
+        <div class="nav-button"><router-link to="/home">My Home</router-link></div>
       </div>
       <div class="nav-right">
         <div class="nav-button">Tools</div>
@@ -43,5 +43,9 @@ export default {
     .nav-button {
         margin-left: 10px;
         margin-right: 10px;
+    }
+    .nav-button a {
+      text-decoration: none;
+      color: #39ced8;
     }
 </style>
