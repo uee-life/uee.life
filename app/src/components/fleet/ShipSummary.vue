@@ -2,9 +2,8 @@
   <div id="ship-summary" class="ship-summary">
       <img :src="shipImage" />
       <div class="ship-info">
-          <div>Ship: {{ ship.manufacturer }} {{ ship.make }}</div>
-          <div>Model: {{ ship.model }}</div>
-          <div>Name: {{ ship.name }}</div>
+          <div><i><b>"{{ ship.name }}"</b></i></div>
+          <div>{{ ship.manufacturer }} {{ ship.make }} {{ ship.model }}</div>
       </div>
                 <span class="corner top left"></span>
           <span class="corner top right"></span>
@@ -43,6 +42,6 @@ export default {
     }
 
     .ship-info {
-        margin-left: 5px;
+        margin-left: 10px;
     }
 </style>

@@ -21,7 +21,7 @@ export default {
         height: 400px;
         border: 1px solid grey;
         margin: 10px;
-        padding: 3px;
+        padding: 15px;
         position: relative;
         background: url('/images/fading-bars.png') repeat;
     }

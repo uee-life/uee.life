@@ -1,5 +1,6 @@
 <template>
   <div id="app" class="small-container">
+    <link href="//fonts.googleapis.com/css?family=Electrolize|Orbitron:400,500,700|Share+Tech+Mono" rel="stylesheet" type="text/css">
     <!--img alt="Vue logo" src="@/assets/logo.png"-->
     <main-header />
     <nav-bar />
@@ -91,10 +92,12 @@ body {
         color: gainsboro;
     }
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
+  font-family: 'Electrolize';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: gainsboro;
+  color: #39ced8;
+  text-shadow: 0px 0px 15px rgba(57, 206, 216, 0.5);
   padding: 0;
   background: url("/images/gridbg_glow.png") repeat center top;
 }

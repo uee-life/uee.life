@@ -3,7 +3,7 @@
       <img class="logo" alt="logo" src="@/assets/logo.png">
       <div class="main-header-right">
           <div class="user">
-              Welcome, Citizen
+              Welcome, <b>Flint McBane</b>
           </div>
           <div class="search">
               <input type="search" class="search-box" value="Search">

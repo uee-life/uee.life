@@ -1,12 +1,20 @@
 <template>
   <div class="citizen-right" id="citizen-right">
-      Right stuff
+      <citizen-org />
+      <citizen-links />
   </div>
 </template>
 
 <script>
+import CitizenOrg from '@/components/citizen/CitizenOrg.vue'
+import CitizenLinks from '@/components/citizen/CitizenLinks.vue'
+
 export default {
-    name: "citizen-right"
+    name: "citizen-right",
+    components: {
+        CitizenOrg,
+        CitizenLinks
+    }
 }
 </script>
 
@@ -14,7 +22,6 @@ export default {
     .citizen-right {
         width: 300px;
         min-width: 300px;
-        border: 1px solid white;
         margin: 10px;
         padding: 3px;
     }
