@@ -36,7 +36,7 @@ export default {
         text-align: right;
     }
     .search {
-        margin-top: 15px;
+        margin-top: 35px;
     }
     .search-box {
         background: white;

@@ -27,5 +27,6 @@ export default {
         border: 1px solid grey;
         padding: 5px;
         background: url('/images/fading-bars.png') repeat;
+        margin-bottom: 20px;
     }
 </style>
