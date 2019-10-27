@@ -28,7 +28,7 @@ Vue.use(VueRouter)
 
 const routes = [
   { path: '/citizen', component: Citizen },
-  { path: '/location', component: Location }
+  { path: '/location/:name', component: Location }
 ]
 
 const router = new VueRouter({

@@ -33,15 +33,15 @@
 <template>
     <div id="location-data" class="location-data">
         <div class="location-info">
-            <div class="location-name"><b>Location:</b> {{ location.name }} ({{ location.designation }})</div>
+            <div class="location-name"><b>Location: {{ location.name }} </b> ({{ location.designation }})</div>
             <div class="location-type"><b>Type:</b> {{ location.type }}</div>
             <div class="location-hab"><b>Habitable:</b> {{ is_habitable }}</div>
             <div class="location-description-title"><b>Description:</b></div>
             <p class="location-description">{{ location.description }}</p>
             <div class="location-poi-title"><b>Points of Interest:</b></div>
             <p class="location-poi-list">
-                <ul v-for="poi in location.POIs" :key="poi.id">
-                    <li class="location-poi-name">{{ poi.name }}</li>
+                <ul>
+                    <li v-for="poi in location.POIs" :key="poi.id" class="location-poi-name">{{ poi.name }}</li>
                 </ul>
             </p>
         </div>
@@ -55,10 +55,10 @@
 <script>
   export default {
     name: 'location-data',
-    props: {},
+    props: ["location"],
     data() {
         return {
-            location: {
+            /*location: {
                 id: 2,
                 name: "Daymar",
                 designation: "Stanton IIc",
@@ -85,7 +85,7 @@
                         facilities: [],
                     }
                 ]
-            }
+            }*/
         }
     },
     methods: {

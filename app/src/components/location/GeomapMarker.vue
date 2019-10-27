@@ -1,8 +1,8 @@
 <template>
-    <transform id="geomap-marker" class="transform" :translation='marker.location'>
+    <transform id="geomap-marker" class="transform" :translation='location'>
         <shape class="shape" :onmouseover="tooltip" onmouseout="clearTooltip()"> 			
             <appearance> 
-                <material class="material" :diffuseColor='marker.colour'></material> 
+                <material class="material" :diffuseColor='color'></material> 
             </appearance> 
             <sphere radius="10"></sphere>
         </shape>
@@ -15,12 +15,19 @@ export default {
     props: ["marker"],
     computed: {
         tooltip: function() {
-            return "setTooltip(" + this.marker.name + ")"
-        }
-    },
-    methods: {
-        async get_color() {
-            var colors = {
+            return "setTooltip('" + this.marker.name + "')"
+        },
+        location: function() {
+            if(this.marker.type == "marker") {
+                return this.marker.coords.x + " " + this.marker.coords.y + " " + this.marker.coords.z
+            } else {
+                return this.marker.coords.x + " " + this.marker.coords.z + " " + this.marker.coords.y
+            }
+            
+        },
+        color: function() {
+            let color = "1 1 1"
+            const colors = {
                 north: "1 0 0",
                 marker: "0 0 1",
                 Shelter: "0 1 1",
@@ -29,11 +36,11 @@ export default {
                 default: "0 1 1"
             }
             if(Object.keys(colors).includes(this.marker.type)) {
-                color = colors[data['type']];
+                color = colors[this.marker.type];
             } else {
                 color = colors['default'];
             }
-            return color
+            return color;
         }
     }
 }

@@ -3,17 +3,25 @@
         <appearance>
             <ImageTexture class="texture" :url="texture"></ImageTexture>
         </appearance>
-        <sphere class="radius" :radius="radius"></sphere>
+        <sphere class="radius" :radius="location.msl"></sphere>
     </shape>
 </template>
 
 <script>
 export default {
     name: "geomap-globe",
+    props: ["location"],
     data() {
         return {
-            texture: 'https://robertsspaceindustries.com/media/qzf7kii1vu7k7r/source/Planet_Stanton3.jpg',
-            radius: 295
+            /*location: {
+                name: 'Yela',
+                radius: 295
+            }*/
+        }
+    },
+    computed: {
+        texture: function() {
+            return "/images/textures/" + this.location.name + ".jpg"
         }
     }
 }

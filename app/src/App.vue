@@ -23,24 +23,7 @@ export default {
       location: {}
     }
   },
-  mounted() {
-    this.getLocation("Daymar")
-  },
   methods: {
-    async getLocation(location) {
-      try {
-        const response = await fetch('https://www.capnflint.com:4444/stargps/location?foobar', {
-          method: 'POST',
-          body: JSON.stringify({query: location}),
-          headers: { 'Content-type': 'application/json; charset=UTF-8'}
-        })
-        const data = await response.json()
-        this.location = data
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error(error) 
-      }
-    },
     async addEmployee(employee) {
       try {
         const response = await fetch('https://jsonplaceholder.typicode.com/users', {
