@@ -88,6 +88,7 @@ export default {
 body {
         background: black;
         color: gainsboro;
+        margin: 0;
     }
 #app {
   /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/

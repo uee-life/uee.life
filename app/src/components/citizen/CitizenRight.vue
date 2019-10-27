@@ -1,6 +1,6 @@
 <template>
   <div class="citizen-right" id="citizen-right">
-      <citizen-org />
+      <citizen-org :org="citizen.org"/>
       <citizen-links />
   </div>
 </template>
@@ -11,6 +11,7 @@ import CitizenLinks from '@/components/citizen/CitizenLinks.vue'
 
 export default {
     name: "citizen-right",
+    props: ["citizen"],
     components: {
         CitizenOrg,
         CitizenLinks

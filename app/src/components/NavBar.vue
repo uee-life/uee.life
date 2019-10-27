@@ -3,7 +3,7 @@
       <div class="nav-left">
         <div class="nav-button"><router-link to="/citizen">My Profile</router-link></div>
         <div class="nav-button"><router-link to="/org">My Org</router-link></div>
-        <div class="nav-button"><router-link to="/home">My Home</router-link></div>
+        <div class="nav-button"><router-link to="/location">My Home</router-link></div>
       </div>
       <div class="nav-right">
         <div class="nav-button">Tools</div>
@@ -30,14 +30,18 @@ export default {
         border: 1px solid grey;
         margin: 10px 10px 0 10px;
         padding: 3px;
-        padding-left: 10px;
-        padding-right: 10px;
         background: url('/images/fading-bars.png') repeat;
         position: relative;
     }
 
     .nav-left {
         display: flex;
+        align-self: center;
+    }
+
+    .nav-right {
+      display: flex;
+      align-self: center;
     }
 
     .nav-button {

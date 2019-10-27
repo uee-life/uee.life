@@ -16,54 +16,9 @@ export default {
     components: {
         ShipSummary
     },
+    props: ["ships"],
     data() {
         return {
-            ships: [
-                {
-                    id: 1,
-                    manufacturer: "Anvil",
-                    make: "Hornet",
-                    model: "F7a",
-                    name: "Bulldog",
-                    size: "Light",
-                    crew: 8
-                },
-                {
-                    id: 2,
-                    manufacturer: "Aegis",
-                    make: "Avenger",
-                    model: "Titan",
-                    name: "Guppy",
-                },
-                {
-                    id: 3,
-                    manufacturer: "RSI",
-                    make: "Constellation",
-                    model: "Phoenix",
-                    name: "Shark",
-                },
-                {
-                    id: 4,
-                    manufacturer: "RSI",
-                    make: "Constellation",
-                    model: "Aquila",
-                    name: "Grog",
-                },
-                {
-                    id: 5,
-                    manufacturer: "Aegis",
-                    make: "Avenger",
-                    model: "Titan Renegade",
-                    name: "Penguin",
-                },
-                {
-                    id: 6,
-                    manufacturer: "Aegis",
-                    make: "Gladius",
-                    model: "",
-                    name: "Jester",
-                },
-            ]
         }
     }
 }

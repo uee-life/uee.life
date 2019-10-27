@@ -45,7 +45,10 @@
                 </ul>
             </p>
         </div>
-        <img :src="location.image" class="location-image" />
+          <span class="corner top left"></span>
+          <span class="corner top right"></span>
+          <span class="corner bottom left"></span>
+          <span class="corner bottom right"></span>
     </div>
 </template>
 
@@ -100,13 +103,17 @@
   }
 </script>
 
-<style scoped>
+<style>
     .location-data {
+        position: relative;
         display: flex;
         justify-content: space-between;
         text-align: left !important;
-        margin: 15px;
-        max-width: 800px;
+        margin: 10px;
+        max-width: 300px;
+        min-width: 200px;
+        border: 1px solid grey;
+        padding: 15px;
     }
     .location-info {
         display: flex;

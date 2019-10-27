@@ -1,8 +1,8 @@
 <template>
   <div class="citizen-main" id="citizen-main">
-      <citizen-info />
-      <citizen-bio />
-      <fleet-view />
+      <citizen-info :citizen="citizen"/>
+      <citizen-bio :bio="citizen.bio"/>
+      <fleet-view :ships="citizen.ships"/>
   </div>
 </template>
 
@@ -13,6 +13,7 @@ import FleetView from '@/components/fleet/FleetView.vue'
 
 export default {
     name: "citizen-main",
+    props: ["citizen"],
     components: {
         CitizenInfo,
         CitizenBio,

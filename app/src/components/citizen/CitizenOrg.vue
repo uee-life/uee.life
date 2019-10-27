@@ -1,12 +1,12 @@
 <template>
   <div refs="org" class="citizen-org" id="citizen-org">
     <div class="content">
-      <img class="logo" :src="logo" />
+      <img class="logo" :src="org.logo" />
       <div class="org-name">
-        McBane Enterprises
+        {{ org.name }}
       </div>
       <div class="org-title">
-        Title: Director
+        Title: {{ org.title }}
       </div>
     </div>
     <span class="corner top left"></span>
@@ -21,6 +21,7 @@ import { TimelineLite } from "gsap"
 
 export default {
   name: "citizen-org",
+  props: ['org'],
   data() {
     return {
       logo: "https://robertsspaceindustries.com/media/2weountodg09pr/heap_infobox/MCBANE-Logo.png"
