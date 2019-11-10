@@ -1,14 +1,23 @@
 <template>
   <div class="news-feed" id="news-feed">
       <div class="feed-title">News Feed:</div>
-    <div v-for="item in articles" :key="item.title">
-      <news-item :item="item" />
-      </div>
+      <transition-group
+        name="staggered-fade"
+        tag="div"
+        :css="false"
+        v-on:before-enter="beforeEnter"
+        v-on:enter="enter"
+        v-on:leave="leave">
+        <div v-for="(item, index) in articles" :key="item.title" :index="index">
+            <news-item :item="item" />
+        </div>
+      </transition-group>
     </div>
 </template>
 
 <script>
 import NewsItem from '@/components/news/NewsItem.vue'
+import { TimelineLite } from 'gsap'
 
 export default {
     name: "news-feed",
@@ -36,6 +45,21 @@ export default {
                 // eslint-disable-next-line no-console
                 console.error(error) 
             }
+        },
+        beforeEnter: function (el) {
+            el.style.opacity = 0
+        },
+        enter: function (el) {
+            var delay = el.getAttribute('index') * 250
+            setTimeout(function() {
+                new TimelineLite().to(el, 1, {opacity: 0.9})
+            }, delay)
+        },
+        leave: function (el) {
+            var delay = el.dataset.index * 150
+            setTimeout(function() {
+                new TimelineLite().to(el, 1, {opacity: 0})
+            }, delay)
         }
     }
 

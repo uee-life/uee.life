@@ -1,6 +1,6 @@
 <template>
     <a :href="item.link" style="text-decoration: none" target="blank">
-    <div class="news-item" id="news-item">
+    <div ref="newsitem" class="news-item" id="news-item">
         <div class="background" :style="style"></div>
         <div class="mask"></div>
         <img class="article-image" :src="item.image" />
@@ -16,6 +16,8 @@
 </template>
 
 <script>
+//import {TimelineLite} from 'gsap'
+
 export default {
     name: "news-item",
     props: ["item"],
@@ -23,6 +25,11 @@ export default {
         style () {
             return 'background: url(' + this.item.image + '); background-size: cover; background-position: center center;'
         }
+    },
+    mounted() {
+        //const timeline = new TimelineLite()
+
+        //timeline.to(".news-item", 1, {opacity: 0.9})
     }
 }
 </script>
@@ -43,7 +50,7 @@ export default {
         padding: 9px;
         border: 1px solid grey;
         position: relative;
-
+        opacity: 1;
     }
 
     .news-item-info {
@@ -54,7 +61,7 @@ export default {
     }
 
     .background {
-        opacity: 0.9;
+        opacity: 0.9 !important;
         top: 0;
         left: 0;
         bottom: 0;
