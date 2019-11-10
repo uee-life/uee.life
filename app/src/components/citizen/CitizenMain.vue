@@ -1,8 +1,8 @@
 <template>
   <div class="citizen-main" id="citizen-main">
-      <citizen-info :citizen="citizen"/>
-      <citizen-bio :bio="citizen.bio"/>
-      <fleet-view :ships="citizen.ships"/>
+        <citizen-info :citizen="citizen"/>
+        <citizen-bio :bio="citizen.bio"/>
+        <fleet-view :ships="citizen.ships"/>
   </div>
 </template>
 
@@ -19,7 +19,6 @@ export default {
         CitizenBio,
         FleetView
     }
-
 }
 </script>
 

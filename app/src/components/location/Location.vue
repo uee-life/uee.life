@@ -1,7 +1,10 @@
 <template>
   <div class="location" id="location">
       <left-nav />
-      <geomap :location="location"/>
+        <portal to="navigationPane">
+            <div v-for="link in links" :key="link.text" class="nav-button"><router-link :to="link.path">{{ link.text }}</router-link></div>
+        </portal>
+      <geomap :location="location" :v-if="renderComponent"/>
       <location-data :location="location"/>
   </div>
 </template>
@@ -20,6 +23,17 @@ export default {
     },
     data() {
         return {
+            renderComponent: true,
+            links: [
+                {
+                text: "Daymar",
+                path: "/location/Daymar"
+                },
+                {
+                text: "Yela",
+                path: "/location/Yela"
+                }
+            ],
             location: {
                 name: "",
                 parent: "",
@@ -32,7 +46,6 @@ export default {
                 atmo: 0,
                 msl: 0,
                 sattelites: [],
-                type: "",
                 subtype: "",
                 om_radius: ""
             }
@@ -51,15 +64,22 @@ export default {
                 })
                 const data = await response.json()
                 this.location = data['data']
+                this.forceRerender()
             } catch (error) {
                 // eslint-disable-next-line no-console
                 console.error(error) 
             }
         },
+        forceRerender() {
+            this.renderComponent = false;
+
+            this.$nextTick(() => {
+                this.renderComponent = true;
+            });
+        }
     },
     beforeRouteUpdate (to, from, next) {
         this.location.POIs = [];
-        x3dom.reload();
         this.getLocation(to.params.name)
         next();
     }

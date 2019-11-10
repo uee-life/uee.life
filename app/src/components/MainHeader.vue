@@ -1,7 +1,7 @@
 <template>
   <div class="main-header" id="main-header">
       <div class="main-header-left">
-      <img class="logo" alt="logo" src="@/assets/logo.png">
+      <router-link to="/"><img class="logo" alt="logo" src="@/assets/logo.png"></router-link>
       <div class="title">
           <div>Your UEE Life...</div>
       </div>
@@ -28,7 +28,7 @@ export default {
         display: flex;
         justify-content: space-between;
         width: 100%;
-        height: 120px;
+        height: 110px;
         border: 1px solid black;
         background: rgba(13, 46, 66, 0.5);
     }

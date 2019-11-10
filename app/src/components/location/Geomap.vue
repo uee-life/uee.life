@@ -51,15 +51,7 @@ export default {
                 {name: "OM4",type: 'marker', coords:{"x":464.5,"y":0,"z":0}},
                 {name: "OM5",type: 'marker', coords:{"x":0,"y":0,"z":-464.5}},
                 {name: "OM6",type: 'marker', coords:{"x":0,"y":0,"z":464.5}}
-            ],
-            /*POIs: [
-                {"name": "Wolf Point", "type": "Shelter", "coords": {"x":276.443536,"z":-9.384236,"y":103.100625}},
-                {"name": 'Eager Flats', "type": "Shelter", "coords": {"x":105.271803, "z":-199.087723, "y":188.641219}},
-                {"name": 'Shubin SCD-1', "type": "Mining", "coords": {"x":133.25458, "z":-203.51641, "y":164.012811}},
-                {"name": 'Kudre Ore', "type": "Mining", "coords": {"z": -143.955328, "x": 177.82615699999997, "y": -185.964455}},
-                {"name": 'Daymar Cave', "type": "Custom", "coords": {"z": -108.443219, "x": -245.121636, "y": 122.39169300000003}},
-                {"name": "Bountiful Harvest", "type": "Hydroponics", "coords": {"z": -56.248283000000015, "x": 93.241222, "y": -274.020436}}
-            ]*/
+            ]
         }
     }
 }

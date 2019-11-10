@@ -1,6 +1,6 @@
 <template>
   <div id="left-nav" class="left-nav">
-    <div v-for="link in links" :key="link.text" class="nav-button"><router-link :to="link.path">{{ link.text }}</router-link></div>
+    <portal-target name="navigationPane"></portal-target>
     <span class="corner top left"></span>
     <span class="corner top right"></span>
     <span class="corner bottom left"></span>
@@ -12,20 +12,6 @@
 export default {
   name: "left-nav",
   //props: ["links"],
-  data() {
-    return {
-      links: [
-        {
-          text: "Daymar",
-          path: "/location/Daymar"
-        },
-        {
-          text: "Yela",
-          path: "/location/Yela"
-        }
-      ]
-    }
-  }
 }
 </script>
 

@@ -1,33 +1,29 @@
 <template>
-  <div class="citizen" id="citizen">
-      <left-nav />
-        <portal to="navigationPane">
-            <div v-for="link in links" :key="link.text" class="nav-button"><router-link :to="link.path">{{ link.text }}</router-link></div>
-        </portal>
-      <citizen-main :citizen="citizen"/>
-      <citizen-right :citizen="citizen"/>
+  <div refs="org" class="latest-citizen" id="latest-citizen">
+    <div class="content">
+      <div class="cit-name">Latest Citizen</div>
+      <img class="logo" :src="citizen.portrait" />
+      <div class="cit-name">
+        {{ citizen.name }}
+      </div>
+      <div class="cit-handle">
+        Handle: {{ citizen.handle }}
+      </div>
+    </div>
+    <span class="corner top left"></span>
+    <span class="corner top right"></span>
+    <span class="corner bottom left"></span>
+    <span class="corner bottom right"></span>
   </div>
 </template>
 
 <script>
-import LeftNav from '@/components/LeftNav.vue'
-import CitizenMain from '@/components/citizen/CitizenMain.vue'
-import CitizenRight from '@/components/citizen/CitizenRight.vue'
+import { TimelineLite } from "gsap"
 
 export default {
-    name: "citizen",
+    name: "latest-citizen",
     data() {
         return {
-            links: [
-                {
-                text: "Daymar",
-                path: "/location/Daymar"
-                },
-                {
-                text: "Yela",
-                path: "/location/Yela"
-                }
-            ],
             citizen: {
                 name: "Flint McBane",
                 handle: "Capn_Flint",
@@ -75,17 +71,41 @@ export default {
             }
         }
     },
-    components: {
-        LeftNav,
-        CitizenMain,
-        CitizenRight
+    mounted() {
+        const timeline = new TimelineLite()
+
+        timeline.to(".latest-citizen .content", 1, {opacity: 1})
     }
 }
 </script>
 
-<style scoped>
-    .citizen {
-        width: 100%;
-        display: flex;
-    }
+<style>
+  .latest-citizen {
+    position: relative;
+    padding: 15px;
+    height: 330px;
+    width: 100%;
+    border: 1px solid grey;
+    background: url('/images/fading-bars.png') repeat;
+  }
+  .content{
+    display: flex;
+    flex-direction: Column;
+    justify-content: center;
+    opacity: 0;
+  }
+  .logo {
+    width: 165px;
+    height: 165px; 
+    align-self: center;
+    margin: 10px;
+  }
+  .cit-name {
+    align-self: center;
+    font-size: 20px;
+  }
+  .cit-handle {
+    align-self: center;
+    margin-bottom: 15px;
+  }
 </style>

@@ -1,6 +1,7 @@
 <template>
   <div class="nav-bar" id="nav-bar">
       <div class="nav-left">
+        <div class="nav-button"><router-link to="/">Home</router-link></div>
         <div class="nav-button"><router-link to="/citizen">My Profile</router-link></div>
         <div class="nav-button"><router-link to="/org">My Org</router-link></div>
         <div class="nav-button"><router-link to="/location">My Home</router-link></div>
