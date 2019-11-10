@@ -26,7 +26,7 @@ export default {
     methods: {
         async getNews() {
             try {
-                const response = await fetch('https://www.capnflint.com:4444/rsi/news', {
+                const response = await fetch('https://www.capnflint.com:4443/rsi/news', {
                     method: 'GET',
                     headers: { 'Accept': 'application/json; charset=UTF-8'}
                 })
