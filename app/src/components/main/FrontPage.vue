@@ -1,5 +1,6 @@
 <template>
     <div class="front-page" id="front-page">
+        <left-nav />
       <front-page-main />
       <front-page-right />
   </div>
