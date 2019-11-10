@@ -39,7 +39,7 @@ export default {
         display: flex;
         width: 100% - 20px;
         min-width: 400px;
-        margin: 15px;
+        margin: 5px 0 20px 15px;
         padding: 9px;
         border: 1px solid grey;
         position: relative;
