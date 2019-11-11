@@ -21,8 +21,8 @@ export default {
 
 <style scoped>
     .citizen-right {
-        width: 300px;
-        min-width: 300px;
+        width: 250px;
+        min-width: 250px;
         margin: 10px;
         padding: 3px;
     }
