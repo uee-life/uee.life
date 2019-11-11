@@ -6,8 +6,7 @@
         tag="div"
         :css="false"
         v-on:before-enter="beforeEnter"
-        v-on:enter="enter"
-        v-on:leave="leave">
+        v-on:enter="enter">
         <div v-for="(item, index) in articles" :key="item.title" :index="index">
             <news-item :item="item" />
         </div>
@@ -54,12 +53,6 @@ export default {
             setTimeout(function() {
                 new TimelineLite().to(el, 1, {opacity: 0.9})
             }, delay)
-        },
-        leave: function (el) {
-            var delay = el.dataset.index * 150
-            setTimeout(function() {
-                new TimelineLite().to(el, 1, {opacity: 0})
-            }, delay)
         }
     }
 
@@ -69,7 +62,7 @@ export default {
 <style>
     .news-feed {
         display: flex;
-        width: 100%;
+        flex-basis: 500px;
         display: block;
     }
 

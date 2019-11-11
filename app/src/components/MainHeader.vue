@@ -7,6 +7,8 @@
       </div>
       </div>
       <div class="main-header-right">
+          <button v-if='authenticated' v-on:click='logout' id='logout-button'> Logout </button>
+          <button v-else v-on:click='login' id="login-button"> Login </button>
           <div class="user">
               Welcome, <b>Flint McBane</b>
           </div>

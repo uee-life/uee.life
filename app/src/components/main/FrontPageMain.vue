@@ -17,7 +17,10 @@ export default {
 
 <style>
     .front-page-main {
-        width: 100%;
+        position: relative;
+        min-width: 500px;
+        flex-basis: 500px;
+        flex-grow: 1;
         padding: 10px;
     }
 </style>

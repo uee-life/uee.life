@@ -25,5 +25,6 @@ export default {
     .front-page {
         width: 100%;
         display: flex;
+        flex-wrap: wrap
     }
 </style>

@@ -46,6 +46,7 @@ export default {
         display: flex;
         width: 100% - 20px;
         min-width: 400px;
+        flex-basis: 400px;
         margin: 5px 0 20px 15px;
         padding: 9px;
         border: 1px solid grey;
@@ -74,8 +75,8 @@ export default {
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
+        bottom: 0;
+        right: 0;
         background: url('/images/fading-bars.png') repeat;
         z-index: 0;
     }

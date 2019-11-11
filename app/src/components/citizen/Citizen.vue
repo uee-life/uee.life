@@ -20,13 +20,9 @@ export default {
         return {
             links: [
                 {
-                text: "Daymar",
-                path: "/location/Daymar"
+                text: "Home",
+                path: "/"
                 },
-                {
-                text: "Yela",
-                path: "/location/Yela"
-                }
             ],
             citizen: {
                 name: "Flint McBane",
