@@ -18,6 +18,7 @@ export default {
     name: "citizen",
     data() {
         return {
+            loading: true,
             links: [
                 {
                 text: "Home",
@@ -25,12 +26,7 @@ export default {
                 },
             ],
             citizen: {
-                name: "Flint McBane",
-                handle: "Capn_Flint",
-                bio: "This is a bio...",
-                record: "84348",
-                enlisted: "Nov 18, 2194",
-                portrait: "https://robertsspaceindustries.com/media/lb0drmasxlhcyr/heap_infobox/Grog_fallout.png",
+                info: {},
                 home: {
                     system: "Stanton",
                     planet: "Hurston",
@@ -62,11 +58,11 @@ export default {
                 }
                 ],
                 org: {
-                    name: "McBane Enterprises",
+                  /*  name: "McBane Enterprises",
                     type: "Organization",
                     title: "Director",
                     logo: "https://robertsspaceindustries.com/media/2weountodg09pr/heap_infobox/MCBANE-Logo.png"
-                }
+               */ }
 
             }
         }
@@ -75,6 +71,46 @@ export default {
         LeftNav,
         CitizenMain,
         CitizenRight
+    },
+    methods: {
+        async getCitizen() {
+            try {
+                const response = await fetch('https://www.capnflint.com:4443/rsi/citizen?q=' + this.$route.params.handle, {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json; charset=UTF-8'}
+                })
+                const data = await response.json()
+                this.citizen.info = data
+                this.getOrg()
+            } catch (error) {
+                // eslint-disable-next-line
+                console.error(error)
+            }
+            this.loading = false
+        },
+        async getOrg() {
+            try {
+                const response = await fetch('https://www.capnflint.com:4443/rsi/org?q=' + this.citizen.info.org, {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json; charset=UTF-8'}
+                })
+                const data = await response.json()
+                this.citizen.org = data
+            } catch (error) {
+                // eslint-disable-next-line
+                console.error(error)
+            }
+            this.loading = false
+        },
+    },
+    mounted() {
+        this.getCitizen()
+    },
+    watch: {
+        $route(to, from, next) {
+            this.getCitizen()
+            next()
+        }
     }
 }
 </script>

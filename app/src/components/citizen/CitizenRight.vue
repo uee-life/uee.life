@@ -1,6 +1,6 @@
 <template>
   <div class="citizen-right" id="citizen-right">
-      <citizen-org :org="citizen.org"/>
+      <citizen-org :citizen="citizen"/>
       <citizen-links />
   </div>
 </template>

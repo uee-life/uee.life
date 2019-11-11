@@ -125,8 +125,8 @@ export default {
     },
     watch: {
         search: function() {
-            this.clearNews()
-            this.getNews()
+            this.clearNews();
+            this.getNews();
         }
     }
 

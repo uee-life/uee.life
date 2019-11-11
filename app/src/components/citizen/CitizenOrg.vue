@@ -1,12 +1,12 @@
 <template>
   <div refs="org" class="citizen-org" id="citizen-org">
     <div class="content">
-      <img class="logo" :src="org.logo" />
+      <img class="logo" :src="citizen.org.logo" />
       <div class="org-name">
-        {{ org.name }}
+        {{ citizen.org.name }}
       </div>
       <div class="org-title">
-        Title: {{ org.title }}
+        Title: {{ citizen.info.orgRank }}
       </div>
     </div>
     <span class="corner top left"></span>
@@ -21,7 +21,7 @@ import { TimelineLite } from "gsap"
 
 export default {
   name: "citizen-org",
-  props: ['org'],
+  props: ['citizen'],
   data() {
     return {
       logo: "https://robertsspaceindustries.com/media/2weountodg09pr/heap_infobox/MCBANE-Logo.png"
@@ -30,7 +30,7 @@ export default {
       mounted() {
         const timeline = new TimelineLite()
 
-        timeline.to(".citizen-org", 1, {width: "100%", height: "290px"})
+        timeline.to(".citizen-org", 1, {width: "100%", height: "320px"})
         timeline.to(".citizen-org .content", 1, {opacity: 1})
     }
 }
@@ -60,9 +60,11 @@ export default {
   .org-name {
     align-self: center;
     font-size: 20px;
+    text-align: center;
   }
   .org-title {
     align-self: center;
     margin-bottom: 15px;
+    text-align: center;
   }
 </style>

@@ -1,17 +1,17 @@
 <template>
   <div id="citizen-info" class="citizen-info">
       <div class="portrait" id="portrait">
-          <img class="portrait-img" :src="citizen.portrait" />
+          <img class="portrait-img" :src="citizen.info.portrait" />
             <span class="corner top left"></span>
           <span class="corner top right"></span>
           <span class="corner bottom left"></span>
           <span class="corner bottom right"></span>
       </div>
       <div class="info">
-          <div class="line-item"><div>UEE Citizen Record:</div><div>#{{ citizen.record }}</div></div>
-          <div class="line-item"><div>Name:</div><div>{{citizen.name}}</div></div>
-          <div class="line-item"><div>Handle:</div><div>{{citizen.handle}}</div></div>
-          <div class="line-item"><div>Enlisted:</div><div>{{citizen.enlisted}}</div></div>
+          <div class="line-item"><div>UEE Citizen Record:</div><div>{{ citizen.info.record }}</div></div>
+          <div class="line-item"><div>Name:</div><div>{{citizen.info.name}}</div></div>
+          <div class="line-item"><div>Handle:</div><div>{{citizen.info.handle}}</div></div>
+          <div class="line-item"><div>Enlisted:</div><div>{{citizen.info.enlisted}}</div></div>
           <br>
           <div>
             Home:
@@ -70,7 +70,7 @@ export default {
         opacity: 0;
     }
     .info {
-        width: 220px;
+        width: 250px;
         opacity: 0;
     }
     .line-item {

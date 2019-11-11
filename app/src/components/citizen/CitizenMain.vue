@@ -1,7 +1,7 @@
 <template>
   <div class="citizen-main" id="citizen-main">
         <citizen-info :citizen="citizen"/>
-        <citizen-bio :bio="citizen.bio"/>
+        <citizen-bio :bio="citizen.info.bio"/>
         <fleet-view :ships="citizen.ships"/>
   </div>
 </template>
