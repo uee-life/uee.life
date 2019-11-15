@@ -23,7 +23,7 @@ export default {
     props: ["item"],
     computed: {
         style () {
-            return 'background: url(' + this.item.image + '); background-size: cover; background-position: center center;'
+            return 'background: url("' + this.item.image + '"); background-size: cover; background-position: center center;'
         }
     },
     mounted() {
