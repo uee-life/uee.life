@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 
 const {getCitizen} = require('./db/citizen');
+const {getOrganization} = require('./db/organization');
 
 // defining the Express app
 const app = express();
@@ -19,8 +20,12 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('combined'));
 
-app.get('/', (req, res) => {
+app.get('/citizen', async (req, res) => {
     res.send(await getCitizen());
+});
+
+app.get('/organization', async (req, res) => {
+    res.send(await getOrganization());
 });
 
 // starting the server
