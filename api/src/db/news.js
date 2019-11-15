@@ -15,7 +15,7 @@ async function fetchNews(data) {
             art.id = art.link.split('/')[3].split('-')[0]
             art.image = $(el).find('div.background').attr('style').split("'")[1]
             if(!art.image.startsWith('http')) {
-                art.image = baseURI + art.image.split('.com')[1]
+                art.image = baseURI + art.image
             }
             art.posted = $(el).find('div.time_ago').find('span.value').text()
             news.push(art)
