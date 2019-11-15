@@ -18,7 +18,7 @@ async function fetchCitizen(handle) {
         return info
     } catch (error) {
         console.error(error)
-        return {}
+        return null
     }
 }
 
@@ -62,6 +62,10 @@ async function getCitizen(handle) {
     res = loadData(handle)
 
     info = await fetchCitizen(handle)
+
+    if(info == null) {
+        return {error: "Character not found"}
+    }
 
     res.info = info
 

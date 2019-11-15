@@ -58,11 +58,11 @@ export default {
                 }
                 ],
                 org: {
-                  /*  name: "McBane Enterprises",
+                    name: "McBane Enterprises",
                     type: "Organization",
                     title: "Director",
                     logo: "https://robertsspaceindustries.com/media/2weountodg09pr/heap_infobox/MCBANE-Logo.png"
-               */ }
+                }
 
             }
         }
@@ -75,12 +75,12 @@ export default {
     methods: {
         async getCitizen() {
             try {
-                const response = await fetch('https://www.capnflint.com:4443/rsi/citizen?q=' + this.$route.params.handle, {
+                const response = await fetch('https://api.uee.life/citizen/' + this.$route.params.handle, {
                     method: 'GET',
                     headers: { 'Accept': 'application/json; charset=UTF-8'}
                 })
                 const data = await response.json()
-                this.citizen.info = data
+                this.citizen.info = data.info
                 this.getOrg()
             } catch (error) {
                 // eslint-disable-next-line
