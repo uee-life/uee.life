@@ -2,9 +2,9 @@
   <div class="nav-bar" id="nav-bar">
       <div class="nav-left">
         <div class="nav-button"><router-link to="/">Home</router-link></div>
-        <div class="nav-button"><router-link to="/citizen/capn_flint">My Profile</router-link></div>
-        <div class="nav-button"><router-link to="/org">My Org</router-link></div>
-        <div class="nav-button"><router-link to="/location">My Home</router-link></div>
+        <div class="nav-button"><router-link to="/citizen/capn_flint">Citizen Registry</router-link></div>
+        <div class="nav-button"><router-link to="/org">Org Directory</router-link></div>
+        <div class="nav-button"><router-link to="/location">Gal-Net</router-link></div>
       </div>
       <div class="nav-right">
         <div class="nav-button">Tools</div>

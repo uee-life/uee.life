@@ -82,7 +82,6 @@ body {
   color: #39ced8;
   text-shadow: 0px 0px 15px rgba(57, 206, 216, 0.5);
   padding: 0;
-  background: url("./assets/gridbg_glow.png") repeat center top;
 }
 .container::before {
   position: fixed;

@@ -108,7 +108,9 @@ export default {
     },
     watch: {
         $route(to, from, next) {
-            this.getCitizen()
+            if(this.$route.params.handle) {
+                this.getCitizen()
+            }
             next()
         }
     }

@@ -1,7 +1,7 @@
 <template>
   <div class="news-feed" id="news-feed">
       <portal to="navigationPane">
-            <div v-for="source in sources" v-on:click="search = source.search; title = source.name" :key="source.name" class="nav-button">
+            <div v-for="source in sources" v-on:click="search = source.search; title = source.name" :key="source.id" class="nav-button">
                 <router-link to="/">{{ source.name }}</router-link>
             </div>
         </portal>
@@ -125,8 +125,8 @@ export default {
     },
     watch: {
         search: function() {
-            this.clearNews();
-            this.getNews();
+            this.clearNews()
+            this.getNews()
         }
     }
 
