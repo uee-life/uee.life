@@ -13,7 +13,7 @@
         v-on:before-enter="beforeEnter"
         v-on:enter="enter"
         v-on:leave="leave">
-        <div v-for="(item, index) in articles" :key="index" :index="index">
+        <div v-for="(item, index) in articles" :key="item.id" :index="index">
             <news-item :item="item" />
         </div>
       </transition-group>
