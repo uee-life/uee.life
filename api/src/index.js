@@ -20,15 +20,15 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('combined'));
 
-app.get('/citizen', async (req, res) => {
-    res.send(await getCitizen());
+app.get('/citizen/:handle', async (req, res) => {
+    res.send(await getCitizen(req.params.handle));
 });
 
-app.get('/organization', async (req, res) => {
-    res.send(await getOrganization());
+app.get('/organization/:id', async (req, res) => {
+    res.send(await getOrganization(req.params.id));
 });
 
 // starting the server
 app.listen(3001, () => {
     console.log('listening on port 3001');
-});
+})
