@@ -57,14 +57,13 @@ export default {
     methods: {
         async getLocation(location) {
             try {
-                const response = await fetch('https://www.capnflint.com:4444/stargps/location?foobar', {
+                const response = await fetch('<need a new api>', {
                 method: 'POST',
                 body: JSON.stringify({query: location}),
                 headers: { 'Content-type': 'application/json; charset=UTF-8'}
                 })
                 const data = await response.json()
                 this.location = data['data']
-                this.forceRerender()
             } catch (error) {
                 // eslint-disable-next-line no-console
                 console.error(error) 

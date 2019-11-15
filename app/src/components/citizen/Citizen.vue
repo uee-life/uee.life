@@ -90,7 +90,7 @@ export default {
         },
         async getOrg() {
             try {
-                const response = await fetch('https://www.capnflint.com:4443/rsi/org?q=' + this.citizen.info.org, {
+                const response = await fetch('https://api.uee.life/organization/' + this.citizen.info.org, {
                     method: 'GET',
                     headers: { 'Accept': 'application/json; charset=UTF-8'}
                 })
