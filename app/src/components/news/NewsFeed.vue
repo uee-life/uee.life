@@ -82,7 +82,7 @@ export default {
         async getNews() {
             this.loading = true
             try {
-                const response = await fetch('https://www.capnflint.com:4443/rsi/news?channel=' + this.search.channel + '&series=' + this.search.series + '&page=' + this.pages, {
+                const response = await fetch('https://api.uee.life/news?channel=' + this.search.channel + '&series=' + this.search.series + '&page=' + this.pages, {
                     method: 'GET',
                     headers: { 'Accept': 'application/json; charset=UTF-8'}
                 })
