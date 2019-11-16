@@ -27,12 +27,24 @@ export default {
       logo: "https://robertsspaceindustries.com/media/2weountodg09pr/heap_infobox/MCBANE-Logo.png"
     }
   },
-      mounted() {
+  mounted() {
+        
+        // eslint-disable-next-line
+        console.log(this.citizen.org.name)
+        if(this.citizen.org.name != undefined) {
+          
+        }
+  },
+  watch: {
+    'citizen.org': {
+      handler: function(val, oldVal) {
         const timeline = new TimelineLite()
-
-        timeline.to(".citizen-org", 1, {width: "100%", height: "320px"})
-        timeline.to(".citizen-org .content", 1, {opacity: 1})
+        timeline.to(".citizen-org", 0, {display: "block"})
+          timeline.to(".citizen-org", 1, {width: "100%", height: "320px"})
+          timeline.to(".citizen-org .content", 1, {opacity: 1})
+      }
     }
+  }
 }
 </script>
 
@@ -44,6 +56,8 @@ export default {
     width: 50px;
     border: 1px solid grey;
     background: url('/images/fading-bars.png') repeat;
+    display: none;
+    margin-bottom: 20px;
   }
   .content{
     display: flex;

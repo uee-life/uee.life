@@ -50,8 +50,12 @@ export default {
                 this.citizen.info = data.info
                 this.citizen.home = data.location
                 this.citizen.ships = data.ships
-                this.citizen.links.push(data.website)
-                this.getOrg()
+                if(data.info.website){
+                    this.citizen.links.push(data.info.website)
+                }
+                if(data.info.org) {
+                    await this.getOrg()
+                }
             } catch (error) {
                 // eslint-disable-next-line
                 console.error(error)

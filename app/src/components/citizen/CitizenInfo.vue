@@ -1,7 +1,7 @@
 <template>
   <div id="citizen-info" class="citizen-info">
       <div class="portrait" id="portrait">
-          <img class="portrait-img" :src="'https://robertsspaceindustries.com' + citizen.info.portrait" />
+          <img class="portrait-img" :src="citizen.info.portrait" />
             <span class="corner top left"></span>
           <span class="corner top right"></span>
           <span class="corner bottom left"></span>

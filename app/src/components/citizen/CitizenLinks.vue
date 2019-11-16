@@ -4,9 +4,8 @@
     External Links
     <ul>
         <li v-for="link in citizen.links" :key="link">
-          <a :href="link">{{link.split("/")[2]}}</a>
+          <a :href="link">{{link.split('/')[2]}}</a>
         </li>
-        <li>Twitter: <a href="https://twitter.com/Capn_Flint">@Capn_Flint</a></li>
     </ul>
     </div>
     <span class="corner top left"></span>
@@ -22,11 +21,15 @@ import { TimelineLite } from "gsap"
 export default {
   name: "citizen-links",
   props: ['citizen'],
-  mounted() {
-    const timeline = new TimelineLite()
-
+  watch: {
+    'citizen.links': {
+      handler: function(old, newVal) {
+        const timeline = new TimelineLite()
+timeline.to(".citizen-links", 0, {display: "block"})
     timeline.to(".citizen-links", 1, {width: "100%", height: "200px"})
     timeline.to(".citizen-links .content", 1, {opacity: 1})
+      }
+    }
   }
 }
 </script>
@@ -38,8 +41,8 @@ export default {
     height: 50px;
     padding: 15px;
     border: 1px solid grey;
-    margin-top: 20px;
     background: url('/images/fading-bars.png') repeat;
+    display: none;
   }
   .citizen-links .content {
     display: flex;

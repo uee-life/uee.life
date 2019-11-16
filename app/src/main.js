@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import PortalVue from 'portal-vue'
 import Auth from '@okta/okta-vue'
+import axios from 'axios'
 
 import App from './App.vue'
 
@@ -29,6 +30,7 @@ Vue.config.ignoredElements = [
   'material'
 ]
 
+Vue.use(axios)
 Vue.use(VueRouter)
 Vue.use(PortalVue)
 Vue.use(Auth, {
