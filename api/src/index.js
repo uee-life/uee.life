@@ -5,7 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
-const {getCitizen} = require('./db/citizen');
+const {getCitizen, getCitizenInfo, getCitizenShips, getCitizenLocation} = require('./db/citizen');
 const {getOrganization} = require('./db/organization');
 const {getNews} = require('./db/news');
 
@@ -24,6 +24,18 @@ app.use(morgan('combined'));
 app.get('/citizen/:handle', async (req, res) => {
     res.send(await getCitizen(req.params.handle));
 });
+
+app.get('/citizen/:handle/info', async (req, res) => {
+    res.send(await getCitizenInfo(req.params.handle));
+})
+
+app.get('/citizen/:handle/ships', async (req, res) => {
+    res.send(await getCitizenShips(req.params.handle));
+});
+
+app.get('/citizen/:handle/location', async(req, res) => {
+    res.send(await getCitizenLocation(req.params.handle))
+})
 
 app.get('/organization/:id', async (req, res) => {
     res.send(await getOrganization(req.params.id));

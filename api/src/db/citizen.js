@@ -22,45 +22,44 @@ async function fetchCitizen(handle) {
     }
 }
 
-function loadData(handle) {
-    return {
-        home: {
-            system: "Stanton",
-            planet: "Hurston",
-            city: "Lorville"
+async function fetchShips(handle) {
+    return [
+        {
+            id: 1,
+            manufacturer: "Anvil",
+            make: "Hornet",
+            model: "F7a",
+            name: "Bulldog",
+            size: "Light",
+            crew: 8
         },
-        ships: [
-            {
-                id: 1,
-                manufacturer: "Anvil",
-                make: "Hornet",
-                model: "F7a",
-                name: "Bulldog",
-                size: "Light",
-                crew: 8
-            },
-            {
-                id: 2,
-                manufacturer: "Aegis",
-                make: "Avenger",
-                model: "Titan",
-                name: "Penguin",
-            },
-            {
-                id: 3,
-                manufacturer: "RSI",
-                make: "Constellation",
-                model: "Phoenix",
-                name: "Shark",
-            }
-        ]
+        {
+            id: 2,
+            manufacturer: "Aegis",
+            make: "Avenger",
+            model: "Titan",
+            name: "Penguin",
+        },
+        {
+            id: 3,
+            manufacturer: "RSI",
+            make: "Constellation",
+            model: "Phoenix",
+            name: "Shark",
+        }
+    ]
+}
+
+async function fetchLocation(handle) {
+    return {
+        system: "Unknown",
+        planet: "Unknown",
+        city: "Unknown"
     }
 }
 
 async function getCitizen(handle) {
-
-    res = loadData(handle)
-
+    res = {}
     info = await fetchCitizen(handle)
 
     if(info == null) {
@@ -68,10 +67,27 @@ async function getCitizen(handle) {
     }
 
     res.info = info
+    res.ships = await fetchShips(handle)
+    res.location = await fetchLocation(handle)
 
     return res
 };
 
+async function getCitizenInfo(handle) {
+    return await fetchCitizen(handle)
+}
+
+async function getCitizenShips(handle) {
+    return await fetchShips(handle)
+}
+
+async function getCitizenLocation(handle) {
+    return await fetchLocation(handle)
+}
+
 module.exports = {
     getCitizen,
+    getCitizenInfo,
+    getCitizenShips,
+    getCitizenLocation
 };
