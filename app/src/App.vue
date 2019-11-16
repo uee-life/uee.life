@@ -6,7 +6,7 @@
       <div class="main-header-left">
       <router-link to="/"><img class="logo" alt="logo" src="@/assets/logo.png"></router-link>
       <div class="title">
-          <div>Your UEE Life...</div>
+          <div>A portal to your life in the UEE...</div>
       </div>
       </div>
       <div class="main-header-right">
