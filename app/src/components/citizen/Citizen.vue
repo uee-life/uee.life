@@ -50,6 +50,7 @@ export default {
                 this.citizen.info = data.info
                 this.citizen.home = data.location
                 this.citizen.ships = data.ships
+                this.citizen.links = []
                 if(data.info.website){
                     this.citizen.links.push(data.info.website)
                 }
@@ -81,11 +82,10 @@ export default {
         this.getCitizen()
     },
     watch: {
-        $route(to, from, next) {
+        $route(to, from) {
             if(this.$route.params.handle) {
                 this.getCitizen()
             }
-            next()
         }
     }
 }
