@@ -33,9 +33,6 @@ export default {
     props: ["citizen"],
     data() {
         return {
-            user: {
-                portrait: "https://robertsspaceindustries.com/media/lb0drmasxlhcyr/heap_infobox/Grog_fallout.png",
-            }
         }
     },
     mounted() {

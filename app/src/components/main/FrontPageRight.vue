@@ -21,8 +21,8 @@ export default {
 
 <style>
     .front-page-right {
-        width: 250px;
-        min-width: 200px;
+        width: 220px;
+        min-width: 220px;
         margin: 10px;
         padding: 0;
     }

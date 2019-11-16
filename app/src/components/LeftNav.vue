@@ -17,8 +17,8 @@ export default {
 
 <style scoped>
     .left-nav {
-        width: 200px;
-        min-width: 200px;
+        width: 220px;
+        min-width: 220px;
         height: 400px;
         border: 1px solid grey;
         margin: 10px;

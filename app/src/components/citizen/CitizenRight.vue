@@ -1,7 +1,7 @@
 <template>
   <div class="citizen-right" id="citizen-right">
       <citizen-org :citizen="citizen"/>
-      <citizen-links />
+      <citizen-links :citizen="citizen"/>
   </div>
 </template>
 
@@ -21,8 +21,8 @@ export default {
 
 <style scoped>
     .citizen-right {
-        width: 250px;
-        min-width: 250px;
+        width: 220px;
+        min-width: 220px;
         margin: 10px;
         padding: 3px;
     }

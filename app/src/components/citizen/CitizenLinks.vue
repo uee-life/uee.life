@@ -3,7 +3,9 @@
     <div class="content">
     External Links
     <ul>
-        <li>Web: <a href="https://capnflint.com">capnflint.com</a></li>
+        <li v-for="link in citizen.links" :key="link">
+          <a :href="link">{{link.split("/")[2]}}</a>
+        </li>
         <li>Twitter: <a href="https://twitter.com/Capn_Flint">@Capn_Flint</a></li>
     </ul>
     </div>
@@ -19,6 +21,7 @@ import { TimelineLite } from "gsap"
 
 export default {
   name: "citizen-links",
+  props: ['citizen'],
   mounted() {
     const timeline = new TimelineLite()
 

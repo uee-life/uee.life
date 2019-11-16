@@ -27,43 +27,10 @@ export default {
             ],
             citizen: {
                 info: {},
-                home: {
-                    system: "Stanton",
-                    planet: "Hurston",
-                    city: "Lorville"
-                },
-                ships: [
-                    {
-                    id: 1,
-                    manufacturer: "Anvil",
-                    make: "Hornet",
-                    model: "F7a",
-                    name: "Bulldog",
-                    size: "Light",
-                    crew: 8
-                },
-                {
-                    id: 2,
-                    manufacturer: "Aegis",
-                    make: "Avenger",
-                    model: "Titan",
-                    name: "Penguin",
-                },
-                {
-                    id: 3,
-                    manufacturer: "RSI",
-                    make: "Constellation",
-                    model: "Phoenix",
-                    name: "Shark",
-                }
-                ],
-                org: {
-                    name: "McBane Enterprises",
-                    type: "Organization",
-                    title: "Director",
-                    logo: "https://robertsspaceindustries.com/media/2weountodg09pr/heap_infobox/MCBANE-Logo.png"
-                }
-
+                home: {},
+                ships: [],
+                org: {},
+                links: []
             }
         }
     },
@@ -81,6 +48,9 @@ export default {
                 })
                 const data = await response.json()
                 this.citizen.info = data.info
+                this.citizen.home = data.location
+                this.citizen.ships = data.ships
+                this.citizen.links.push(data.website)
                 this.getOrg()
             } catch (error) {
                 // eslint-disable-next-line
@@ -101,7 +71,7 @@ export default {
                 console.error(error)
             }
             this.loading = false
-        },
+        }
     },
     mounted() {
         this.getCitizen()
