@@ -1,17 +1,46 @@
 <template>
-  <div class="org-main" id="org-main">
-      <org-info :org="org"/>
-  </div>
+    <div class="org-main" id="org-main">
+        <org-banner :org="org" />
+        <div>
+            <tabs :tabs="tabs" :initialTab="initialTab">
+                <template slot="tab-title-info">
+                    INFO
+                </template>
+                <template slot="tab-content-info">
+                    <org-details :org="org" />
+                </template>
+
+                <template slot="tab-title-fleet">
+                    FLEET
+                </template>
+                <template slot="tab-content-fleet">
+                    <fleet-view :ships="fleet"/>
+                </template>
+            </tabs>
+        </div>
+    </div>
 </template>
 
 <script>
-import OrgInfo from '@/components/org/OrgInfo.vue'
+import OrgBanner from '@/components/org/OrgBanner.vue'
+import OrgDetails from '@/components/org/OrgDetails.vue'
+import Tabs from '@/components/layout/Tabs.vue'
+import FleetView from '@/components/fleet/FleetView.vue'
 
 export default {
     name: 'org-main',
-    props: ['org'],
+    props: ['org', 'fleet'],
+    data() {
+        return {
+            tabs: ["info","fleet"],
+            initialTab: "info"
+        }
+    },
     components: {
-        OrgInfo
+        OrgBanner,
+        OrgDetails,
+        Tabs,
+        FleetView
     }
 }
 </script>

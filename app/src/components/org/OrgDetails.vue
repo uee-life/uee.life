@@ -1,20 +1,6 @@
 <template>
-  <div id="org-info" class="org-info">
-    <div class="org-banner">
-      <div class="banner-img" :style="style"></div>
-      <div class="mask"></div>
-      <div class="org-banner-bottom">
-        <div class="org-logo" id="org-logo">
-          <img :src="org.logo" />
-        </div>
-        <div class="org-banner-name">{{org.name}} / {{ tag }}</div>
-      </div>
-      <span class="corner top left"></span>
-      <span class="corner top right"></span>
-      <span class="corner bottom left"></span>
-      <span class="corner bottom right"></span>
-    </div>
-    <div class="org-details">
+  <div id="org-details" class="org-details">
+    <div class="info">
         <div class="line-item"><div>Name:</div><div>{{org.name}}</div></div>
         <br>
         <div>
@@ -30,39 +16,15 @@
 </template>
 
 <script>
-import { TimelineLite } from "gsap"
 
 export default {
-  name: 'org-info',
-  props: ['org'],
-  computed: {
-    style () {
-      return 'background: url("' + this.org.banner + '") center center / cover'
-    },
-    tag () {
-      if(this.org.tag){
-        return this.org.tag.toUpperCase()
-      } else {
-        return this.org.tag
-      }
-    }
-  },
-  watch: {
-    org: {
-      handler: function () {
-        const timeline = new TimelineLite()
-        timeline.to(".org-logo", 0.5, {opacity: 1})
-        timeline.to(".org-logo img", 0.5, {opacity: 1})
-        timeline.to(".org-banner-name", 0.5, {opacity: 1})
-        timeline.to(".org-info .org-details", 0.5, {opacity: 1})
-      }
-    }
-  }
+  name: 'org-details',
+  props: ['org']
 }
 </script>
 
-<style>
-    .org-info {
+<style scoped>
+    .org-details {
       position: relative;
         display: flex;
         flex-direction: column;
@@ -81,11 +43,12 @@ export default {
       position: relative;
       width: 100%;
       padding-bottom: 67px;
+      border: 1px solid grey;
     }
 
     .org-banner .banner-img {
       opacity: 0.8 !important;
-      border: 1px solid grey;
+      border-bottom: 1px dashed grey;
       display: block;
       height: 250px;
       background-size: cover;
@@ -112,11 +75,12 @@ export default {
         margin-left: 5px;
     }
 
-    .org-details {
+    .org-details .info {
         width: fit-content;
-        opacity: 0;
+        opacity: 1;
         margin-left: 30px;
         margin-top: 10px;
+        color: white;
     }
     .line-item {
         display: flex;

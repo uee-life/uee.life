@@ -1,13 +1,15 @@
 <template>
     <div class="organization" id="organization">
         <left-dock />
-        <org-main :org="org"/>
+        <org-main :org="org" :fleet="ships"/>
         <right-dock />
         <!--fleet-view :ships="ships" /-->
     </div>
 </template>
 
 <script>
+import { TimelineLite } from "gsap"
+
 import LeftDock from '@/components/layout/LeftDock.vue'
 import RightDock from '@/components/layout/RightDock.vue'
 import OrgMain from "@/components/org/OrgMain.vue"
@@ -69,6 +71,16 @@ export default {
     },
     mounted() {
         this.getOrg()
+    },
+    watch: {
+        org: {
+            handler: function () {
+                const timeline = new TimelineLite()
+                timeline.to(".org-logo", 0.5, {opacity: 1})
+                timeline.to(".org-logo img", 0.5, {opacity: 1})
+                timeline.to(".org-banner h1", 0.5, {opacity: 1})
+            }
+        }
     }
 }
 </script>
