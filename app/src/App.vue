@@ -31,7 +31,7 @@
 
 <script>
 //import MainHeader from '@/components/MainHeader.vue'
-import NavBar from '@/components/NavBar.vue'
+import NavBar from '@/components/layout/NavBar.vue'
 
 export default {
   name: 'app',

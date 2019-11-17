@@ -1,18 +1,19 @@
 <template>
     <a :href="item.link" style="text-decoration: none" target="blank">
-    <div ref="newsitem" class="news-item" id="news-item">
-        <div class="background" :style="style"></div>
-        <div class="mask"></div>
-        <img class="article-image" :src="item.image" />
-        <div class="news-item-info">
-            <div><b>{{ item.title }}</b></div>
-            <div>Posted: {{ item.posted }}</div>
+        <div ref="newsitem" class="news-item" id="news-item">
+            <div class="background" :style="style"></div>
+            <div class="mask"></div>
+            <img class="article-image" :src="item.image" />
+            <div class="news-item-info">
+                <div><b>{{ item.title }}</b></div>
+                <div>Posted: {{ item.posted }}</div>
+            </div>
+            <span class="corner top left"></span>
+            <span class="corner top right"></span>
+            <span class="corner bottom left"></span>
+            <span class="corner bottom right"></span>
         </div>
-        <span class="corner top left"></span>
-        <span class="corner top right"></span>
-        <span class="corner bottom left"></span>
-        <span class="corner bottom right"></span>
-    </div></a>
+    </a>
 </template>
 
 <script>

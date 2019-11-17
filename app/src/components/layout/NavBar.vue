@@ -3,7 +3,7 @@
       <div class="nav-left">
         <div class="nav-button"><router-link to="/">Home</router-link></div>
         <div class="nav-button"><router-link to="/citizen/capn_flint">Citizen Registry</router-link></div>
-        <div class="nav-button"><router-link to="/org">Org Directory</router-link></div>
+        <div class="nav-button"><router-link to="/organization">Org Directory</router-link></div>
         <div class="nav-button"><a href="https://robertsspaceindustries.com/starmap" target="_blank">Starmap</a></div>
       </div>
       <div class="nav-right">

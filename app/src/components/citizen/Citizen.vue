@@ -1,18 +1,18 @@
 <template>
   <div class="citizen" id="citizen">
-      <left-nav />
+      <left-dock />
         <portal to="navigationPane">
-            <div v-for="link in links" :key="link.text" class="nav-button"><router-link :to="link.path">{{ link.text }}</router-link></div>
+            <div v-for="link in links" :key="link.text" class="left-nav-button"><router-link :to="link.path">{{ link.text }}</router-link></div>
         </portal>
       <citizen-main :citizen="citizen"/>
-      <citizen-right :citizen="citizen"/>
+      <right-dock />
   </div>
 </template>
 
 <script>
-import LeftNav from '@/components/LeftNav.vue'
+import LeftDock from '@/components/layout/LeftDock.vue'
+import RightDock from '@/components/layout/RightDock.vue'
 import CitizenMain from '@/components/citizen/CitizenMain.vue'
-import CitizenRight from '@/components/citizen/CitizenRight.vue'
 
 export default {
     name: "citizen",
@@ -35,9 +35,9 @@ export default {
         }
     },
     components: {
-        LeftNav,
+        LeftDock,
+        RightDock,
         CitizenMain,
-        CitizenRight
     },
     methods: {
         async getCitizen() {
@@ -56,6 +56,8 @@ export default {
                 }
                 if(data.info.org) {
                     await this.getOrg()
+                } else {
+                    this.citizen.org = {}
                 }
             } catch (error) {
                 // eslint-disable-next-line
@@ -83,6 +85,8 @@ export default {
     },
     watch: {
         $route(to, from) {
+            // eslint-disable-next-line
+            console.log(from + "::" + to)
             if(this.$route.params.handle) {
                 this.getCitizen()
             }

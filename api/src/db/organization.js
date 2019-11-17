@@ -12,6 +12,7 @@ async function fetchOrg(org) {
         info.logo = baseURI + $('div.logo', '#organization').find('img').attr('src')
         info.count = $('div.logo', '#organization').find('span').text().split(" ")[0]
         info.bio = $('div.body').text()
+        info.tag = org
 
         return info
     } catch (error) {

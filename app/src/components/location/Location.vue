@@ -1,6 +1,6 @@
 <template>
   <div class="location" id="location">
-      <left-nav />
+      <left-dock />
         <portal to="navigationPane">
             <div v-for="link in links" :key="link.text" class="nav-button"><router-link :to="link.path">{{ link.text }}</router-link></div>
         </portal>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import LeftNav from '@/components/LeftNav.vue'
+import LeftDock from '@/components/layout/LeftDock.vue'
 import LocationData from '@/components/location/LocationData.vue'
 import Geomap from '@/components/location/Geomap.vue'
 
@@ -19,7 +19,7 @@ export default {
     components: {
         LocationData,
         Geomap,
-        LeftNav
+        LeftDock
     },
     data() {
         return {

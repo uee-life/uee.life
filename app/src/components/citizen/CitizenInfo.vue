@@ -35,12 +35,16 @@ export default {
         return {
         }
     },
-    mounted() {
-        const timeline = new TimelineLite()
-
-        timeline.to(".portrait", 1, {width: "150px", height: "150px"})
-        timeline.to(".portrait img", 1, {opacity: 1})
-        timeline.to(".citizen-info .info", 1, {opacity: 1})
+    watch: {
+        'citizen.info': {
+            handler: function() {
+                const timeline = new TimelineLite()
+                timeline.to(".portrait", 0.5, {opacity: 1})
+                timeline.to(".portrait", 1, {width: "150px", height: "150px"})
+                timeline.to(".portrait img", 0.5, {opacity: 1})
+                timeline.to(".citizen-info .info", 0.5, {opacity: 1})
+            }
+        }
     }
 }
 </script>
@@ -59,6 +63,7 @@ export default {
         margin-right: 20px;
         background: url('/images/fading-bars.png') repeat;
         position: relative;
+        opacity: 0;
     }
 
     .portrait img {

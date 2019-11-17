@@ -9,7 +9,7 @@ import App from './App.vue'
 import FrontPage from '@/components/main/FrontPage.vue'
 import Citizen from '@/components/citizen/Citizen.vue'
 import Location from '@/components/location/Location.vue'
-import Org from '@/components/org/Org.vue'
+import Organization from '@/components/org/Organization.vue'
 
 Vue.config.productionTip = false
 
@@ -45,7 +45,7 @@ const routes = [
   { path: '/', component: FrontPage },
   { path: '/citizen/:handle', component: Citizen },
   { path: '/location/:name', component: Location },
-  { path: '/org', component: Org},
+  { path: '/organization/:org', component: Organization},
   { path: '/implicit/callback', component: Auth.handleCallback() },
   { path: '*', component: FrontPage }
 ]

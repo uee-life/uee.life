@@ -13,7 +13,7 @@ async function fetchNews(data) {
                 art = {}
                 art.title = $(el).find('div.title').text()
                 art.link = baseURI + $(el).attr('href')
-                art.id = art.link.split('/')[3].split('-')[0]
+                art.id = art.link.split('/').slice(-1)[0].split('-')[0]
                 bg = $(el).find('div.background')
                 if(bg.attr('style')) {
                     art.image = bg.attr('style').split("'")[1]

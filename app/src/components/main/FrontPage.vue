@@ -1,13 +1,13 @@
 <template>
     <div class="front-page" id="front-page">
-        <left-nav />
+        <left-dock />
       <front-page-main />
       <front-page-right />
   </div>
 </template>
 
 <script>
-import LeftNav from '@/components/LeftNav.vue'
+import LeftDock from '@/components/layout/LeftDock.vue'
 import FrontPageMain from '@/components/main/FrontPageMain.vue'
 import FrontPageRight from '@/components/main/FrontPageRight.vue'
 
@@ -16,7 +16,7 @@ export default {
     components: {
         FrontPageMain,
         FrontPageRight,
-        LeftNav
+        LeftDock
     }
 }
 </script>

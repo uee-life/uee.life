@@ -27,21 +27,20 @@ export default {
       logo: "https://robertsspaceindustries.com/media/2weountodg09pr/heap_infobox/MCBANE-Logo.png"
     }
   },
-  mounted() {
-        
-        // eslint-disable-next-line
-        console.log(this.citizen.org.name)
-        if(this.citizen.org.name != undefined) {
-          
-        }
-  },
   watch: {
     'citizen.org': {
-      handler: function(val, oldVal) {
-        const timeline = new TimelineLite()
-        timeline.to(".citizen-org", 0, {display: "block"})
-          timeline.to(".citizen-org", 1, {width: "100%", height: "320px"})
+      handler: function() {
+        if(Object.keys(this.citizen.org).length === 0) {
+          const timeline = new TimelineLite()
+          timeline.to(".citizen-org .content", 0.5, {opacity: 0})
+          timeline.to(".citizen-org", 1, {width: "50px", height: "50px"})
+          timeline.to(".citizen-org", 0, {display: "none"})
+        } else {
+          const timeline = new TimelineLite()
+          timeline.to(".citizen-org", 0, {display: "block"})
+          timeline.to(".citizen-org", 1, {width: "220px", height: "320px"})
           timeline.to(".citizen-org .content", 1, {opacity: 1})
+        }
       }
     }
   }

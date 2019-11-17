@@ -1,7 +1,8 @@
 <template>
   <div class="news-feed" id="news-feed">
       <portal to="navigationPane">
-            <div v-for="source in sources" v-on:click="search = source.search; title = source.name" :key="source.id" class="nav-button">
+          <div class="nav-title">Filter View</div>
+            <div v-for="source in sources" v-on:click="search = source.search; title = source.name" :key="source.id" class="left-nav-button">
                 <router-link to="/">{{ source.name }}</router-link>
             </div>
         </portal>
