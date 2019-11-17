@@ -7,7 +7,7 @@
         <div class="org-logo" id="org-logo">
           <img :src="org.logo" />
         </div>
-        <div class="org-banner-name">{{org.name}} / {{org.tag}}</div>
+        <div class="org-banner-name">{{org.name}} / {{ tag }}</div>
       </div>
       <span class="corner top left"></span>
       <span class="corner top right"></span>
@@ -38,6 +38,13 @@ export default {
   computed: {
     style () {
       return 'background: url("' + this.org.banner + '") center center / cover'
+    },
+    tag () {
+      if(this.org.tag){
+        return this.org.tag.toUpperCase()
+      } else {
+        return this.org.tag
+      }
     }
   },
   watch: {
@@ -45,8 +52,8 @@ export default {
       handler: function () {
         const timeline = new TimelineLite()
         timeline.to(".org-logo", 0.5, {opacity: 1})
-        timeline.to(".org-logo", 1, {width: "150px", height: "150px"})
         timeline.to(".org-logo img", 0.5, {opacity: 1})
+        timeline.to(".org-banner-name", 0.5, {opacity: 1})
         timeline.to(".org-info .org-details", 0.5, {opacity: 1})
       }
     }
@@ -63,9 +70,8 @@ export default {
         height: 250px;
     }
     .org-logo{
-        width: 50px;
-        height: 50px;
-        padding: 7px;
+        width: 136px;
+        height: 136px;
         margin-right: 20px;
         position: relative;
         opacity: 0;
@@ -92,7 +98,11 @@ export default {
       left: 0;
       margin: 5px;
       display: flex;
-      justify-content: end;
+      align-items: flex-end;
+    }
+    .org-banner-name {
+      height: 57px;
+      opacity: 0;
     }
 
     .org-logo img {
@@ -101,6 +111,7 @@ export default {
         opacity: 0;
         margin-left: 5px;
     }
+
     .org-details {
         width: fit-content;
         opacity: 0;

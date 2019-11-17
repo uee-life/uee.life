@@ -1,10 +1,7 @@
 <template>
     <div id="right-dock" class="right-dock">
-        <portal to="navigationPane">
-            <div v-for="link in links" :key="link.text" class="left-nav-button"><router-link :to="link.path">{{ link.text }}</router-link></div>
-        </portal>
-    <portal-target name="rightDock"></portal-target>
-  </div>
+        <portal-target name="rightDock"></portal-target>
+    </div>
 </template>
 
 <script>
