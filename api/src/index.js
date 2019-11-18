@@ -63,9 +63,9 @@ app.get('/news', async (req, res) => {
     res.send(await getNews(data));
 })
 
-app.use(checkJwt);
+//app.use(checkJwt);
 
-app.get("/secure", (req, res) => {
+app.get("/secure", checkJwt, (req, res) => {
     res.send({
         msg: "Your Access Token was successfully validated!"
     });
