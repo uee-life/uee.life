@@ -2,6 +2,8 @@
   <div class="citizen-main" id="citizen-main">
         <portal to="rightDock">
             <citizen-org :citizen="citizen"/>
+        </portal>
+        <portal to="leftDock">
             <citizen-links :citizen="citizen"/>
         </portal>
         <citizen-info :citizen="citizen"/>
@@ -34,5 +36,6 @@ export default {
     .citizen-main {
         width: 100%;
         padding: 10px;
+        padding-top: 20px;
     }
 </style>
