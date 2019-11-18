@@ -47,7 +47,7 @@ export default {
 
                 this.citizen.info = data.info
                 this.citizen.home = data.location
-                //this.citizen.ships = data.ships
+                this.citizen.ships = data.ships
                 this.citizen.links = []
                 if(data.info.website){
                     this.citizen.links.push(data.info.website)
