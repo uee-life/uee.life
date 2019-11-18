@@ -5,6 +5,9 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
+const jwt = require('express-jwt')
+const jwksRsa = require('jwks-rsa')
+
 const {getCitizen, getCitizenInfo, getCitizenShips, getCitizenLocation} = require('./db/citizen');
 const {getOrganization} = require('./db/organization');
 const {getNews} = require('./db/news');
@@ -12,14 +15,23 @@ const {getNews} = require('./db/news');
 // defining the Express app
 const app = express();
 
-const data = [
-    {title: "Hello World!"}
-];
-
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('combined'));
+
+const checkJwt = jwt({
+    secret: jwksRsa.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: `https://ueelife-test.auth0.com/.well-known/jwks.json`
+    }),
+
+    audience: 'https://ueelife-test',
+    issuer: `https://ueelife-test.auth0.com/`,
+    algorithms: ['RS256']
+});
 
 app.get('/citizen/:handle', async (req, res) => {
     res.send(await getCitizen(req.params.handle));
@@ -49,6 +61,14 @@ app.get('/news', async (req, res) => {
         }
     }
     res.send(await getNews(data));
+})
+
+app.use(checkJwt);
+
+app.get("/secure", (req, res) => {
+    res.send({
+        msg: "Your Access Token was successfully validated!"
+    });
 })
 
 // starting the server
