@@ -58,7 +58,6 @@ export default {
     .portrait{
         width: 50px;
         height: 50px;
-        border: 1px solid grey;
         padding: 7px;
         margin-right: 20px;
         background: url('/images/fading-bars.png') repeat;

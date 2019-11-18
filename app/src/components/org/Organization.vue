@@ -1,6 +1,10 @@
 <template>
     <div class="organization" id="organization">
         <left-dock />
+        <portal to="navigationPane">
+            <div class="left-nav-button"><router-link to="/organization">Search Orgs</router-link></div>
+            <div class="left-nav-button"><a :href="spectrumLink">Spectrum</a></div>
+        </portal>
         <org-main :org="org" :fleet="ships"/>
         <right-dock />
         <!--fleet-view :ships="ships" /-->
@@ -23,6 +27,16 @@ export default {
     },
     data() {
         return {
+            links: [
+                {
+                text: "Search Orgs",
+                path: "/organization"
+                },
+                {
+                    text: "Spectrum",
+                    path: "https://robertsspaceindustries.com/spectrum/community/"
+                }
+            ],
             org: {
                 name: "Testy Mc Test Face"
             },
@@ -51,6 +65,11 @@ export default {
                     name: "Shark",
                 }
                 ]
+        }
+    },
+    computed: {
+        spectrumLink() {
+            return `https://robertsspaceindustries.com/spectrum/community/${this.org.tag}`
         }
     },
     methods: {

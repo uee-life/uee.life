@@ -1,5 +1,12 @@
 <template>
   <div refs="org" class="citizen-org" id="citizen-org">
+        <div class="section-title small hidden">
+            <span class="text">
+                ORG
+                <div class="endcap left"></div>
+                <div class="endcap right"></div>
+            </span>
+        </div>
     <div class="content">
       <img class="logo" :src="citizen.org.logo" />
       <div class="org-name">
@@ -33,12 +40,14 @@ export default {
         if(Object.keys(this.citizen.org).length === 0) {
           const timeline = new TimelineLite()
           timeline.to(".citizen-org .content", 0.5, {opacity: 0})
+          timeline.to(".citizen-org .section-title", 0.5, {opacity: 0})
           timeline.to(".citizen-org", 1, {width: "50px", height: "50px"})
           timeline.to(".citizen-org", 0, {display: "none"})
         } else {
           const timeline = new TimelineLite()
           timeline.to(".citizen-org", 0, {display: "block"})
           timeline.to(".citizen-org", 1, {width: "220px", height: "320px"})
+          timeline.to(".citizen-org .section-title", 0.5, {opacity: 1})
           timeline.to(".citizen-org .content", 1, {opacity: 1})
         }
       }
@@ -53,7 +62,6 @@ export default {
     padding: 15px;
     height: 50px;
     width: 50px;
-    border: 1px solid grey;
     background: url('/images/fading-bars.png') repeat;
     display: none;
     margin-bottom: 20px;

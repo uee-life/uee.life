@@ -36,7 +36,6 @@ export default {
         min-width: 400px;
         margin: 5px;
         padding: 9px;
-        border: 1px solid grey;
         position: relative;
         background: url('/images/fading-bars.png') repeat;
     }

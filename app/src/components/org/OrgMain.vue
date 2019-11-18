@@ -16,6 +16,34 @@
                 <template slot="tab-content-fleet">
                     <fleet-view :ships="fleet"/>
                 </template>
+
+                <template slot="tab-title-members">
+                    MEMBERS
+                </template>
+                <template slot="tab-content-members">
+                    Coming Soon...
+                </template>
+
+                <template slot="tab-title-history">
+                    HISTORY
+                </template>
+                <template slot="tab-content-history">
+                    Coming Soon...
+                </template>
+
+                <template slot="tab-title-manifesto">
+                    MANIFESTO
+                </template>
+                <template slot="tab-content-manifesto">
+                    Coming Soon...
+                </template>
+
+                <template slot="tab-title-charter">
+                    CHARTER
+                </template>
+                <template slot="tab-content-charter">
+                    Coming Soon...
+                </template>
             </tabs>
         </div>
     </div>
@@ -32,7 +60,7 @@ export default {
     props: ['org', 'fleet'],
     data() {
         return {
-            tabs: ["info","fleet"],
+            tabs: ["info","fleet", "members", "history", "manifesto", "charter"],
             initialTab: "info"
         }
     },
@@ -48,6 +76,7 @@ export default {
 <style>
     .org-main {
         width: 100%;
-        padding-top: 10px;
+        padding: 10px;
+        padding-top: 20px;
     }
 </style>

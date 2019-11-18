@@ -1,7 +1,13 @@
 <template>
   <div class="citizen-links" id="citizen-links">
+        <div class="section-title small hidden">
+            <span class="text">
+                LINKS
+                <div class="endcap left"></div>
+                <div class="endcap right"></div>
+            </span>
+        </div>
     <div class="content">
-    External Links
     <ul>
         <li v-for="link in citizen.links" :key="link">
           <a :href="link">{{link.split('/')[2]}}</a>
@@ -33,6 +39,7 @@ export default {
           this.show = false
           const timeline = new TimelineLite()
           timeline.to(".citizen-links .content", 0.5, {opacity: 0})
+          timeline.to(".citizen-links .section-title", 0.5, {opacity: 0})
           timeline.to(".citizen-links", 0.5, {width: "50px", height: "50px"})
           timeline.to(".citizen-links", 0.5, {opacity: 0})
           timeline.to(".citizen-links", 0, {display: "none"})
@@ -42,6 +49,7 @@ export default {
           timeline.to(".citizen-links", 0, {display: "block"})
           timeline.to(".citizen-links", 0.5, {opacity: 1})
           timeline.to(".citizen-links", 1, {width: "220px", height: "200px"})
+          timeline.to(".citizen-links .section-title", 0.5, {opacity: 1})
           timeline.to(".citizen-links .content", 1, {opacity: 1})
         }
       }
@@ -56,7 +64,6 @@ export default {
     width: 50px;
     height: 50px;
     padding: 15px;
-    border: 1px solid grey;
     background: url('/images/fading-bars.png') repeat;
     display: none;
   }

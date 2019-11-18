@@ -170,8 +170,62 @@ body {
     }
 
     .corner {
-        height: 25px;
-        width: 25px;
+        height: 20px;
+        width: 20px;
         position: absolute;
+    }
+
+    .section-title {
+        font-family: 'Michroma';
+        position:absolute;
+        left: 0;
+        top:-13px;
+        width: 100%;
+        display: flex;
+    }
+
+    .section-title .text {
+        position: relative;
+        font-size: 14px;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-left: 40px;
+    }
+
+    .section-title.small {
+      top: -8px;
+      opacity: 1;
+    }
+
+    .section-title.hidden {
+      opacity: 0;
+    }
+
+    .section-title.small .text {
+      font-size: 10px;
+      margin-left: 30px;
+    }
+
+    .endcap {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 6px;
+      border-top: 1px solid white;
+      border-bottom: 1px solid white;
+    }
+
+    .endcap.left {
+      left: 0;
+      border-left: 1px solid white;
+    }
+
+    .endcap.right {
+      right: 0;
+      border-right: 1px solid white;
+    }
+
+    .hidden {
+      opacity: 0;
     }
 </style>
