@@ -64,39 +64,7 @@ PRIMARY KEY (`id`)
 );
 
 
--- ************************************** `Cust_POI`
-
-CREATE TABLE `Cust_POI`
-(
- `id`           int NOT NULL ,
- `name`         varchar(45) NOT NULL ,
- `description`  text NOT NULL ,
- `altitude`     float NOT NULL ,
- `json_array`   text NOT NULL ,
- `public`       boolean NOT NULL ,
- `org_viewable` boolean NOT NULL ,
- `date_created` date NOT NULL ,
- `colour`       int NOT NULL ,
- `type`         int NOT NULL ,
- `organisation` int NOT NULL ,
- `character`    int NOT NULL ,
- `location`     int NOT NULL ,
-
-PRIMARY KEY (`id`),
-KEY `fkIdx_231` (`colour`),
-CONSTRAINT `FK_231` FOREIGN KEY `fkIdx_231` (`colour`) REFERENCES `POI_Colour` (`id`),
-KEY `fkIdx_234` (`type`),
-CONSTRAINT `FK_234` FOREIGN KEY `fkIdx_234` (`type`) REFERENCES `POI_Type` (`id`),
-KEY `fkIdx_237` (`organisation`),
-CONSTRAINT `FK_237` FOREIGN KEY `fkIdx_237` (`organisation`) REFERENCES `Organisation` (`id`),
-KEY `fkIdx_240` (`character`),
-CONSTRAINT `FK_240` FOREIGN KEY `fkIdx_240` (`character`) REFERENCES `Character` (`id`),
-KEY `fkIdx_243` (`location`),
-CONSTRAINT `FK_243` FOREIGN KEY `fkIdx_243` (`location`) REFERENCES `Location` (`id`)
-);
-
-
--- ************************************** `Language`
+-- ******************************* `Language`
 
 CREATE TABLE `Language`
 (
@@ -105,37 +73,6 @@ CREATE TABLE `Language`
  `abbrv` varchar(45) NOT NULL ,
 
 PRIMARY KEY (`id`)
-);
-
-
--- ************************************** `Location`
-
-CREATE TABLE `Location`
-(
- `id`          int NOT NULL ,
- `name`        varchar(45) NOT NULL ,
- `description` text NOT NULL ,
- `designation` varchar(45) NOT NULL ,
- `habitable`   boolean NOT NULL ,
- `danger`      smallint NOT NULL ,
- `economy`     smallint NOT NULL ,
- `population`  int NOT NULL ,
- `thumbnail`   text NOT NULL ,
- `outlaw`      boolean NOT NULL ,
- `sea_level`   float NOT NULL ,
- `atmo_edge`   float NOT NULL ,
- `om_radius`   float NOT NULL ,
- `type`        int NOT NULL ,
- `system`      int NOT NULL ,
- `affiliation` int NOT NULL ,
-
-PRIMARY KEY (`id`),
-KEY `fkIdx_188` (`type`),
-CONSTRAINT `FK_188` FOREIGN KEY `fkIdx_188` (`type`) REFERENCES `Location_Type` (`id`),
-KEY `fkIdx_196` (`system`),
-CONSTRAINT `FK_196` FOREIGN KEY `fkIdx_196` (`system`) REFERENCES `System` (`id`),
-KEY `fkIdx_214` (`affiliation`),
-CONSTRAINT `FK_214` FOREIGN KEY `fkIdx_214` (`affiliation`) REFERENCES `Government` (`id`)
 );
 
 
@@ -157,6 +94,62 @@ CREATE TABLE `Location_Type`
 (
  `id`   int NOT NULL ,
  `type` varchar(45) NOT NULL ,
+
+PRIMARY KEY (`id`)
+);
+
+
+-- ************************************** `POI_Colour`
+
+CREATE TABLE `POI_Colour`
+(
+ `id`     int NOT NULL ,
+ `colour` varchar(45) NOT NULL ,
+
+PRIMARY KEY (`id`)
+);
+
+
+-- ************************************** `POI_Type`
+
+CREATE TABLE `POI_Type`
+(
+ `id`   int NOT NULL ,
+ `type` varchar(45) NOT NULL ,
+
+PRIMARY KEY (`id`)
+);
+
+
+-- ************************************** `Service_Type`
+
+CREATE TABLE `Service_Type`
+(
+ `id`   int NOT NULL ,
+ `type` varchar(45) NOT NULL ,
+
+PRIMARY KEY (`id`)
+);
+
+
+-- ************************************** `Ship_Role`
+
+CREATE TABLE `Ship_Role`
+(
+ `id`       int NOT NULL ,
+ `role`     varchar(45) NOT NULL ,
+ `sub_role` varchar(45) NOT NULL ,
+
+PRIMARY KEY (`id`)
+);
+
+
+-- ************************************** `System_Type`
+
+CREATE TABLE `System_Type`
+(
+ `id`          int NOT NULL ,
+ `description` varchar(45) NOT NULL ,
 
 PRIMARY KEY (`id`)
 );
@@ -201,6 +194,86 @@ CONSTRAINT `FK_130` FOREIGN KEY `fkIdx_130` (`sec_activity`) REFERENCES `Activit
 );
 
 
+-- ************************************** `System`
+
+CREATE TABLE `System`
+(
+ `id`          int NOT NULL ,
+ `name`        varchar(45) NOT NULL ,
+ `description` text NOT NULL ,
+ `type`        int NOT NULL ,
+ `affiliation` int NOT NULL ,
+
+PRIMARY KEY (`id`),
+KEY `fkIdx_203` (`type`),
+CONSTRAINT `FK_203` FOREIGN KEY `fkIdx_203` (`type`) REFERENCES `System_Type` (`id`),
+KEY `fkIdx_211` (`affiliation`),
+CONSTRAINT `FK_211` FOREIGN KEY `fkIdx_211` (`affiliation`) REFERENCES `Government` (`id`)
+);
+
+
+-- ************************************** `Location`
+
+CREATE TABLE `Location`
+(
+ `id`          int NOT NULL ,
+ `name`        varchar(45) NOT NULL ,
+ `description` text NOT NULL ,
+ `designation` varchar(45) NOT NULL ,
+ `habitable`   boolean NOT NULL ,
+ `danger`      smallint NOT NULL ,
+ `economy`     smallint NOT NULL ,
+ `population`  int NOT NULL ,
+ `thumbnail`   text NOT NULL ,
+ `outlaw`      boolean NOT NULL ,
+ `sea_level`   float NOT NULL ,
+ `atmo_edge`   float NOT NULL ,
+ `om_radius`   float NOT NULL ,
+ `type`        int NOT NULL ,
+ `system`      int NOT NULL ,
+ `affiliation` int NOT NULL ,
+
+PRIMARY KEY (`id`),
+KEY `fkIdx_188` (`type`),
+CONSTRAINT `FK_188` FOREIGN KEY `fkIdx_188` (`type`) REFERENCES `Location_Type` (`id`),
+KEY `fkIdx_196` (`system`),
+CONSTRAINT `FK_196` FOREIGN KEY `fkIdx_196` (`system`) REFERENCES `System` (`id`),
+KEY `fkIdx_214` (`affiliation`),
+CONSTRAINT `FK_214` FOREIGN KEY `fkIdx_214` (`affiliation`) REFERENCES `Government` (`id`)
+);
+
+-- ************************************** `Cust_POI`
+
+CREATE TABLE `Cust_POI`
+(
+ `id`           int NOT NULL ,
+ `name`         varchar(45) NOT NULL ,
+ `description`  text NOT NULL ,
+ `altitude`     float NOT NULL ,
+ `json_array`   text NOT NULL ,
+ `public`       boolean NOT NULL ,
+ `org_viewable` boolean NOT NULL ,
+ `date_created` date NOT NULL ,
+ `colour`       int NOT NULL ,
+ `type`         int NOT NULL ,
+ `organisation` int NOT NULL ,
+ `character`    int NOT NULL ,
+ `location`     int NOT NULL ,
+
+PRIMARY KEY (`id`),
+KEY `fkIdx_231` (`colour`),
+CONSTRAINT `FK_231` FOREIGN KEY `fkIdx_231` (`colour`) REFERENCES `POI_Colour` (`id`),
+KEY `fkIdx_234` (`type`),
+CONSTRAINT `FK_234` FOREIGN KEY `fkIdx_234` (`type`) REFERENCES `POI_Type` (`id`),
+KEY `fkIdx_237` (`organisation`),
+CONSTRAINT `FK_237` FOREIGN KEY `fkIdx_237` (`organisation`) REFERENCES `Organisation` (`id`),
+KEY `fkIdx_240` (`character`),
+CONSTRAINT `FK_240` FOREIGN KEY `fkIdx_240` (`character`) REFERENCES `Character` (`id`),
+KEY `fkIdx_243` (`location`),
+CONSTRAINT `FK_243` FOREIGN KEY `fkIdx_243` (`location`) REFERENCES `Location` (`id`)
+);
+
+
 -- ************************************** `Organisation_Map`
 
 CREATE TABLE `Organisation_Map`
@@ -214,17 +287,6 @@ KEY `fkIdx_75` (`character_id`),
 CONSTRAINT `FK_75` FOREIGN KEY `fkIdx_75` (`character_id`) REFERENCES `Character` (`id`),
 KEY `fkIdx_95` (`organisation_id`),
 CONSTRAINT `FK_95` FOREIGN KEY `fkIdx_95` (`organisation_id`) REFERENCES `Organisation` (`id`)
-);
-
-
--- ************************************** `POI_Colour`
-
-CREATE TABLE `POI_Colour`
-(
- `id`     int NOT NULL ,
- `colour` varchar(45) NOT NULL ,
-
-PRIMARY KEY (`id`)
 );
 
 
@@ -251,17 +313,6 @@ CONSTRAINT `FK_181` FOREIGN KEY `fkIdx_181` (`location`) REFERENCES `Location` (
 );
 
 
--- ************************************** `POI_Type`
-
-CREATE TABLE `POI_Type`
-(
- `id`   int NOT NULL ,
- `type` varchar(45) NOT NULL ,
-
-PRIMARY KEY (`id`)
-);
-
-
 -- ************************************** `Service_Map`
 
 CREATE TABLE `Service_Map`
@@ -275,17 +326,6 @@ KEY `fkIdx_140` (`service_id`),
 CONSTRAINT `FK_140` FOREIGN KEY `fkIdx_140` (`service_id`) REFERENCES `Service_Type` (`id`),
 KEY `fkIdx_157` (`poi_id`),
 CONSTRAINT `FK_157` FOREIGN KEY `fkIdx_157` (`poi_id`) REFERENCES `POI` (`id`)
-);
-
-
--- ************************************** `Service_Type`
-
-CREATE TABLE `Service_Type`
-(
- `id`   int NOT NULL ,
- `type` varchar(45) NOT NULL ,
-
-PRIMARY KEY (`id`)
 );
 
 
@@ -308,18 +348,6 @@ CONSTRAINT `FK_64` FOREIGN KEY `fkIdx_64` (`basemodel`) REFERENCES `Ship_Role` (
 );
 
 
--- ************************************** `Ship_Role`
-
-CREATE TABLE `Ship_Role`
-(
- `id`       int NOT NULL ,
- `role`     varchar(45) NOT NULL ,
- `sub_role` varchar(45) NOT NULL ,
-
-PRIMARY KEY (`id`)
-);
-
-
 -- ************************************** `Ship_Map`
 
 CREATE TABLE `Ship_Map`
@@ -336,30 +364,3 @@ CONSTRAINT `FK_45` FOREIGN KEY `fkIdx_45` (`ship_id`) REFERENCES `Ship` (`id`)
 );
 
 
--- ************************************** `System_Type`
-
-CREATE TABLE `System_Type`
-(
- `id`          int NOT NULL ,
- `description` varchar(45) NOT NULL ,
-
-PRIMARY KEY (`id`)
-);
-
-
--- ************************************** `System`
-
-CREATE TABLE `System`
-(
- `id`          int NOT NULL ,
- `name`        varchar(45) NOT NULL ,
- `description` text NOT NULL ,
- `type`        int NOT NULL ,
- `affiliation` int NOT NULL ,
-
-PRIMARY KEY (`id`),
-KEY `fkIdx_203` (`type`),
-CONSTRAINT `FK_203` FOREIGN KEY `fkIdx_203` (`type`) REFERENCES `System_Type` (`id`),
-KEY `fkIdx_211` (`affiliation`),
-CONSTRAINT `FK_211` FOREIGN KEY `fkIdx_211` (`affiliation`) REFERENCES `Government` (`id`)
-);
