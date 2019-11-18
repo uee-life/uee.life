@@ -7,8 +7,25 @@
             <citizen-links :citizen="citizen"/>
         </portal>
         <citizen-info :citizen="citizen"/>
-        <citizen-bio :bio="citizen.info.bio"/>
-        <fleet-view :ships="citizen.ships"/>
+
+        <div>
+            <tabs :tabs="tabs" :initialTab="initialTab">
+                <template slot="tab-title-info">
+                    INFO
+                </template>
+                <template slot="tab-content-info">
+                    <citizen-bio :bio="citizen.info.bio"/>
+                </template>
+
+                <template slot="tab-title-ships">
+                    SHIPS
+                </template>
+                <template slot="tab-content-ships">
+                    <fleet-view :ships="citizen.ships"/>
+                </template>
+
+            </tabs>
+        </div>
   </div>
 </template>
 
@@ -17,6 +34,8 @@ import CitizenOrg from '@/components/citizen/CitizenOrg.vue'
 import CitizenLinks from '@/components/citizen/CitizenLinks.vue'
 import CitizenInfo from '@/components/citizen/CitizenInfo.vue'
 import CitizenBio from '@/components/citizen/CitizenBio.vue'
+
+import Tabs from '@/components/layout/Tabs.vue'
 import FleetView from '@/components/fleet/FleetView.vue'
 
 export default {
@@ -27,8 +46,15 @@ export default {
         CitizenLinks,
         CitizenInfo,
         CitizenBio,
-        FleetView
-    }
+        FleetView,
+        Tabs
+    },
+    data() {
+        return {
+            tabs: ["info","ships"],
+            initialTab: "info"
+        }
+    },
 }
 </script>
 

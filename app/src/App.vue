@@ -10,16 +10,16 @@
       </div>
       </div>
       <div class="main-header-right">
-        <div class="user">
-          <div v-if='authenticated'>
-              Welcome, <b>Flint McBane</b> ( <a v-on:click='logout'> Log Out </a> )
+        <div v-if="!$auth.loading" class="user">
+          <div v-if='$auth.isAuthenticated'>
+              Welcome, <b>{{ $auth.user.name }}</b> ( <a @click='logout'> Log Out </a> )
           </div>
           <div v-else>
-            Welcome! Please <a v-on:click='login' id="login-button">Log In</a>
+            Welcome! Please <a @click='login' id="login-button">Log In</a>
           </div>
           </div>
           <div class="search">
-              <input type="search" class="search-box" value="Search">
+              <!--input type="search" class="search-box" value="Search"-->
           </div>
       </div>
     </div>
@@ -45,24 +45,14 @@ export default {
       authenticated: false
     }
   },
-  created () {
-    this.isAuthenticated()
-  },
-  watch: {
-    '$route': 'isAuthenticated'
-  },
   methods: {
-    async isAuthenticated() {
-      this.authenticated = await this.$auth.isAuthenticated()
-    },
     login() {
-      this.$auth.loginRedirect('/')
+      this.$auth.loginWithRedirect()
     },
-    async logout() {
-      await this.$auth.logout()
-      await this.isAuthenticated()
-
-      this.$router.push({ path: '/' })
+    logout() {
+      this.$auth.logout({
+        returnTo: window.location.origin
+      });
     }
   }
 }
@@ -151,22 +141,22 @@ body {
 <style>
     .corner.top {
         top: -2px;
-        border-top: 2px solid white;
+        border-top: 1px solid white;
     }
 
     .corner.bottom {
         bottom: -2px;
-        border-bottom: 2px solid white;
+        border-bottom: 1px solid white;
     }
 
     .corner.left {
         left: -2px;
-        border-left: 2px solid white;
+        border-left: 1px solid white;
     }
 
     .corner.right {
         right: -2px;
-        border-right: 2px solid white;
+        border-right: 1px solid white;
     }
 
     .corner {
@@ -190,6 +180,7 @@ body {
         padding-left: 10px;
         padding-right: 10px;
         margin-left: 40px;
+        text-shadow: 0px 0px 15px rgba(57, 206, 216, 0.5);
     }
 
     .section-title.small {

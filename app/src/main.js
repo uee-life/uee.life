@@ -1,15 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import PortalVue from 'portal-vue'
-import Auth from '@okta/okta-vue'
 import axios from 'axios'
 
 import App from './App.vue'
 
-import FrontPage from '@/components/main/FrontPage.vue'
-import Citizen from '@/components/citizen/Citizen.vue'
-import Location from '@/components/location/Location.vue'
-import Organization from '@/components/org/Organization.vue'
+import { domain, clientId, audience } from "../auth_config.json";
+import { Auth0Plugin } from "./auth";
 
 Vue.config.productionTip = false
 
@@ -33,20 +30,38 @@ Vue.config.ignoredElements = [
 Vue.use(axios)
 Vue.use(VueRouter)
 Vue.use(PortalVue)
-Vue.use(Auth, {
-  issuer: 'https://dev-185424.okta.com/oauth2/default',
-  clientId: '0oa1s8lscwCuWnZ2R357',
-  redirectUri: 'http://localhost:8080/implicit/callback',
-  scopes: ['openid', 'profile', 'email'],
-  pkce: true
-})
+
+Vue.use(Auth0Plugin, {
+  domain, 
+  clientId,
+  audience,
+  onRedirectCallback: appState => {
+    router.push(
+      appState && appState.targetUrl
+        ? appState.targetUrl
+        : window.location.pathname
+    );
+  }
+});
+
+// Global components
+import SectionTitle from '@/components/layout/SectionTitle.vue'
+Vue.component('section-title', SectionTitle)
+
+// Route components
+import FrontPage from '@/components/main/FrontPage.vue'
+import Citizen from '@/components/citizen/Citizen.vue'
+import Organization from '@/components/org/Organization.vue'
+import Settings from '@/components/user/Settings.vue'
+
+import { authGuard } from "@/auth/authGuard"
 
 const routes = [
   { path: '/', component: FrontPage },
   { path: '/citizen/:handle', component: Citizen },
-  { path: '/location/:name', component: Location },
   { path: '/organization/:org', component: Organization},
-  { path: '/implicit/callback', component: Auth.handleCallback() },
+  { path: '/implicit/callback', component: FrontPage },
+  { path: '/settings', component: Settings, beforeEnter: authGuard },
   { path: '*', component: FrontPage }
 ]
 

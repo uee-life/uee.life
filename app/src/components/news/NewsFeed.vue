@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import axios from "axios"
+
 import NewsItem from '@/components/news/NewsItem.vue'
 import { TimelineLite } from 'gsap'
 
@@ -83,14 +85,20 @@ export default {
         async getNews() {
             this.loading = true
             try {
-                const response = await fetch('https://api.uee.life/news?channel=' + this.search.channel + '&series=' + this.search.series + '&page=' + this.pages, {
-                    method: 'GET',
-                    headers: { 'Accept': 'application/json; charset=UTF-8'}
-                })
-                const data = await response.json()
+                // Get the access token from the auth wrapper
+                //const token = await this.$auth.getTokenSilently();
+
+                // Use Axios to make a call to the API
+                const { data } = await axios.get('https://api.uee.life/news?channel=' + this.search.channel + '&series=' + this.search.series + '&page=' + this.pages, {
+                    headers: {
+                        //Authorization: `Bearer ${token}`    // send the access token through the 'Authorization' header
+                    }
+                });
+
                 if(data.length < 10) {
                     this.more = false
                 }
+
                 this.articles = this.articles.concat(data)
                 this.pages += 1;
             } catch (error) {

@@ -13,6 +13,7 @@
 
 <script>
 import { TimelineLite } from "gsap"
+import axios from "axios"
 
 import LeftDock from '@/components/layout/LeftDock.vue'
 import RightDock from '@/components/layout/RightDock.vue'
@@ -75,11 +76,7 @@ export default {
     methods: {
         async getOrg() {
             try {
-                const response = await fetch('https://api.uee.life/organization/' + this.$route.params.org, {
-                    method: 'GET',
-                    headers: { 'Accept': 'application/json; charset=UTF-8'}
-                })
-                const data = await response.json()
+                const { data } = await axios.get('https://api.uee.life/organization/' + this.$route.params.org)
                 this.org = data
             } catch (error) {
                 // eslint-disable-next-line

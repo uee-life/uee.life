@@ -19,20 +19,20 @@
 
 <script>
 export default {
-    name: 'org-banner',
-    props: ["org"],
-    computed: {
-        style () {
-        return 'background: url("' + this.org.banner + '") center center / cover'
-        },
-        tag () {
-        if(this.org.tag){
-            return this.org.tag.toUpperCase()
-        } else {
-            return this.org.tag
-        }
-        }
+  name: 'org-banner',
+  props: ["org"],
+  computed: {
+    style () {
+      return 'background: url("' + this.org.banner + '") center center / cover'
     },
+    tag () {
+      if(this.org.tag){
+        return this.org.tag.toUpperCase()
+      } else {
+        return this.org.tag
+      }
+    }
+  },
 }
 </script>
 

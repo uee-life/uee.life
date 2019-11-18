@@ -1,13 +1,14 @@
 <template>
   <div class="citizen-bio" id="citizen-bio">
       <div class="bio">
-          <div class="section-title hidden">
+          <!--div class="section-title hidden">
               <span class="text">
                   BIO
                   <div class="endcap left"></div>
                   <div class="endcap right"></div>
                 </span>
-            </div>
+            </div-->
+            <section-title text="BIO" />
           <div class="content">{{ bio }}</div>
           <span class="corner top left"></span>
           <span class="corner top right"></span>
@@ -48,13 +49,13 @@ export default {
     .bio {
         display: block;
         position: relative;
-        width: 50px;
+        width: 105px;
         height: 50px;
         border: 0px solid grey;
         border-top: none;
         padding: 5px;
         background: url('/images/fading-bars.png') repeat;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
         opacity: 0;
     }
 

@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import axios from "axios"
 import LeftDock from '@/components/layout/LeftDock.vue'
 import RightDock from '@/components/layout/RightDock.vue'
 import CitizenMain from '@/components/citizen/CitizenMain.vue'
@@ -42,14 +43,11 @@ export default {
     methods: {
         async getCitizen() {
             try {
-                const response = await fetch('https://api.uee.life/citizen/' + this.$route.params.handle, {
-                    method: 'GET',
-                    headers: { 'Accept': 'application/json; charset=UTF-8'}
-                })
-                const data = await response.json()
+                const { data } = await axios.get('https://api.uee.life/citizen/' + this.$route.params.handle)
+
                 this.citizen.info = data.info
                 this.citizen.home = data.location
-                this.citizen.ships = data.ships
+                //this.citizen.ships = data.ships
                 this.citizen.links = []
                 if(data.info.website){
                     this.citizen.links.push(data.info.website)
@@ -67,11 +65,8 @@ export default {
         },
         async getOrg() {
             try {
-                const response = await fetch('https://api.uee.life/organization/' + this.citizen.info.org, {
-                    method: 'GET',
-                    headers: { 'Accept': 'application/json; charset=UTF-8'}
-                })
-                const data = await response.json()
+                const { data } = await axios.get('https://api.uee.life/organization/' + this.citizen.info.org)
+
                 this.citizen.org = data
             } catch (error) {
                 // eslint-disable-next-line

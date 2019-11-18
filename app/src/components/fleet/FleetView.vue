@@ -1,15 +1,11 @@
 <template>
     <div id="fleet-view" class="fleet-view">
-        <div class="section-title hidden">
-            <span class="text">
-                FLEET
-                <div class="endcap left"></div>
-                <div class="endcap right"></div>
-            </span>
-        </div>
-        <div class="ships">
+        <div v-if="ships.length > 0" class="ships">
             <ship-summary v-for="(s, index) in ships" :key="s.id" :ship="s" :index="index">
             </ship-summary>
+        </div>
+        <div class="no-ships" v-else>
+            No ships currently listed
         </div>
     </div>
 </template>
@@ -23,7 +19,14 @@ export default {
     components: {
         ShipSummary
     },
-    props: ["ships"],
+    props: {
+        ships: {
+            type: Array,
+            default: function () {
+                return []
+            }
+        }
+    },
     data() {
         return {
         }
@@ -36,10 +39,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .fleet-view {
         position: relative;
-        padding-top: 20px;
+        margin-bottom: 20px;
+    }
+    .no-ships {
+        text-align: center;
+        font-size: 18px;
+        color: white;
     }
     .ships {
         display: flex;

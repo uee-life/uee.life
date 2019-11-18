@@ -33,6 +33,7 @@ const checkJwt = jwt({
     algorithms: ['RS256']
 });
 
+// Public API calls
 app.get('/citizen/:handle', async (req, res) => {
     res.send(await getCitizen(req.params.handle));
 });
@@ -63,7 +64,7 @@ app.get('/news', async (req, res) => {
     res.send(await getNews(data));
 })
 
-//app.use(checkJwt);
+// Secure API calls
 
 app.get("/secure", checkJwt, (req, res) => {
     res.send({

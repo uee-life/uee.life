@@ -8,6 +8,7 @@
       </div>
       <div class="nav-right">
         <div class="nav-button">Tools</div>
+        <div v-if="$auth.isAuthenticated" class="nav-button"><router-link to="/settings">Settings</router-link></div>
       </div>
     <span class="corner top left"></span>
     <span class="corner top right"></span>
