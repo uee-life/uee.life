@@ -1,24 +1,11 @@
 <template>
-  <div class="citizen-links" id="citizen-links">
-        <div class="section-title small hidden">
-            <span class="text">
-                LINKS
-                <div class="endcap left"></div>
-                <div class="endcap right"></div>
-            </span>
-        </div>
-    <div class="content">
+  <dock-item title="Links">
     <ul>
         <li v-for="link in citizen.links" :key="link">
           <a :href="link">{{link.split('/')[2]}}</a>
         </li>
     </ul>
-    </div>
-    <span class="corner top left"></span>
-    <span class="corner top right"></span>
-    <span class="corner bottom left"></span>
-    <span class="corner bottom right"></span>
-  </div>
+  </dock-item>
 </template>
 
 <script>
@@ -59,14 +46,6 @@ export default {
 </script>
 
 <style>
-  .citizen-links {
-    position: relative;
-    width: 50px;
-    height: 50px;
-    padding: 15px;
-    background: url('/images/fading-bars.png') repeat;
-    display: none;
-  }
   .citizen-links .content {
     display: flex;
     flex-direction: column;

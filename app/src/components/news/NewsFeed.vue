@@ -1,23 +1,23 @@
 <template>
-  <div class="news-feed" id="news-feed">
-      <portal to="navigationPane">
-          <div class="nav-title">Filter View</div>
+    <div class="news-feed" id="news-feed">
+        <portal to="navigationPane">
+            <div class="nav-title">Filter View</div>
             <div v-for="source in sources" v-on:click="search = source.search; title = source.name" :key="source.id" class="left-nav-button">
                 <router-link to="/">{{ source.name }}</router-link>
             </div>
         </portal>
-      <div class="feed-title">{{title}}:</div>
-      <transition-group
-        name="staggered-fade"
-        tag="div"
-        :css="false"
-        v-on:before-enter="beforeEnter"
-        v-on:enter="enter"
-        v-on:leave="leave">
-        <div v-for="(item, index) in articles" :key="item.id" :index="index">
-            <news-item :item="item" />
-        </div>
-      </transition-group>
+        <section-title :text="title" size="big"/>
+        <transition-group
+            name="staggered-fade"
+            tag="div"
+            :css="false"
+            v-on:before-enter="beforeEnter"
+            v-on:enter="enter"
+            v-on:leave="leave">
+            <div v-for="(item, index) in articles" :key="item.id" :index="index">
+                <news-item :item="item" />
+            </div>
+        </transition-group>
     </div>
 </template>
 
@@ -144,9 +144,12 @@ export default {
 
 <style>
     .news-feed {
+        position: relative;
         display: flex;
         flex-basis: 500px;
         display: block;
+        padding-top: 20px;
+        margin-top: 20px;
     }
 
     .feed-title {

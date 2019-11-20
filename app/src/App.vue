@@ -2,11 +2,12 @@
   <div id="app" class="container">
     <link href="//fonts.googleapis.com/css?family=Electrolize|Orbitron:400,500,700|Share+Tech+Mono" rel="stylesheet" type="text/css">
     <!--img alt="Vue logo" src="@/assets/logo.png"-->
+    <cookie-law theme="blood-orange"/>
     <div class="main-header" id="main-header">
       <div class="main-header-left">
       <router-link to="/"><img class="logo" alt="logo" src="@/assets/logo.png"></router-link>
       <div class="title">
-          <div>A portal to your life in the UEE...</div>
+          <div>The portal to your life in the UEE...</div>
       </div>
       </div>
       <div class="main-header-right">
@@ -26,18 +27,21 @@
     <!--main-header /-->
     <nav-bar />
     <router-view />
+    <page-foot />
   </div>
 </template>
 
 <script>
 //import MainHeader from '@/components/MainHeader.vue'
 import NavBar from '@/components/layout/NavBar.vue'
+import PageFoot from '@/components/layout/PageFoot.vue'
 
 export default {
   name: 'app',
   components: {
 //    MainHeader,
-    NavBar
+    NavBar,
+    PageFoot
   },
   data() {
     return {
@@ -59,6 +63,7 @@ export default {
 </script>
 
 <style scoped>
+
 body {
         background: black;
         color: gainsboro;
@@ -72,6 +77,7 @@ body {
   color: #39ced8;
   text-shadow: 0px 0px 15px rgba(57, 206, 216, 0.5);
   padding: 0;
+  padding-bottom: 90px; /* making space for the footer */
 }
 .container::before {
   position: fixed;
@@ -96,10 +102,12 @@ body {
   z-index: -1;
 }
 .container {
+  position: relative;
+  min-height: 100vh;
   max-width: 100%;
 }
 
-        .main-header {
+  .main-header {
         display: flex;
         justify-content: space-between;
         width: 100%;
@@ -114,7 +122,8 @@ body {
         align-self: center;
     }
     .title div {
-        font-size: 20px;
+        font-family: 'Michroma';
+        font-size: 18px;
     }
     .main-header-right {
         display: flex;
@@ -218,5 +227,11 @@ body {
 
     .hidden {
       opacity: 0;
+    }
+
+    .clearfix::after {
+      content: "";
+      clear: both;
+      display: table;
     }
 </style>

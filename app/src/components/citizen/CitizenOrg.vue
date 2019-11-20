@@ -1,26 +1,13 @@
 <template>
-  <div refs="org" class="citizen-org" id="citizen-org">
-        <div class="section-title small hidden">
-            <span class="text">
-                ORG
-                <div class="endcap left"></div>
-                <div class="endcap right"></div>
-            </span>
-        </div>
-    <div class="content">
-      <img class="logo" :src="citizen.org.logo" />
+  <dock-item title="Org" mainClass="citizen-org">
+      <router-link :to="orgLink"><img class="logo" :src="citizen.org.logo" /></router-link>
       <div class="org-name">
         {{ citizen.org.name }}
       </div>
       <div class="org-title">
         Title: {{ citizen.info.orgRank }}
       </div>
-    </div>
-    <span class="corner top left"></span>
-    <span class="corner top right"></span>
-    <span class="corner bottom left"></span>
-    <span class="corner bottom right"></span>
-  </div>
+  </dock-item>
 </template>
 
 <script>
@@ -34,6 +21,11 @@ export default {
       logo: "https://robertsspaceindustries.com/media/2weountodg09pr/heap_infobox/MCBANE-Logo.png"
     }
   },
+  computed: {
+    orgLink () {
+      return `/organization/${this.citizen.org.tag}`;
+    }
+  },
   watch: {
     'citizen.org': {
       handler: function() {
@@ -41,12 +33,12 @@ export default {
           const timeline = new TimelineLite()
           timeline.to(".citizen-org .content", 0.5, {opacity: 0})
           timeline.to(".citizen-org .section-title", 0.5, {opacity: 0})
-          timeline.to(".citizen-org", 1, {width: "50px", height: "50px"})
+          timeline.to(".citizen-org", 1, {height: "50px"})
           timeline.to(".citizen-org", 0, {display: "none"})
         } else {
           const timeline = new TimelineLite()
           timeline.to(".citizen-org", 0, {display: "block"})
-          timeline.to(".citizen-org", 1, {width: "220px", height: "320px"})
+          timeline.to(".citizen-org", 1, {height: "300px"})
           timeline.to(".citizen-org .section-title", 0.5, {opacity: 1})
           timeline.to(".citizen-org .content", 1, {opacity: 1})
         }
@@ -59,31 +51,28 @@ export default {
 <style>
   .citizen-org {
     position: relative;
-    padding: 15px;
     height: 50px;
-    width: 50px;
-    background: url('/images/fading-bars.png') repeat;
     display: none;
     margin-bottom: 20px;
   }
-  .content{
+  .citizen-org .content{
     display: flex;
     flex-direction: Column;
     justify-content: center;
     opacity: 0;
   }
-  .logo {
+  .citizen-org .logo {
     width: 165px;
     height: 165px; 
     align-self: center;
     margin: 10px;
   }
-  .org-name {
+  .citizen-org .org-name {
     align-self: center;
     font-size: 20px;
     text-align: center;
   }
-  .org-title {
+  .citizen-org .org-title {
     align-self: center;
     margin-bottom: 15px;
     text-align: center;

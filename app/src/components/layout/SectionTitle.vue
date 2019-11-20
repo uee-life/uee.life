@@ -41,6 +41,8 @@ export default {
         top:-13px;
         width: 100%;
         display: flex;
+        text-transform: uppercase;
+        word-spacing:3px;
     }
 
     .section-title.hidden {

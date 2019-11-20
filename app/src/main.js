@@ -46,7 +46,18 @@ Vue.use(Auth0Plugin, {
 
 // Global components
 import SectionTitle from '@/components/layout/SectionTitle.vue'
+import LeftDock from '@/components/layout/LeftDock.vue'
+import RightDock from '@/components/layout/RightDock.vue'
+import DockItem from '@/components/layout/DockItem.vue'
+
 Vue.component('section-title', SectionTitle)
+Vue.component('left-dock', LeftDock)
+Vue.component('right-dock', RightDock)
+Vue.component('dock-item', DockItem)
+
+
+import CookieLaw from 'vue-cookie-law'
+Vue.component('cookie-law', CookieLaw)
 
 // Route components
 import FrontPage from '@/components/main/FrontPage.vue'
