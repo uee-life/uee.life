@@ -20,6 +20,8 @@ async function fetchOrg(org) {
         info.history = $('h2:contains("History")', '#organization').next().html()
         info.manifesto = $('h2:contains("Manifesto")', '#organization').next().html()
         info.charter = $('h2:contains("Charter")', '#organization').next().html()
+        info.founders = await fetchOrgFounders(org)
+        
         info.tag = org
 
         return info
@@ -29,9 +31,32 @@ async function fetchOrg(org) {
     }
 }
 
+async function fetchOrgFounders(org) {
+    try {
+        const resp = await axios.post('https://robertsspaceindustries.com/api/orgs/getOrgMembers', {
+            symbol: org,
+            search: "",
+            role: "1"
+        });
+        const $ = cheerio.load(resp.data.data.html)
+        founders = []
+        $('li.member-item').each(function (i, el) {
+            let handle = $(el).find('span.nick').text()
+            let name = $(el).find('span.name').text()
+            founders[i] = {}
+            founders[i]['name'] = name
+            founders[i]['handle'] = handle
+        })
+        return founders
+    } catch (error) {
+        console.error(error)
+        return {error: "Org not found!"}
+    }
+}
 
-
-
+async function getOrgFounders(org) {
+    return await fetchOrgFounders(org)
+}
 
 async function getOrganization(org) {
     return await fetchOrg(org)
@@ -39,4 +64,5 @@ async function getOrganization(org) {
 
 module.exports = {
     getOrganization,
+    getOrgFounders
 };

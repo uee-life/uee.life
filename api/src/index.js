@@ -9,7 +9,7 @@ const jwt = require('express-jwt')
 const jwksRsa = require('jwks-rsa')
 
 const {getCitizen, getCitizenInfo, getCitizenShips, getCitizenLocation} = require('./db/citizen');
-const {getOrganization} = require('./db/organization');
+const {getOrganization, getOrgFounders} = require('./db/organization');
 const {getNews} = require('./db/news');
 
 // defining the Express app
@@ -52,6 +52,10 @@ app.get('/citizen/:handle/location', async(req, res) => {
 
 app.get('/organization/:id', async (req, res) => {
     res.send(await getOrganization(req.params.id));
+});
+
+app.get('/organization/:id/founders', async (req, res) => {
+    res.send(await getOrgFounders(req.params.id));
 });
 
 app.get('/news', async (req, res) => {
