@@ -34,9 +34,9 @@ PRIMARY KEY (`id`)
 );
 
 
--- ************************************** `Character`
+-- ************************************** `Citizen`
 
-CREATE TABLE `Character`
+CREATE TABLE `Citizen`
 (
  `id`           int NOT NULL ,
  `name`         varchar(45) NOT NULL ,
@@ -257,7 +257,7 @@ CREATE TABLE `Cust_POI`
  `colour`       int NOT NULL ,
  `type`         int NOT NULL ,
  `organisation` int NOT NULL ,
- `character`    int NOT NULL ,
+ `citizen`      int NOT NULL ,
  `location`     int NOT NULL ,
 
 PRIMARY KEY (`id`),
@@ -267,8 +267,8 @@ KEY `fkIdx_234` (`type`),
 CONSTRAINT `FK_234` FOREIGN KEY `fkIdx_234` (`type`) REFERENCES `POI_Type` (`id`),
 KEY `fkIdx_237` (`organisation`),
 CONSTRAINT `FK_237` FOREIGN KEY `fkIdx_237` (`organisation`) REFERENCES `Organisation` (`id`),
-KEY `fkIdx_240` (`character`),
-CONSTRAINT `FK_240` FOREIGN KEY `fkIdx_240` (`character`) REFERENCES `Character` (`id`),
+KEY `fkIdx_240` (`citizen`),
+CONSTRAINT `FK_240` FOREIGN KEY `fkIdx_240` (`citizen`) REFERENCES `Citizen` (`id`),
 KEY `fkIdx_243` (`location`),
 CONSTRAINT `FK_243` FOREIGN KEY `fkIdx_243` (`location`) REFERENCES `Location` (`id`)
 );
@@ -279,12 +279,12 @@ CONSTRAINT `FK_243` FOREIGN KEY `fkIdx_243` (`location`) REFERENCES `Location` (
 CREATE TABLE `Organisation_Map`
 (
  `id`              int NOT NULL ,
- `character_id`    int NOT NULL ,
+ `citizen_id`      int NOT NULL ,
  `organisation_id` int NOT NULL ,
 
 PRIMARY KEY (`id`),
-KEY `fkIdx_75` (`character_id`),
-CONSTRAINT `FK_75` FOREIGN KEY `fkIdx_75` (`character_id`) REFERENCES `Character` (`id`),
+KEY `fkIdx_75` (`citizen_id`),
+CONSTRAINT `FK_75` FOREIGN KEY `fkIdx_75` (`citizen_id`) REFERENCES `Citizen` (`id`),
 KEY `fkIdx_95` (`organisation_id`),
 CONSTRAINT `FK_95` FOREIGN KEY `fkIdx_95` (`organisation_id`) REFERENCES `Organisation` (`id`)
 );
@@ -353,12 +353,12 @@ CONSTRAINT `FK_64` FOREIGN KEY `fkIdx_64` (`basemodel`) REFERENCES `Ship_Role` (
 CREATE TABLE `Ship_Map`
 (
  `id`           int NOT NULL ,
- `character_id` int NOT NULL ,
+ `citizen_id`   int NOT NULL ,
  `ship_id`      int NOT NULL ,
 
 PRIMARY KEY (`id`),
-KEY `fkIdx_25` (`character_id`),
-CONSTRAINT `FK_25` FOREIGN KEY `fkIdx_25` (`character_id`) REFERENCES `Character` (`id`),
+KEY `fkIdx_25` (`citizen_id`),
+CONSTRAINT `FK_25` FOREIGN KEY `fkIdx_25` (`citizen_id`) REFERENCES `Citizen` (`id`),
 KEY `fkIdx_45` (`ship_id`),
 CONSTRAINT `FK_45` FOREIGN KEY `fkIdx_45` (`ship_id`) REFERENCES `Ship` (`id`)
 );
