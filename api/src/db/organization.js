@@ -12,6 +12,14 @@ async function fetchOrg(org) {
         info.logo = baseURI + $('div.logo', '#organization').find('img').attr('src')
         info.count = $('div.logo', '#organization').find('span').text().split(" ")[0]
         info.bio = $('div.body').text()
+        info.model = $('ul.tags', '#organization').find('li.model').text()
+        info.roles = {}
+        info.roles.primary = $('ul.focus', '#organization').find('li.primary').find('img').attr('alt')
+        info.roles.secondary = $('ul.focus', '#organization').find('li.secondary').find('img').attr('alt')
+        info.intro = $('div.join-us', '#organization').find('div.markitup-text').html()
+        info.history = $('h2:contains("History")', '#organization').next().html()
+        info.manifesto = $('h2:contains("Manifesto")', '#organization').next().html()
+        info.charter = $('h2:contains("Charter")', '#organization').next().html()
         info.tag = org
 
         return info
