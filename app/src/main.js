@@ -49,11 +49,15 @@ import SectionTitle from '@/components/layout/SectionTitle.vue'
 import LeftDock from '@/components/layout/LeftDock.vue'
 import RightDock from '@/components/layout/RightDock.vue'
 import DockItem from '@/components/layout/DockItem.vue'
+import MainPanel from '@/components/layout/MainPanel.vue'
+import Tabs from '@/components/layout/Tabs.vue'
 
 Vue.component('section-title', SectionTitle)
 Vue.component('left-dock', LeftDock)
 Vue.component('right-dock', RightDock)
 Vue.component('dock-item', DockItem)
+Vue.component('main-panel', MainPanel)
+Vue.component('tabs', Tabs)
 
 
 import CookieLaw from 'vue-cookie-law'

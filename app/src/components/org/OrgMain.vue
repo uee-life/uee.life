@@ -7,7 +7,7 @@
                     INFO
                 </template>
                 <template slot="tab-content-info">
-                    <org-details :org="org" />
+                    <org-info :org="org" />
                 </template>
 
                 <template slot="tab-title-fleet">
@@ -23,27 +23,6 @@
                 <template slot="tab-content-members">
                     Coming Soon...
                 </template>
-
-                <template slot="tab-title-history">
-                    HISTORY
-                </template>
-                <template slot="tab-content-history">
-                    Coming Soon...
-                </template>
-
-                <template slot="tab-title-manifesto">
-                    MANIFESTO
-                </template>
-                <template slot="tab-content-manifesto">
-                    Coming Soon...
-                </template>
-
-                <template slot="tab-title-charter">
-                    CHARTER
-                </template>
-                <template slot="tab-content-charter">
-                    Coming Soon...
-                </template>
             </tabs>
         </div>
     </div>
@@ -51,8 +30,7 @@
 
 <script>
 import OrgBanner from '@/components/org/OrgBanner.vue'
-import OrgDetails from '@/components/org/OrgDetails.vue'
-import Tabs from '@/components/layout/Tabs.vue'
+import OrgInfo from '@/components/org/OrgInfo.vue'
 import FleetView from '@/components/fleet/FleetView.vue'
 
 export default {
@@ -60,14 +38,13 @@ export default {
     props: ['org', 'fleet'],
     data() {
         return {
-            tabs: ["info","fleet", "members", "history", "manifesto", "charter"],
+            tabs: ["info", "fleet", "members"],
             initialTab: "info"
         }
     },
     components: {
         OrgBanner,
-        OrgDetails,
-        Tabs,
+        OrgInfo,
         FleetView
     }
 }

@@ -1,22 +1,14 @@
 <template>
-  <div class="citizen-bio" id="citizen-bio">
-      <div class="bio">
-          <!--div class="section-title hidden">
-              <span class="text">
-                  BIO
-                  <div class="endcap left"></div>
-                  <div class="endcap right"></div>
-                </span>
-            </div-->
+    <div class="citizen-bio" id="citizen-bio">
+        <div class="bio">
             <section-title text="BIO" />
-          <div class="content">{{ bio }}</div>
-          <span class="corner top left"></span>
-          <span class="corner top right"></span>
-          <span class="corner bottom left"></span>
-          <span class="corner bottom right"></span>
-      </div>
-        
-  </div>
+            <div class="content">{{ bio }}</div>
+            <span class="corner top left"></span>
+            <span class="corner top right"></span>
+            <span class="corner bottom left"></span>
+            <span class="corner bottom right"></span>
+        </div>
+    </div>
 </template>
 
 <script>

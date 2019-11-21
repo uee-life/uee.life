@@ -1,5 +1,5 @@
 <template>
-  <dock-item title="Org" mainClass="citizen-org">
+  <dock-item :title="citizen.org.model" mainClass="citizen-org">
       <router-link :to="orgLink"><img class="logo" :src="citizen.org.logo" /></router-link>
       <div class="org-name">
         {{ citizen.org.name }}

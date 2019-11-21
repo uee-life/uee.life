@@ -13,7 +13,7 @@
       <div class="main-header-right">
         <div v-if="!$auth.loading" class="user">
           <div v-if='$auth.isAuthenticated'>
-              Welcome, <b>{{ $auth.user.name }}</b> ( <a @click='logout'> Log Out </a> )
+              Welcome, <b>{{ $auth.user.user_metadata }}</b> ( <a @click='logout'> Log Out </a> )
           </div>
           <div v-else>
             Welcome! Please <a @click='login' id="login-button">Log In</a>
@@ -58,6 +58,10 @@ export default {
         returnTo: window.location.origin
       });
     }
+  },
+  mounted() {
+    // eslint-disable-next-line
+      console.log(this.$auth.user)
   }
 }
 </script>
@@ -174,38 +178,6 @@ body {
         position: absolute;
     }
 
-    .section-title {
-        font-family: 'Michroma';
-        position:absolute;
-        left: 0;
-        top:-13px;
-        width: 100%;
-        display: flex;
-    }
-
-    .section-title .text {
-        position: relative;
-        font-size: 14px;
-        padding-left: 10px;
-        padding-right: 10px;
-        margin-left: 40px;
-        text-shadow: 0px 0px 15px rgba(57, 206, 216, 0.5);
-    }
-
-    .section-title.small {
-      top: -8px;
-      opacity: 1;
-    }
-
-    .section-title.hidden {
-      opacity: 0;
-    }
-
-    .section-title.small .text {
-      font-size: 10px;
-      margin-left: 30px;
-    }
-
     .endcap {
       position: absolute;
       top: 0;
@@ -229,9 +201,14 @@ body {
       opacity: 0;
     }
 
-    .clearfix::after {
-      content: "";
-      clear: both;
+    .clearfix::before {
+      content: " ";
       display: table;
+    }
+
+    .clearfix::after {
+      content: " ";
+      display: table;
+      clear: both;
     }
 </style>

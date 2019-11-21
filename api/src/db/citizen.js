@@ -23,6 +23,22 @@ async function fetchCitizen(handle) {
     }
 }
 
+async function getCitizen(handle) {
+    let conn;
+    try {
+      conn = await pool.getConnection();
+      const rows = await conn.query("SELECT name, bio FROM `Character` where handle=?", [handle]);
+
+      console.log(rows); //[ {val: 1}, meta: ... ]
+  
+    } catch (err) {
+      throw err;
+    } finally {
+      if (conn) conn.end();
+    }
+    return rows[0]
+}
+
 async function fetchShips(handle) {
     return [
         {
@@ -75,6 +91,7 @@ async function getCitizen(handle) {
 };
 
 async function getCitizenInfo(handle) {
+    data = db_getCitizen(handle)
     return await fetchCitizen(handle)
 }
 
