@@ -72,7 +72,7 @@ export default {
         z-index: -1;
     }
 
-    .mask {
+    .news-item .mask {
         position: absolute;
         top: 0;
         left: 0;

@@ -62,7 +62,8 @@ async function getOrganization(org) {
     return await fetchOrg(org)
 }
 
+
 module.exports = {
     getOrganization,
-    getOrgFounders
+    getOrgFounders,
 };

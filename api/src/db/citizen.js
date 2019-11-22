@@ -28,8 +28,6 @@ async function getCitizen(handle) {
     try {
       conn = await pool.getConnection();
       const rows = await conn.query("SELECT name, bio FROM `Character` where handle=?", [handle]);
-
-      console.log(rows); //[ {val: 1}, meta: ... ]
   
     } catch (err) {
       throw err;
@@ -41,7 +39,7 @@ async function getCitizen(handle) {
 
 async function fetchShips(handle) {
     return [
-        {
+        /*{
             id: 1,
             manufacturer: "Anvil",
             make: "Hornet",
@@ -63,7 +61,7 @@ async function fetchShips(handle) {
             make: "Constellation",
             model: "Phoenix",
             name: "Shark",
-        }
+        }*/
     ]
 }
 

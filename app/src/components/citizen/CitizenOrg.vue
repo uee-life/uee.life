@@ -23,7 +23,7 @@ export default {
   },
   computed: {
     orgLink () {
-      return `/organization/${this.citizen.org.tag}`;
+      return `/orgs/${this.citizen.org.tag}`;
     }
   },
   watch: {

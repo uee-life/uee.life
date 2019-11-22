@@ -20,11 +20,17 @@ export default {
       content: "> "
     }
     .left-nav-button {
-        margin-left: 10px;
-        margin-right: 10px;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-bottom: 5px;
+        overflow:hidden;
     }
     .left-nav-button a {
       text-decoration: none;
       color: #39ced8;
+    }
+
+    .left-nav-button a:hover {
+      color: white;
     }
 </style>

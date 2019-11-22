@@ -66,15 +66,19 @@ Vue.component('cookie-law', CookieLaw)
 // Route components
 import FrontPage from '@/components/main/FrontPage.vue'
 import Citizen from '@/components/citizen/Citizen.vue'
+import CitizenSearch from '@/components/citizen/CitizenSearch.vue'
 import Organization from '@/components/org/Organization.vue'
+import OrgSearch from '@/components/org/OrgSearch.vue'
 import Settings from '@/components/user/Settings.vue'
 
 import { authGuard } from "@/auth/authGuard"
 
 const routes = [
   { path: '/', component: FrontPage },
-  { path: '/citizen/:handle', component: Citizen },
-  { path: '/organization/:org', component: Organization},
+  { path: '/citizens/:handle', component: Citizen },
+  { path: '/citizens', component: CitizenSearch },
+  { path: '/orgs/:org', component: Organization},
+  { path: '/orgs', component: OrgSearch},
   { path: '/implicit/callback', component: FrontPage },
   { path: '/settings', component: Settings, beforeEnter: authGuard },
   { path: '*', component: FrontPage }

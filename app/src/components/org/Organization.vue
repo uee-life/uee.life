@@ -2,7 +2,7 @@
     <div class="organization" id="organization">
         <left-dock />
         <portal to="navigationPane">
-            <div class="left-nav-button"><router-link to="/organization">Search Orgs</router-link></div>
+            <div class="left-nav-button"><router-link to="/orgs">Search Orgs</router-link></div>
             <div class="left-nav-button"><a :href="spectrumLink">Spectrum</a></div>
         </portal>
         <org-main :org="org" :fleet="ships"/>
@@ -28,18 +28,8 @@ export default {
     },
     data() {
         return {
-            links: [
-                {
-                text: "Search Orgs",
-                path: "/organization"
-                },
-                {
-                    text: "Spectrum",
-                    path: "https://robertsspaceindustries.com/spectrum/community/"
-                }
-            ],
             org: {
-                name: "Testy Mc Test Face"
+                tag: ""
             },
             ships: [
                     {
@@ -82,13 +72,17 @@ export default {
                 // eslint-disable-next-line
                 console.error(error)
             }
-            this.loading = false
         }
     },
     mounted() {
         this.getOrg()
     },
     watch: {
+        route: {
+            handler: function () {
+                this.getOrg();
+            }
+        },
         org: {
             handler: function () {
                 const timeline = new TimelineLite()

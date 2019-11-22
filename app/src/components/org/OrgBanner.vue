@@ -1,13 +1,14 @@
 <template>
     <div class="org-banner">
       <div class="banner-img" :style="style"></div>
-      <div class="mask"></div>
-      <div class="org-banner-bottom">
-        <div class="org-logo" id="org-logo">
-          <img :src="org.logo" />
-        </div>
-        <div class="org-summary">
-            <h1>{{org.name}} /  <span class="tag">{{ tag }}</span></h1>
+      <div class="mask">
+        <div class="org-banner-bottom">
+          <div class="org-logo" id="org-logo">
+            <img :src="org.logo" />
+          </div>
+          <div class="org-summary">
+              <h1>{{org.name}} /  <span class="tag">{{ tag }}</span></h1>
+          </div>
         </div>
       </div>
       <span class="corner top left"></span>
@@ -41,38 +42,48 @@ export default {
     .org-banner {
       position: relative;
       width: 100%;
-      padding-bottom: 67px;
       border: 1px solid grey;
     }
 
+    .org-banner .mask {
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: url('/images/fading-bars.png') repeat;
+        z-index: 0;
+        padding-top: 0.1px;
+    }
+
     .org-banner .banner-img {
+      position: absolute;
+      width: 100%;
+      height: 250px;
       opacity: 0.8 !important;
       border-bottom: 1px dashed grey;
       display: block;
-      height: 250px;
       background-size: cover;
       background-position: center center;
+      z-index: -1;
     }
 
     .org-logo{
         width: 136px;
         height: 136px;
         margin-right: 20px;
-        position: relative;
         opacity: 0;
     }
 
     .org-banner-bottom {
-      position: absolute;
       bottom: 0;
       left: 0;
       padding: 5px;
+      margin-top: 177px;
       display: flex;
-      align-items: flex-end;
     }
 
     .org-banner h1 {
-      height: 57px;
+      height: fit-content;
       opacity: 0;
       font-family: 'Michroma';
       font-size: 1.45em;
@@ -91,5 +102,9 @@ export default {
         height: 136px;
         opacity: 0;
         margin-left: 5px;
+    }
+
+    .org-summary {
+      padding-top: 73px;
     }
 </style>

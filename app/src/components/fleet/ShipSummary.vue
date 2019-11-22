@@ -34,6 +34,7 @@ export default {
         display: flex;
         width: 400px;
         min-width: 400px;
+        flex-grow: 1;
         margin: 5px;
         padding: 9px;
         position: relative;

@@ -1,6 +1,6 @@
 <template>
   <div id="left-dock" class="left-dock">
-    <left-nav />
+    <left-nav v-if="nav"/>
     <portal-target name="leftDock"></portal-target>
   </div>
 </template>
@@ -9,6 +9,12 @@
 import LeftNav from '@/components/layout/LeftNav.vue'
 export default {
   name: 'left-dock',
+  props: {
+        nav: {
+            type: Boolean,
+            default: true
+        }
+  },
   components: {
     LeftNav
   }

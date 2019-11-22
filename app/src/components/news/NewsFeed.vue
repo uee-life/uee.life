@@ -18,6 +18,11 @@
                 <news-item :item="item" />
             </div>
         </transition-group>
+        <div class="more" v-if="more" @click="loadMore()">
+            Load More
+            <div class="endcap left"></div>
+            <div class="endcap right"></div>
+        </div>
     </div>
 </template>
 
@@ -73,7 +78,6 @@ export default {
         NewsItem
     },
     mounted() {
-        this.scroll()
         this.getNews()
     },
     methods: {
@@ -119,16 +123,9 @@ export default {
         leave: function(el) {
             new TimelineLite().to(el, 2, {opacity: 0})
         },
-        scroll () {
-            window.onscroll = () => {
-                let bottomOfWindow = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight > document.documentElement.offsetHeight - 1000
-                // eslint-disable-next-line
-                console.log(this.more)                
-                if (bottomOfWindow) {
-                    if(!this.loading && this.more) {
-                        this.getNews()
-                    }
-                }
+        loadMore: function() {
+            if(!this.loading && this.more) {
+                this.getNews()
             }
         }
     },
@@ -150,6 +147,21 @@ export default {
         display: block;
         padding-top: 20px;
         margin-top: 20px;
+    }
+
+    .news-feed .more {
+        position: relative;
+        width: 100% - 20px;
+        display: flex;
+        justify-content: center;
+        font-size: 21px;
+        cursor: pointer;
+        margin: 5px 0 20px 15px;
+        background: url('/images/fading-bars.png') repeat;
+    }
+
+    .news-feed .more:hover {
+        color: white;
     }
 
     .feed-title {

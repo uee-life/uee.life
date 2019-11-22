@@ -2,7 +2,8 @@
   <div class="citizen" id="citizen">
       <left-dock />
         <portal to="navigationPane">
-            <div v-for="link in links" :key="link.text" class="left-nav-button"><router-link :to="link.path">{{ link.text }}</router-link></div>
+            <div class="left-nav-button"><router-link to="/citizens">Search Citizens</router-link></div>
+            <div class="left-nav-button"><a :href="dossierLink">Official Dossier</a></div>
         </portal>
       <citizen-main :citizen="citizen"/>
       <right-dock />
@@ -40,6 +41,11 @@ export default {
         RightDock,
         CitizenMain,
     },
+    computed: {
+        dossierLink() {
+            return `https://robertsspaceindustries.com/citizens/${this.$route.params.handle}`
+        }
+    },
     methods: {
         async getCitizen() {
             try {
@@ -50,7 +56,7 @@ export default {
                 this.citizen.ships = data.ships
                 this.citizen.links = []
                 if(data.info.website){
-                    this.citizen.links.push(data.info.website)
+                    this.citizen.links.push({text: "Website", url: data.info.website})
                 }
                 if(data.info.org) {
                     await this.getOrg()
@@ -79,9 +85,7 @@ export default {
         this.getCitizen()
     },
     watch: {
-        $route(to, from) {
-            // eslint-disable-next-line
-            console.log(from + "::" + to)
+        $route() {
             if(this.$route.params.handle) {
                 this.getCitizen()
             }

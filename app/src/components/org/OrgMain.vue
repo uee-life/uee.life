@@ -1,7 +1,7 @@
 <template>
     <div class="org-main" id="org-main">
         <org-banner :org="org" />
-        <div>
+        <div class="org-tabs">
             <tabs :tabs="tabs" :initialTab="initialTab">
                 <template slot="tab-title-info">
                     INFO

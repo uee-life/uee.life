@@ -5,11 +5,14 @@
             OVERVIEW
         </template>
         <template slot="tab-content-overview">
-                      <div class="info">
+          <main-panel>
+                <div v-html="org.intro"></div>
+          </main-panel>
+            <div class="info">
               <main-panel title="roles" mainClass="info-panel">
                 <ul class="info-items">
-                  <li class="line-item"><span>Primary Role</span>-<span>{{ org.roles.primary }}</span></li>
-                  <li class="line-item"><span>Secondary Role</span>-<span>{{ org.roles.secondary }}</span></li>
+                  <li v-if="org.roles" class="line-item"><span>Primary Role</span>-<span>{{ org.roles.primary }}</span></li>
+                  <li v-if="org.roles" class="line-item"><span>Secondary Role</span>-<span>{{ org.roles.secondary }}</span></li>
                 </ul>
               </main-panel>
               <main-panel title="headquarters" mainClass="info-panel">
@@ -21,13 +24,14 @@
               </main-panel>
               <main-panel title="founders" mainClass="info-panel">
                 <ul class="info-items">
-                  <li v-for="f in org.founders" :key="f.handle" class="line-item"><router-link :to="citizenLink(f.handle)">{{f.name}}</router-link></li>
+                  <li v-for="f in org.founders" :key="f.handle" class="line-item">
+                    <router-link :to="citizenLink(f.handle)">
+                      {{f.name}}
+                    </router-link>
+                  </li>
                 </ul>
               </main-panel>
             </div>
-          <main-panel>
-                <div v-html="org.intro"></div>
-          </main-panel>
         </template>
 
         <template slot="tab-title-history">
@@ -73,13 +77,13 @@ export default {
   },
   methods: {
     citizenLink(handle) {
-      return `/citizen/${handle}`
-    }
+      return `/citizens/${handle}`
+    },
   }
 }
 </script>
 
-<style scoped>
+<style>
     .org-info {
       position: relative;
         display: flex;
@@ -87,19 +91,20 @@ export default {
         width: 100%;
     }
 
-    .org-info .info .info-panel {
-      min-width: 300px;
-      margin-right: 20px;
-    }
-
     .org-info .info {
         display: flex;
-        width: fit-content;
+        flex-wrap: wrap;
+        width: calc(100% + 20px);
+        margin-left: -10px;
+        margin-right: -10px;
         opacity: 1;
     }
 
-    .org-info .info div:last-child {
-      margin-right: 0px;
+    .org-info .info .info-panel {
+      min-width: 300px;
+      margin-left: 10px;
+      margin-right: 10px;
+      flex-grow: 1;
     }
 
     .org-info .info-items {

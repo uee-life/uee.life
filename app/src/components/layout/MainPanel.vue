@@ -13,7 +13,7 @@
 
 <script>
 export default {
-    name: 'org-history',
+    name: 'main-panel',
     props: {
         title: {
             type: String,

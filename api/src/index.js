@@ -11,6 +11,7 @@ const jwksRsa = require('jwks-rsa')
 const {getCitizen, getCitizenInfo, getCitizenShips, getCitizenLocation} = require('./db/citizen');
 const {getOrganization, getOrgFounders} = require('./db/organization');
 const {getNews} = require('./db/news');
+const {searchOrgs} = require('./db/search');
 
 // defining the Express app
 const app = express();
@@ -66,7 +67,11 @@ app.get('/news', async (req, res) => {
         }
     }
     res.send(await getNews(data));
-})
+});
+
+app.post('/search/org', async (req, res) => {
+    res.send(await searchOrgs(req.body));
+});
 
 // Secure API calls
 

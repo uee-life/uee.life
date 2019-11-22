@@ -58,10 +58,6 @@ export default {
         returnTo: window.location.origin
       });
     }
-  },
-  mounted() {
-    // eslint-disable-next-line
-      console.log(this.$auth.user)
   }
 }
 </script>
