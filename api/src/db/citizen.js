@@ -89,7 +89,7 @@ async function getCitizen(handle) {
 };
 
 async function getCitizenInfo(handle) {
-    data = db_getCitizen(handle)
+    //data = db_getCitizen(handle)
     return await fetchCitizen(handle)
 }
 
