@@ -1,6 +1,7 @@
 <template>
     <dock-item title="Community Links" mainClass="community-links">
         <div class="link"><a href="https://gallog.co" target="_blank">Galaxy Logistics</a></div>
+        <div class="link"><a href="https://gameglass.gg" target="_blank">GameGlass</a></div>
     </dock-item>
 </template>
 
