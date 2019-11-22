@@ -1,6 +1,6 @@
 <template>
     <dock-item title="Latest Citizen" mainClass="latest-citizen">
-      <img class="logo" :src="citizen.portrait" />
+      <router-link :to="citizenLink"><img class="logo" :src="citizen.portrait" /></router-link>
       <div class="cit-name">
         {{ citizen.name }}
       </div>
@@ -62,6 +62,11 @@ export default {
                 }
 
             }
+        }
+    },
+    computed: {
+        citizenLink () {
+        return `/citizens/${this.citizen.handle}`;
         }
     },
     mounted() {
