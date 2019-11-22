@@ -11,7 +11,7 @@
       </div>
       </div>
       <div class="main-header-right">
-        <div v-if="!$auth.loading" class="user">
+        <div v-if="false"><!--"!$auth.loading" class="user"-->
           <div v-if='$auth.isAuthenticated'>
               Welcome, <b>{{ $auth.user.user_metadata }}</b> ( <a @click='logout'> Log Out </a> )
           </div>
