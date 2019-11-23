@@ -3,7 +3,6 @@
         <div v-for="link in links" :key="link.url" class="link">
             <a :href="link.url" target="_blank">{{link.name}}</a>
         </div>
-        <div class="link"><a href="https://gameglass.gg" target="_blank">GameGlass</a></div>
     </dock-item>
 </template>
 
