@@ -19,7 +19,7 @@ export default {
                 {name: "Bar Citizens", url: "https://barcitizen.sc"},
                 {name: "SC Tools", url: "https://sc-tools.org"},
                 {name: "GameGlass", url: "https://gameglass.gg"},
-                {name: "Gallog Trade Tool", url: "https://gallog.co"}
+                {name: "Gallog Trade Tool", url: "https://gallog.co/trading/"}
             ]
         }
     }
