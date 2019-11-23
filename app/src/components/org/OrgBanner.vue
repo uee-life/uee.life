@@ -88,7 +88,7 @@ export default {
       font-family: 'Michroma';
       font-size: 1.45em;
       letter-spacing: 1px;
-      color: white;
+      color: #dbf3ff;
       margin: 0;
     }
 

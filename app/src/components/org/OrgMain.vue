@@ -21,7 +21,7 @@
                     MEMBERS
                 </template>
                 <template slot="tab-content-members">
-                    Coming Soon...
+                    <org-members :members="members" />
                 </template>
             </tabs>
         </div>
@@ -32,10 +32,11 @@
 import OrgBanner from '@/components/org/OrgBanner.vue'
 import OrgInfo from '@/components/org/OrgInfo.vue'
 import FleetView from '@/components/fleet/FleetView.vue'
+import OrgMembers from '@/components/org/OrgMembers.vue'
 
 export default {
     name: 'org-main',
-    props: ['org', 'fleet'],
+    props: ['org', 'fleet', 'members'],
     data() {
         return {
             tabs: ["info", "fleet", "members"],
@@ -45,7 +46,8 @@ export default {
     components: {
         OrgBanner,
         OrgInfo,
-        FleetView
+        FleetView,
+        OrgMembers
     }
 }
 </script>

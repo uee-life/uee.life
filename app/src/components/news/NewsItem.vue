@@ -58,7 +58,7 @@ export default {
     .news-item-info {
         margin-left: 10px;
         text-decoration: none;
-        color: white;
+        color: #dbf3ff;
         text-shadow: 2px 2px 4px #000;
     }
 

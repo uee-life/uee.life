@@ -41,7 +41,6 @@ export default {
         display: block;
         position: relative;
         padding: 15px;
-        padding-top: 20px;
         margin-bottom: 20px;
         background: url('/images/fading-bars.png') repeat;
     }

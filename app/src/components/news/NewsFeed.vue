@@ -161,7 +161,7 @@ export default {
     }
 
     .news-feed .more:hover {
-        color: white;
+        color: #dbf3ff;
     }
 
     .feed-title {

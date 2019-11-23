@@ -81,7 +81,7 @@ export default {
   .latest-citizen .content{
     display: flex;
     flex-direction: Column;
-    justify-content: center;
+    align-items: center;
     opacity: 1;
   }
   .logo {
