@@ -5,7 +5,7 @@
             <div class="left-nav-button"><router-link to="/orgs">Search Orgs</router-link></div>
             <div class="left-nav-button"><a :href="spectrumLink">Spectrum</a></div>
         </portal>
-        <org-main :org="org" :fleet="ships" :members="members"/>
+        <org-main :org="org" :fleet="ships" :members="org.members"/>
         <right-dock />
         <!--fleet-view :ships="ships" /-->
     </div>
@@ -31,7 +31,6 @@ export default {
             org: {
                 tag: ""
             },
-            members: [],
             ships: [
                     {
                     id: 1,
@@ -72,17 +71,6 @@ export default {
 
                     if(res.status == 200) {
                         this.org = res.data
-                    }
-                })
-                axios.get(`http://api.sc-tools.org/v1/orgs/${sid}/json`).then(res => {
-                                        // eslint-disable-next-line
-                    console.log(res.status)
-                    if(res.data.status === 'ok') {
-                                            // eslint-disable-next-line
-                    console.log(res.data.orgs.members)
-                        this.members = res.data.orgs.members
-                    } else {
-                        this.members = []
                     }
                 })
                 

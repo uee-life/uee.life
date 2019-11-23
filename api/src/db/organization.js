@@ -1,6 +1,19 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
 
+async function fetchMembers(org) {
+    members = []
+    await axios.get(`http://api.sc-tools.org/v1/orgs/${org}/json`).then(res => {
+        if(res.data.status == 'ok') {
+            console.log(res.data.orgs.members)
+            members = res.data.orgs.members;
+        } else {
+            members = []
+        }
+    })
+    return members
+}
+
 async function fetchOrg(org) {
     try {
         const baseURI = "https://robertsspaceindustries.com"
@@ -21,6 +34,7 @@ async function fetchOrg(org) {
         info.manifesto = $('h2:contains("Manifesto")', '#organization').next().html()
         info.charter = $('h2:contains("Charter")', '#organization').next().html()
         info.founders = await fetchOrgFounders(org)
+        info.members = await fetchMembers(org)
         
         info.tag = org
 
