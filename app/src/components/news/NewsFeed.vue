@@ -156,7 +156,7 @@ export default {
         justify-content: center;
         font-size: 21px;
         cursor: pointer;
-        margin: 5px 0 20px 15px;
+        margin: 5px 0 20px 0;
         background: url('/images/fading-bars.png') repeat;
     }
 

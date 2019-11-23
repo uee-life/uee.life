@@ -79,8 +79,6 @@ export default {
     .site-news {
         display: flex;
         min-width: 300px;
-        margin-left: 10px;
-        margin-right: 10px;
         flex-grow: 1;
     }
 
