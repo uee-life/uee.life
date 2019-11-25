@@ -38,7 +38,6 @@ export default {
         font-family: 'Michroma';
         position:absolute;
         left: 0;
-        top:-13px;
         width: 100%;
         display: flex;
         text-transform: uppercase;
@@ -51,20 +50,32 @@ export default {
 
     .section-title .text {
         position: relative;
-        font-size: 14px;
         padding-left: 10px;
         padding-right: 10px;
-        margin-left: 40px;
         text-shadow: 0px 0px 15px rgba(57, 206, 216, 0.5);
     }
 
     .section-title.small {
       top: -8px;
-      opacity: 1;
     }
-
-    .section-title.small .text {
+    .section-title.small>.text {
       font-size: 10px;
       margin-left: 30px;
+    }
+
+    .section-title.medium {
+        top: -13px;
+    }
+    .section-title.medium>.text {
+        font-size: 14px;
+        margin-left: 40px;
+    }
+
+    .section-title.large {
+        top: -20px;
+    }
+    .section-title.large>.text {
+        font-size: 21px;
+        margin-left: 50px;
     }
 </style>

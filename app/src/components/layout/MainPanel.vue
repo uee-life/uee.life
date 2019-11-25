@@ -1,6 +1,6 @@
 <template>
     <div :class="computedClass">
-        <section-title v-if="title" :text="title" size="large" />
+        <section-title v-if="title" :text="title" size="medium" />
         <div :class="contentClass">
             <slot></slot>
         </div>
