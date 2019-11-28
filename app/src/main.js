@@ -77,6 +77,7 @@ import Organization from '@/components/org/Organization.vue'
 import OrgSearch from '@/components/org/OrgSearch.vue'
 import Settings from '@/components/user/Settings.vue'
 import NewsArticle from '@/components/news/NewsArticle.vue'
+import SignUp from '@/components/user/SignUp.vue'
 
 import { authGuard } from "@/auth/authGuard"
 
@@ -89,6 +90,7 @@ const routes = [
   { path: '/implicit/callback', component: FrontPage },
   { path: '/settings', component: Settings, beforeEnter: authGuard },
   { path: '/news/:newsId', component: NewsArticle },
+  { path: '/signup', component: SignUp },
   { path: '*', component: FrontPage }
 ]
 
