@@ -3,13 +3,13 @@
         <fieldset>
             <legend>Sign up</legend>
             <p>
-            <input type="email" id="signup-email" placeholder="Email" required/>
+            <input class="form-input" type="email" id="signup-email" placeholder="Email" required/>
             </p>
             <p>
-            <input type="password" id="signup-password" placeholder="Password" required/>
+            <input class="form-input" type="password" id="signup-password" placeholder="Password" required/>
             </p>
             <p>
-            <input type="text" id="handle" placeholder="Handle" required/>
+            <input class="form-input" type="text" id="handle" placeholder="Handle" required/>
             </p>
             <input type="submit" value="Sign up"/>
         </fieldset>
@@ -18,6 +18,7 @@
 
 <script>
 import axios from "axios"
+import {lock} from "../../auth"
 
 export default {
     name: 'signup',
@@ -28,20 +29,25 @@ export default {
                     'content-type': 'application/json'
                 },
                 data: {
-                    client_id: '',
+                    client_id: 'yu63VPdVtrk1JXE9OB0oN97x95aEdys1',
                     email: '$(\'#signup-email\').val()',
                     password: '$(\'#signup-password\').val()',
-                    connection: '',
+                    connection: 'Username-Password-Authentication',
                     user_metadata: {
                         handle: '$(\'#handle\').val()'
                     }
                 }
             })
         }
+    },
+    mounted() {
+        lock.show();
     }
 }
 </script>
 
-<style>
-
+<style scoped>
+    .form-input {
+        color: white;
+    }
 </style>

@@ -2,11 +2,12 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import PortalVue from 'portal-vue'
 import axios from 'axios'
+//import Auth0Lock from 'auth0-lock'
 
 import App from './App.vue'
 
-import { domain, clientId, audience } from "../auth_config.json";
-import { Auth0Plugin } from "./auth";
+//import { domain, clientId,/* audience*/ } from "../auth_config.json";
+//import { Auth0Plugin } from "./auth";
 
 Vue.config.productionTip = false
 
@@ -31,7 +32,7 @@ Vue.use(axios)
 Vue.use(VueRouter)
 Vue.use(PortalVue)
 
-Vue.use(Auth0Plugin, {
+/*Vue.use(Auth0Plugin, {
   domain, 
   clientId,
   audience,
@@ -42,13 +43,7 @@ Vue.use(Auth0Plugin, {
         : window.location.pathname
     );
   }
-});
-
-/*var lock = new Auth0Lock(
-  clientId,
-  domain
-);*/
-
+});*/
 
 // Global components
 import SectionTitle from '@/components/layout/SectionTitle.vue'
