@@ -5,7 +5,7 @@
             <div class="left-nav-button"><router-link to="/orgs">Search Orgs</router-link></div>
             <div class="left-nav-button"><a :href="spectrumLink">Spectrum</a></div>
         </portal>
-        <org-main :org="org" :fleet="ships"/>
+        <org-main :org="org" :fleet="ships" :members="org.members"/>
         <right-dock />
         <!--fleet-view :ships="ships" /-->
     </div>
@@ -66,8 +66,14 @@ export default {
     methods: {
         async getOrg() {
             try {
-                const { data } = await axios.get('https://api.uee.life/organization/' + this.$route.params.org)
-                this.org = data
+                const sid = this.$route.params.org
+                axios.get(`https://api.uee.life/organization/${sid}`).then(res => {
+
+                    if(res.status == 200) {
+                        this.org = res.data
+                    }
+                })
+                
             } catch (error) {
                 // eslint-disable-next-line
                 console.error(error)

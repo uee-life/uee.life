@@ -44,6 +44,12 @@ Vue.use(Auth0Plugin, {
   }
 });
 
+/*var lock = new Auth0Lock(
+  clientId,
+  domain
+);*/
+
+
 // Global components
 import SectionTitle from '@/components/layout/SectionTitle.vue'
 import LeftDock from '@/components/layout/LeftDock.vue'
@@ -70,6 +76,7 @@ import CitizenSearch from '@/components/citizen/CitizenSearch.vue'
 import Organization from '@/components/org/Organization.vue'
 import OrgSearch from '@/components/org/OrgSearch.vue'
 import Settings from '@/components/user/Settings.vue'
+import NewsArticle from '@/components/news/NewsArticle.vue'
 
 import { authGuard } from "@/auth/authGuard"
 
@@ -81,6 +88,7 @@ const routes = [
   { path: '/orgs', component: OrgSearch},
   { path: '/implicit/callback', component: FrontPage },
   { path: '/settings', component: Settings, beforeEnter: authGuard },
+  { path: '/news/:newsId', component: NewsArticle },
   { path: '*', component: FrontPage }
 ]
 

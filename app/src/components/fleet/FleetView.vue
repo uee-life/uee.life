@@ -47,7 +47,7 @@ export default {
     .no-ships {
         text-align: center;
         font-size: 18px;
-        color: white;
+        color: #dbf3ff;
     }
     .ships {
         display: flex;

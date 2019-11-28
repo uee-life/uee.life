@@ -20,9 +20,9 @@ export default {
       content: "> "
     }
     .left-nav-button {
-        margin-left: 0px;
+        margin-left: 10px;
         margin-right: 0px;
-        margin-bottom: 5px;
+        margin-bottom: 3px;
         overflow:hidden;
     }
     .left-nav-button a {
@@ -31,6 +31,6 @@ export default {
     }
 
     .left-nav-button a:hover {
-      color: white;
+      color: #dbf3ff;
     }
 </style>

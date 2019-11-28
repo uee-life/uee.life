@@ -1,7 +1,6 @@
 <template>
   <div id="app" class="container">
     <link href="//fonts.googleapis.com/css?family=Electrolize|Orbitron:400,500,700|Share+Tech+Mono" rel="stylesheet" type="text/css">
-    <!--img alt="Vue logo" src="@/assets/logo.png"-->
     <cookie-law theme="blood-orange"/>
     <div class="main-header" id="main-header">
       <div class="main-header-left">
@@ -11,7 +10,7 @@
       </div>
       </div>
       <div class="main-header-right">
-        <div v-if="false"><!--"!$auth.loading" class="user"-->
+        <div v-if="!$auth.loading" class="user">
           <div v-if='$auth.isAuthenticated'>
               Welcome, <b>{{ $auth.user.user_metadata }}</b> ( <a @click='logout'> Log Out </a> )
           </div>
@@ -150,22 +149,22 @@ body {
 <style>
     .corner.top {
         top: -2px;
-        border-top: 1px solid white;
+        border-top: 1px solid #dbf3ff;
     }
 
     .corner.bottom {
         bottom: -2px;
-        border-bottom: 1px solid white;
+        border-bottom: 1px solid #dbf3ff;
     }
 
     .corner.left {
         left: -2px;
-        border-left: 1px solid white;
+        border-left: 1px solid #dbf3ff;
     }
 
     .corner.right {
         right: -2px;
-        border-right: 1px solid white;
+        border-right: 1px solid #dbf3ff;
     }
 
     .corner {
@@ -179,25 +178,25 @@ body {
       top: 0;
       height: 100%;
       width: 6px;
-      border-top: 1px solid white;
-      border-bottom: 1px solid white;
+      border-top: 1px solid #dbf3ff;
+      border-bottom: 1px solid #dbf3ff;
     }
 
     .endcap.left {
       left: 0;
-      border-left: 1px solid white;
+      border-left: 1px solid #dbf3ff;
     }
 
     .endcap.right {
       right: 0;
-      border-right: 1px solid white;
+      border-right: 1px solid #dbf3ff;
     }
 
     .hidden {
       opacity: 0;
     }
 
-    .clearfix::before {
+    /*.clearfix::before {
       content: " ";
       display: table;
     }
@@ -206,5 +205,5 @@ body {
       content: " ";
       display: table;
       clear: both;
-    }
+    }*/
 </style>

@@ -5,6 +5,7 @@
         <div class="nav-button"><router-link to="/citizens">Citizen Registry</router-link></div>
         <div class="nav-button"><router-link to="/orgs">Org Directory</router-link></div>
         <div class="nav-button"><a href="https://robertsspaceindustries.com/starmap" target="_blank">Starmap</a></div>
+        <div class="nav-button"><a href="https://robertsspaceindustries.com/galactapedia" target="_blank">Galactapedia</a></div>
       </div>
       <div class="nav-right">
         <div class="nav-button">Tools</div>
@@ -30,9 +31,9 @@ export default {
     .nav-bar {
         display: flex;
         justify-content: space-between;
-        width: calc(100% - 20px);
+        flex-grow: 1;
         height: 35px;
-        border: 1px solid grey;
+        border: 1px solid #546f84;
         margin: 10px 10px 0 10px;
         padding: 3px;
         background: url('/images/fading-bars.png') repeat;
@@ -53,8 +54,11 @@ export default {
         margin-left: 10px;
         margin-right: 10px;
     }
-    .nav-button a {
+    .nav-button>a {
       text-decoration: none;
       color: #39ced8;
+    }
+    .nav-button>a:hover {
+      color: #dbf3ff;
     }
 </style>

@@ -1,7 +1,8 @@
 <template>
     <dock-item title="Community Links" mainClass="community-links">
-        <div class="link"><a href="https://gallog.co" target="_blank">Galaxy Logistics</a></div>
-        <div class="link"><a href="https://gameglass.gg" target="_blank">GameGlass</a></div>
+        <div v-for="link in links" :key="link.url" class="link">
+            <a :href="link.url" target="_blank">{{link.name}}</a>
+        </div>
     </dock-item>
 </template>
 
@@ -10,24 +11,38 @@
 export default {
     name: 'community-links',
     components: {
+    },
+    data() {
+        return {
+            links: [
+                {name: "Bar Citizens", url: "https://barcitizen.sc"},
+                {name: "SC Tools", url: "https://sc-tools.org"},
+                {name: "GameGlass", url: "https://gameglass.gg"},
+                {name: "Gallog Trade Tool", url: "https://gallog.co/trading/"}
+            ]
+        }
     }
 }
 </script>
 
 <style>
-    .community-links .content {
+    .community-links>.content {
         opacity: 1;
     }
 
-    .community-links .link::before {
+    .community-links>.content>.link::before {
       content: "> "
     }
-    .community-links .link {
+    .community-links>.content>.link {
         margin-left: 10px;
         margin-right: 10px;
+        margin-bottom: 3px;
     }
-    .community-links .link a {
+    .community-links>.content>.link>a {
       text-decoration: none;
       color: #39ced8;
+    }
+    .community-links>.content>.link>a:hover {
+      color: #dbf3ff;    
     }
 </style>

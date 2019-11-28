@@ -48,7 +48,7 @@ export default {
         width: 100% - 20px;
         min-width: 400px;
         flex-basis: 400px;
-        margin: 5px 0 20px 15px;
+        margin: 5px 0 20px 0;
         padding: 9px;
         border: 1px solid grey;
         position: relative;
@@ -58,7 +58,7 @@ export default {
     .news-item-info {
         margin-left: 10px;
         text-decoration: none;
-        color: white;
+        color: #dbf3ff;
         text-shadow: 2px 2px 4px #000;
     }
 

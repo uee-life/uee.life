@@ -1,6 +1,6 @@
 <template>
     <div :class="computedClass">
-        <section-title v-if="title" :text="title" size="large" />
+        <section-title v-if="title" :text="title" size="medium" />
         <div :class="contentClass">
             <slot></slot>
         </div>
@@ -41,7 +41,6 @@ export default {
         display: block;
         position: relative;
         padding: 15px;
-        padding-top: 20px;
         margin-bottom: 20px;
         background: url('/images/fading-bars.png') repeat;
     }

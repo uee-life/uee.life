@@ -1,6 +1,6 @@
 <template>
     <dock-item title="Latest Citizen" mainClass="latest-citizen">
-      <img class="logo" :src="citizen.portrait" />
+      <router-link :to="citizenLink"><img class="logo" :src="citizen.portrait" /></router-link>
       <div class="cit-name">
         {{ citizen.name }}
       </div>
@@ -64,6 +64,11 @@ export default {
             }
         }
     },
+    computed: {
+        citizenLink () {
+        return `/citizens/${this.citizen.handle}`;
+        }
+    },
     mounted() {
         const timeline = new TimelineLite()
 
@@ -76,7 +81,7 @@ export default {
   .latest-citizen .content{
     display: flex;
     flex-direction: Column;
-    justify-content: center;
+    align-items: center;
     opacity: 1;
   }
   .logo {
