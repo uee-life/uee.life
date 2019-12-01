@@ -12,10 +12,10 @@
       <div class="main-header-right">
         <div v-if="!$auth.loading" class="user">
           <div v-if='$auth.isAuthenticated'>
-              Welcome, <b>{{ $auth.user.user_metadata }}</b> ( <a @click='logout'> Log Out </a> )
+              Welcome, <b>{{ $auth.user["https://uee.life/user_metadata"].handle }}</b> ( <a @click='logout'> Log Out </a> )
           </div>
           <div v-else>
-            Welcome! Please <a @click='login' id="login-button">Log In</a>
+            Welcome! Please <a @click='login' id="login-button">Log In / Sign Up</a>
           </div>
           </div>
           <div class="search">
@@ -50,12 +50,14 @@ export default {
   },
   methods: {
     login() {
-      //this.$auth.loginWithRedirect()
+      this.$auth.loginWithRedirect({
+
+      })
     },
     logout() {
-      /*this.$auth.logout({
+      this.$auth.logout({
         returnTo: window.location.origin
-      });*/
+      });
     }
   }
 }

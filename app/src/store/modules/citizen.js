@@ -1,24 +1,24 @@
 
 
 const state = {
-    orgID: ""
+    citizen: {}
 }
 
 const getters = {
-    getOrgID: () => {
+    getCitizen: () => {
         return state.orgID
     }
 }
 
 const actions = {
-    doSomething(param) {
-        commit('some_mutator', param)
+    setCitizen(param) {
+        this.commit('updateCitizen', param)
     }
 }
 
 const mutations = {
-    some_mutator(param) {
-        state.orgID = param
+    updateCitizen(state, param ) {
+        state.citizen.handle = param
     }
 }
 

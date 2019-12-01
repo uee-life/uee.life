@@ -12,6 +12,7 @@ const {getCitizen, getCitizenInfo, getCitizenShips, getCitizenLocation} = requir
 const {getOrganization, getOrgFounders} = require('./db/organization');
 const {getNews} = require('./db/news');
 const {searchOrgs} = require('./db/search');
+const {getHandle} = require('./db/user.js');
 
 // defining the Express app
 const app = express();
@@ -75,10 +76,8 @@ app.post('/search/org', async (req, res) => {
 
 // Secure API calls
 
-app.get("/secure", checkJwt, (req, res) => {
-    res.send({
-        msg: "Your Access Token was successfully validated!"
-    });
+app.get("/handle", checkJwt, (req, res) => {
+    res.send(await getHandle(req.headers.authorization));
 })
 
 // starting the server

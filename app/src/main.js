@@ -2,12 +2,11 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import PortalVue from 'portal-vue'
 import axios from 'axios'
-//import Auth0Lock from 'auth0-lock'
 
 import App from './App.vue'
 
-//import { domain, clientId,/* audience*/ } from "../auth_config.json";
-//import { Auth0Plugin } from "./auth";
+import { domain, clientId, audience } from "../auth_config.json";
+import { Auth0Plugin } from "./auth";
 
 Vue.config.productionTip = false
 
@@ -32,7 +31,7 @@ Vue.use(axios)
 Vue.use(VueRouter)
 Vue.use(PortalVue)
 
-/*Vue.use(Auth0Plugin, {
+Vue.use(Auth0Plugin, {
   domain, 
   clientId,
   audience,
@@ -43,7 +42,7 @@ Vue.use(PortalVue)
         : window.location.pathname
     );
   }
-});*/
+});
 
 // Global components
 import SectionTitle from '@/components/layout/SectionTitle.vue'
@@ -70,7 +69,7 @@ import Citizen from '@/components/citizen/Citizen.vue'
 import CitizenSearch from '@/components/citizen/CitizenSearch.vue'
 import Organization from '@/components/org/Organization.vue'
 import OrgSearch from '@/components/org/OrgSearch.vue'
-import Settings from '@/components/user/Settings.vue'
+import Profile from '@/components/user/Profile.vue'
 import NewsArticle from '@/components/news/NewsArticle.vue'
 import SignUp from '@/components/user/SignUp.vue'
 
@@ -82,8 +81,7 @@ const routes = [
   { path: '/citizens', component: CitizenSearch },
   { path: '/orgs/:org', component: Organization},
   { path: '/orgs', component: OrgSearch},
-  { path: '/implicit/callback', component: FrontPage },
-  { path: '/settings', component: Settings, beforeEnter: authGuard },
+  { path: '/profile', component: Profile, beforeEnter: authGuard },
   { path: '/news/:newsId', component: NewsArticle },
   { path: '/signup', component: SignUp },
   { path: '*', component: FrontPage }

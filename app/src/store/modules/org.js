@@ -12,7 +12,7 @@ const getters = {
 
 const actions = {
     doSomething(param) {
-        commit('some_mutator', param)
+        this.commit('some_mutator', param)
     }
 }
 

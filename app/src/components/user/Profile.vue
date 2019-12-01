@@ -2,7 +2,7 @@
     <div>
     <div>
       <img :src="$auth.user.picture">
-      <h2>{{ $auth.user.name }}</h2>
+      <h2>{{ $auth.user["https://uee.life/user_metadata"].handle }}</h2>
       <p>{{ $auth.user.email }}</p>
     </div>
 
@@ -14,7 +14,7 @@
 
 <script>
 export default {
-    name: "settings"
+    name: "profile"
 }
 </script>
 

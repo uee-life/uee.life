@@ -9,5 +9,7 @@ export default new Vuex.Store({
     modules: {
         org,
         citizen
-    }
+    },
+    strict: true,
+    plugins: [] 
 })

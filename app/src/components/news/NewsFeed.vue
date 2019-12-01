@@ -90,7 +90,9 @@ export default {
             this.loading = true
             try {
                 // Get the access token from the auth wrapper
-                //const token = await this.$auth.getTokenSilently();
+                const token = await this.$auth.getTokenSilently();
+                // eslint-disable-next-line
+                console.log(token);
 
                 // Use Axios to make a call to the API
                 const { data } = await axios.get('https://api.uee.life/news?channel=' + this.search.channel + '&series=' + this.search.series + '&page=' + this.pages, {
