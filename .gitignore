@@ -24,3 +24,4 @@ yarn-error.log*
 
 # Sensitive Files
 auth_config.json
+auth_config.js

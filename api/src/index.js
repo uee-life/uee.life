@@ -8,11 +8,12 @@ const morgan = require('morgan');
 const jwt = require('express-jwt')
 const jwksRsa = require('jwks-rsa')
 
-const {getCitizen, getCitizenInfo, getCitizenShips, getCitizenLocation} = require('./db/citizen');
+const {getCitizen, getCitizenInfo, getCitizenShips, getCitizenLocation, verifyCitizen} = require('./db/citizen');
 const {getOrganization, getOrgFounders} = require('./db/organization');
 const {getNews} = require('./db/news');
 const {searchOrgs} = require('./db/search');
-const {getHandle} = require('./db/user.js');
+const {getHandle} = require('./db/user');
+
 
 // defining the Express app
 const app = express();
@@ -76,9 +77,13 @@ app.post('/search/org', async (req, res) => {
 
 // Secure API calls
 
-app.get("/handle", checkJwt, (req, res) => {
-    res.send(await getHandle(req.headers.authorization));
-})
+app.get("/user", checkJwt, async (req, res) => {
+    res.send(await getUser(req.headers.authorization));
+});
+
+app.get("/citizen/:handle/verify", checkJwt, async (req, res) => {
+    res.send(await verifyCitizen(req.headers.authorization, req.params.handle));
+});
 
 // starting the server
 app.listen(3001, () => {

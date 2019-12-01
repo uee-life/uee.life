@@ -71,7 +71,23 @@ export default {
                     }
                 }
             }).then() // handle errors here... i.e. password complexity
+        },
+        async test() {
+            // Get the access token from the auth wrapper
+                const token = await this.$auth.getTokenSilently();
+                // eslint-disable-next-line
+                console.log(token);
+
+                // Use Axios to make a call to the API
+                const { data } = await axios.get('http://localhost:3001/handle/verify', {
+                    headers: {
+                        Authorization: `Bearer ${token}`    // send the access token through the 'Authorization' header
+                    }
+                });
         }
+    },
+    mounted() {
+        this.test()
     }
 }
 </script>

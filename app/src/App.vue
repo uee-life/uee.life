@@ -12,7 +12,7 @@
       <div class="main-header-right">
         <div v-if="!$auth.loading" class="user">
           <div v-if='$auth.isAuthenticated'>
-              Welcome, <b>{{ $auth.user["https://uee.life/user_metadata"].handle }}</b> ( <a @click='logout'> Log Out </a> )
+              Welcome, <b>{{ $auth.user["https://uee.life/app_metadata"].handle }}</b><span v-if='!$auth.user["https://uee.life/app_metadata"].handle_verified'> ( unverified ) </span><br/>[ <a @click='logout'> Log Out </a> ]
           </div>
           <div v-else>
             Welcome! Please <a @click='login' id="login-button">Log In / Sign Up</a>
@@ -44,8 +44,11 @@ export default {
   },
   data() {
     return {
-      location: {},
-      authenticated: false
+      user: {
+        app_metadata: {
+          handle: ""
+        }
+      }
     }
   },
   methods: {

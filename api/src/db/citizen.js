@@ -1,5 +1,6 @@
 const axios = require("axios")
 const cheerio = require('cheerio')
+const {verifyHandle} = require('./user')
 
 async function fetchCitizen(handle) {
     try {
@@ -35,6 +36,37 @@ async function getCitizen(handle) {
       if (conn) conn.end();
     }
     return rows[0]
+}
+
+function getCode(bio) {
+    console.log(bio)
+    result = bio.match(/\[ueelife\:[A-Za-z0-9]+\]/i);
+    console.log("found: " + result)
+    return result
+}
+
+function getVerificationCode(handle) {
+    return 'EDD78789FSF9SD8FSDD'
+}
+
+async function verifyCitizen(token, handle) {
+    citizen = await getCitizen(handle).then(async function(citizen) {
+        console.log(citizen)
+        code = getCode(citizen.info.bio)
+        validCode = getVerificationCode(handle)
+        console.log(code + ':' + validCode)
+        if(code == `[ueelife:${validCode}]`) {
+            console.log('verified!')
+            res = await verifyHandle(token)
+            return res
+        } else {
+            console.log('not verified')
+            return {success: false, data: null}
+        }
+    }).catch(function (err) {
+        console.error(err)
+    })
+    return citizen
 }
 
 async function fetchShips(handle) {
@@ -105,5 +137,6 @@ module.exports = {
     getCitizen,
     getCitizenInfo,
     getCitizenShips,
-    getCitizenLocation
+    getCitizenLocation,
+    verifyCitizen
 };

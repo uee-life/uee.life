@@ -6,7 +6,7 @@
                 <router-link to="/">{{ source.name }}</router-link>
             </div>
         </portal>
-        <section-title :text="title" size="big"/>
+        <section-title :text="title" size="large"/>
         <transition-group
             name="staggered-fade"
             tag="div"
@@ -90,9 +90,9 @@ export default {
             this.loading = true
             try {
                 // Get the access token from the auth wrapper
-                const token = await this.$auth.getTokenSilently();
+                //const token = await this.$auth.getTokenSilently();
                 // eslint-disable-next-line
-                console.log(token);
+                //console.log(token);
 
                 // Use Axios to make a call to the API
                 const { data } = await axios.get('https://api.uee.life/news?channel=' + this.search.channel + '&series=' + this.search.series + '&page=' + this.pages, {
@@ -148,7 +148,7 @@ export default {
         flex-basis: 500px;
         display: block;
         padding-top: 20px;
-        margin-top: 20px;
+        margin-top: 40px;
     }
 
     .news-feed .more {
