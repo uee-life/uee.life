@@ -66,7 +66,7 @@ async function setVerificationCode(user, code) {
     try {
         conn = await pool.getConnection();
 
-        const res = await conn.query("INSERT INTO verification (email, code) value (?, ?)", [user.email, code]);
+        const res = await conn.query("INSERT INTO verification (email, vcode) value (?, ?)", [user.email, code]);
         console.log(res); // { affectedRows: 1, insertId: 1, warningStatus: 0 }
   
     } catch (err) {
@@ -81,7 +81,7 @@ async function getVerificationCode(user) {
     code = "";
     try {
         conn = await pool.getConnection();
-        const rows = await conn.query("SELECT code from verification where email = ?", [user.email]);
+        const rows = await conn.query("SELECT vcode from verification where email = ?", [user.email]);
         console.log(rows); //[ {val: 1}, meta: ... ]
         if(rows) {
             code = rows[0].code
