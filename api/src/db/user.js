@@ -85,17 +85,17 @@ async function getVerificationCode(user) {
         console.log(rows); //[ {val: 1}, meta: ... ]
         if(rows.length > 1) { // rows + meta info
             code = rows[0].code
-            return code;
         } else {
             code = uuid()
+            console.log(code)
             await setVerificationCode(user, code);
-            return code;
         }
     } catch (err) {
         throw err;
     } finally {
-        if (conn) return conn.end();
+        if (conn) conn.end();
     }
+    return code;
 }
 
 async function verifyHandle(token, code) {
