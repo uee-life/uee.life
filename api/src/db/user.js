@@ -83,18 +83,18 @@ async function getVerificationCode(user) {
         conn = await pool.getConnection();
         const rows = await conn.query("SELECT code from verification where email = ?", [user.email]);
         console.log(rows); //[ {val: 1}, meta: ... ]
-        code = rows[0].code
+        if(rows) {
+            code = rows[0].code
+            return code;
+        } else {
+            code = uuid()
+            await setVerificationCode(user, code);
+            return code;
+        }
     } catch (err) {
         throw err;
     } finally {
         if (conn) return conn.end();
-    }
-    if(code) {
-        return code;
-    } else {
-        code = uuid()
-        await setVerificationCode(user, code);
-        return code;
     }
 }
 
