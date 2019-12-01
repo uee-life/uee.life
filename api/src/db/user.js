@@ -1,4 +1,8 @@
 const axios = require("axios")
+const uuid = require('uuid/v4')
+
+const pool = require('./mariadb')
+
 const { domain, clientId, clientSecret, scope, audience } = require("../config/auth_config.js");
 
 var ManagementClient = require('auth0').ManagementClient;
@@ -29,6 +33,7 @@ async function getUser(token) {
     }).catch(function (err) {
         console.error(err);
     })
+    data.verificationCode = getVerificationCode(data)
     return data
 }
 
@@ -56,22 +61,64 @@ async function updateHandle(token, handle) {
     });
 }
 
-async function verifyHandle(token) {
-    var user = await getUser(token)
-    var params = {
-        id: user.sub
+async function setVerificationCode(user, code) {
+    let conn;
+    try {
+        conn = await pool.getConnection();
+
+        const res = await conn.query("INSERT INTO verification (email, code) value (?, ?)", [user.email, code]);
+        console.log(res); // { affectedRows: 1, insertId: 1, warningStatus: 0 }
+  
+    } catch (err) {
+        throw err;
+    } finally {
+        if (conn) return conn.end();
     }
-    var metadata = {
-        handle_verified: true
+}
+
+async function getVerificationCode(user) {
+    let conn;
+    code = "";
+    try {
+        conn = await pool.getConnection();
+        const rows = await conn.query("SELECT code from verification where email = ?", [user.email]);
+        console.log(rows); //[ {val: 1}, meta: ... ]
+        code = rows[0].code
+    } catch (err) {
+        throw err;
+    } finally {
+        if (conn) return conn.end();
     }
-    const res = await management.updateAppMetadata(params, metadata).then(function(user) {
-        //console.log(user)
+    if(code) {
+        return code;
+    } else {
+        code = uuid()
+        await setVerificationCode(user, code);
+        return code;
+    }
+}
+
+async function verifyHandle(token, code) {
+    const user = await getUser(token)
+    const validCode = getVerificationCode(user)
+
+    if(code == `[ueelife:${validCode}]`) {
+        var params = {
+            id: user.sub
+        }
+        var metadata = {
+            handle_verified: true
+        }
+        const res = await management.updateAppMetadata(params, metadata).then(function(user) {
+            return user
+        }).catch(function(err) {
+            console.error(err)
+            return user
+        })
+        return res
+    } else {
         return user
-    }).catch(function(err) {
-        console.error(err)
-        return null
-    })
-    return res
+    }
 }
 
 module.exports = {

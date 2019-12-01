@@ -1,9 +1,11 @@
 const mariadb = require('mariadb');
+const {db_host, db_user, db_pass, db_db} = require('../config/db_config')
 
 const pool = mariadb.createPool({
-     host: 'mydb.com', 
-     user:'myUser', 
-     password: 'myPassword',
+     host: db_host, 
+     user: db_user, 
+     password: db_pass,
+     database: db_db,
      connectionLimit: 5
 });
 
@@ -22,3 +24,5 @@ async function asyncFunction() {
 	if (conn) return conn.end();
   }
 }
+
+module.exports = pool

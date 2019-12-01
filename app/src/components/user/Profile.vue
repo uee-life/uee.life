@@ -38,7 +38,7 @@ export default {
       async getUser() {
         const token = await this.$auth.getTokenSilently();
         axios({
-          url: `http://api.uee.life/user`,
+          url: `http://capnflint.com:3002/user`,
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`
@@ -57,7 +57,7 @@ export default {
         const handle = this.$auth.user["https://uee.life/app_metadata"].handle
 
         axios({
-          url: `http://api.uee.life/citizen/${handle}/verify`,
+          url: `https://api.uee.life/citizen/${handle}/verify`,
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`

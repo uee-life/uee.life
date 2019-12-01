@@ -1,6 +1,8 @@
 const axios = require("axios")
 const cheerio = require('cheerio')
+
 const {verifyHandle} = require('./user')
+const {pool} = require('./mariadb')
 
 async function fetchCitizen(handle) {
     try {
@@ -45,21 +47,10 @@ function getCode(bio) {
     return result
 }
 
-function getVerificationCode(handle) {
-    return 'EDD78789FSF9SD8FSDD'
-}
-
 async function verifyCitizen(token, handle) {
     citizen = await getCitizen(handle).then(async function(citizen) {
         code = getCode(citizen.info.bio)
-        validCode = getVerificationCode(handle)
-
-        if(code == `[ueelife:${validCode}]`) {
-            res = await verifyHandle(token)
-            return res
-        } else {
-            return {success: false, data: null}
-        }
+        res = await verifyHandle(token, code)
     }).catch(function (err) {
         console.error(err)
     })

@@ -12,7 +12,7 @@ const {getCitizen, getCitizenInfo, getCitizenShips, getCitizenLocation, verifyCi
 const {getOrganization, getOrgFounders} = require('./db/organization');
 const {getNews} = require('./db/news');
 const {searchOrgs} = require('./db/search');
-const {getHandle} = require('./db/user');
+const {getUser} = require('./db/user');
 
 
 // defining the Express app
@@ -20,9 +20,7 @@ const app = express();
 
 app.use(helmet());
 app.use(bodyParser.json());
-
 app.use(cors());
-
 app.use(morgan('combined'));
 
 const checkJwt = jwt({
