@@ -2,7 +2,8 @@ const auth = {
     "domain": "",
     "clientId": "",
     "clientSecret": "",
-    "scope": ""
+    "scope": "",
+    "audience": ""
 }
 
 module.exports = auth

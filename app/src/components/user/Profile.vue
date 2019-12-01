@@ -30,24 +30,44 @@ export default {
       }
     },
     mounted() {
+      this.getUser()
       this.user = this.$auth.user
       this.user.app_metadata = this.$auth.user["https://uee.life/app_metadata"]
     },
     methods: {
-      async verifyHandle() {
+      async getUser() {
         const token = await this.$auth.getTokenSilently();
-        const handle = this.$auth.user["https://uee.life/app_metadata"].handle
-
         axios({
-          url: `http://localhost:3001/citizen/${handle}/verify`,
+          url: `http://api.uee.life/user`,
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`
           }
         }).then((res) => {
+          // eslint-disable-next-line
+          console.log(res)
+          this.user = res.data
+        }).catch((error) => {
+          // eslint-disable-next-line
+          console.error(error)
+        })
+      },
+      async verifyHandle() {
+        const token = await this.$auth.getTokenSilently();
+        const handle = this.$auth.user["https://uee.life/app_metadata"].handle
+
+        axios({
+          url: `http://api.uee.life/citizen/${handle}/verify`,
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }).then((res) => {
+          // eslint-disable-next-line
           console.log(res)
           this.user = res.data
         }).catch(function(err) {
+          // eslint-disable-next-line
           console.error(err)
         })
       }
