@@ -83,7 +83,7 @@ async function getVerificationCode(user) {
         conn = await pool.getConnection();
         const rows = await conn.query("SELECT vcode from verification where email = ?", [user.email]);
         console.log(rows); //[ {val: 1}, meta: ... ]
-        if(rows) {
+        if(rows.length > 1) { // rows + meta info
             code = rows[0].code
             return code;
         } else {
