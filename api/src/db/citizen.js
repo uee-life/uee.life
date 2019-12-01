@@ -51,16 +51,13 @@ function getVerificationCode(handle) {
 
 async function verifyCitizen(token, handle) {
     citizen = await getCitizen(handle).then(async function(citizen) {
-        console.log(citizen)
         code = getCode(citizen.info.bio)
         validCode = getVerificationCode(handle)
-        console.log(code + ':' + validCode)
+
         if(code == `[ueelife:${validCode}]`) {
-            console.log('verified!')
             res = await verifyHandle(token)
             return res
         } else {
-            console.log('not verified')
             return {success: false, data: null}
         }
     }).catch(function (err) {

@@ -42,7 +42,6 @@ async function getHandle(token) {
 }
 
 async function updateHandle(token, handle) {
-    console.log(user)
     var params = {
         id: user.sub
     }
@@ -72,7 +71,6 @@ async function verifyHandle(token) {
         console.error(err)
         return null
     })
-    console.log(res)
     return res
 }
 
