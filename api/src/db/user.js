@@ -20,9 +20,9 @@ var management = new ManagementClient({
 });
 
 async function getUser(token) {
-    data = {}
+    user = {}
     const api_uri = 'https://ueelife-test.auth0.com/userinfo'
-    data = await axios({
+    user = await axios({
         url: api_uri,
         method: 'GET',
         headers: {
@@ -33,8 +33,10 @@ async function getUser(token) {
     }).catch(function (err) {
         console.error(err);
     })
-    data.verificationCode = getVerificationCode(data)
-    return data
+    code = getVerificationCode(user)
+    console.log("code: " + code)
+    user.verificationCode = code
+    return user
 }
 
 async function getHandle(token) {
@@ -87,7 +89,6 @@ async function getVerificationCode(user) {
             code = rows[0].vcode
         } else {
             code = uuid()
-            console.log(code)
             await setVerificationCode(user, code);
         }
     } catch (err) {
@@ -95,7 +96,6 @@ async function getVerificationCode(user) {
     } finally {
         if (conn) conn.end();
     }
-    console.log(code)
     return code;
 }
 
