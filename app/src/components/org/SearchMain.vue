@@ -5,7 +5,7 @@
                 <input class="search-input" @keyup.enter="getResults()" v-model="input" placeholder="Org Handle"/>
             </dock-item>
         </portal>
-        <section-title text="Organization Registry" size="big"/>
+        <section-title text="Organization Registry" size="large"/>
         <div v-if="result" v-html="result" class="results">
         </div>
         <div v-else class="no-results">
@@ -64,7 +64,8 @@ export default {
         position: relative;
         width: 100%;
         padding: 10px;
-        margin-top: 20px;
+        padding-top: 20px;
+        margin-top: 30px;
     }
 
     .no-results {
