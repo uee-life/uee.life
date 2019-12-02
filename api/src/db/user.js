@@ -77,8 +77,7 @@ async function getVerificationCode(user) {
         if(rows.length > 0) { // rows + meta info
             code = rows[0].vcode
         } else {
-            code = uuid()
-            await setVerificationCode(user, code);
+            await setVerificationCode(user, uuid());
         }
     } catch (err) {
         throw err;
@@ -106,6 +105,7 @@ async function verifyHandle(token, code) {
             console.error(err)
             return null
         })
+        setVerificationCode(user, uuid());
         return {
             success: true,
             user: res
