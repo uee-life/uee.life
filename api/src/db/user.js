@@ -95,7 +95,7 @@ async function verifyHandle(token, code) {
     console.log("test code: " + code)
     if(code == `[ueelife:${validCode}]`) {
         var params = {
-            id: user.sub
+            id: user.user_id
         }
         var metadata = {
             handle_verified: true
@@ -104,7 +104,7 @@ async function verifyHandle(token, code) {
             return user
         }).catch(function(err) {
             console.error(err)
-            return user
+            return null
         })
         return {
             success: true,
