@@ -28,11 +28,11 @@ const checkJwt = jwt({
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,
-        jwksUri: `https://ueelife-test.auth0.com/.well-known/jwks.json`
+        jwksUri: `https://ueelife.auth0.com/.well-known/jwks.json`
     }),
 
-    audience: 'https://ueelife-test',
-    issuer: `https://ueelife-test.auth0.com/`,
+    audience: 'https://ueelife-api',
+    issuer: `https://ueelife.auth0.com/`,
     algorithms: ['RS256']
 });
 

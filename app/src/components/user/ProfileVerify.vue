@@ -12,7 +12,6 @@
 </template>
 
 <script>
-import axios from "axios"
 import { TimelineLite } from "gsap"
 
 export default {
@@ -46,7 +45,7 @@ export default {
         }
     },
     methods: {
-        async verify(event) {
+        async verify() {
             this.$emit('verify')
         }
     }
