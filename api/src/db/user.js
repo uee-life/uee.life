@@ -105,9 +105,15 @@ async function verifyHandle(token, code) {
             console.error(err)
             return user
         })
-        return res
+        return {
+            success: true,
+            user: res
+        }
     } else {
-        return user
+        return {
+            success: false,
+            user: user
+        }
     }
 }
 
