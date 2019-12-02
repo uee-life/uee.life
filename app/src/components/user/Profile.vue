@@ -1,44 +1,45 @@
 <template>
-    <div>
-    <div>
-      <!--img :src="$auth.user.picture"-->
-      <h2>{{ user.app_metadata.handle }}</h2>
-      <p>{{ user.email }}</p>
-      <p>Verified: {{ user.app_metadata.handle_verified}}</p>
-      <button @click="verifyHandle">Verify</button>
-    </div>
+  <div class="profile">
+    <left-dock />
+    <portal to="navigationPane"></portal>
+    <div class="profile-main">
+      <profile-info :user="user"/>
+      <profile-verify :user="user" @verify="verifyHandle"/>
 
-    <div>
-      <pre>{{ JSON.stringify(user, null, 2) }}</pre>
+      <div v-if="debug" class="debug">
+        <pre>{{ JSON.stringify(user, null, 2) }}</pre>
+      </div>
     </div>
+    <right-dock />
   </div>
 </template>
 
 <script>
 import axios from "axios"
 
+import ProfileInfo from '@/components/user/ProfileInfo.vue'
+import ProfileVerify from '@/components/user/ProfileVerify.vue'
+
 export default {
     name: "profile",
+    components: {
+      ProfileInfo,
+      ProfileVerify
+    },
     data() {
       return {
-        user: {
-          app_metadata: {
-            handle: "",
-            handle_verified: false
-          }
-        }
+        user: null,
+        debug: true
       }
     },
     mounted() {
       this.getUser()
-      this.user = this.$auth.user
-      this.user.app_metadata = this.$auth.user["https://uee.life/app_metadata"]
     },
     methods: {
       async getUser() {
         const token = await this.$auth.getTokenSilently();
         axios({
-          url: `http://capnflint.com:3002/user`,
+          url: `https://api.uee.life/user`,
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`
@@ -75,6 +76,21 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+  .profile {
+    position: relative;
+    width: 100%;
+    display: flex;
+  }
 
+  .profile-main {
+    width: 100%;
+    padding: 10px;
+    padding-top: 20px;
+  }
+
+  .debug {
+    display: flex;
+    overflow: hidden;
+  }
 </style>

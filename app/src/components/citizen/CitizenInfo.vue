@@ -49,7 +49,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .citizen-info {
         display: flex;
         width: 100%;
