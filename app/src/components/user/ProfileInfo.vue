@@ -1,10 +1,12 @@
 <template>
   <main-panel id="profile-info" title="User Profile" mainClass="profile-info">
       <div v-if="user" class="info">
-          <div class="line-item"><div>Handle: </div> <div> {{user.app_metadata.handle}}</div></div>
+          <div class="line-item"><div>Username: </div> <div> {{user.username}}</div></div>
           <div class="line-item"><div>Email: </div> <div> {{user.email}}</div></div>
-          <br>
-          <div class="line-item"><div>Verified: </div> <div> {{ isVerified }}</div></div>
+          <div class="line-item"><div>Verified: </div> <div> {{ isVerified(user.email_verified) }}</div></div>
+            <br />
+          <div class="line-item"><div>Handle: </div> <div> {{user.app_metadata.handle}}</div></div>
+          <div class="line-item"><div>Verified: </div> <div> {{ isVerified(user.app_metadata.handle_verified) }}</div></div>
       </div>
   </main-panel>
 </template>
@@ -30,9 +32,9 @@ export default {
             }
         }
     },
-    computed: {
-        isVerified() {
-            if(this.user.app_metadata.handle_verified) {
+    methods: {
+        isVerified(item) {
+            if(item) {
                 return "Yes"
             } else {
                 return "No"
@@ -47,7 +49,7 @@ export default {
         position: relative;
         display: flex;
         width: 100%;
-        height: 250px;
+        height: fit-content;
         padding: 10px;
         padding-top: 20px;
         margin-top: 20px;

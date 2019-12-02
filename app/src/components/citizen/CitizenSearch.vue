@@ -1,17 +1,17 @@
 <template>
     <div class="citizen-search">
         <left-dock :nav="false"/>
-        <search-main />
+        <citizen-results />
         <right-dock />
     </div>
 </template>
 
 <script>
-import SearchMain from '@/components/citizen/SearchMain.vue'
+import CitizenResults from '@/components/citizen/CitizenResults.vue'
 export default {
     name: 'citizen-search',
     components: {
-        SearchMain
+        CitizenResults
     }
 }
 </script>

@@ -8,8 +8,8 @@
         </div>
         <div class="page-head-right">
             <div v-if="!$auth.loading" class="user">
-                <div v-if='$auth.isAuthenticated'>
-                    Welcome, <b>{{ $auth.user["https://uee.life/app_metadata"].handle }}</b>
+                <div v-if='$auth.isAuthenticated' class="welcome">
+                    Welcome, <router-link :to="citizenLink"><b>{{ $auth.user["https://uee.life/app_metadata"].handle }}</b></router-link>
                 </div>
                 <div v-if='$auth.isAuthenticated'>
                     [ <a @click='logout'> Log Out </a> ]
@@ -28,6 +28,11 @@
 <script>
 export default {
     name: 'page-head',
+    computed: {
+        citizenLink() {
+            return `/citizens/${this.$auth.user["https://uee.life/app_metadata"].handle}`
+        }
+    },
     methods: {
         login() {
             this.$auth.loginWithRedirect();
@@ -82,6 +87,15 @@ export default {
 
     .page-head-right .user a {
         cursor: pointer;
+    }
+
+    .page-head-right .user .welcome>a {
+        color: #39ced8;
+        text-decoration: none;
+    }
+
+    .page-head-right .user .welcome>a:hover {
+        color: #dbf3ff;
     }
 
     .page-head-right .search {

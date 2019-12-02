@@ -102,7 +102,6 @@ export default {
   .profile-main {
     width: 100%;
     padding: 10px;
-    padding-top: 20px;
   }
 
   .debug {
