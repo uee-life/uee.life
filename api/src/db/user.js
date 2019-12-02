@@ -23,7 +23,18 @@ var management = new ManagementClient({
 async function getUser(token) {
     userID = jwt.decode(token.slice(7)).sub
     console.log(userID)
-    user = {}
+    var params = {
+        id: userID
+    }
+    const user = await management.getUser(params).then((res) => {
+        return res
+    }).catch((err) => {
+        console.error(err)
+    });
+
+    user.verificationCode = await getVerificationCode(user)
+    return user
+    /*user = {}
     const api_uri = 'https://ueelife-test.auth0.com/userinfo'
     user = await axios({
         url: api_uri,
@@ -37,7 +48,7 @@ async function getUser(token) {
         console.error(err);
     })
     user.verificationCode = await getVerificationCode(user)
-    return user
+    return user*/
 }
 
 async function getHandle(token) {
