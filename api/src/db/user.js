@@ -84,7 +84,7 @@ async function getVerificationCode(user) {
         const rows = await conn.query("SELECT vcode from verification where email = ?", [user.email]);
         console.log(rows); //[ {val: 1}, meta: ... ]
         if(rows.length > 0) { // rows + meta info
-            code = rows[0].code
+            code = rows[0].vcode
         } else {
             code = uuid()
             console.log(code)
