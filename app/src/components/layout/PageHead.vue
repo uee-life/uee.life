@@ -24,7 +24,17 @@
 
 <script>
 export default {
-    name: 'page-head'
+    name: 'page-head',
+    methods: {
+        login() {
+            this.$auth.loginWithRedirect();
+        },
+        logout() {
+            this.$auth.logout({
+                returnTo: window.location.origin
+            });
+        }
+    }
 }
 </script>
 
