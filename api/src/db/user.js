@@ -21,7 +21,7 @@ var management = new ManagementClient({
 });
 
 async function getUser(token) {
-    userID = jwt.decode(token).payload
+    userID = jwt.decode(token)
     console.log(userID)
     user = {}
     const api_uri = 'https://ueelife-test.auth0.com/userinfo'
