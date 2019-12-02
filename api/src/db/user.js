@@ -21,6 +21,7 @@ var management = new ManagementClient({
 });
 
 async function getUser(token) {
+    console.log(token)
     userID = jwt.decode(token)
     console.log(userID)
     user = {}
