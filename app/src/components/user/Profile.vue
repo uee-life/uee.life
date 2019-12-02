@@ -1,6 +1,6 @@
 <template>
   <div class="profile">
-    <left-dock />
+    <left-dock nav="false"/>
     <portal to="navigationPane"></portal>
     <div class="profile-main">
       <profile-info :user="user"/>

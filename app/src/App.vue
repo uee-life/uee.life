@@ -1,29 +1,7 @@
 <template>
   <div id="app" class="container">
-    <link href="//fonts.googleapis.com/css?family=Electrolize|Orbitron:400,500,700|Share+Tech+Mono" rel="stylesheet" type="text/css">
     <cookie-law theme="blood-orange"/>
-    <div class="main-header" id="main-header">
-      <div class="main-header-left">
-      <router-link to="/"><img class="logo" alt="logo" src="@/assets/logo.png"></router-link>
-      <div class="title">
-          <div>The portal to your life in the UEE...</div>
-      </div>
-      </div>
-      <div class="main-header-right">
-        <div v-if="!$auth.loading" class="user">
-          <div v-if='$auth.isAuthenticated'>
-              Welcome, <b>{{ $auth.user["https://uee.life/app_metadata"].handle }}</b><span v-if='!$auth.user["https://uee.life/app_metadata"].handle_verified'> ( unverified ) </span><br/>[ <a @click='logout'> Log Out </a> ]
-          </div>
-          <div v-else>
-            Welcome! Please <a @click='login' id="login-button">Log In / Sign Up</a>
-          </div>
-          </div>
-          <div class="search">
-              <!--input type="search" class="search-box" value="Search"-->
-          </div>
-      </div>
-    </div>
-    <!--main-header /-->
+    <page-head />
     <nav-bar />
     <router-view />
     <page-foot />
@@ -31,14 +9,14 @@
 </template>
 
 <script>
-//import MainHeader from '@/components/MainHeader.vue'
+import PageHead from '@/components/layout/PageHead.vue'
 import NavBar from '@/components/layout/NavBar.vue'
 import PageFoot from '@/components/layout/PageFoot.vue'
 
 export default {
   name: 'app',
   components: {
-//    MainHeader,
+    PageHead,
     NavBar,
     PageFoot
   },
@@ -111,45 +89,6 @@ body {
   max-width: 100%;
 }
 
-  .main-header {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        height: 110px;
-        border: 1px solid black;
-        background: rgba(13, 46, 66, 0.5);
-    }
-    .main-header-left {
-        display: flex;
-    }
-    .title {
-        align-self: center;
-    }
-    .title div {
-        font-family: 'Michroma';
-        font-size: 18px;
-    }
-    .main-header-right {
-        display: flex;
-        flex-direction: column;
-        margin: 15px;
-    }
-    .user {
-        text-align: right;
-    }
-    .search {
-        margin-top: 35px;
-    }
-    .search-box {
-        background: white;
-        height: 25px;
-    }
-    .logo {
-        width: 90px;
-        height: 90px;
-        margin: 10px;
-        align-self: center;
-    }
 </style>
 <style>
     .corner.top {
@@ -200,15 +139,4 @@ body {
     .hidden {
       opacity: 0;
     }
-
-    /*.clearfix::before {
-      content: " ";
-      display: table;
-    }
-
-    .clearfix::after {
-      content: " ";
-      display: table;
-      clear: both;
-    }*/
 </style>
