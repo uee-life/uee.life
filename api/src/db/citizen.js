@@ -47,7 +47,7 @@ function getCode(bio) {
 }
 
 async function verifyCitizen(token, handle) {
-    result = await getCitizen(handle).then((citizen) => {
+    result = await getCitizen(handle).then(async (citizen) =>{
         code = getCode(citizen.info.bio)
         res = await verifyHandle(token, code)
         console.log(res)
