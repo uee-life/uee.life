@@ -1,7 +1,7 @@
 <template>
     <main-panel v-if="user" title="Verify Account" mainClass="profile-verify" id="profile-verify">
         <h3>Welcome to UEE.life!</h3>
-        <p>To verify your account, copy the unique code from below, then paste it into your RSI account bio!</p>
+        <p>To verify your account, copy the unique code from below, then paste it into your <a href="https://robertsspaceindustries.com/account/profile">RSI account bio</a>!</p>
         <p>Once done, return here and click on the "verify" button to complete verification.</p>
         <p class="verify-code">
             <input type="text" :value="verificationCode" readonly>

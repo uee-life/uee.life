@@ -1,14 +1,12 @@
 <template>
-  <div id="profile-info" class="profile-info">
-      <section-title text="User Profile" size="large"/>
+  <main-panel id="profile-info" title="User Profile" mainClass="profile-info">
       <div v-if="user" class="info">
-          <div class="line-item"><div>Name: </div> <div></div></div>
           <div class="line-item"><div>Handle: </div> <div> {{user.app_metadata.handle}}</div></div>
           <div class="line-item"><div>Email: </div> <div> {{user.email}}</div></div>
           <br>
           <div class="line-item"><div>Verified: </div> <div> {{ isVerified }}</div></div>
       </div>
-  </div>
+  </main-panel>
 </template>
 
 <script>

@@ -1,11 +1,10 @@
 <template>
   <div class="profile">
-    <left-dock nav="false"/>
+    <left-dock :nav="false"/>
     <portal to="navigationPane"></portal>
     <div class="profile-main">
-      <profile-info :user="user"/>
       <profile-verify v-if="!verified" :user="user" :errors="errors.verification" @verify="verifyHandle"/>
-
+      <profile-info v-if="user" :user="user"/>
       <div v-if="debug" class="debug">
         <pre>{{ JSON.stringify(user, null, 2) }}</pre>
       </div>
@@ -29,7 +28,7 @@ export default {
     data() {
       return {
         user: null,
-        debug: true,
+        debug: false,
         errors: {
           verification: ""
         }

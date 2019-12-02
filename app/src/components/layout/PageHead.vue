@@ -9,7 +9,10 @@
         <div class="page-head-right">
             <div v-if="!$auth.loading" class="user">
                 <div v-if='$auth.isAuthenticated'>
-                    Welcome, <b>{{ $auth.user["https://uee.life/app_metadata"].handle }}</b><span v-if='!$auth.user["https://uee.life/app_metadata"].handle_verified'> ( unverified ) </span><br/>[ <a @click='logout'> Log Out </a> ]
+                    Welcome, <b>{{ $auth.user["https://uee.life/app_metadata"].handle }}</b>
+                </div>
+                <div v-if='$auth.isAuthenticated'>
+                    [ <a @click='logout'> Log Out </a> ]
                 </div>
                 <div v-else>
                     Welcome! Please <a @click='login' id="login-button">Log In / Sign Up</a>
@@ -69,6 +72,16 @@ export default {
         display: flex;
         flex-direction: column;
         margin: 15px;
+    }
+
+    .page-head-right .user {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .page-head-right .user a {
+        cursor: pointer;
     }
 
     .page-head-right .search {
