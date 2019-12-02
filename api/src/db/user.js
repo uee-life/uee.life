@@ -91,7 +91,8 @@ async function getVerificationCode(user) {
 async function verifyHandle(token, code) {
     const user = await getUser(token)
     const validCode = getVerificationCode(user)
-
+    console.log("valid code: " + validCode)
+    console.log("test code: " + code)
     if(code == `[ueelife:${validCode}]`) {
         var params = {
             id: user.sub
