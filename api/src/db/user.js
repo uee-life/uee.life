@@ -1,5 +1,6 @@
 const axios = require("axios")
 const uuid = require('uuid/v4')
+const jwt = require('jsonwebtoken')
 
 const pool = require('./mariadb')
 
@@ -20,6 +21,8 @@ var management = new ManagementClient({
 });
 
 async function getUser(token) {
+    userID = jwt.decode(token).payload
+    console.log(userID)
     user = {}
     const api_uri = 'https://ueelife-test.auth0.com/userinfo'
     user = await axios({
@@ -33,9 +36,7 @@ async function getUser(token) {
     }).catch(function (err) {
         console.error(err);
     })
-    code = await getVerificationCode(user)
-    console.log("code: " + code)
-    user.verificationCode = code
+    user.verificationCode = await getVerificationCode(user)
     return user
 }
 
