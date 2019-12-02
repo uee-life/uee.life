@@ -41,21 +41,22 @@ async function getCitizen(handle) {
 }
 
 function getCode(bio) {
-    console.log(bio)
-    result = bio.match(/\[ueelife\:[A-Za-z0-9]+\]/i);
+    result = bio.match(/\[ueelife\:[A-Za-z0-9\-]+\]/i);
     console.log("found: " + result)
     return result
 }
 
 async function verifyCitizen(token, handle) {
-    citizen = await getCitizen(handle).then(async function(citizen) {
+    result = await getCitizen(handle).then((citizen) => {
         code = getCode(citizen.info.bio)
         res = await verifyHandle(token, code)
+        console.log(res)
         return res
     }).catch(function (err) {
         console.error(err)
     })
-    return citizen
+    console.log(result)
+    return result
 }
 
 async function fetchShips(handle) {
