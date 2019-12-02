@@ -22,7 +22,7 @@ var management = new ManagementClient({
 
 async function getUser(token) {
     userID = jwt.decode(token.slice(7)).sub
-    console.log(userID)
+
     var params = {
         id: userID
     }
@@ -33,31 +33,9 @@ async function getUser(token) {
     });
 
     user.verificationCode = await getVerificationCode(user)
-    return user
-    /*user = {}
-    const api_uri = 'https://ueelife-test.auth0.com/userinfo'
-    user = await axios({
-        url: api_uri,
-        method: 'GET',
-        headers: {
-            'Authorization': `${token}`
-        }
-    }).then(function (res) {
-        return res.data
-    }).catch(function (err) {
-        console.error(err);
-    })
-    user.verificationCode = await getVerificationCode(user)
-    return user*/
-}
 
-async function getHandle(token) {
-    user = await getUser(token)
-    data = {
-        handle: user['https://uee.life/user_metadata'].handle,
-        verified: user['https://uee.life/app_metadata'].handle_verified
-    }
-    return data
+    //TODO: filter to just wanted user fields.
+    return user
 }
 
 async function updateHandle(token, handle) {
