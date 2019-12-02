@@ -33,7 +33,7 @@ async function getUser(token) {
     }).catch(function (err) {
         console.error(err);
     })
-    code = getVerificationCode(user)
+    code = await getVerificationCode(user)
     console.log("code: " + code)
     user.verificationCode = code
     return user
