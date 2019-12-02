@@ -4,7 +4,7 @@
     <portal to="navigationPane"></portal>
     <div class="profile-main">
       <profile-info :user="user"/>
-      <profile-verify :user="user" @verify="verifyHandle"/>
+      <profile-verify v-if="!verified" :user="user" :errors="errors.verification" @verify="verifyHandle"/>
 
       <div v-if="debug" class="debug">
         <pre>{{ JSON.stringify(user, null, 2) }}</pre>
@@ -29,7 +29,19 @@ export default {
     data() {
       return {
         user: null,
-        debug: true
+        debug: true,
+        errors: {
+          verification: ""
+        }
+      }
+    },
+    computed: {
+      verified() {
+        if(this.user && this.user.app_metadata.handle_verified) {
+          return true
+        } else {
+          return false
+        }
       }
     },
     mounted() {
@@ -66,7 +78,12 @@ export default {
         }).then((res) => {
           // eslint-disable-next-line
           console.log(res)
-          this.user = res.data
+          if(!res.data.success) {
+            this.errors.verification = "Unable to verify token. Did you copy it to your bio?"
+          } else {
+            this.errors.verification = ""
+          }
+          this.user = res.data.user
         }).catch(function(err) {
           // eslint-disable-next-line
           console.error(err)
