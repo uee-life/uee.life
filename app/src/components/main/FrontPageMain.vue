@@ -7,19 +7,10 @@
             <latest-citizen />
         </portal> 
         <main-panel title="Site News" mainClass="site-news" id="site-news" :style="newsHeight">
-            <h3>Welcome to UEE.life!</h3>
-            <p>Welcome to the grand launch of UEE.life! The portal to your life in the UEE!</p>
-            <p>As the initial release, we currently lack many of the features we have planned, 
-                but worry not! We will continue working on UEE.life to make sure it is always
-                your primary destination!</p>
-            <p>Planned Features:
-                <ul>
-                    <li>Profile Customization</li>
-                    <li>Fleet Management</li>
-                    <li>Org Management</li>
-                    <li>Location Database</li>
-                    <li>Community Event Calendar</li>
-                </ul>
+            <h3>UEE.life v0.1.1 now live!</h3>
+            <p>In our first major update to UEE.life, you can now create an account, and link your RSI account!</p>
+            <p>Once you have created your account (make sure you enter your RSI handle accurately), visit your profile page <router-link to="/profile">here</router-link> to verify your account!</p>
+            <p>Come back regularly to keep up with all updates!
             </p>
             <p>This site is by the community, for the community, so if you have any thoughts on what
                 you would like to see here, please let me know at: 
@@ -93,7 +84,7 @@ export default {
     }
 
     .site-news>.content>h3 {
-        align-self: center;
+        word-spacing: 8px;
     }
 
     .site-news>.content>.read-more {
