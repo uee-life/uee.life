@@ -20,7 +20,7 @@ export default {
     name: "latest-citizen",
     data() {
         return {
-          latest: "tylvas",
+          latest: "Nubsly",
             citizen: null
         }
     },
