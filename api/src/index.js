@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const mcache = require('memory-cache');
 
 const jwt = require('express-jwt')
 const jwksRsa = require('jwks-rsa')
@@ -23,6 +24,24 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('combined'));
 
+const cache = (duration) => {
+    return (req, res, next) => {
+        let key = '__express__' + req.originalUrl || req.url
+        let cachedBody = mcache.get(key)
+        if(cachedBody) {
+            res.send(cachedBody)
+            return
+        } else {
+            res.sendResponse = res.send
+            res.send = (body) => {
+                mcache.put(key, body, duration * 1000);
+                res.sendResponse(body)
+            }
+            next()
+        }
+    }
+}
+
 const checkJwt = jwt({
     secret: jwksRsa.expressJwtSecret({
         cache: true,
@@ -37,31 +56,31 @@ const checkJwt = jwt({
 });
 
 // Public API calls
-app.get('/citizen/:handle', async (req, res) => {
+app.get('/citizen/:handle', cache(60), async (req, res) => {
     res.send(await getCitizen(req.params.handle));
 });
 
-app.get('/citizen/:handle/info', async (req, res) => {
+app.get('/citizen/:handle/info', cache(60), async (req, res) => {
     res.send(await getCitizenInfo(req.params.handle));
 })
 
-app.get('/citizen/:handle/ships', async (req, res) => {
+app.get('/citizen/:handle/ships', cache(60), async (req, res) => {
     res.send(await getCitizenShips(req.params.handle));
 });
 
-app.get('/citizen/:handle/location', async(req, res) => {
+app.get('/citizen/:handle/location', cache(60), async(req, res) => {
     res.send(await getCitizenLocation(req.params.handle))
 })
 
-app.get('/organization/:id', async (req, res) => {
+app.get('/organization/:id', cache(60), async (req, res) => {
     res.send(await getOrganization(req.params.id));
 });
 
-app.get('/organization/:id/founders', async (req, res) => {
+app.get('/organization/:id/founders', cache(60), async (req, res) => {
     res.send(await getOrgFounders(req.params.id));
 });
 
-app.get('/news', async (req, res) => {
+app.get('/news', cache(60), async (req, res) => {
     let data = {"channel": "","series":"","type":"","text":"","sort":"publish_new","page":1};
     for (const prop in req.query) {
         if(prop in data) {
