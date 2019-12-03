@@ -1,84 +1,67 @@
 <template>
     <dock-item title="Latest Citizen" mainClass="latest-citizen">
-      <router-link :to="citizenLink"><img class="logo" :src="citizen.portrait" /></router-link>
+      <div v-if="citizen" >
+      <router-link :to="citizenLink"><img class="logo" :src="citizen.info.portrait" /></router-link>
       <div class="cit-name">
-        {{ citizen.name }}
+        {{ citizen.info.name }}
       </div>
       <div class="cit-handle">
-        Handle: {{ citizen.handle }}
+        Handle: {{ citizen.info.handle }}
+      </div>
       </div>
     </dock-item>
 </template>
 
 <script>
 import { TimelineLite } from "gsap"
+import axios from "axios"
 
 export default {
     name: "latest-citizen",
     data() {
         return {
-            citizen: {
-                name: "Flint McBane",
-                handle: "Capn_Flint",
-                bio: "This is a bio...",
-                record: "84348",
-                enlisted: "Nov 18, 2194",
-                portrait: "https://robertsspaceindustries.com/media/lb0drmasxlhcyr/heap_infobox/Grog_fallout.png",
-                home: {
-                    system: "Stanton",
-                    planet: "Hurston",
-                    city: "Lorville"
-                },
-                ships: [
-                    {
-                    id: 1,
-                    manufacturer: "Anvil",
-                    make: "Hornet",
-                    model: "F7a",
-                    name: "Bulldog",
-                    size: "Light",
-                    crew: 8
-                },
-                {
-                    id: 2,
-                    manufacturer: "Aegis",
-                    make: "Avenger",
-                    model: "Titan",
-                    name: "Penguin",
-                },
-                {
-                    id: 3,
-                    manufacturer: "RSI",
-                    make: "Constellation",
-                    model: "Phoenix",
-                    name: "Shark",
-                }
-                ],
-                org: {
-                    name: "McBane Enterprises",
-                    type: "Organization",
-                    title: "Director",
-                    logo: "https://robertsspaceindustries.com/media/2weountodg09pr/heap_infobox/MCBANE-Logo.png"
-                }
-
-            }
+          latest: "tylvas",
+            citizen: null
         }
     },
     computed: {
         citizenLink () {
-        return `/citizens/${this.citizen.handle}`;
+        return `/citizens/${this.citizen.info.handle}`;
         }
     },
-    mounted() {
+    methods: {
+      async getLatest() {
+        axios({
+          url: `https://api.uee.life/citizen/${this.latest}`,
+          method: 'GET'
+        }).then((res) => {
+          this.citizen = res.data
+        }).catch((error) => {
+          // eslint-disable-next-line
+          console.error(error)
+        });
+      }
+    },
+    watch: {
+      citizen() {
         const timeline = new TimelineLite()
 
-        timeline.to(".latest-citizen .content", 1, {opacity: 1})
+        timeline.to(".latest-citizen", 1, {opacity: 1})
+      }
+    },
+    mounted() {
+        this.getLatest()
     }
 }
 </script>
 
 <style>
-  .latest-citizen .content{
+  .latest-citizen {
+    opacity: 1;
+    transition-property: all;
+  }
+
+  .latest-citizen .content div{
     display: flex;
     flex-direction: Column;
     align-items: center;
