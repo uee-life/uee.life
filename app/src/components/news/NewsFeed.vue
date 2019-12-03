@@ -116,7 +116,7 @@ export default {
             el.style.opacity = 0
         },
         enter: function (el) {
-            var delay = el.getAttribute('index') * 250
+            var delay = (el.getAttribute('index') % 10) * 250
             setTimeout(function() {
                 new TimelineLite().to(el, 1, {opacity: 0.9})
             }, delay)
