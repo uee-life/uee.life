@@ -57,6 +57,10 @@ async function setVerificationCode(user, code) {
     try {
         conn = await pool.getConnection();
 
+        // delete old code
+        await conn.query("DELETE FROM verification WHERE email = ?", [user.email]);
+
+        // add new code
         const res = await conn.query("INSERT INTO verification (email, vcode) value (?, ?)", [user.email, code]);
         console.log(res); // { affectedRows: 1, insertId: 1, warningStatus: 0 }
   
