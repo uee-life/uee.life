@@ -76,7 +76,8 @@ async function getVerificationCode(user) {
         if(rows.length > 0) { // rows + meta info
             code = rows[0].vcode
         } else {
-            await setVerificationCode(user, uuid());
+            code = uuid();
+            await setVerificationCode(user, code);
         }
     } catch (err) {
         throw err;
