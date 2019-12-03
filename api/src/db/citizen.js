@@ -26,20 +26,6 @@ async function fetchCitizen(handle) {
     }
 }
 
-async function getCitizen(handle) {
-    let conn;
-    try {
-      conn = await pool.getConnection();
-      const rows = await conn.query("SELECT name, bio FROM `Character` where handle=?", [handle]);
-  
-    } catch (err) {
-      throw err;
-    } finally {
-      if (conn) conn.end();
-    }
-    return rows[0]
-}
-
 function getCode(bio) {
     result = bio.match(/\[ueelife\:[A-Za-z0-9\-]+\]/i);
     console.log("found: " + result)

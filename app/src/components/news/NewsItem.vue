@@ -1,6 +1,7 @@
 <template>
-    <a :href="item.link" style="text-decoration: none" target="blank">
-        <div ref="newsitem" class="news-item" id="news-item">
+    <div ref="newsitem" class="news-item" id="news-item">
+        <a :href="item.link" style="text-decoration: none" target="blank">
+            <div class="content">
             <div class="background" :style="style"></div>
             <div class="mask"></div>
             <img class="article-image" :src="item.image" />
@@ -8,12 +9,13 @@
                 <div><b>{{ item.title }}</b></div>
                 <div>Posted: {{ item.posted }}</div>
             </div>
+            </div>
             <span class="corner top left"></span>
             <span class="corner top right"></span>
             <span class="corner bottom left"></span>
             <span class="corner bottom right"></span>
-        </div>
-    </a>
+        </a>
+    </div>
 </template>
 
 <script>
@@ -45,14 +47,17 @@ export default {
 
     .news-item {
         display: flex;
-        width: 100% - 20px;
-        min-width: 400px;
-        flex-basis: 400px;
-        margin: 5px 0 20px 0;
+        margin: 10px;
         padding: 9px;
         border: 1px solid grey;
         position: relative;
         opacity: 1;
+        flex-grow: 1;
+    }
+
+    .news-item .content {
+        display: flex;
+        flex-grow: 1;
     }
 
     .news-item-info {
@@ -62,8 +67,8 @@ export default {
         text-shadow: 2px 2px 4px #000;
     }
 
-    .background {
-        opacity: 0.9 !important;
+    .news-item .background {
+        opacity: 0.5 !important;
         top: 0;
         left: 0;
         bottom: 0;

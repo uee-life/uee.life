@@ -13,10 +13,9 @@
             :css="false"
             v-on:before-enter="beforeEnter"
             v-on:enter="enter"
-            v-on:leave="leave">
-            <div v-for="(item, index) in articles" :key="item.id" :index="index">
-                <news-item :item="item" />
-            </div>
+            v-on:leave="leave"
+            class="t-group">
+            <news-item v-for="(item, index) in articles" :key="item.id" :index="index" :item="item" />
         </transition-group>
         <div class="more" v-if="more" @click="loadMore()">
             Load More
@@ -149,6 +148,14 @@ export default {
         display: block;
         padding-top: 20px;
         margin-top: 40px;
+        margin-left: -10px;
+        margin-right: -10px;
+    }
+
+    .news-feed>.t-group {
+        display: flex;
+        flex-wrap: wrap;
+        flex-grow: 1;
     }
 
     .news-feed .more {
@@ -158,7 +165,7 @@ export default {
         justify-content: center;
         font-size: 21px;
         cursor: pointer;
-        margin: 5px 0 20px 0;
+        margin: 5px 10px 20px 10px;
         background: url('/images/fading-bars.png') repeat;
     }
 

@@ -1,4 +1,3 @@
-const axios = require("axios")
 const uuid = require('uuid/v4')
 const jwt = require('jsonwebtoken')
 
@@ -108,11 +107,13 @@ async function verifyHandle(token, code) {
         setVerificationCode(user, uuid());
         return {
             success: true,
+            error: "",
             user: res
         }
     } else {
         return {
             success: false,
+            error: "Code missing or doesn't match. Did you copy the code to your bio?",
             user: user
         }
     }
