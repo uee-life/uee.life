@@ -108,8 +108,10 @@ export const useAuth0 = ({
             }
           }
         }
-        // eslint-disable-next-line
-        Vue.toasted.show(decodeURI(getUrlVars().error_description), options)
+        var errorStr = getUrlVars().error_description.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
+          return '&#' + i.charCodeAt(0) + ';';
+        });
+        Vue.toasted.show(decodeURI(errorStr), options)
       }
     },
     /** Use this lifecycle method to instantiate the SDK client */
