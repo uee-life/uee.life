@@ -1,5 +1,8 @@
 import Vue from "vue";
 import createAuth0Client from "@auth0/auth0-spa-js";
+import Toasted from 'vue-toasted'
+
+Vue.use(Toasted)
 
 /** Define a default action to perform after authentication */
 const DEFAULT_REDIRECT_CALLBACK = () =>
@@ -56,6 +59,9 @@ export const useAuth0 = ({
           this.isAuthenticated = true;
         } catch (e) {
           this.error = e;
+
+          //eslint-disable-next-line
+          console.error(e);
         } finally {
           this.loading = false;
         }
@@ -80,6 +86,30 @@ export const useAuth0 = ({
       /** Logs the user out and removes their session on the authorization server */
       logout(o) {
         return this.auth0Client.logout(o);
+      },
+
+      /** Handle auth errors */
+      handleAuthError() {
+        function getUrlVars() {
+          var vars = {};
+          window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+              vars[key] = value;
+          });
+          return vars;
+        }
+
+        const options = {
+          position: 'top-center',
+          duration: null,
+          action: {
+            text: 'Close',
+            onClick: (e, toastObject) => {
+              toastObject.goAway(0)
+            }
+          }
+        }
+        // eslint-disable-next-line
+        Vue.toasted.show(decodeURI(getUrlVars().error_description), options)
       }
     },
     /** Use this lifecycle method to instantiate the SDK client */
@@ -104,6 +134,10 @@ export const useAuth0 = ({
           // Notify subscribers that the redirect callback has happened, passing the appState
           // (useful for retrieving any pre-authentication state)
           onRedirectCallback(appState);
+        } else if (window.location.search.includes("error=") && window.location.search.includes("error_description=")) {
+          //eslint-disable-next-line
+          console.log("error hit!")
+          this.handleAuthError()
         }
       } catch (e) {
         this.error = e;
