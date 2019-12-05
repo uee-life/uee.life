@@ -112,6 +112,7 @@ export const useAuth0 = ({
           return '&#' + i.charCodeAt(0) + ';';
         });
         Vue.toasted.show(decodeURI(errorStr), options)
+        window.location.search = ""
       }
     },
     /** Use this lifecycle method to instantiate the SDK client */
