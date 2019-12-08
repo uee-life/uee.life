@@ -1,5 +1,5 @@
 
-const pool = require('./mariadb')
+const {pool} = require('./mariadb')
 
 
 async function getSystem(code) {
