@@ -104,7 +104,7 @@ app.get('/system/:code/planets', async (req, res) => {
 })
 
 app.get('/system/:code/planets/:planet', async (req, res) => {
-    res.send(await getPlanets(req.params.code, req.params.planet));
+    res.send(await getPlanet(req.params.code, req.params.planet));
 })
 
 app.post('/search/org', async (req, res) => {
