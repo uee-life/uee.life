@@ -22,7 +22,7 @@ export default {
 
 <style scoped>
     img {
-        width: 170px;
+        width: 100px;
         margin-left: 1px;
     }
 

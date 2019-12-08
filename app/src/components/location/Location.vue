@@ -42,7 +42,7 @@ export default {
         return {
             tabs: ["info", "fleet", "members"],
             initialTab: "info",
-            debug: false
+            debug: true
         }
     },
     components: {

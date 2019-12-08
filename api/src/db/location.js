@@ -16,9 +16,6 @@ async function getSystem(code) {
     } finally {
         if (conn) conn.end();
     }
-    if(rows.length > 0) {
-        system = rows[0]
-    }
     return system;
 }
 

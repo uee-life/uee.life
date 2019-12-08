@@ -39,7 +39,7 @@ export default {
             const planet = this.$route.params.planet
             axios.get(`https://api.uee.life/system/${sid}/planets/${planet}`).then(res => {
                 if(res.status == 200) {
-                    this.system = res.data
+                    this.planet = res.data
                 }
             }).catch(error => {
                 // eslint-disable-next-line
@@ -51,7 +51,7 @@ export default {
             const planet = this.$route.params.planet
             axios.get(`https://api.uee.life/system/${sid}/planets/${planet}/sattelites`).then(res => {
                 if(res.status == 200) {
-                    this.planets = res.data
+                    this.sattelites = res.data
                 }
             }).catch(error => {
                 //eslint-disable-next-line
