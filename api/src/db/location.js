@@ -23,7 +23,7 @@ async function getPlanets(system) {
     let conn;
     planets = [];
     conn = await pool.getConnection();
-    planets = await conn.query("SELECT * FROM locations WHERE system = ?", [system]).then(rows => {
+    planets = await conn.query("SELECT * FROM locations WHERE system = ? and type='planet'", [system]).then(rows => {
         if(rows.length > 0) {
             return rows
         } else {
