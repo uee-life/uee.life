@@ -2,8 +2,7 @@
     <div class="system">
         <left-dock />
         <portal to="navigationPane">
-            <div class="left-nav-button"><router-link to="/orgs">Search Orgs</router-link></div>
-            <div class="left-nav-button"><a target="_blank" :href="starmapLink">starmap</a></div>
+            <div class="left-nav-button"><a target="_blank" :href="starmapLink">Starmap Link</a></div>
         </portal>
         <location :location="system" type="System">
             <planet-list :planets="planets"/>

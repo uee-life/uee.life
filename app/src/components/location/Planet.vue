@@ -2,12 +2,13 @@
     <div class="planet">
         <left-dock />
         <portal to="navigationPane">
-            <div class="left-nav-button"><a target="_blank" :href="starmapLink">starmap</a></div>
+            <div class="left-nav-button"><router-link :to="systemLink">{{planet.system}} system</router-link></div>
+            <div class="left-nav-button"><a target="_blank" :href="starmapLink">Starmap Link</a></div>
         </portal>
         <location :location="planet" type="Planet">
+            <moon-list :sattelites="sattelites" />
         </location>
         <right-dock />
-        <!--fleet-view :ships="ships" /-->
     </div>
 </template>
 
@@ -17,7 +18,7 @@ import axios from "axios"
 import LeftDock from '@/components/layout/LeftDock.vue'
 import RightDock from '@/components/layout/RightDock.vue'
 import Location from '@/components/location/Location.vue'
-//import SatteliteList from '@/components/location/PlanetList.vue'
+import MoonList from '@/components/location/MoonList.vue'
 
 export default {
     name: "system",
@@ -25,7 +26,7 @@ export default {
         LeftDock,
         RightDock,
         Location,
-      //  PlanetList
+        MoonList
     },
     data() {
         return {
@@ -66,6 +67,9 @@ export default {
             } else {
                 return ""
             }
+        },
+        systemLink() {
+            return `/system/${this.planet.system}`
         }
     },
     mounted() {
@@ -84,7 +88,7 @@ export default {
 </script>
 
 <style scoped>
-    .system {
+    .planet {
         width: 100%;
         display: flex;
     }

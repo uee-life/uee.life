@@ -1,5 +1,5 @@
 
-const {pool} = require('./mariadb')
+const {pool, getData} = require('./mariadb')
 
 
 async function getSystem(code) {
@@ -57,8 +57,15 @@ async function getPlanet(system, planet) {
     return res;
 }
 
+async function getSattelites(system, planet) {
+    sql = "SELECT b.* FROM locations a left join locations b on b.parent_id = a.id WHERE a.name = ? and b.type='satellite'"
+    rows = getData(sql, [planet])
+    return rows
+}
+
 module.exports = {
     getSystem,
     getPlanets,
-    getPlanet
+    getPlanet,
+    getSattelites
 }
