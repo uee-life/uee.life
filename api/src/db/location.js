@@ -43,9 +43,9 @@ async function getPlanets(system) {
 
 async function getPlanet(system, planet) {
     let conn;
-    planet = {};
+    res = {};
     conn = await pool.getConnection();
-    planet = await conn.query("SELECT * FROM locations WHERE system = ? and name = ? and type='planet'", [system, planet]).then(rows => {
+    res = await conn.query("SELECT * FROM locations WHERE system = ? and name = ? and type='planet'", [system, planet]).then(rows => {
         if(rows.length > 0) {
             return rows[0]
         } else {
@@ -57,7 +57,7 @@ async function getPlanet(system, planet) {
     }).finally(() => {
         if (conn) conn.end();
     });
-    return planet;
+    return res;
 }
 
 module.exports = {
