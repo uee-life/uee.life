@@ -14,7 +14,7 @@ const {getOrganization, getOrgFounders, getOrgMembers} = require('./db/organizat
 const {getNews} = require('./db/news');
 const {searchOrgs} = require('./db/search');
 const {getUser} = require('./db/user');
-const {getSystem, getPlanets} = require('./db/location.js');
+const {getSystem, getPlanets, getPlanet} = require('./db/location.js');
 
 
 // defining the Express app
