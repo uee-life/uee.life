@@ -10,6 +10,11 @@ async function getSystem(code) {
         const rows = await conn.query("SELECT * from systems where code = ?", [code]);
         if(rows.length > 0) { // rows + meta info
             system = rows[0]
+            system.planets = []
+            const rows = await conn.query("select code, name, type, subtype from locations where system=?", [code])
+            rows.array.forEach(element => {
+                system.planets.push(element)
+            });
         }
     } catch (err) {
         throw err;
