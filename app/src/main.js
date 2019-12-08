@@ -69,6 +69,7 @@ import Citizen from '@/components/citizen/Citizen.vue'
 import CitizenSearch from '@/components/citizen/CitizenSearch.vue'
 import Organization from '@/components/org/Organization.vue'
 import OrgSearch from '@/components/org/OrgSearch.vue'
+import System from '@/components/location/System.vue'
 import Profile from '@/components/user/Profile.vue'
 import NewsArticle from '@/components/news/NewsArticle.vue'
 import SignUp from '@/components/user/SignUp.vue'
@@ -79,6 +80,7 @@ const routes = [
   { path: '/', component: FrontPage },
   { path: '/citizens/:handle', component: Citizen },
   { path: '/citizens', component: CitizenSearch },
+  { path: '/system/:code', component: System },
   { path: '/orgs/:org', component: Organization},
   { path: '/orgs', component: OrgSearch},
   { path: '/profile', component: Profile, beforeEnter: authGuard },
