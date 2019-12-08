@@ -57,7 +57,7 @@ async function getPlanet(system, planet) {
     return res;
 }
 
-async function getSattelites(system, planet) {
+async function getSattelites(planet) {
     sql = "SELECT b.* FROM locations a left join locations b on b.parent_id = a.id WHERE a.name = ? and b.type='satellite'"
     rows = getData(sql, [planet])
     return rows

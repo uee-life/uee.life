@@ -14,7 +14,7 @@ const {getOrganization, getOrgFounders, getOrgMembers} = require('./db/organizat
 const {getNews} = require('./db/news');
 const {searchOrgs} = require('./db/search');
 const {getUser} = require('./db/user');
-const {getSystem, getPlanets, getPlanet} = require('./db/location.js');
+const {getSystem, getPlanets, getPlanet, getSattelites} = require('./db/location.js');
 
 
 // defining the Express app
@@ -105,6 +105,10 @@ app.get('/system/:code/planets', async (req, res) => {
 
 app.get('/system/:code/planets/:planet', async (req, res) => {
     res.send(await getPlanet(req.params.code, req.params.planet));
+})
+
+app.get('/system/:code/planets/:planet/sattelites', async (req, res) => {
+    res.send(await getSattelites(req.params.planet));
 })
 
 app.post('/search/org', async (req, res) => {
