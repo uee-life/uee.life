@@ -1,26 +1,26 @@
 <template>
-    <div id="fleet-view" class="fleet-view">
-        <div v-if="ships.length > 0" class="ships">
-            <ship-summary v-for="(s, index) in ships" :key="s.id" :ship="s" :index="index">
-            </ship-summary>
+    <div id="planet-list" class="planet-list">
+        <div v-if="planets.length > 0" class="planets">
+            <planet-summary v-for="(p, index) in planets" :key="p.code" :planet="p" :index="index">
+            </planet-summary>
         </div>
-        <div class="no-ships" v-else>
-            No ships currently listed
+        <div class="no-planets" v-else>
+            No planets found in system
         </div>
     </div>
 </template>
 
 <script>
 import { TimelineLite } from 'gsap'
-import ShipSummary from '@/components/fleet/ShipSummary.vue'
+import PlanetSummary from '@/components/location/PlanetSummary.vue'
 
 export default {
-    name: "fleet-view",
+    name: "planet-list",
     components: {
-        ShipSummary
+        PlanetSummary
     },
     props: {
-        ships: {
+        planets: {
             type: Array,
             default: function () {
                 return []
@@ -33,25 +33,25 @@ export default {
     },
     mounted() {
         const tl = new TimelineLite()
-        tl.to(".fleet-view .section-title", 1, {opacity: 1})
-        tl.to(".ships", 2, {opacity: 1})
+        tl.to(".planet-list .section-title", 1, {opacity: 1})
+        tl.to(".planets", 2, {opacity: 1})
     }
 }
 </script>
 
 <style scoped>
-    .fleet-view {
+    .planet-view {
         position: relative;
         margin-bottom: 20px;
     }
-    .no-ships {
+    .no-planets {
         text-align: center;
         font-size: 18px;
         color: #dbf3ff;
     }
-    .ships {
+    .planets {
         display: flex;
         flex-wrap: wrap;
-        opacity: 0;
+        opacity: 1;
     }
 </style>

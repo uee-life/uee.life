@@ -4,6 +4,7 @@
             <h3> {{ location.name }} {{ type }} ( {{ location.affiliation }} )</h3>
             <p> {{ location.description }} </p>
         </main-panel>
+        <slot></slot>
         <div v-if="debug">{{ JSON.stringify(location, null, 2) }}</div>
         <!--div class="org-tabs">
             <tabs :tabs="tabs" :initialTab="initialTab">

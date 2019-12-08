@@ -5,7 +5,10 @@
             <div class="left-nav-button"><router-link to="/orgs">Search Orgs</router-link></div>
             <div class="left-nav-button"><a target="_blank" :href="starmapLink">starmap</a></div>
         </portal>
-        <location :location="system" type="System"/>
+        <location :location="system" type="System">
+
+        </location>
+                    <planet-list :planets="planets"/>
         <right-dock />
         <!--fleet-view :ships="ships" /-->
     </div>
@@ -17,17 +20,20 @@ import axios from "axios"
 import LeftDock from '@/components/layout/LeftDock.vue'
 import RightDock from '@/components/layout/RightDock.vue'
 import Location from '@/components/location/Location.vue'
+import PlanetList from '@/components/location/PlanetList.vue'
 
 export default {
     name: "system",
     components: {
         LeftDock,
         RightDock,
-        Location
+        Location,
+        PlanetList
     },
     data() {
         return {
-            system: {}
+            system: {},
+            planets: []
         }
     },
     methods: {
@@ -39,6 +45,17 @@ export default {
                 }
             }).catch(error => {
                 // eslint-disable-next-line
+                console.error(error)
+            });
+        },
+        async getPlanets() {
+            const sid = this.$route.params.code
+            axios.get(`https://api.uee.life/system/${sid}/planets`).then(res => {
+                if(res.status == 200) {
+                    this.planets = res.data
+                }
+            }).catch(error => {
+                //eslint-disable-next-line
                 console.error(error)
             });
         }
@@ -54,6 +71,7 @@ export default {
     },
     mounted() {
         this.getSystem()
+        this.getPlanets()
     },
     watch: {
         route: {

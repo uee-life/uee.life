@@ -32,6 +32,8 @@ async function getPlanets(system) {
     }).catch(error => {
         console.error(error)
         return []
+    }).finally(() => {
+        if (conn) conn.end();
     });
     return planets;
 }
