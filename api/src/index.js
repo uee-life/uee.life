@@ -14,6 +14,7 @@ const {getOrganization, getOrgFounders} = require('./db/organization');
 const {getNews} = require('./db/news');
 const {searchOrgs} = require('./db/search');
 const {getUser} = require('./db/user');
+const {getSystem} = require('./db/location.js');
 
 
 // defining the Express app
@@ -89,6 +90,10 @@ app.get('/news', cache(60), async (req, res) => {
     }
     res.send(await getNews(data));
 });
+
+app.get('/system/:code', async (req, res) => {
+    res.send(await getSystem(req.params.code));
+})
 
 app.post('/search/org', async (req, res) => {
     res.send(await searchOrgs(req.body));
