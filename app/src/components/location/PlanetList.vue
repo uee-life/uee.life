@@ -1,5 +1,6 @@
 <template>
     <div id="planet-list" class="planet-list">
+        <section-title text="Planets" size="medium"/>
         <div v-if="planets.length > 0" class="planets">
             <planet-summary v-for="(p, index) in planets" :key="p.code" :planet="p" :index="index">
             </planet-summary>
@@ -40,9 +41,10 @@ export default {
 </script>
 
 <style scoped>
-    .planet-view {
+    .planet-list {
         position: relative;
         margin-bottom: 20px;
+        padding-top: 10px;
     }
     .no-planets {
         text-align: center;

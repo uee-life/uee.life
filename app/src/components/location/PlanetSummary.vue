@@ -3,7 +3,8 @@
       <img v-if="planet.thumbnail" :src="planet.thumbnail" />
       <div class="planet-info">
           <div><i><b>"{{ planet.name }}"</b></i></div>
-          <div>{{ planet.type }} | {{ planet.subtype }} | {{ planet.affiliation }}</div>
+          <div>Type: {{ planet.subtype }}</div>
+          <div>Affiliation: {{ planet.affiliation }}</div>
       </div>
         <span class="corner top left"></span>
           <span class="corner top right"></span>
@@ -25,7 +26,7 @@ export default {
         margin-left: 1px;
     }
 
-    .ship-summary {
+    .planet-summary {
         display: flex;
         width: 400px;
         min-width: 400px;
@@ -36,7 +37,7 @@ export default {
         background: url('/images/fading-bars.png') repeat;
     }
 
-    .ship-info {
+    .planet-info {
         margin-left: 10px;
     }
 </style>

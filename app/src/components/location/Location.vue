@@ -1,7 +1,7 @@
 <template>
     <div class="location">
-        <main-panel>
-            <h3> {{ location.name }} {{ type }} ( {{ location.affiliation }} )</h3>
+        <main-panel :title="type" mainClass="location-info">
+            <h3> {{ location.name }} ( {{ location.affiliation }} )</h3>
             <p> {{ location.description }} </p>
         </main-panel>
         <slot></slot>
@@ -60,5 +60,9 @@ export default {
         width: 100%;
         padding: 10px;
         padding-top: 20px;
+    }
+
+    .location-info {
+        margin-bottom: 30px;
     }
 </style>

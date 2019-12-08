@@ -1,12 +1,10 @@
 <template>
-    <div class="system">
+    <div class="planet">
         <left-dock />
         <portal to="navigationPane">
-            <div class="left-nav-button"><router-link to="/orgs">Search Orgs</router-link></div>
             <div class="left-nav-button"><a target="_blank" :href="starmapLink">starmap</a></div>
         </portal>
-        <location :location="system" type="System">
-            <planet-list :planets="planets"/>
+        <location :location="planet" type="Planet">
         </location>
         <right-dock />
         <!--fleet-view :ships="ships" /-->
@@ -19,7 +17,7 @@ import axios from "axios"
 import LeftDock from '@/components/layout/LeftDock.vue'
 import RightDock from '@/components/layout/RightDock.vue'
 import Location from '@/components/location/Location.vue'
-import PlanetList from '@/components/location/PlanetList.vue'
+//import SatteliteList from '@/components/location/PlanetList.vue'
 
 export default {
     name: "system",
@@ -27,18 +25,19 @@ export default {
         LeftDock,
         RightDock,
         Location,
-        PlanetList
+      //  PlanetList
     },
     data() {
         return {
-            system: {},
-            planets: []
+            planet: {},
+            sattelites: []
         }
     },
     methods: {
-        async getSystem() {
-            const sid = this.$route.params.code
-            axios.get(`https://api.uee.life/system/${sid}`).then(res => {
+        async getPlanet() {
+            const sid = this.$route.params.system
+            const planet = this.$route.params.planet
+            axios.get(`https://api.uee.life/system/${sid}/planets/${planet}`).then(res => {
                 if(res.status == 200) {
                     this.system = res.data
                 }
@@ -47,9 +46,10 @@ export default {
                 console.error(error)
             });
         },
-        async getPlanets() {
-            const sid = this.$route.params.code
-            axios.get(`https://api.uee.life/system/${sid}/planets`).then(res => {
+        async getSattelites() {
+            const sid = this.$route.params.system
+            const planet = this.$route.params.planet
+            axios.get(`https://api.uee.life/system/${sid}/planets/${planet}/sattelites`).then(res => {
                 if(res.status == 200) {
                     this.planets = res.data
                 }
@@ -61,21 +61,22 @@ export default {
     },
     computed: {
         starmapLink() {
-            if(this.system) {
-                return `https://robertsspaceindustries.com/starmap?location=${this.system.code}`
+            if(this.planet) {
+                return `https://robertsspaceindustries.com/starmap?location=${this.planet.code}&system=${this.planet.system}`
             } else {
                 return ""
             }
         }
     },
     mounted() {
-        this.getSystem()
-        this.getPlanets()
+        this.getPlanet()
+        this.getSattelites()
     },
     watch: {
         route: {
             handler: function () {
-                this.getSystem();
+                this.getPlanet();
+                this.getSattelites();
             }
         }
     }
