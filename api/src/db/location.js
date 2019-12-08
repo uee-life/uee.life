@@ -10,11 +10,6 @@ async function getSystem(code) {
         const rows = await conn.query("SELECT * from systems where code = ?", [code]);
         if(rows.length > 0) { // rows + meta info
             system = rows[0]
-            system.planets = []
-            const rows = await conn.query("select code, name, type, subtype from locations where system=?", [code])
-            rows.array.forEach(element => {
-                system.planets.push(element)
-            });
         }
     } catch (err) {
         throw err;
@@ -24,6 +19,24 @@ async function getSystem(code) {
     return system;
 }
 
+async function getPlanets(system) {
+    let conn;
+    planets = [];
+    conn = await pool.getConnection();
+    planets = await conn.query("SELECT * FROM locations WHERE system = ?", [system]).then(rows => {
+        if(rows.length > 0) {
+            return rows
+        } else {
+            return []
+        }
+    }).catch(error => {
+        console.error(error)
+        return []
+    });
+    return planets;
+}
+
 module.exports = {
-    getSystem
+    getSystem,
+    getPlanets
 }
