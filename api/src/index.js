@@ -10,7 +10,7 @@ const jwt = require('express-jwt')
 const jwksRsa = require('jwks-rsa')
 
 const {getCitizen, getCitizenInfo, getCitizenShips, getCitizenLocation, verifyCitizen} = require('./db/citizen');
-const {getOrganization, getOrgFounders} = require('./db/organization');
+const {getOrganization, getOrgFounders, getOrgMembers} = require('./db/organization');
 const {getNews} = require('./db/news');
 const {searchOrgs} = require('./db/search');
 const {getUser} = require('./db/user');
@@ -79,6 +79,10 @@ app.get('/organization/:id', cache(60), async (req, res) => {
 app.get('/organization/:id/founders', cache(60), async (req, res) => {
     res.send(await getOrgFounders(req.params.id));
 });
+
+app.get('/organization/:id/members/:page', async (req, res) => {
+    res.send(await getOrgMembers(req.params.id, req.params.page));
+})
 
 app.get('/news', cache(60), async (req, res) => {
     let data = {"channel": "","series":"","type":"","text":"","sort":"publish_new","page":1};

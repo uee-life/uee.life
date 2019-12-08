@@ -1,16 +1,76 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
 
-async function fetchMembers(org) {
-    members = []
-    await axios.get(`http://api.sc-tools.org/v1/orgs/${org}/json`).then(res => {
+async function fetchMembers(org, page=1) {
+    let members = {
+        count: 1,
+        members: []
+    }
+    /*await axios.get(`http://api.sc-tools.org/v1/orgs/${org}/json`).then(res => {
         if(res.data.status == 'ok') {
             console.log(res.data.orgs.members)
             members = res.data.orgs.members;
         } else {
             members = []
         }
-    })
+    })*/
+
+    try {
+        const url = "https://robertsspaceindustries.com/api/orgs/getOrgMembers"
+        let i = 0
+        data = {
+            symbol: org,
+            search: '',
+            pagesize: 32,
+            page: page
+        }
+
+        members = axios({
+            url: url,
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            data: data
+        }).then((res) => {
+            let members = []
+            const totalMembers = res.data.data.totalrows
+            const html = res.data.data.html
+            const $ = cheerio.load(html)
+
+            $('li.member-item').each(function (i, el) {
+                let handle = $(el).find('span.nick').text()
+                let name = $(el).find('span.name').text()
+                if(handle.trim() != '') {
+                    member = {
+                        name: name,
+                        handle: handle,
+                        stars: 5
+                    }
+                    members.push(member)
+                } else {
+                    member = {
+                        name: 'Redacted',
+                        handle: 'Redacted',
+                        stars: 0
+                    }
+                    members.push(member)
+                }
+            })
+
+            result = {
+                count: totalMembers,
+                members: members
+            }
+            
+            return result
+        }).catch((err) => {
+            console.error(err)
+        })
+    } catch (error) {
+        console.error(error)
+        return {error: "Couldn't grab org members!"}
+    }
     return members
 }
 
@@ -34,7 +94,7 @@ async function fetchOrg(org) {
         info.manifesto = $('h2:contains("Manifesto")', '#organization').next().html()
         info.charter = $('h2:contains("Charter")', '#organization').next().html()
         info.founders = await fetchOrgFounders(org)
-        info.members = await fetchMembers(org)
+        //info.members = await fetchMembers(org)
         
         info.tag = org
 
@@ -76,8 +136,33 @@ async function getOrganization(org) {
     return await fetchOrg(org)
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+  
+
+async function getOrgMembers(org, page) {
+    if (!page) {
+        page = 1
+    }
+    members = await fetchMembers(org, page)
+    console.log(members.count)
+    console.log(members.members.length)
+    total = members.count
+    current = members.members.length
+    /*while(current < total) {
+        page += 1
+        next = await fetchMembers(org, page)
+        members.members.concat(next.members)
+        current = members.members.length
+    }*/
+    await sleep(1000)
+    return members
+}
+
 
 module.exports = {
     getOrganization,
     getOrgFounders,
+    getOrgMembers
 };
