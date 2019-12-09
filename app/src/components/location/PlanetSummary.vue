@@ -5,6 +5,7 @@
           <div><i><b>"{{ planet.name }}"</b></i></div>
           <div>Type: {{ planet.subtype }}</div>
           <div>Affiliation: {{ planet.affiliation }}</div>
+          <DIV>Habitable: {{ isHabitable }}</div>
       </div>
         <span class="corner top left"></span>
           <span class="corner top right"></span>
@@ -20,6 +21,13 @@ export default {
     computed: {
         planetLink() {
             return `/system/${this.planet.system}/planet/${this.planet.name}`
+        },
+        isHabitable() {
+            if(this.planet.habitable) {
+                return "Yes"
+            } else {
+                return "No"
+            }
         }
     }
 }

@@ -63,9 +63,21 @@ async function getSatellites(planet) {
     return rows
 }
 
+async function getPOIs(system="", location="") {
+    if(location) {
+        sql = "SELECT * FROM pois where parent_id=(select id from locations where name=?)"
+        rows = getData(sql, [location])
+    } else {
+        sql = "SELECT * FROM pois where system=?"
+        rows = getData(sql, [system])
+    }
+    return rows
+}
+
 module.exports = {
     getSystem,
     getPlanets,
     getPlanet,
-    getSatellites
+    getSatellites,
+    getPOIs
 }

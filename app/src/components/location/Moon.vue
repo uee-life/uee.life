@@ -1,12 +1,12 @@
 <template>
-    <div class="planet">
+    <div class="satellite">
         <left-dock />
         <portal to="navigationPane">
+            <div v-if="satellite" class="left-nav-button"><router-link :to="systemLink">{{satellite.system}} system</router-link></div>
             <div class="left-nav-button"><a target="_blank" :href="starmapLink">Starmap Link</a></div>
-            <div v-if="planet" class="left-nav-button"><router-link :to="systemLink">{{planet.system}} system</router-link></div>
         </portal>
-        <location :location="planet" type="Planet">
-            <moon-list :satellites="satellites" :link="planetLink"/>
+        <location :location="satellite" type="Satellite">
+            <moon-list :satellites="satellites" :planet="planet.name"/>
         </location>
         <right-dock />
     </div>
@@ -30,8 +30,7 @@ export default {
     },
     data() {
         return {
-            planet: {},
-            satellites: []
+            satellite: {}
         }
     },
     methods: {
@@ -70,9 +69,6 @@ export default {
         },
         systemLink() {
             return `/system/${this.planet.system}`
-        },
-        planetLink() {
-            return `${this.systemLink}/planet/${this.planet.name}`
         }
     },
     mounted() {

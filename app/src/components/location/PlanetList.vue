@@ -45,6 +45,8 @@ export default {
         position: relative;
         margin-bottom: 20px;
         padding-top: 10px;
+        padding-left: -5px;
+        padding-right: -5px;
     }
     .no-planets {
         text-align: center;

@@ -4,7 +4,7 @@
         <div class="nav-button"><router-link to="/">Home</router-link></div>
         <div class="nav-button"><router-link to="/citizens">Citizen Registry</router-link></div>
         <div class="nav-button"><router-link to="/orgs">Org Directory</router-link></div>
-        <div class="nav-button"><router-link to="/system/stanton">Systems</router-link></div>
+        <div class="nav-button"><router-link to="/system/stanton">Stanton System</router-link></div>
         <div class="nav-button"><a href="https://robertsspaceindustries.com/starmap" target="_blank">Starmap</a></div>
         <div class="nav-button"><a href="https://robertsspaceindustries.com/galactapedia" target="_blank">Galactapedia</a></div>
       </div>

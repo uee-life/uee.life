@@ -1,9 +1,9 @@
 <template>
     <div id="moon-list" class="moon-list">
         <section-title text="Moons" size="medium"/>
-        <div v-if="planets.length > 0" class="moons">
-            <moon-summary v-for="(p, index) in sattelites" :key="p.code" :sattelite="p" :index="index">
-            </moon-summary>
+        <div v-if="satellites.length > 0" class="moons">
+            <location-summary v-for="(loc, index) in satellites" :key="loc.code" :loc="loc" :link="getLink(loc.name)" :index="index">
+            </location-summary>
         </div>
         <div class="no-moons" v-else>
             No moons found near this planet
@@ -13,23 +13,31 @@
 
 <script>
 import { TimelineLite } from 'gsap'
-import MoonSummary from '@/components/location/MoonSummary.vue'
+import LocationSummary from '@/components/location/LocationSummary.vue'
 
 export default {
     name: "moon-list",
     components: {
-        MoonSummary
+        LocationSummary
     },
     props: {
-        sattelites: {
+        satellites: {
             type: Array,
             default: function () {
                 return []
             }
+        },
+        link: {
+            type: String
         }
     },
     data() {
         return {
+        }
+    },
+    methods: {
+        getLink(locName) {
+            return `${this.link}/moon/${locName}`
         }
     },
     mounted() {
@@ -45,6 +53,8 @@ export default {
         position: relative;
         margin-bottom: 20px;
         padding-top: 10px;
+        margin-left: -5px;
+        margin-right: -5px;
     }
     .no-moons {
         text-align: center;
