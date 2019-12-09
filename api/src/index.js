@@ -95,35 +95,35 @@ app.get('/news', cache(60), async (req, res) => {
     res.send(await getNews(data));
 });
 
-app.get('/systems/:code', async (req, res) => {
+app.get('/systems/:code', cache(60), async (req, res) => {
     res.send(await getSystem(req.params.code));
 });
 
-app.get('/systems/:code/planets', async (req, res) => {
+app.get('/systems/:code/planets', cache(60), async (req, res) => {
     res.send(await getPlanets(req.params.code));
 })
 
-app.get('/systems/:code/pois', async (req, res) => {
+app.get('/systems/:code/pois', cache(60), async (req, res) => {
     res.send(await getPOIs(req.params.code));
 })
 
-app.get('/planets/:planet', async (req, res) => {
+app.get('/planets/:planet', cache(60), async (req, res) => {
     res.send(await getPlanet(req.params.planet));
 })
 
-app.get('/planets/:planet/satellites', async (req, res) => {
+app.get('/planets/:planet/satellites', cache(60), async (req, res) => {
     res.send(await getSatellites(req.params.planet));
 })
 
-app.get('/satellites/:name', async (req, res) => {
+app.get('/satellites/:name', cache(60), async (req, res) => {
     res.send(await getSatellite(req.params.name));
 })
 
-app.get('/planets/:planet/pois', async (req, res) => {
+app.get('/planets/:planet/pois', cache(60), async (req, res) => {
     res.send(await getPOIs("", req.params.planet));
 })
 
-app.get('/pois/:name', async (req, res) => {
+app.get('/pois/:name', cache(60), async (req, res) => {
     res.send(await getPOI(req.params.name));
 })
 
