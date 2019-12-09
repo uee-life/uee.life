@@ -38,11 +38,11 @@ async function getPlanets(system) {
     return planets;
 }
 
-async function getPlanet(system, planet) {
+async function getPlanet(planet) {
     let conn;
     res = {};
     conn = await pool.getConnection();
-    res = await conn.query("SELECT * FROM locations WHERE system = ? and name = ? and type='planet'", [system, planet]).then(rows => {
+    res = await conn.query("SELECT * FROM locations WHERE name = ? and type='planet'", [planet]).then(rows => {
         if(rows.length > 0) {
             return rows[0]
         } else {
