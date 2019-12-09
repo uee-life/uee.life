@@ -18,15 +18,13 @@ import axios from "axios"
 import LeftDock from '@/components/layout/LeftDock.vue'
 import RightDock from '@/components/layout/RightDock.vue'
 import Location from '@/components/location/Location.vue'
-import MoonList from '@/components/location/MoonList.vue'
 
 export default {
     name: "system",
     components: {
         LeftDock,
         RightDock,
-        Location,
-        MoonList
+        Location
     },
     data() {
         return {
@@ -34,7 +32,7 @@ export default {
         }
     },
     methods: {
-        async getPlanet() {
+        async getSattelite() {
             const sid = this.$route.params.system
             const planet = this.$route.params.planet
             axios.get(`https://api.uee.life/system/${sid}/planets/${planet}`).then(res => {

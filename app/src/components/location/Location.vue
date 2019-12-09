@@ -52,7 +52,7 @@ export default {
         return {
             tabs: ["info", "fleet", "members"],
             initialTab: "info",
-            debug: false
+            debug: true
         }
     },
     components: {
@@ -62,7 +62,7 @@ export default {
             return `${this.location.name} ${this.type} ( ${this.location.affiliation} )`
         },
         isHabitable() {
-            if(location.habitable) {
+            if(this.location.habitable) {
                 return 'Yes'
             } else {
                 return 'No'
@@ -101,8 +101,8 @@ export default {
     }
 
     .location-image {
-        flex-basis: 300px;
-        height: 300px;
+        flex-basis: 400px;
+        height: 400px;
         border: 1px dotted #546f84;
     }
 

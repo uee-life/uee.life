@@ -7,6 +7,7 @@
         </portal>
         <location :location="planet" type="Planet">
             <moon-list :satellites="satellites" :link="planetLink"/>
+            <poi-list :pois="pois"/> 
         </location>
         <right-dock />
     </div>
@@ -19,26 +20,33 @@ import LeftDock from '@/components/layout/LeftDock.vue'
 import RightDock from '@/components/layout/RightDock.vue'
 import Location from '@/components/location/Location.vue'
 import MoonList from '@/components/location/MoonList.vue'
+import PoiList from '@/components/location/POIList.vue'
 
 export default {
-    name: "system",
+    name: "planet",
     components: {
         LeftDock,
         RightDock,
         Location,
-        MoonList
+        MoonList,
+        PoiList
     },
     data() {
         return {
             planet: {},
-            satellites: []
+            satellites: [],
+            pois: []
         }
     },
     methods: {
+        async update() {
+            this.getPlanet()
+            this.getSatellites()
+            this.getPOIs()
+        },
         async getPlanet() {
-            const sid = this.$route.params.system
             const planet = this.$route.params.planet
-            axios.get(`https://api.uee.life/system/${sid}/planets/${planet}`).then(res => {
+            axios.get(`https://api.uee.life/planets/${planet}`).then(res => {
                 if(res.status == 200) {
                     this.planet = res.data
                 }
@@ -48,9 +56,8 @@ export default {
             });
         },
         async getSatellites() {
-            const sid = this.$route.params.system
             const planet = this.$route.params.planet
-            axios.get(`https://api.uee.life/system/${sid}/planets/${planet}/satellites`).then(res => {
+            axios.get(`https://api.uee.life/planets/${planet}/satellites`).then(res => {
                 if(res.status == 200) {
                     this.satellites = res.data
                 }
@@ -58,6 +65,17 @@ export default {
                 //eslint-disable-next-line
                 console.error(error)
             });
+        },
+        async getPOIs() {
+            const planet = this.$route.params.planet
+            axios.get(`https://api.uee.life/planets/${planet}/pois`).then(res => {
+                if(res.status == 200) {
+                    this.pois = res.data
+                }
+            }).catch(error => {
+                //eslint-disable-next-line
+                console.error(error)
+            })
         }
     },
     computed: {
@@ -76,14 +94,12 @@ export default {
         }
     },
     mounted() {
-        this.getPlanet()
-        this.getSatellites()
+        this.update()
     },
     watch: {
         route: {
             handler: function () {
-                this.getPlanet();
-                this.getSatellites();
+                this.update()
             }
         }
     }

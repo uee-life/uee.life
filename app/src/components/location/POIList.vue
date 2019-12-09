@@ -1,12 +1,12 @@
 <template>
-    <div id="planet-list" class="planet-list">
-        <section-title text="Planets" size="medium"/>
-        <div v-if="planets.length > 0" class="planets">
-            <location-summary v-for="(loc, index) in planets" :key="loc.code" :loc="loc" :link="getLink(loc.name)" :index="index">
+    <div class="poi-list">
+        <section-title text="Points of Interest" size="medium"/>
+        <div v-if="pois.length > 0" class="pois">
+            <location-summary v-for="(loc, index) in pois" :key="loc.code" :loc="loc" :link="getLink(loc.name)" :index="index">
             </location-summary>
         </div>
-        <div class="no-planets" v-else>
-            No planets found in system
+        <div class="no-pois" v-else>
+            No POIs found near this location
         </div>
     </div>
 </template>
@@ -16,12 +16,12 @@ import { TimelineLite } from 'gsap'
 import LocationSummary from '@/components/location/LocationSummary.vue'
 
 export default {
-    name: "planet-list",
+    name: "poi-list",
     components: {
         LocationSummary
     },
     props: {
-        planets: {
+        pois: {
             type: Array,
             default: function () {
                 return []
@@ -34,7 +34,7 @@ export default {
     },
     methods: {
         getLink(locName) {
-            return `/planet/${locName}`
+            return `/poi/${locName}`
         }
     },
     mounted() {
@@ -46,19 +46,19 @@ export default {
 </script>
 
 <style scoped>
-    .planet-list {
+    .poi-list {
         position: relative;
         margin-bottom: 20px;
         padding-top: 10px;
-        padding-left: -5px;
-        padding-right: -5px;
+        margin-left: -5px;
+        margin-right: -5px;
     }
-    .no-planets {
+    .no-pois {
         text-align: center;
         font-size: 18px;
         color: #dbf3ff;
     }
-    .planets {
+    .pois {
         display: flex;
         flex-wrap: wrap;
         opacity: 1;

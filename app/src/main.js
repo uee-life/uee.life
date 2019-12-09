@@ -82,7 +82,7 @@ const routes = [
   { path: '/citizens/:handle', component: Citizen },
   { path: '/citizens', component: CitizenSearch },
   { path: '/system/:code', component: System },
-  { path: '/system/:system/planet/:planet', component: Planet},
+  { path: '/planet/:planet', component: Planet},
   { path: '/orgs/:org', component: Organization},
   { path: '/orgs', component: OrgSearch},
   { path: '/profile', component: Profile, beforeEnter: authGuard },
