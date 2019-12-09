@@ -88,7 +88,7 @@ async function getPOIs(system, location="") {
 async function getPOI(name) {
     sql = "SELECT * FROM pois WHERE code like ?"
     term = `%.${name}`
-    rows = getData(sql, [term])
+    rows = await getData(sql, [term])
     if(rows) {
         return rows[0]
     } else {
