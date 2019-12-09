@@ -1,6 +1,5 @@
 <template>
     <div class="poi-list">
-        <section-title text="Points of Interest" size="medium"/>
         <div v-if="pois.length > 0" class="pois">
             <location-summary v-for="(loc, index) in pois" :key="loc.code" :loc="loc" :link="getLink(loc.code)" :index="index">
                 <div>Type: {{ loc.subtype }}</div>
@@ -38,12 +37,23 @@ export default {
     methods: {
         getLink(code) {
             return `/poi/${code.split(".")[2]}`
+        },
+        show() {
+            const timeline = new TimelineLite()
+            timeline.to(".poi-list", 1, {opacity: 1})
         }
     },
     mounted() {
-        const tl = new TimelineLite()
-        tl.to(".planet-list .section-title", 1, {opacity: 1})
-        tl.to(".planets", 2, {opacity: 1})
+        if(this.pois) {
+            this.show()
+        }
+    },
+    watch: {
+        pois: {
+            handler: function() {
+                this.show()
+            }
+        }
     }
 }
 </script>
@@ -52,9 +62,9 @@ export default {
     .poi-list {
         position: relative;
         margin-bottom: 20px;
-        padding-top: 10px;
         margin-left: -5px;
         margin-right: -5px;
+        opacity: 0;
     }
     .no-pois {
         text-align: center;

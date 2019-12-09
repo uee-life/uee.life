@@ -1,12 +1,12 @@
 <template>
-    <div class="satellite">
+    <div class="poi">
         <left-dock />
         <portal to="navigationPane">
-            <div v-if="satellite" class="left-nav-button"><router-link :to="systemLink">System: {{satellite.system}}</router-link></div>
-            <div v-if="satellite" class="left-nav-button"><router-link :to="planetLink">Planet: {{satellite.planet}}</router-link></div>
+            <div v-if="poi" class="left-nav-button"><router-link :to="systemLink">System: {{poi.system}}</router-link></div>
+            <div v-if="poi" class="left-nav-button"><router-link :to="planetLink">Planet: {{poi.planet}}</router-link></div>
             <div class="left-nav-button"><a target="_blank" :href="starmapLink">Open in Starmap</a></div>
         </portal>
-        <location :location="satellite" type="Satellite">
+        <location :location="poi" type="POI">
         </location>
         <right-dock />
     </div>
@@ -20,7 +20,7 @@ import RightDock from '@/components/layout/RightDock.vue'
 import Location from '@/components/location/Location.vue'
 
 export default {
-    name: "satellite",
+    name: "poi",
     components: {
         LeftDock,
         RightDock,
@@ -28,15 +28,15 @@ export default {
     },
     data() {
         return {
-            satellite: {}
+            poi: {}
         }
     },
     methods: {
-        async getSatellite() {
-            const moon = this.$route.params.moon
-            axios.get(`https://api.uee.life/satellites/${moon}`).then(res => {
+        async getPoi() {
+            const poi = this.$route.params.poi
+            axios.get(`https://api.uee.life/pois/${poi}`).then(res => {
                 if(res.status == 200) {
-                    this.satellite = res.data
+                    this.poi = res.data
                 }
             }).catch(error => {
                 // eslint-disable-next-line
@@ -46,26 +46,26 @@ export default {
     },
     computed: {
         starmapLink() {
-            if(this.satellite) {
-                return `https://robertsspaceindustries.com/starmap?location=${this.satellite.code}&system=${this.satellite.system}`
+            if(this.poi) {
+                return `https://robertsspaceindustries.com/starmap?location=${this.poi.code}&system=${this.poi.system}`
             } else {
                 return ""
             }
         },
         systemLink() {
-            return `/system/${this.satellite.system}`
+            return `/system/${this.poi.system}`
         },
         planetLink() {
-            return `/planet/${this.satellite.planet}`
+            return `/planet/${this.poi.planet}`
         }
     },
     mounted() {
-        this.getSatellite()
+        this.getPoi()
     },
     watch: {
         route: {
             handler: function () {
-                this.getSatellite();
+                this.getPoi();
             }
         }
     }
@@ -73,7 +73,7 @@ export default {
 </script>
 
 <style scoped>
-    .satellite {
+    .poi {
         width: 100%;
         display: flex;
     }

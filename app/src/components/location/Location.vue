@@ -1,8 +1,8 @@
 <template>
     <div class="location">
-        <main-panel :title="location.name" mainClass="location-panel">
+        <main-panel mainClass="location-panel">
             <div class="location-info">
-                <h3> {{ location.name }} ( {{type}} )</h3>
+                <h3 class="title"> {{ location.name }}</h3>
                 <p>
                     <span v-if="location.subtype">Type: <span class='value'>{{location.subtype}}</span><br></span>
                     Affiliation: <span class='value'>{{location.affiliation}}</span><br>
@@ -16,34 +16,11 @@
         </main-panel>
         <slot></slot>
         <div v-if="debug">{{ JSON.stringify(location, null, 2) }}</div>
-        <!--div class="org-tabs">
-            <tabs :tabs="tabs" :initialTab="initialTab">
-                <template slot="tab-title-info">
-                    INFO
-                </template>
-                <template slot="tab-content-info">
-                    <org-info :org="org" />
-                </template>
-
-                <template slot="tab-title-fleet">
-                    FLEET
-                </template>
-                <template slot="tab-content-fleet">
-                    <fleet-view :ships="fleet"/>
-                </template>
-
-                <template slot="tab-title-members">
-                    MEMBERS
-                </template>
-                <template slot="tab-content-members">
-                    <org-members :members="members" />
-                </template>
-            </tabs>
-        </div-->
     </div>
 </template>
 
 <script>
+import { TimelineLite } from "gsap"
 
 export default {
     name: 'location',
@@ -52,7 +29,7 @@ export default {
         return {
             tabs: ["info", "fleet", "members"],
             initialTab: "info",
-            debug: true
+            debug: false
         }
     },
     components: {
@@ -85,6 +62,17 @@ export default {
                 return "None"
             }
         }
+    },
+    watch: {
+        location: {
+            handler: function() {
+                const timeline = new TimelineLite()
+                timeline.to(".location", 1, {opacity: 1})
+                //timeline.to(".portrait", 1, {width: "150px", height: "150px"})
+                //timeline.to(".portrait img", 0.5, {opacity: 1})
+                //timeline.to(".citizen-info .info", 0.5, {opacity: 1})
+            }
+        }
     }
 }
 </script>
@@ -94,6 +82,7 @@ export default {
         width: 100%;
         padding: 10px;
         padding-top: 20px;
+        opacity: 0;
     }
 
     .location-panel .content {
@@ -101,14 +90,20 @@ export default {
     }
 
     .location-image {
-        flex-basis: 400px;
-        height: 400px;
+        flex-basis: 300px;
+        height: 300px;
         border: 1px dotted #546f84;
     }
 
     .location-info {
         margin-bottom: 30px;
         margin: 0 20px;
+    }
+
+    .location-info .title {
+        letter-spacing: 1.5px;
+        word-spacing: 3px;
+        margin: 10px 0;
     }
 
     .location-info .value {

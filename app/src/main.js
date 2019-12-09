@@ -75,6 +75,7 @@ import Satellite from '@/components/location/Satellite.vue'
 import Profile from '@/components/user/Profile.vue'
 import NewsArticle from '@/components/news/NewsArticle.vue'
 import SignUp from '@/components/user/SignUp.vue'
+import Poi from '@/components/location/POI.vue'
 
 import { authGuard } from "@/auth/authGuard"
 
@@ -85,6 +86,7 @@ const routes = [
   { path: '/system/:code', component: System },
   { path: '/planet/:planet', component: Planet},
   { path: '/satellite/:moon', component: Satellite},
+  { path: '/poi/:poi', component: Poi},
   { path: '/orgs/:org', component: Organization},
   { path: '/orgs', component: OrgSearch},
   { path: '/profile', component: Profile, beforeEnter: authGuard },

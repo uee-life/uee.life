@@ -2,11 +2,26 @@
     <div class="system">
         <left-dock />
         <portal to="navigationPane">
-            <div class="left-nav-button"><a target="_blank" :href="starmapLink">Starmap Link</a></div>
+            <div class="left-nav-button"><a target="_blank" :href="starmapLink">Open in Starmap</a></div>
         </portal>
         <location :location="system" type="System">
-            <planet-list :planets="planets"/>
-            <poi-list :pois="pois"/>        
+            <div class="location-tabs">
+                <tabs :tabs="tabs" :initialTab="initialTab">
+                    <template slot="tab-title-planets">
+                        PLANETS
+                    </template>
+                    <template slot="tab-content-planets">
+                        <planet-list :planets="planets"/>
+                    </template>
+
+                    <template slot="tab-title-pois">
+                        POIs
+                    </template>
+                    <template slot="tab-content-pois">
+                        <poi-list :pois="pois"/> 
+                    </template>
+                </tabs>
+            </div>      
         </location>
         <right-dock />
         <!--fleet-view :ships="ships" /-->
@@ -33,6 +48,8 @@ export default {
     },
     data() {
         return {
+            tabs: ["planets", "pois"],
+            initialTab: "planets",
             system: {},
             planets: [],
             pois: []

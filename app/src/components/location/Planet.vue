@@ -2,12 +2,27 @@
     <div class="planet">
         <left-dock />
         <portal to="navigationPane">
-            <div class="left-nav-button"><a target="_blank" :href="starmapLink">Starmap Link</a></div>
-            <div v-if="planet" class="left-nav-button"><router-link :to="systemLink">{{planet.system}} system</router-link></div>
+            <div v-if="planet" class="left-nav-button"><router-link :to="systemLink">System: {{planet.system}}</router-link></div>
+            <div class="left-nav-button"><a target="_blank" :href="starmapLink">Open in Starmap</a></div>
         </portal>
         <location :location="planet" type="Planet">
-            <moon-list :satellites="satellites" :link="planetLink"/>
-            <poi-list :pois="pois"/> 
+            <div class="location-tabs">
+                <tabs :tabs="tabs" :initialTab="initialTab">
+                    <template slot="tab-title-satellites">
+                        MOONS
+                    </template>
+                    <template slot="tab-content-satellites">
+                        <moon-list :satellites="satellites" :link="planetLink"/>
+                    </template>
+
+                    <template slot="tab-title-pois">
+                        POIs
+                    </template>
+                    <template slot="tab-content-pois">
+                        <poi-list :pois="pois"/> 
+                    </template>
+                </tabs>
+            </div>
         </location>
         <right-dock />
     </div>
@@ -33,6 +48,8 @@ export default {
     },
     data() {
         return {
+            tabs: ["satellites", "pois"],
+            initialTab: "satellites",
             planet: {},
             satellites: [],
             pois: []

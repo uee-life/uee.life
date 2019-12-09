@@ -1,6 +1,5 @@
 <template>
     <div id="planet-list" class="planet-list">
-        <section-title text="Planets" size="medium"/>
         <div v-if="planets.length > 0" class="planets">
             <location-summary v-for="(loc, index) in planets" :key="loc.code" :loc="loc" :link="getLink(loc.name)" :index="index">
                 <div>Type: {{ loc.subtype }}</div>
@@ -45,12 +44,23 @@ export default {
             } else {
                 return "No"
             }
+        },
+        show() {
+            const tl = new TimelineLite()
+            tl.to(".planet-list", 1, {opacity: 1})
         }
     },
     mounted() {
-        const tl = new TimelineLite()
-        tl.to(".planet-list .section-title", 1, {opacity: 1})
-        tl.to(".planets", 2, {opacity: 1})
+        if(this.planets) {
+            this.show()
+        }
+    },
+    watch: {
+        planets: {
+            handler: function() {
+                this.show()
+            }
+        }
     }
 }
 </script>
@@ -59,9 +69,9 @@ export default {
     .planet-list {
         position: relative;
         margin-bottom: 20px;
-        padding-top: 10px;
         margin-left: -5px;
         margin-right: -5px;
+        opacity: 0;
     }
     .no-planets {
         text-align: center;

@@ -49,6 +49,11 @@ export default {
 </script>
 
 <style>
+
+    .tab-titles {
+        margin-bottom: 10px;
+    }
+
     .tab-title {
         display: inline-block;
         margin: 0 5px;

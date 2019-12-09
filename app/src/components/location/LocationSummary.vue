@@ -43,7 +43,7 @@ export default {
         width: 400px;
         min-width: 400px;
         flex-grow: 1;
-        margin: 5px;
+        margin: 10px;
         padding: 9px;
         position: relative;
         background: url('/images/fading-bars.png') repeat;
