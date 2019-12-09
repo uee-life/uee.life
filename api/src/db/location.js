@@ -59,13 +59,13 @@ async function getPlanet(planet) {
 
 async function getSatellites(planet) {
     sql = "SELECT b.* FROM locations a left join locations b on b.parent_id = a.id WHERE a.name = ? and b.type='satellite'"
-    rows = getData(sql, [planet])
+    rows = await getData(sql, [planet])
     return rows
 }
 
 async function getSatellite(moon) {
     sql = "SELECT * FROM locations where name=? and type='satellite'"
-    rows = getData(sql, [moon])
+    rows = await getData(sql, [moon])
     console.log(rows)
     if(rows) {
         return rows[0]
@@ -77,15 +77,10 @@ async function getSatellite(moon) {
 async function getPOIs(system, location="") {
     if(location) {
         sql = "SELECT * FROM pois where parent_id=(select id from locations where name=?)"
-        console.log(sql)
-        rows = getData(sql, [location])
-        console.log(rows)
+        rows = await getData(sql, [location])
     } else {
         sql = "SELECT * FROM pois where system=?"
-        console.log(sql)
-        console.log(system)
-        console.log(location)
-        rows = getData(sql, [system])
+        rows = await getData(sql, [system])
     }
     return rows
 }
