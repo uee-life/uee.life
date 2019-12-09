@@ -26,9 +26,6 @@ export default {
             default: function () {
                 return []
             }
-        },
-        link: {
-            type: String
         }
     },
     data() {
@@ -37,7 +34,7 @@ export default {
     },
     methods: {
         getLink(locName) {
-            return `${this.link}/moon/${locName}`
+            return `/satellite/${locName}`
         }
     },
     mounted() {

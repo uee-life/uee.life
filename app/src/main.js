@@ -71,6 +71,7 @@ import Organization from '@/components/org/Organization.vue'
 import OrgSearch from '@/components/org/OrgSearch.vue'
 import System from '@/components/location/System.vue'
 import Planet from '@/components/location/Planet.vue'
+import Satellite from '@/components/location/Satellite.vue'
 import Profile from '@/components/user/Profile.vue'
 import NewsArticle from '@/components/news/NewsArticle.vue'
 import SignUp from '@/components/user/SignUp.vue'
@@ -83,6 +84,7 @@ const routes = [
   { path: '/citizens', component: CitizenSearch },
   { path: '/system/:code', component: System },
   { path: '/planet/:planet', component: Planet},
+  { path: '/satellite/:moon', component: Satellite},
   { path: '/orgs/:org', component: Organization},
   { path: '/orgs', component: OrgSearch},
   { path: '/profile', component: Profile, beforeEnter: authGuard },
