@@ -66,6 +66,7 @@ async function getSatellites(planet) {
 async function getSatellite(moon) {
     sql = "SELECT * FROM locations where name=? and type='satellite'"
     rows = getData(sql, [moon])
+    console.log(rows)
     if(rows) {
         return rows[0]
     } else {
