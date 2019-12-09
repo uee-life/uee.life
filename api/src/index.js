@@ -123,7 +123,7 @@ app.get('/planets/:planet/pois', async (req, res) => {
     res.send(await getPOIs("", req.params.planet));
 })
 
-app.get('/satellites/:name', async (req, res) => {
+app.get('/pois/:name', async (req, res) => {
     res.send(await getPOI(req.params.name));
 })
 
