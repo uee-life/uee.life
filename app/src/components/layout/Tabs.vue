@@ -51,7 +51,7 @@ export default {
 <style>
 
     .tab-titles {
-        margin-bottom: 10px;
+        margin-bottom: 20px;
     }
 
     .tab-title {
