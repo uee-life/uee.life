@@ -64,7 +64,7 @@ async function getSatellites(planet) {
 }
 
 async function getSatellite(moon) {
-    sql = "SELECT a.*, b.name FROM locations a left join locations b on a.parent_id = b.id where a.name=? and a.type='satellite'"
+    sql = "SELECT a.*, b.name as planet FROM locations a left join locations b on a.parent_id = b.id where a.name=? and a.type='satellite'"
     rows = await getData(sql, [moon])
     console.log(rows)
     if(rows) {
