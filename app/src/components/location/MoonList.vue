@@ -3,6 +3,9 @@
         <section-title text="Moons" size="medium"/>
         <div v-if="satellites.length > 0" class="moons">
             <location-summary v-for="(loc, index) in satellites" :key="loc.code" :loc="loc" :link="getLink(loc.name)" :index="index">
+                <div>Type: {{ loc.subtype }}</div>
+                <div>Affiliation: {{ loc.affiliation }}</div>
+                <div>Habitable: {{ isHabitable }}</div>
             </location-summary>
         </div>
         <div class="no-moons" v-else>

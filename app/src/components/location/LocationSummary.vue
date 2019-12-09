@@ -3,9 +3,7 @@
       <img v-if="loc.thumbnail" :src="loc.thumbnail" />
           <div class="summary-info">
           <div><h3 class="summary-name">{{ loc.name }}</h3></div>
-          <div>Type: {{ loc.subtype }}</div>
-          <div>Affiliation: {{ loc.affiliation }}</div>
-          <div>Habitable: {{ isHabitable }}</div>
+          <slot></slot>
       </div>
         <span class="corner top left"></span>
           <span class="corner top right"></span>

@@ -3,6 +3,9 @@
         <section-title text="Planets" size="medium"/>
         <div v-if="planets.length > 0" class="planets">
             <location-summary v-for="(loc, index) in planets" :key="loc.code" :loc="loc" :link="getLink(loc.name)" :index="index">
+                <div>Type: {{ loc.subtype }}</div>
+                <div>Affiliation: {{ loc.affiliation }}</div>
+                <div>Habitable: {{ isHabitable(loc) }}</div>
             </location-summary>
         </div>
         <div class="no-planets" v-else>
@@ -35,6 +38,13 @@ export default {
     methods: {
         getLink(locName) {
             return `/planet/${locName}`
+        },
+        isHabitable(loc) {
+            if(loc.habitable) {
+                return "Yes"
+            } else {
+                return "No"
+            }
         }
     },
     mounted() {
@@ -50,8 +60,8 @@ export default {
         position: relative;
         margin-bottom: 20px;
         padding-top: 10px;
-        padding-left: -5px;
-        padding-right: -5px;
+        margin-left: -5px;
+        margin-right: -5px;
     }
     .no-planets {
         text-align: center;

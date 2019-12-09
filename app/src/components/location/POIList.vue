@@ -2,7 +2,10 @@
     <div class="poi-list">
         <section-title text="Points of Interest" size="medium"/>
         <div v-if="pois.length > 0" class="pois">
-            <location-summary v-for="(loc, index) in pois" :key="loc.code" :loc="loc" :link="getLink(loc.name)" :index="index">
+            <location-summary v-for="(loc, index) in pois" :key="loc.code" :loc="loc" :link="getLink(loc.code)" :index="index">
+                <div>Type: {{ loc.subtype }}</div>
+                <div>Affiliation: {{ loc.affiliation }}</div>
+                <div>Location: {{ loc.planet }}</div>
             </location-summary>
         </div>
         <div class="no-pois" v-else>
@@ -33,8 +36,8 @@ export default {
         }
     },
     methods: {
-        getLink(locName) {
-            return `/poi/${locName}`
+        getLink(code) {
+            return `/poi/${code.split(".")[2]}`
         }
     },
     mounted() {
