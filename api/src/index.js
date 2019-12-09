@@ -112,11 +112,11 @@ app.get('/system/:code/planets/:planet/satellites', async (req, res) => {
 })
 
 app.get('/system/:code/pois', async (req, res) => {
-    res.send(await getPOIs(system=req.params.code));
+    res.send(await getPOIs(req.params.code));
 })
 
 app.get('/system/:code/planets/:planet/pois', async (req, res) => {
-    res.send(await getPOIs(location=req.params.planet));
+    res.send(await getPOIs(req.params.code, req.params.planet));
 })
 
 app.post('/search/org', async (req, res) => {
