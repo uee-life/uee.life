@@ -5,10 +5,10 @@
                 <h3 class="title"> {{ location.name }}</h3>
                 <p>
                     <span v-if="location.subtype">Type: <span class='value'>{{location.subtype}}</span><br></span>
-                    Affiliation: <span class='value'>{{location.affiliation}}</span><br>
-                    Habitable: <span class='value'>{{isHabitable}}</span><br>
-                    Population: <span class='value'>{{rating(location.population)}}</span><br>
-                    Risk: <span class='value'>{{rating(location.danger)}}</span><br>
+                    <span v-if="location.affiliation">Affiliation: <span class='value'>{{location.affiliation}}</span><br></span>
+                    <span v-if="location.habitable">Habitable: <span class='value'>{{isHabitable}}</span><br></span>
+                    <span v-if="location.population">Population: <span class='value'>{{rating(location.population)}}</span><br></span>
+                    <span v-if="location.danger">Risk: <span class='value'>{{rating(location.danger)}}</span><br></span>
                 </p>
                 <p>{{ location.description }}</p>
             </div>
