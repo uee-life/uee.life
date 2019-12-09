@@ -34,6 +34,7 @@ export default {
 <style scoped>
     .summary img {
         width: 100px;
+        height: 100px;
         margin-left: 1px;
         border: 1px dotted #546f84;
     }
