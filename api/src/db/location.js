@@ -63,7 +63,7 @@ async function getSatellites(planet) {
     return rows
 }
 
-async function getPOIs(system="", location="") {
+async function getPOIs(system, location="") {
     if(location) {
         sql = "SELECT * FROM pois where parent_id=(select id from locations where name=?)"
         console.log(sql)
