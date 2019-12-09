@@ -114,7 +114,7 @@ export default {
         this.update()
     },
     watch: {
-        route: {
+        $route: {
             handler: function () {
                 this.update()
             }

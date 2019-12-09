@@ -63,7 +63,7 @@ export default {
         this.getPoi()
     },
     watch: {
-        route: {
+        $route: {
             handler: function () {
                 this.getPoi();
             }

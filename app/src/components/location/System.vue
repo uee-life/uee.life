@@ -108,7 +108,7 @@ export default {
         this.getPOIs()
     },
     watch: {
-        route: {
+        $route: {
             handler: function () {
                 this.getSystem()
                 this.getPlanets()

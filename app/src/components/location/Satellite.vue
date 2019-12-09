@@ -63,7 +63,7 @@ export default {
         this.getSatellite()
     },
     watch: {
-        route: {
+        $route: {
             handler: function () {
                 this.getSatellite();
             }
