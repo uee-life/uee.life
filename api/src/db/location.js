@@ -72,6 +72,8 @@ async function getPOIs(system="", location="") {
     } else {
         sql = "SELECT * FROM pois where system=?"
         console.log(sql)
+        console.log(system)
+        console.log(location)
         rows = getData(sql, [system])
     }
     return rows
