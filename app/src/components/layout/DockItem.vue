@@ -42,7 +42,7 @@ export default {
         width: 220px;
         min-width: 220px;
         margin-bottom: 20px;
-        padding: 15px;
+        padding: 15px 10px;
         background: url('/images/fading-bars.png') repeat;
     }
 </style>

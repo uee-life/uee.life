@@ -1,6 +1,7 @@
 <template>
     <div class="front-page-main">
         <portal to="leftDock">
+            <official-links />
             <community-links />
         </portal>
         <portal to="rightDock">
@@ -25,6 +26,7 @@
 <script>
 import NewsFeed from "@/components/news/NewsFeed.vue"
 import LatestCitizen from '@/components/main/LatestCitizen.vue'
+import OfficialLinks from '@/components/main/OfficialLinks.vue'
 import CommunityLinks from '@/components/main/CommunityLinks.vue'
 
 export default {
@@ -32,6 +34,7 @@ export default {
     components: {
         NewsFeed,
         LatestCitizen,
+        OfficialLinks,
         CommunityLinks
     },
     data() {

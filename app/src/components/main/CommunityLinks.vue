@@ -16,7 +16,7 @@ export default {
         return {
             links: [
                 {name: "Bar Citizens", url: "https://barcitizen.sc"},
-                {name: "SC Tools", url: "https://sc-tools.org"},
+                {name: "SC Wiki", url: "https://starcitizen.tools"},
                 {name: "GameGlass", url: "https://gameglass.gg"},
                 {name: "Ship fitting Calculator", url: "https://erkul.games/calculator"},
                 {name: "Gallog Trade Tool", url: "https://gallog.co/trading/"},

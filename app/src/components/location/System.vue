@@ -8,14 +8,14 @@
             <div class="location-tabs">
                 <tabs :tabs="tabs" :initialTab="initialTab">
                     <template slot="tab-title-planets">
-                        PLANETS
+                        PLANETS ( {{planets.length}} )
                     </template>
                     <template slot="tab-content-planets">
                         <planet-list :planets="planets"/>
                     </template>
 
                     <template slot="tab-title-pois">
-                        POIs
+                        POIs ( {{ pois.length }} )
                     </template>
                     <template slot="tab-content-pois">
                         <poi-list :pois="pois"/> 

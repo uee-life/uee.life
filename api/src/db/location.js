@@ -2,12 +2,12 @@
 const {pool, getData} = require('./mariadb')
 
 
-async function getSystem(code) {
+async function getSystem(sys) {
     let conn;
     system = {};
     try {
         conn = await pool.getConnection();
-        const rows = await conn.query("SELECT * from systems where code = ?", [code]);
+        const rows = await conn.query("SELECT * from system_view where name = ?", [sys]);
         if(rows.length > 0) { // rows + meta info
             system = rows[0]
         }
@@ -23,7 +23,7 @@ async function getPlanets(system) {
     let conn;
     planets = [];
     conn = await pool.getConnection();
-    planets = await conn.query("SELECT * FROM locations WHERE system = ? and type='planet'", [system]).then(rows => {
+    planets = await conn.query("SELECT * FROM location_view WHERE system = ? and type='planet'", [system]).then(rows => {
         if(rows.length > 0) {
             return rows
         } else {
@@ -42,7 +42,7 @@ async function getPlanet(planet) {
     let conn;
     res = {};
     conn = await pool.getConnection();
-    res = await conn.query("SELECT * FROM locations WHERE name = ? and type='planet'", [planet]).then(rows => {
+    res = await conn.query("SELECT * FROM location_view WHERE name = ? and type='planet'", [planet]).then(rows => {
         if(rows.length > 0) {
             return rows[0]
         } else {
@@ -58,13 +58,13 @@ async function getPlanet(planet) {
 }
 
 async function getSatellites(planet) {
-    sql = "SELECT b.* FROM locations a left join locations b on b.parent_id = a.id WHERE a.name = ? and b.type='satellite'"
+    sql = "SELECT b.* FROM location_view a left join location_view b on b.parent_id = a.id WHERE a.name = ? and b.type='satellite'"
     rows = await getData(sql, [planet])
     return rows
 }
 
 async function getSatellite(moon) {
-    sql = "SELECT a.*, b.name as planet FROM locations a left join locations b on a.parent_id = b.id where a.name=? and a.type='satellite'"
+    sql = "SELECT a.*, b.name as planet FROM location_view a left join location_view b on a.parent_id = b.id where a.name=? and a.type='satellite'"
     rows = await getData(sql, [moon])
     console.log(rows)
     if(rows) {
@@ -76,17 +76,17 @@ async function getSatellite(moon) {
 
 async function getPOIs(system, location="") {
     if(location) {
-        sql = "SELECT * FROM pois where parent_id=(select id from locations where name=?)"
+        sql = "SELECT * FROM poi_view where parent_id=(select id from location_view where name=?)"
         rows = await getData(sql, [location])
     } else {
-        sql = "SELECT * FROM pois where system=?"
+        sql = "SELECT * FROM poi_view where system=?"
         rows = await getData(sql, [system])
     }
     return rows
 }
 
 async function getPOI(name) {
-    sql = "SELECT * FROM pois WHERE code like ?"
+    sql = "SELECT * FROM poi_view WHERE code like ?"
     term = `%.${name}`
     rows = await getData(sql, [term])
     if(rows) {

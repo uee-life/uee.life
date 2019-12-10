@@ -67,7 +67,7 @@ export default {
         async getOrg() {
             try {
                 const sid = this.$route.params.org
-                axios.get(`http://localhost:3001/organization/${sid}`).then((res) => {
+                axios.get(`https://api.uee.life/organization/${sid}`).then((res) => {
 
                     if(res.status == 200) {
                         this.org = res.data
@@ -86,7 +86,7 @@ export default {
         },
         async getOrgMembers() {
             const sid = this.$route.params.org
-            axios.get(`http://localhost:3001/organization/${sid}/members/1`).then((res) => {
+            axios.get(`https://api.uee.life/organization/${sid}/members/1`).then((res) => {
                 if(res.status == 200) {
                     this.$nextTick(() => {
                         //eslint-disable-next-line

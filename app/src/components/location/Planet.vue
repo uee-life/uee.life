@@ -9,14 +9,14 @@
             <div class="location-tabs">
                 <tabs :tabs="tabs" :initialTab="initialTab">
                     <template slot="tab-title-satellites">
-                        MOONS
+                        MOONS ( {{ satellites.length }} )
                     </template>
                     <template slot="tab-content-satellites">
                         <moon-list :satellites="satellites" :link="planetLink"/>
                     </template>
 
                     <template slot="tab-title-pois">
-                        POIs
+                        POIs ( {{ pois.length }} )
                     </template>
                     <template slot="tab-content-pois">
                         <poi-list :pois="pois"/> 

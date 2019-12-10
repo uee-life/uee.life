@@ -40,6 +40,7 @@ export default {
     .main-panel {
         display: block;
         position: relative;
+        max-width: fit-content;
         padding: 15px;
         margin-bottom: 20px;
         background: url('/images/fading-bars.png') repeat;
