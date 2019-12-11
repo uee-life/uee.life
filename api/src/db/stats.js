@@ -85,8 +85,9 @@ async function activeUsers() {
 async function getStats() {
     stats = {}
     stats.latestCitizen = await latestCitizen()
-    stats.userCount = await userCount()
-    stats.activeUsers = await activeUsers()
+    stats.users = {}
+    stats.users.total = await userCount()
+    stats.users.active = await activeUsers()
     return stats
 }
 
