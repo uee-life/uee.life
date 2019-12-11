@@ -2,7 +2,7 @@ const uuid = require('uuid/v4')
 const jwt = require('jsonwebtoken')
 
 const {executeSQL} = require('./mariadb')
-const {syncCitizen} = require('./citizen')
+const {syncCitizen, getCitizen} = require('./citizen')
 
 const { domain, clientId, clientSecret, scope, audience } = require("../config/auth_config.js");
 
