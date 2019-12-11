@@ -67,12 +67,12 @@ async function userCount() {
       };
       
     const result = management.getUsers(params).then((res) => {
-        return res
+        return res.total
     }).catch(err => {
         console.error(err)
     });
 
-    return result["total"]
+    return result
 }
 
 async function getStats() {
