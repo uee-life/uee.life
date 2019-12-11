@@ -30,9 +30,9 @@ async function fetchCitizen(handle) {
         info.org = $('span:contains("Spectrum Identification (SID)")', '#public-profile').next().text()
         info.orgRank = $('span:contains("Organization rank")', '#public-profile').next().text()
         info.website = $('span:contains("Website")', '#public-profile').next().attr('href')
-        info.home_system = null
-        info.home_location = null
-        info.home_base = null
+        info.system = null
+        info.planet = null
+        info.home = null
         return info
     } catch (error) {
         console.error(error)
@@ -77,9 +77,6 @@ async function getCitizen(handle) {
     } else {
         citizen.info = await fetchCitizen(handle)
         citizen.ships = []
-        citizen.system = null
-        citizen.planet = null
-        citizen.home = null
     }
 
     return citizen
