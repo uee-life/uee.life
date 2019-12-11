@@ -161,7 +161,10 @@ async function checkCitizen(handle, verified) {
             purgeCitizen(handle)
         }
     }
+}
 
+async function test() {
+    console.log('Testing...')
 }
 
 module.exports = {
@@ -171,5 +174,6 @@ module.exports = {
     getCitizenLocation,
     verifyCitizen,
     checkCitizen,
-    syncCitizen
+    syncCitizen,
+    test
 };

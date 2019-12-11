@@ -2,7 +2,7 @@ const uuid = require('uuid/v4')
 const jwt = require('jsonwebtoken')
 
 const {executeSQL} = require('./mariadb')
-const {checkCitizen} = require('./citizen')
+const {checkCitizen, test} = require('./citizen')
 
 const { domain, clientId, clientSecret, scope, audience } = require("../config/auth_config.js");
 
@@ -33,6 +33,7 @@ async function getUser(token) {
     });
 
     console.log(user)
+    await test()
 
     await checkCitizen(user.app_metadata.handle, user.app_metadata.handle_verified)
 
