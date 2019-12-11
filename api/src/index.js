@@ -9,11 +9,11 @@ const mcache = require('memory-cache');
 const jwt = require('express-jwt')
 const jwksRsa = require('jwks-rsa')
 
-const {getCitizen, getCitizenInfo, getCitizenShips, getCitizenLocation, verifyCitizen} = require('./db/citizen');
+const {getCitizen, getCitizenInfo, getCitizenShips, getCitizenLocation} = require('./db/citizen');
 const {getOrganization, getOrgFounders, getOrgMembers} = require('./db/organization');
 const {getNews} = require('./db/news');
 const {searchOrgs} = require('./db/search');
-const {getUser} = require('./db/user');
+const {getUser, verifyCitizen} = require('./db/user');
 const {
     getSystem, 
     getPlanets, 

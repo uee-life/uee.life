@@ -57,6 +57,25 @@ async function updateHandle(token, handle) {
     });
 }
 
+function getCode(bio) {
+    result = bio.match(/\[ueelife\:[A-Za-z0-9\-]+\]/i);
+    console.log("found: " + result)
+    return result
+}
+
+async function verifyCitizen(token, handle) {
+    result = await getCitizen(handle).then(async (citizen) =>{
+        code = getCode(citizen.info.bio)
+        res = await verifyHandle(token, code)
+        console.log(res)
+        return res
+    }).catch(function (err) {
+        console.error(err)
+    })
+    console.log(result)
+    return result
+}
+
 async function setVerificationCode(user, code) {
     // delete old code
     await executeSQL("DELETE FROM verification WHERE email = ?", [user.email]);
@@ -146,6 +165,7 @@ async function checkCitizen(handle, verified) {
 
 module.exports = {
     getUser,
+    verifyCitizen,
     verifyHandle,
     updateHandle
 }

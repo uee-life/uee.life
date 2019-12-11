@@ -1,7 +1,6 @@
 const axios = require("axios")
 const cheerio = require('cheerio')
 
-const {verifyHandle} = require('./user')
 const {executeSQL} = require('./mariadb')
 
 async function fetchCitizen(handle) {
@@ -26,24 +25,6 @@ async function fetchCitizen(handle) {
     }
 }
 
-function getCode(bio) {
-    result = bio.match(/\[ueelife\:[A-Za-z0-9\-]+\]/i);
-    console.log("found: " + result)
-    return result
-}
-
-async function verifyCitizen(token, handle) {
-    result = await getCitizen(handle).then(async (citizen) =>{
-        code = getCode(citizen.info.bio)
-        res = await verifyHandle(token, code)
-        console.log(res)
-        return res
-    }).catch(function (err) {
-        console.error(err)
-    })
-    console.log(result)
-    return result
-}
 
 async function fetchShips(handle) {
     return [
@@ -135,6 +116,5 @@ module.exports = {
     getCitizenInfo,
     getCitizenShips,
     getCitizenLocation,
-    verifyCitizen,
     syncCitizen
 };
