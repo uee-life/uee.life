@@ -149,7 +149,9 @@ app.post('/search/org', async (req, res) => {
 // Secure API calls
 
 app.get("/user", checkJwt, async (req, res) => {
-    res.send(await getUser(req.headers.authorization));
+    res.send(await getUser(req.headers.authorization).catch(err => {
+        return err
+    }));
 });
 
 app.get("/citizen/:handle/verify", checkJwt, async (req, res) => {
