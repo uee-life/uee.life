@@ -72,7 +72,7 @@ async function userCount() {
         console.error(err)
     });
 
-    return result
+    return result["total"]
 }
 
 async function getStats() {
