@@ -20,7 +20,7 @@ async function latestCitizen() {
         page: 0,
         per_page: 1,
         fields: 'details.response.body.app_metadata',
-        q: 'type:"sapi" AND description:"Update a user"'
+        q: 'type%3A%22sapi%22%20AND%20description%3A%22Update%20a%20user%22'
     }
 
     const result = await management.getLogs(params).then((res) => {
