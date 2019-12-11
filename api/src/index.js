@@ -14,7 +14,18 @@ const {getOrganization, getOrgFounders, getOrgMembers} = require('./db/organizat
 const {getNews} = require('./db/news');
 const {searchOrgs} = require('./db/search');
 const {getUser} = require('./db/user');
-const {getSystem, getPlanets, getPlanet, getSatellites, getSatellite, getPOIs, getPOI} = require('./db/location.js');
+const {
+    getSystem, 
+    getPlanets, 
+    getPlanet, 
+    getSatellites, 
+    getSatellite, 
+    getPOIs, 
+    getPOI
+} = require('./db/location.js');
+const {
+    latestCitizen
+} = require('./db/stats');
 
 
 // defining the Express app
@@ -125,6 +136,10 @@ app.get('/planets/:planet/pois', cache(60), async (req, res) => {
 
 app.get('/pois/:name', cache(60), async (req, res) => {
     res.send(await getPOI(req.params.name));
+})
+
+app.get('/test', async (req, res) => {
+    res.send(await latestCitizen());
 })
 
 app.post('/search/org', async (req, res) => {
