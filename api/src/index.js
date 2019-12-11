@@ -150,6 +150,7 @@ app.post('/search/org', async (req, res) => {
 
 app.get("/user", checkJwt, async (req, res) => {
     res.send(await getUser(req.headers.authorization).catch(err => {
+        console.error(err)
         return err
     }));
 });

@@ -2,7 +2,7 @@ const uuid = require('uuid/v4')
 const jwt = require('jsonwebtoken')
 
 const {executeSQL} = require('./mariadb')
-const {checkCitizen, test} = require('./citizen')
+const {syncCitizen} = require('./citizen')
 
 const { domain, clientId, clientSecret, scope, audience } = require("../config/auth_config.js");
 
@@ -112,6 +112,39 @@ async function verifyHandle(token, code) {
             success: false,
             error: "Code missing or doesn't match. Did you copy the code to your bio?",
             user: user
+        }
+    }
+}
+
+async function purgeCitizen(handle) {
+    sql = "DELETE FROM citizen_sync WHERE handle=?"
+    await executeSQL(sql, [handle])
+}
+
+async function checkCitizen(handle, verified) {
+
+    console.log("Checking citizen: " + handle)
+    // try to load citizen from DB
+    sql = "SELECT * FROM citizen WHERE handle=?"
+    const rows = await executeSQL(sql, [handle])
+
+    if(rows.length === 0) {
+        // if no record, add new record
+        sql = "INSERT INTO citizen (handle, verified) values (?,?)"
+        await executeSQL(sql, [handle, verified])
+        if(verified) {
+            syncCitizen(handle)
+        } else {
+            purgeCitizen(handle)
+        }
+    } else if (rows[0].verified != verified) {
+        // sync verified status
+        sql = "UPDATE citizen SET verified=? WHERE handle=?"
+        await executeSQL(sql, [verified, handle])
+        if(verified) {
+            syncCitizen(handle)
+        } else {
+            purgeCitizen(handle)
         }
     }
 }
