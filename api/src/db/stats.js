@@ -58,9 +58,26 @@ async function latestCitizen() {
     return latest
 }
 
+async function userCount() {
+    var params = {
+        search_engine: 'v3',
+        per_page: 10,
+        page: 0
+      };
+      
+    const result = management.getUsers(params).then((res) => {
+        return res
+    }).catch(err => {
+        console.error(err)
+    });
+
+    return result
+}
+
 async function getStats() {
     stats = {}
     stats.latestCitizen = await latestCitizen()
+    stats.userCount = await userCount()
     return stats
 }
 
