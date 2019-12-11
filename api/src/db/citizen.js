@@ -77,9 +77,9 @@ async function getCitizen(handle) {
     } else {
         citizen.info = await fetchCitizen(handle)
         citizen.ships = []
-        citizen.home_system = null
-        citizen.home_location = null
-        citizen.home_base = null
+        citizen.system = null
+        citizen.planet = null
+        citizen.home = null
     }
 
     return citizen
@@ -98,9 +98,9 @@ async function getCitizenShips(handle) {
 async function getCitizenLocation(handle) {
     citizen = await getCitizen(handle)
     return {
-        home_system: citizen.home_system,
-        home_location: citizen.home_location,
-        home_base: citizen.home_base
+        system: citizen.system,
+        planet: citizen.planet,
+        home: citizen.home
     }
 }
 
