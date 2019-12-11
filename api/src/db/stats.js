@@ -29,7 +29,7 @@ async function latestCitizen() {
         console.error(err)
     });
 
-    return result.details.response.body.app_metadata
+    return result[0].details.response.body.app_metadata
 }
 
 module.exports = {
