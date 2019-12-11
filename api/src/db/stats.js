@@ -66,7 +66,7 @@ async function userCount() {
         include_totals: true
       };
       
-    const result = management.getUsers(params).then((res) => {
+    const result = await management.getUsers(params).then((res) => {
         return res.total
     }).catch(err => {
         console.error(err)
@@ -75,10 +75,18 @@ async function userCount() {
     return result
 }
 
+async function activeUsers() {
+    const count = await management.stats.getActiveUserCount().then((count) => {
+        return count
+    })
+    return count
+}
+
 async function getStats() {
     stats = {}
     stats.latestCitizen = await latestCitizen()
     stats.userCount = await userCount()
+    stats.activeUsers = await activeUsers()
     return stats
 }
 
