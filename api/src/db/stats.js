@@ -58,6 +58,24 @@ async function latestCitizen() {
     return latest
 }
 
+async function verifiedCount() {
+    var params = {
+        search_engine: 'v3',
+        per_page: 0,
+        page: 0,
+        q: 'app_metadata.handle_verified:true',
+        include_totals: true
+      };
+      
+    const result = await management.getUsers(params).then((res) => {
+        return res.total
+    }).catch(err => {
+        console.error(err)
+    });
+
+    return result
+}
+
 async function userCount() {
     var params = {
         search_engine: 'v3',
@@ -75,7 +93,7 @@ async function userCount() {
     return result
 }
 
-async function activeUsers() {
+async function activeCount() {
     const count = await management.getActiveUsersCount().then((count) => {
         return count
     })
@@ -87,7 +105,8 @@ async function getStats() {
     stats.latestCitizen = await latestCitizen()
     stats.users = {}
     stats.users.total = await userCount()
-    stats.users.active = await activeUsers()
+    stats.users.active = await activeCount()
+    stats.users.verified = await verifiedCount()
     return stats
 }
 
