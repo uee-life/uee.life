@@ -6,7 +6,7 @@ const {manager} = require('./manager')
 const {executeSQL} = require('./mariadb')
 
 async function loadCitizen(handle) {
-    sql = "SELECT a.id, a.created, b.*, a.home_system, a.home_location, a.home_base FROM citizen a LEFT JOIN citizen_sync b ON a.handle=b.handle WHERE a.handle=?"
+    sql = "select a.id, a.created, b.*, c.name as system, d.name as planet, e.name as home from citizen a left join citizen_sync b on a.handle=b.handle left join systems c on a.home_system = c.id left join locations d on a.home_location = d.id left join pois e on a.home_base = e.id where a.handle=?"
     const rows = await executeSQL(sql, [handle])
     if(rows.length > 0) {
         return rows[0]
