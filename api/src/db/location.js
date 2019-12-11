@@ -31,13 +31,13 @@ async function getPlanet(planet) {
 
 async function getSatellites(planet) {
     sql = "SELECT b.* FROM location_view a left join location_view b on b.parent_id = a.id WHERE a.name = ? and b.type='satellite'"
-    rows = await getData(sql, [planet])
+    rows = await executeSQL(sql, [planet])
     return rows
 }
 
 async function getSatellite(moon) {
     sql = "SELECT a.*, b.name as planet FROM location_view a left join location_view b on a.parent_id = b.id where a.name=? and a.type='satellite'"
-    rows = await getData(sql, [moon])
+    rows = await executeSQL(sql, [moon])
     console.log(rows)
     if(rows) {
         return rows[0]
@@ -49,10 +49,10 @@ async function getSatellite(moon) {
 async function getPOIs(system, location="") {
     if(location) {
         sql = "SELECT * FROM poi_view where parent_id=(select id from location_view where name=?)"
-        rows = await getData(sql, [location])
+        rows = await executeSQL(sql, [location])
     } else {
         sql = "SELECT * FROM poi_view where system=?"
-        rows = await getData(sql, [system])
+        rows = await executeSQL(sql, [system])
     }
     return rows
 }
@@ -60,7 +60,7 @@ async function getPOIs(system, location="") {
 async function getPOI(name) {
     sql = "SELECT * FROM poi_view WHERE code like ?"
     term = `%.${name}`
-    rows = await getData(sql, [term])
+    rows = await executeSQL(sql, [term])
     if(rows) {
         return rows[0]
     } else {
