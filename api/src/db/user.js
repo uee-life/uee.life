@@ -57,23 +57,14 @@ async function updateHandle(token, handle) {
     });
 }
 
-function getCode(bio) {
-    result = bio.match(/\[ueelife\:[A-Za-z0-9\-]+\]/i);
-    console.log("found: " + result)
-    return result
-}
-
-async function verifyCitizen(token, handle) {
-    result = await getCitizen(handle).then(async (citizen) =>{
-        code = getCode(citizen.info.bio)
-        res = await verifyHandle(token, code)
-        console.log(res)
-        return res
+function getCode(handle) {
+    code = await getCitizen(handle).then((citizen) => {
+        return citizen.info.bio.match(/\[ueelife\:[A-Za-z0-9\-]+\]/i)
     }).catch(function (err) {
         console.error(err)
+        return ""
     })
-    console.log(result)
-    return result
+    return code
 }
 
 async function setVerificationCode(user, code) {
@@ -97,29 +88,35 @@ async function getVerificationCode(user) {
     return code;
 }
 
-async function verifyHandle(token, code) {
+async function setVerified(user) {
+    var params = {
+        id: user.user_id
+    }
+    var metadata = {
+        handle_verified: true
+    }
+    const res = await management.updateAppMetadata(params, metadata).then(function(user) {
+        return user
+    }).catch(function(err) {
+        console.error(err)
+        return null
+    })
+    return res
+}
+
+async function verifyCitizen(token, handle) {
     const user = await getUser(token)
     const validCode = await getVerificationCode(user)
-    console.log("valid code: " + validCode)
-    console.log("test code: " + code)
+    const code = await getCode(handle)
+
     if(code == `[ueelife:${validCode}]`) {
-        var params = {
-            id: user.user_id
-        }
-        var metadata = {
-            handle_verified: true
-        }
-        const res = await management.updateAppMetadata(params, metadata).then(function(user) {
-            return user
-        }).catch(function(err) {
-            console.error(err)
-            return null
-        })
+        const res = setVerified(user)
         setVerificationCode(user, uuid());
+        checkCitizen(user.app_metadata.handle, true)
         return {
             success: true,
             error: "",
-            user: res
+            user: res   // user with verified flag set
         }
     } else {
         return {
@@ -166,6 +163,5 @@ async function checkCitizen(handle, verified) {
 module.exports = {
     getUser,
     verifyCitizen,
-    verifyHandle,
     updateHandle
 }

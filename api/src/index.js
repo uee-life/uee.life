@@ -9,7 +9,7 @@ const mcache = require('memory-cache');
 const jwt = require('express-jwt')
 const jwksRsa = require('jwks-rsa')
 
-const {getCitizen, getCitizenInfo, getCitizenShips, getCitizenLocation} = require('./db/citizen');
+const {getCitizen, getCitizenInfo, getCitizenShips, getCitizenLocation, startSync} = require('./db/citizen');
 const {getOrganization, getOrgFounders, getOrgMembers} = require('./db/organization');
 const {getNews} = require('./db/news');
 const {searchOrgs} = require('./db/search');
@@ -157,6 +157,10 @@ app.get("/user", checkJwt, async (req, res) => {
 
 app.get("/citizen/:handle/verify", checkJwt, async (req, res) => {
     res.send(await verifyCitizen(req.headers.authorization, req.params.handle));
+});
+
+app.get("/sync", checkJwt, async (req, res) => {
+    res.send(await startSync(req.headers.authorization))
 });
 
 // starting the server

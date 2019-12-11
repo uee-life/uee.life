@@ -8,6 +8,9 @@
           <div class="line-item"><div>Handle: </div> <div> {{user.app_metadata.handle}}</div></div>
           <div class="line-item"><div>Verified: </div> <div> {{ isVerified(user.app_metadata.handle_verified) }}</div></div>
       </div>
+      <div v-else class="info-loading">
+          <h3>Loading...</h3>
+        </div>
   </main-panel>
 </template>
 
@@ -48,7 +51,7 @@ export default {
     .profile-info {
         position: relative;
         display: flex;
-        width: 100%;
+        width: fit-content;
         height: fit-content;
         padding: 10px;
         padding-top: 20px;

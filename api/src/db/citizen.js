@@ -1,7 +1,19 @@
 const axios = require("axios")
 const cheerio = require('cheerio')
+const jwt = require('jsonwebtoken')
 
+const {manager} = require('./manager')
 const {executeSQL} = require('./mariadb')
+
+async function loadCitizen(handle) {
+    sql = "SELECT a.id, a.created, b.*, a.home_system, a.home_location, a.home_base FROM citizen a LEFT JOIN citizen_sync b ON a.handle=b.handle WHERE a.handle=?"
+    const rows = await executeSQL(sql, [handle])
+    if(rows.length > 0) {
+        return rows[0]
+    } else {
+        return null
+    }
+}
 
 async function fetchCitizen(handle) {
     try {
@@ -18,6 +30,9 @@ async function fetchCitizen(handle) {
         info.org = $('span:contains("Spectrum Identification (SID)")', '#public-profile').next().text()
         info.orgRank = $('span:contains("Organization rank")', '#public-profile').next().text()
         info.website = $('span:contains("Website")', '#public-profile').next().attr('href')
+        info.home_system = null
+        info.home_location = null
+        info.home_base = null
         return info
     } catch (error) {
         console.error(error)
@@ -54,40 +69,39 @@ async function fetchShips(handle) {
     ]
 }
 
-async function fetchLocation(handle) {
-    return {
-        system: "Unknown",
-        planet: "Unknown",
-        city: "Unknown"
-    }
-}
-
 async function getCitizen(handle) {
-    res = {}
-    info = await fetchCitizen(handle)
-
-    if(info == null) {
-        return {error: "Character not found"}
+    citizen = {}
+    citizen.info = await loadCitizen(handle)
+    if(citizen.info) {
+        citizen.ships = await fetchShips(handle)
+    } else {
+        citizen.info = await fetchCitizen(handle)
+        citizen.ships = []
+        citizen.home_system = null
+        citizen.home_location = null
+        citizen.home_base = null
     }
 
-    res.info = info
-    res.ships = await fetchShips(handle)
-    res.location = await fetchLocation(handle)
-
-    return res
+    return citizen
 };
 
 async function getCitizenInfo(handle) {
-    //data = db_getCitizen(handle)
-    return await fetchCitizen(handle)
+    citizen = await getCitizen(handle)
+    return citizen.info
 }
 
 async function getCitizenShips(handle) {
-    return await fetchShips(handle)
+    citizen = await getCitizen(handle)
+    return citizen.ships
 }
 
 async function getCitizenLocation(handle) {
-    return await fetchLocation(handle)
+    citizen = await getCitizen(handle)
+    return {
+        home_system: citizen.home_system,
+        home_location: citizen.home_location,
+        home_base: citizen.home_base
+    }
 }
 
 async function syncCitizen(handle) {
@@ -108,6 +122,22 @@ async function syncCitizen(handle) {
             citizen.website
         ]
         await executeSQL(sql, data)
+        return true
+    } else {
+        return false
+    }
+}
+
+async function startSync(token) {
+    const userID = jwt.decode(token.slice(7)).sub
+    const user = await manager.getUser({id: userID}).catch((err) => {
+        console.error(err)
+        return {}
+    })
+    if(await syncCitizen(user.app_metadata.handle)) {
+        return {result: "success"}
+    } else {
+        return {result: "failed"}
     }
 }
 
@@ -116,5 +146,6 @@ module.exports = {
     getCitizenInfo,
     getCitizenShips,
     getCitizenLocation,
-    syncCitizen
+    syncCitizen,
+    startSync
 };
