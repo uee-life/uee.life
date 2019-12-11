@@ -76,7 +76,7 @@ async function userCount() {
 }
 
 async function activeUsers() {
-    const count = await management.getActiveUserCount().then((count) => {
+    const count = await management.getActiveUsersCount().then((count) => {
         return count
     })
     return count
