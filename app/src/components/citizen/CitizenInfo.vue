@@ -1,27 +1,39 @@
 <template>
-  <div id="citizen-info" class="citizen-info">
-      <div class="portrait" id="portrait">
-          <img class="portrait-img" :src="citizen.info.portrait" />
-            <span class="corner top left"></span>
-          <span class="corner top right"></span>
-          <span class="corner bottom left"></span>
-          <span class="corner bottom right"></span>
-      </div>
-      <div class="info">
-          <div class="line-item"><div>UEE Citizen Record:</div><div>{{ citizen.info.record }}</div></div>
-          <div class="line-item"><div>Name:</div><div>{{citizen.info.name}}</div></div>
-          <div class="line-item"><div>Handle:</div><div>{{citizen.info.handle}}</div></div>
-          <div class="line-item"><div>Enlisted:</div><div>{{citizen.info.enlisted}}</div></div>
-          <br>
-          <div>
-            Home:
-          <ul>
-              <li class="line-item"><div>System</div>-<div>{{citizen.home.system}}</div></li>
-              <li class="line-item"><div>Planet</div>-<div>{{citizen.home.planet}}</div></li>
-              <li class="line-item"><div>City:</div>-<div>{{citizen.home.city}}</div></li>
-          </ul>
-          </div>
-      </div>
+    <div id="citizen-info" class="citizen-info">
+        <div class="portrait" id="portrait">
+            <img class="portrait-img" :src="citizen.info.portrait" />
+                <span class="corner top left"></span>
+            <span class="corner top right"></span>
+            <span class="corner bottom left"></span>
+            <span class="corner bottom right"></span>
+        </div>
+        <div class="info">
+            <div class="line-item"><div>UEE Citizen Record:</div><div>{{ citizen.info.record }}</div></div>
+            <div class="line-item"><div>Name:</div><div>{{citizen.info.name}}</div></div>
+            <div class="line-item"><div>Handle:</div><div>{{citizen.info.handle}}</div></div>
+            <div class="line-item"><div>Enlisted:</div><div>{{citizen.info.enlisted}}</div></div>
+            <br>
+            <div>
+                Home:
+            <ul>
+                <li class="line-item">
+                    <div>System</div>-
+                    <div v-if="citizen.info.system"><router-link :to="systemLink">{{citizen.info.system}}</router-link></div>
+                    <div v-else>Unknown</div>
+                </li>
+                <li class="line-item">
+                    <div>Planet</div>-
+                    <div v-if="citizen.info.planet"><router-link :to="planetLink">{{citizen.info.planet}}</router-link></div>
+                    <div v-else>Unknown</div>
+                </li>
+                <li class="line-item">
+                    <div>City:</div>-
+                    <div v-if="citizen.info.home"><router-link :to="homeLink">{{citizen.info.home}}</router-link></div>
+                    <div v-else>Unknown</div>
+                </li>
+            </ul>
+            </div>
+        </div>
   </div>
 </template>
 
@@ -33,6 +45,17 @@ export default {
     props: ["citizen"],
     data() {
         return {
+        }
+    },
+    computed: {
+        systemLink() {
+            return `/system/${this.citizen.info.system}`
+        },
+        planetLink() {
+            return `/planet/${this.citizen.info.planet}`
+        },
+        homeLink() {
+            return `/poi/${this.citizen.info.home}`
         }
     },
     watch: {
