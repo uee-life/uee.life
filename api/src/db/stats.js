@@ -32,6 +32,12 @@ async function latestCitizen() {
     return result[0].details.response.body.app_metadata
 }
 
+async function getStats() {
+    stats = {}
+    stats.latestCitizen = await latestCitizen()
+    return stats
+}
+
 module.exports = {
-    latestCitizen
+    getStats
 }

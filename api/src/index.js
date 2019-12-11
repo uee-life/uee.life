@@ -138,7 +138,7 @@ app.get('/pois/:name', cache(60), async (req, res) => {
     res.send(await getPOI(req.params.name));
 })
 
-app.get('/test', async (req, res) => {
+app.get('/stats', async (req, res) => {
     res.send(await latestCitizen());
 })
 
