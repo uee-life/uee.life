@@ -24,7 +24,7 @@ const {
     getPOI
 } = require('./db/location.js');
 const {
-    latestCitizen
+    getStats
 } = require('./db/stats');
 
 
@@ -139,7 +139,7 @@ app.get('/pois/:name', cache(60), async (req, res) => {
 })
 
 app.get('/stats', async (req, res) => {
-    res.send(await latestCitizen());
+    res.send(await getStats());
 })
 
 app.post('/search/org', async (req, res) => {
