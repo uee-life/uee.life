@@ -135,7 +135,7 @@ async function purgeCitizen(handle) {
     await executeSQL(sql, [handle])
 }
 
-function checkCitizen(handle, verified) {
+async function checkCitizen(handle, verified) {
     // try to load citizen from DB
     sql = "SELECT * FROM citizen WHERE handle=?"
     const rows = await executeSQL(sql, [handle])
