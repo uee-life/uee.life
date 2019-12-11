@@ -61,8 +61,9 @@ async function latestCitizen() {
 async function userCount() {
     var params = {
         search_engine: 'v3',
-        per_page: 10,
-        page: 0
+        per_page: 0,
+        page: 0,
+        include_totals: true
       };
       
     const result = management.getUsers(params).then((res) => {
