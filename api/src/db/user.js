@@ -38,6 +38,8 @@ async function getUser(token) {
 
     user.verificationCode = await getVerificationCode(user)
 
+    user.citizen = await getCitizen(user.app_metadata.handle)
+
     //TODO: filter to just wanted user fields.
     return user
 }
@@ -144,7 +146,7 @@ async function checkCitizen(handle, verified) {
         sql = "INSERT INTO citizen (handle, verified) values (?,?)"
         await executeSQL(sql, [handle, verified])
         if(verified) {
-            syncCitizen(handle)
+            await syncCitizen(handle)
         } else {
             purgeCitizen(handle)
         }
@@ -153,7 +155,7 @@ async function checkCitizen(handle, verified) {
         sql = "UPDATE citizen SET verified=? WHERE handle=?"
         await executeSQL(sql, [verified, handle])
         if(verified) {
-            syncCitizen(handle)
+            await syncCitizen(handle)
         } else {
             purgeCitizen(handle)
         }
