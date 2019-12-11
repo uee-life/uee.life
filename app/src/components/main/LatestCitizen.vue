@@ -1,46 +1,30 @@
 <template>
     <dock-item title="Latest Citizen" mainClass="latest-citizen">
       <div v-if="citizen" >
-      <router-link :to="citizenLink"><img class="logo" :src="citizen.info.portrait" /></router-link>
-      <div class="cit-name">
-        {{ citizen.info.name }}
-      </div>
-      <div class="cit-handle">
-        Handle: {{ citizen.info.handle }}
-      </div>
+        <router-link :to="citizenLink"><img class="logo" :src="citizen.portrait" /></router-link>
+        <div class="cit-name">
+          {{ citizen.name }}
+        </div>
+        <div class="cit-handle">
+          {{ citizen.handle }}
+        </div>
       </div>
     </dock-item>
 </template>
 
 <script>
 import { TimelineLite } from "gsap"
-import axios from "axios"
 
 export default {
     name: "latest-citizen",
+    props: ["citizen"],
     data() {
-        return {
-          latest: "Talyian",
-            citizen: null
-        }
+      return {}
     },
     computed: {
         citizenLink () {
-        return `/citizens/${this.citizen.info.handle}`;
+            return `/citizens/${this.citizen.handle}`;
         }
-    },
-    methods: {
-      async getLatest() {
-        axios({
-          url: `https://api.uee.life/citizen/${this.latest}`,
-          method: 'GET'
-        }).then((res) => {
-          this.citizen = res.data
-        }).catch((error) => {
-          // eslint-disable-next-line
-          console.error(error)
-        });
-      }
     },
     watch: {
       citizen() {
@@ -48,20 +32,17 @@ export default {
 
         timeline.to(".latest-citizen", 1, {opacity: 1})
       }
-    },
-    mounted() {
-        this.getLatest()
     }
 }
 </script>
 
 <style>
   .latest-citizen {
-    opacity: 1;
+    opacity: 0;
     transition-property: all;
   }
 
-  .latest-citizen .content div{
+  .latest-citizen .content div {
     display: flex;
     flex-direction: Column;
     align-items: center;
@@ -75,10 +56,26 @@ export default {
   }
   .cit-name {
     align-self: center;
-    font-size: 20px;
+    font-size: 18px;
   }
   .cit-handle {
     align-self: center;
-    margin-bottom: 15px;
+    font-size: 12px;
+  }
+
+  .latest-citizen .content div.citizen-stats {
+    align-items: start;
+  }
+
+  .latest-citizen .content div.citizen-stats h3 {
+    align-self: center;
+  }
+
+  .citizen-stat {
+    align-self: left;
+  }
+
+  .stat-header {
+    margin: 5px;
   }
 </style>

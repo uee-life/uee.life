@@ -5,7 +5,8 @@
             <community-links />
         </portal>
         <portal to="rightDock">
-            <latest-citizen />
+            <site-stats :stats="stats"/>
+            <latest-citizen :citizen="citizen"/>
         </portal> 
         <main-panel title="Site News" mainClass="site-news" id="site-news" :style="newsHeight">
             <h3>UEE.life v0.1.1 now live!</h3>
@@ -24,8 +25,11 @@
 </template>
 
 <script>
+import axios from "axios"
+
 import NewsFeed from "@/components/news/NewsFeed.vue"
 import LatestCitizen from '@/components/main/LatestCitizen.vue'
+import SiteStats from '@/components/main/SiteStats.vue'
 import OfficialLinks from '@/components/main/OfficialLinks.vue'
 import CommunityLinks from '@/components/main/CommunityLinks.vue'
 
@@ -34,6 +38,7 @@ export default {
     components: {
         NewsFeed,
         LatestCitizen,
+        SiteStats,
         OfficialLinks,
         CommunityLinks
     },
@@ -41,7 +46,9 @@ export default {
         return {
             newsHeight: "height: 220px",
             buttonText: "Show More",
-            showing: false
+            showing: false,
+            stats: null,
+            citizen: null
         }
     },
     methods: {
@@ -55,7 +62,30 @@ export default {
                 this.buttonText = "Show Less";
                 this.showing = true;
             }
+        },
+        async getStats() {
+            axios({
+            url: 'https://api.uee.life/stats',
+            method: 'GET'
+            }).then((res) => {
+            this.stats = res.data
+            this.getCitizen(this.stats.latestCitizen)
+            })
+        },
+        async getCitizen(handle) {
+            axios({
+            url: `https://api.uee.life/citizen/${handle}/info`,
+            method: 'GET'
+            }).then((res) => {
+            this.citizen = res.data
+            }).catch((error) => {
+            // eslint-disable-next-line
+            console.error(error)
+            });
         }
+    },
+    mounted() {
+        this.getStats()
     }
 }
 </script>
