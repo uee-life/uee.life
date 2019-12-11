@@ -1,7 +1,7 @@
 const uuid = require('uuid/v4')
 const jwt = require('jsonwebtoken')
 
-const pool = require('./mariadb')
+const {pool, getData} = require('./mariadb')
 
 const { domain, clientId, clientSecret, scope, audience } = require("../config/auth_config.js");
 
@@ -74,20 +74,13 @@ async function setVerificationCode(user, code) {
 async function getVerificationCode(user) {
     let conn;
     code = "";
-    try {
-        conn = await pool.getConnection();
-        const rows = await conn.query("SELECT vcode from verification where email = ?", [user.email]);
+        const rows = await getData("SELECT vcode from verification where email = ?", [user.email]);
         if(rows.length > 0) { // rows + meta info
             code = rows[0].vcode
         } else {
             code = uuid();
             await setVerificationCode(user, code);
         }
-    } catch (err) {
-        throw err;
-    } finally {
-        if (conn) conn.end();
-    }
     return code;
 }
 
