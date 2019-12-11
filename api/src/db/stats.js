@@ -1,6 +1,6 @@
 
 var ManagementClient = require('auth0').ManagementClient;
-const {pool, getData} = require('./mariadb')
+const {executeSQL} = require('./mariadb')
 
 const { domain, clientId, clientSecret, scope, audience } = require("../config/auth_config.js");
 
@@ -18,13 +18,13 @@ var management = new ManagementClient({
 
 function loadStat(stat) {
     sql = "SELECT value FROM stats WHERE stat=?"
-    const res = getData(sql, [stat])[0].value
+    const res = executeSQL(sql, [stat])[0].value
     return res
 }
 
 function saveStat(stat, value) {
     sql = "REPLACE INTO stats (stat, value) VALUES (?,?)"
-    getData(sql, [stat,value])
+    executeSQL(sql, [stat,value])
 }
 
 async function latestCitizen() {

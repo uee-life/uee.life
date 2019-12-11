@@ -1,59 +1,31 @@
 
-const {pool, getData} = require('./mariadb')
+const {executeSQL} = require('./mariadb')
 
 
 async function getSystem(sys) {
-    let conn;
     system = {};
-    try {
-        conn = await pool.getConnection();
-        const rows = await conn.query("SELECT * from system_view where name = ?", [sys]);
-        if(rows.length > 0) { // rows + meta info
-            system = rows[0]
-        }
-    } catch (err) {
-        throw err;
-    } finally {
-        if (conn) conn.end();
+    const rows = await executeSQL("SELECT * from system_view where name = ?", [sys]);
+    if(rows.length > 0) { // rows + meta info
+        system = rows[0]
     }
     return system;
 }
 
 async function getPlanets(system) {
-    let conn;
     planets = [];
-    conn = await pool.getConnection();
-    planets = await conn.query("SELECT * FROM location_view WHERE system = ? and type='planet'", [system]).then(rows => {
-        if(rows.length > 0) {
-            return rows
-        } else {
-            return []
-        }
-    }).catch(error => {
-        console.error(error)
-        return []
-    }).finally(() => {
-        if (conn) conn.end();
-    });
+    rows = await executeSQL("SELECT * FROM location_view WHERE system = ? and type='planet'", [system]);
+    if(rows.length > 0) {
+        planets = rows
+    } 
     return planets;
 }
 
 async function getPlanet(planet) {
-    let conn;
     res = {};
-    conn = await pool.getConnection();
-    res = await conn.query("SELECT * FROM location_view WHERE name = ? and type='planet'", [planet]).then(rows => {
-        if(rows.length > 0) {
-            return rows[0]
-        } else {
-            return {}
-        }
-    }).catch(error => {
-        console.error(error)
-        return {}
-    }).finally(() => {
-        if (conn) conn.end();
-    });
+    rows = await executeSQL("SELECT * FROM location_view WHERE name = ? and type='planet'", [planet]);
+    if(rows.length > 0) {
+        res = rows[0]
+    }
     return res;
 }
 

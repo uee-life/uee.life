@@ -1,7 +1,8 @@
 const uuid = require('uuid/v4')
 const jwt = require('jsonwebtoken')
 
-const {pool, getData} = require('./mariadb')
+const {executeSQL} = require('./mariadb')
+const {checkCitizen} = require('./citizen')
 
 const { domain, clientId, clientSecret, scope, audience } = require("../config/auth_config.js");
 
@@ -31,6 +32,8 @@ async function getUser(token) {
         console.error(err)
     });
 
+    checkCitizen(user.app_metadata.handle, user.app_metadata.handle_verified)
+
     user.verificationCode = await getVerificationCode(user)
 
     //TODO: filter to just wanted user fields.
@@ -53,34 +56,23 @@ async function updateHandle(token, handle) {
 }
 
 async function setVerificationCode(user, code) {
-    let conn;
-    try {
-        conn = await pool.getConnection();
+    // delete old code
+    await executeSQL("DELETE FROM verification WHERE email = ?", [user.email]);
 
-        // delete old code
-        await conn.query("DELETE FROM verification WHERE email = ?", [user.email]);
-
-        // add new code
-        const res = await conn.query("INSERT INTO verification (email, vcode) value (?, ?)", [user.email, code]);
-        console.log(res); // { affectedRows: 1, insertId: 1, warningStatus: 0 }
-  
-    } catch (err) {
-        throw err;
-    } finally {
-        if (conn) return conn.end();
-    }
+    // add new code
+    const res = await executeSQL("INSERT INTO verification (email, vcode) value (?, ?)", [user.email, code]);
+    console.log(res); // { affectedRows: 1, insertId: 1, warningStatus: 0 }
 }
 
 async function getVerificationCode(user) {
-    let conn;
     code = "";
-        const rows = await getData("SELECT vcode from verification where email = ?", [user.email]);
-        if(rows.length > 0) { // rows + meta info
-            code = rows[0].vcode
-        } else {
-            code = uuid();
-            await setVerificationCode(user, code);
-        }
+    const rows = await executeSQL("SELECT vcode from verification where email = ?", [user.email]);
+    if(rows.length > 0) { // rows + meta info
+        code = rows[0].vcode
+    } else {
+        code = uuid();
+        await setVerificationCode(user, code);
+    }
     return code;
 }
 

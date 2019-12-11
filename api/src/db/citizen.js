@@ -2,7 +2,7 @@ const axios = require("axios")
 const cheerio = require('cheerio')
 
 const {verifyHandle} = require('./user')
-const {pool} = require('./mariadb')
+const {executeSQL} = require('./mariadb')
 
 async function fetchCitizen(handle) {
     try {
@@ -109,10 +109,65 @@ async function getCitizenLocation(handle) {
     return await fetchLocation(handle)
 }
 
+async function syncCitizen(handle) {
+    // get citizen data from RSI
+    const citizen = await fetchCitizen(handle)
+    // update citizen data
+    if(citizen) {
+        sql = "REPLACE INTO citizen_sync (handle, record, name, bio, enlisted, portrait, org, orgrank, website) VALUES (?,?,?,?,?,?,?,?,?)"
+        data = [
+            citizen.handle,
+            citizen.record,
+            citizen.name,
+            citizen.bio,
+            citizen.enlisted,
+            citizen.portrait,
+            citizen.org,
+            citizen.orgRank,
+            citizen.website
+        ]
+        await executeSQL(sql, data)
+    }
+}
+
+async function purgeCitizen(handle) {
+    sql = "DELETE FROM citizen_sync WHERE handle=?"
+    await executeSQL(sql, [handle])
+}
+
+function checkCitizen(handle, verified) {
+    // try to load citizen from DB
+    sql = "SELECT * FROM citizen WHERE handle=?"
+    const rows = await executeSQL(sql, [handle])
+
+    if(rows.length === 0) {
+        // if no record, add new record
+        sql = "INSERT INTO citizen (handle, verified) values (?,?)"
+        executeSQL(sql, [handle, verified])
+        if(verified) {
+            syncCitizen(handle)
+        } else {
+            purgeCitizen(handle)
+        }
+    } else if (rows[0].verified != verified) {
+        // sync verified status
+        sql = "UPDATE citizen SET verified=? WHERE handle=?"
+        executeSQL(sql, [verified, handle])
+        if(verified) {
+            syncCitizen(handle)
+        } else {
+            purgeCitizen(handle)
+        }
+    }
+
+}
+
 module.exports = {
     getCitizen,
     getCitizenInfo,
     getCitizenShips,
     getCitizenLocation,
-    verifyCitizen
+    verifyCitizen,
+    checkCitizen,
+    syncCitizen
 };

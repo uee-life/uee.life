@@ -9,7 +9,7 @@ const pool = mariadb.createPool({
      connectionLimit: 5
 });
 
-async function getData(sql, params) {
+async function executeSQL(sql, params) {
   let conn;
   result = [];
   conn = await pool.getConnection();
@@ -28,23 +28,6 @@ async function getData(sql, params) {
   return result;
 }
 
-async function asyncFunction() {
-  let conn;
-  try {
-	conn = await pool.getConnection();
-	const rows = await conn.query("SELECT 1 as val");
-	console.log(rows); //[ {val: 1}, meta: ... ]
-	const res = await conn.query("INSERT INTO myTable value (?, ?)", [1, "mariadb"]);
-	console.log(res); // { affectedRows: 1, insertId: 1, warningStatus: 0 }
-
-  } catch (err) {
-	throw err;
-  } finally {
-	if (conn) return conn.end();
-  }
-}
-
 module.exports = {
-  pool,
-  getData
+  executeSQL
 }
