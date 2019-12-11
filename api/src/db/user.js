@@ -32,6 +32,8 @@ async function getUser(token) {
         console.error(err)
     });
 
+    console.log(user)
+
     await checkCitizen(user.app_metadata.handle, user.app_metadata.handle_verified)
 
     user.verificationCode = await getVerificationCode(user)

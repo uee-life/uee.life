@@ -136,6 +136,8 @@ async function purgeCitizen(handle) {
 }
 
 async function checkCitizen(handle, verified) {
+
+    console.log("Checking citizen: " + handle)
     // try to load citizen from DB
     sql = "SELECT * FROM citizen WHERE handle=?"
     const rows = await executeSQL(sql, [handle])
@@ -143,7 +145,7 @@ async function checkCitizen(handle, verified) {
     if(rows.length === 0) {
         // if no record, add new record
         sql = "INSERT INTO citizen (handle, verified) values (?,?)"
-        executeSQL(sql, [handle, verified])
+        await executeSQL(sql, [handle, verified])
         if(verified) {
             syncCitizen(handle)
         } else {
@@ -152,7 +154,7 @@ async function checkCitizen(handle, verified) {
     } else if (rows[0].verified != verified) {
         // sync verified status
         sql = "UPDATE citizen SET verified=? WHERE handle=?"
-        executeSQL(sql, [verified, handle])
+        await executeSQL(sql, [verified, handle])
         if(verified) {
             syncCitizen(handle)
         } else {
