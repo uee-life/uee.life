@@ -18,6 +18,7 @@ async function loadCitizen(handle) {
 
 async function fetchCitizen(handle) {
     try {
+        console.log(`Fetching ${handle}`)
         const baseURI = 'https://robertsspaceindustries.com'
         const resp = await axios.get(baseURI + '/citizens/' + handle)
         const $ = cheerio.load(resp.data)
