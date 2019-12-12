@@ -15,6 +15,7 @@ const {getNews} = require('./db/news');
 const {searchOrgs} = require('./db/search');
 const {getUser, verifyCitizen} = require('./db/user');
 const {
+    getSystems,
     getSystem, 
     getPlanets, 
     getPlanet, 
@@ -105,6 +106,10 @@ app.get('/news', cache(60), async (req, res) => {
     }
     res.send(await getNews(data));
 });
+
+app.get('/systems', cache(600), async (req, res) => {
+    res.send(await getSystems())
+})
 
 app.get('/systems/:code', cache(60), async (req, res) => {
     res.send(await getSystem(req.params.code));

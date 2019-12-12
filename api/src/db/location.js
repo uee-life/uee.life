@@ -1,6 +1,9 @@
 
 const {executeSQL} = require('./mariadb')
 
+async function getSystems() {
+    return await executeSQL("SELECT id, name FROM systems WHERE affiliation IN (1, 5, 6)")
+}
 
 async function getSystem(sys) {
     system = {};
@@ -69,6 +72,7 @@ async function getPOI(name) {
 }
 
 module.exports = {
+    getSystems,
     getSystem,
     getPlanets,
     getPlanet,
