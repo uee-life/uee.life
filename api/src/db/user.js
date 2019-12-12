@@ -61,7 +61,6 @@ async function updateHandle(token, handle) {
 
 async function getCode(handle) {
     code = await getCitizen(handle).then((citizen) => {
-        console.log(citizen)
         return citizen.info.bio.match(/\[ueelife\:[A-Za-z0-9\-]+\]/i)
     }).catch(function (err) {
         console.error(err)

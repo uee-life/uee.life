@@ -8,7 +8,6 @@ const {executeSQL} = require('./mariadb')
 async function loadCitizen(handle) {
     sql = "select a.id, a.created, b.*, c.name as system, d.name as planet, e.name as home from citizen_sync b left join citizen a on a.handle=b.handle left join systems c on a.home_system = c.id left join locations d on a.home_location = d.id left join pois e on a.home_base = e.id where a.handle=?"
     const rows = await executeSQL(sql, [handle])
-    console.log(rows)
     if(rows.length > 0) {
         return rows[0]
     } else {
@@ -18,7 +17,6 @@ async function loadCitizen(handle) {
 
 async function fetchCitizen(handle) {
     try {
-        console.log(`Fetching ${handle}`)
         const baseURI = 'https://robertsspaceindustries.com'
         const resp = await axios.get(baseURI + '/citizens/' + handle)
         const $ = cheerio.load(resp.data)
