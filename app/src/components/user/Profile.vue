@@ -5,7 +5,6 @@
     <div class="profile-main">
       <profile-verify v-if="!verified" :user="user" :errors="errors.verification" @verify="verifyHandle"/>
       <profile-info v-if="user" :user="user"/>
-      <home-select />
       <div v-if="debug" class="debug">
         <pre>{{ JSON.stringify(user, null, 2) }}</pre>
       </div>
@@ -19,14 +18,14 @@ import axios from "axios"
 
 import ProfileInfo from '@/components/user/ProfileInfo.vue'
 import ProfileVerify from '@/components/user/ProfileVerify.vue'
-import HomeSelect from '@/components/user/HomeSelect.vue'
+//import HomeSelect from '@/components/user/HomeSelect.vue'
 
 export default {
     name: "profile",
     components: {
       ProfileInfo,
       ProfileVerify,
-      HomeSelect
+   //   HomeSelect
     },
     data() {
       return {
