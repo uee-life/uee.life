@@ -1,8 +1,10 @@
 <template>
-    <select v-model="system">
-        <option value="">Not Specified</option>
-        <option v-for="sys in systems" :key="sys.id" value="sys.id">{{sys.name}}</option>
-    </select>
+    <form>
+        <select v-model="system">
+            <option value="">Not Specified</option>
+            <option v-for="sys in systems" :key="sys.id" value="sys.id">{{sys.name}}</option>
+        </select>
+    </form>
 </template>
 
 <script>
