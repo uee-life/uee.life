@@ -8,6 +8,7 @@ const {executeSQL} = require('./mariadb')
 async function loadCitizen(handle) {
     sql = "select a.id, a.created, b.*, c.name as system, d.name as planet, e.name as home from citizen a left join citizen_sync b on a.handle=b.handle left join systems c on a.home_system = c.id left join locations d on a.home_location = d.id left join pois e on a.home_base = e.id where a.handle=?"
     const rows = await executeSQL(sql, [handle])
+    console.log(rows)
     if(rows.length > 0) {
         return rows[0]
     } else {
