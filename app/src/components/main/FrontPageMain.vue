@@ -9,16 +9,36 @@
             <latest-citizen :citizen="citizen"/>
         </portal> 
         <main-panel title="Site News" mainClass="site-news" id="site-news" :style="newsHeight">
-            <h3>UEE.life v0.1.1 now live!</h3>
-            <p>In our first major update to UEE.life, you can now create an account, and link your RSI account!</p>
-            <p>Once you have created your account (make sure you enter your RSI handle accurately), visit your profile page <router-link to="/profile">here</router-link> to verify your account!</p>
-            <p>Come back regularly to keep up with all updates!
+            <div class="title">
+                <h3>UEE.life v0.1.2 now live!</h3>
+                <div class="date"><i>Updated: 12 Dec 2949</i></div>
+            </div>
+            <p>
+                Now featuring:
+                <ul>
+                    <li>System Information! (Check it out: <router-link to="/system/stanton">Stanton System</router-link>)</li>
+                    <li>Site Stats!</li>
+                    <li>Updated Official and Community Links!</li>
+                    <li>Verified Citizen persistance! (prereq for location/fleet management)</li>
+                    <li>Visual Upgrade!</li>
+                </ul>
             </p>
+            <p>
+                Coming Soon:
+                <ul>
+                    <li>Set your home location!</li>
+                    <li>Add ships to your fleet!</li>
+                    <li>Enhanced location information!</li>
+                    <li>Mobile Browser Support! (I know, I know!!!)</li>
+                </ul>
+            </p>
+            <p>Come back regularly to keep up with all updates.</p>
+            <p>And don't forget to visit your profile page <router-link to="/profile">here</router-link> to verify your account!</p>
             <p>This site is by the community, for the community, so if you have any thoughts on what
                 you would like to see here, please let me know at: 
                 <a href="mailto:capnflinttv@gmail.com">capnflinttv@gmail.com</a>
-                </p>
-                <div class="read-more" @click="toggleNews()">{{buttonText}}</div>
+            </p>
+            <div class="read-more" @click="toggleNews()">{{buttonText}}</div>
         </main-panel>
         <news-feed />
     </div>
@@ -44,8 +64,8 @@ export default {
     },
     data() {
         return {
-            newsHeight: "height: 220px",
-            buttonText: "Show More",
+            newsHeight: "height: 100px",
+            buttonText: "Read More",
             showing: false,
             stats: null,
             citizen: null
@@ -54,12 +74,12 @@ export default {
     methods: {
         toggleNews() {
             if(this.showing) {
-                this.newsHeight = "height: 220px";
-                this.buttonText = "Show More";
+                this.newsHeight = "height: 100px";
+                this.buttonText = "Read More";
                 this.showing = false;
             } else {
                 this.newsHeight = "height: auto";
-                this.buttonText = "Show Less";
+                this.buttonText = "Hide";
                 this.showing = true;
             }
         },
@@ -104,6 +124,19 @@ export default {
         display: flex;
         min-width: 300px;
         flex-grow: 1;
+    }
+
+    .site-news .title {
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+
+    .site-news .title h3 {
+        margin: 0px;
+    }
+
+    .site-news .title .date {
+        font-size: 12px;
     }
 
     .site-news>.content {
