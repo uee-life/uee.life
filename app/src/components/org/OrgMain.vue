@@ -21,7 +21,7 @@
                     MEMBERS
                 </template>
                 <template slot="tab-content-members">
-                    <org-members :members="org.members" />
+                    <org-members :members="members" />
                 </template>
             </tabs>
         </div>
@@ -36,7 +36,7 @@ import OrgMembers from '@/components/org/OrgMembers.vue'
 
 export default {
     name: 'org-main',
-    props: ['org', 'fleet'],
+    props: ['org', 'members', 'fleet'],
     data() {
         return {
             tabs: ["info", "fleet", "members"],

@@ -41,11 +41,12 @@ async function fetchMembers(org, page=1) {
             $('li.member-item').each(function (i, el) {
                 let handle = $(el).find('span.nick').text()
                 let name = $(el).find('span.name').text()
+                let stars = $(el).find('span.stars').attr('style').text()
                 if(handle.trim() != '') {
                     member = {
                         name: name,
                         handle: handle,
-                        stars: 5
+                        stars: stars
                     }
                     members.push(member)
                 } else {

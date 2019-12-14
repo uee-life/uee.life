@@ -1,7 +1,7 @@
 <template>
     <div class="org-members">
         <div v-if="members" class="results">
-            <div v-for="member in members" :key="member.handle" class='org-cell'>
+            <div v-for="(member, index) in members" :key="member.handle + index" class='org-cell'>
                 <router-link :to="citizenLink(member.handle)">
                     <div class="left">
                         <div class="identity">

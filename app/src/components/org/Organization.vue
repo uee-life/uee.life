@@ -5,7 +5,7 @@
             <div class="left-nav-button"><router-link to="/orgs">Search Orgs</router-link></div>
             <div class="left-nav-button"><a :href="spectrumLink">Spectrum</a></div>
         </portal>
-        <org-main :org="org" :fleet="ships" />
+        <org-main :org="org" :members="members" :fleet="ships" />
         <right-dock />
         <!--fleet-view :ships="ships" /-->
     </div>
@@ -31,6 +31,8 @@ export default {
             org: {
                 tag: ""
             },
+            members: [],
+            memberCount: 0,
             ships: [
                     {
                     id: 1,
@@ -73,7 +75,6 @@ export default {
                         this.org = res.data
                     }
                     this.org.members = []
-                    this.getOrgMembers()
                 }).catch(err => {
                     // eslint-disable-next-line
                     console.error(err)
@@ -84,22 +85,40 @@ export default {
                 console.error(error)
             }
         },
-        async getOrgMembers() {
+        async getOrgMembers(page=1) {
+            //eslint-disable-next-line
+            console.log(`loading page ${page}`)
             const sid = this.$route.params.org
-            axios.get(`https://api.uee.life/organization/${sid}/members/1`).then((res) => {
+            await axios.get(`https://api.uee.life/organization/${sid}/members/${page}`).then((res) => {
                 if(res.status == 200) {
-                    this.$nextTick(() => {
-                        //eslint-disable-next-line
-                        console.log(this.org.members)
-                        this.org.members.concat(res.data.members)
-                        this.org.memberCount = res.data.count
-                    })
+                    if(page > 1) {
+                        this.members = this.members.concat(res.data.members)
+                    } else {
+                        this.members = res.data.members
+                        this.memberCount = res.data.count
+                    }
                 }
+            }).catch((error) => {
+                // eslint-disable-next-line
+                console.error(error)
             })
+        },
+        async getAllMembers() {
+            let page = 1
+            await this.getOrgMembers(page)
+            //eslint-disable-next-line
+            console.log(`members: ${this.members.length}, count: ${this.memberCount}`)
+            while(this.members.length < this.memberCount && page < 10) {
+                page = page + 1
+                await this.getOrgMembers(page)
+                //eslint-disable-next-line
+                console.log(`members: ${this.members.length}, count: ${this.memberCount}`)
+            }
         }
     },
     mounted() {
         this.getOrg()
+        this.getAllMembers()
     },
     watch: {
         route: {
