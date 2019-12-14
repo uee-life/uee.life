@@ -132,9 +132,9 @@ async function startSync(token) {
         return {}
     })
     if(citizen = await syncCitizen(user.app_metadata.handle)) {
-        return {result: "success", citizen: citizen}
+        return {success: true, citizen: citizen}
     } else {
-        return {result: "failed"}
+        return {success: false}
     }
 }
 
