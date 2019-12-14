@@ -41,7 +41,7 @@ async function fetchMembers(org, page=1) {
             $('li.member-item').each(function (i, el) {
                 let handle = $(el).find('span.nick').text()
                 let name = $(el).find('span.name').text()
-                let stars = $(el).find('span.stars').attr('style').match(/width\:\ (.*)\%/)
+                let stars = parseInt($(el).find('span.stars').attr('style').match(/width\:\ (.*)\%/)[1]) / 20
                 if(handle.trim() != '') {
                     member = {
                         name: name,
