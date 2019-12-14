@@ -25,7 +25,7 @@ async function fetchMembers(org, page=1, isMain) {
             symbol: org,
             search: '',
             pagesize: 32,
-            main_org: isMain ? "1" : "0",
+            main_org: isMain == true ? "1" : "0",
             page: page
         }
 
@@ -70,9 +70,7 @@ async function fetchMembers(org, page=1, isMain) {
 
             result = {
                 count: totalMembers,
-                members: members.sort((a, b) => {
-                    b.stars - a.stars
-                })
+                members: members
             }
             
             return result
