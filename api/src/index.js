@@ -41,7 +41,7 @@ const cache = (duration) => {
     return (req, res, next) => {
         let key = '__express__' + req.originalUrl || req.url
         let cachedBody = mcache.get(key)
-        if(cachedBody && !req.body.skipcache) {
+        if(cachedBody && !req.headers.skipcache) {
             res.send(cachedBody)
             return
         } else {
