@@ -5,6 +5,7 @@
         </portal>
         <portal to="leftDock">
             <citizen-links :citizen="citizen"/>
+            <citizen-tools @syncSuccess="syncSuccess" v-if="$auth.isAuthenticated && isOwner"/>
         </portal>
         <citizen-info :citizen="citizen"/>
 
@@ -34,6 +35,7 @@ import CitizenOrg from '@/components/citizen/CitizenOrg.vue'
 import CitizenLinks from '@/components/citizen/CitizenLinks.vue'
 import CitizenInfo from '@/components/citizen/CitizenInfo.vue'
 import CitizenBio from '@/components/citizen/CitizenBio.vue'
+import CitizenTools from '@/components/citizen/CitizenTools.vue'
 
 import Tabs from '@/components/layout/Tabs.vue'
 import FleetView from '@/components/fleet/FleetView.vue'
@@ -44,10 +46,20 @@ export default {
     components: {
         CitizenOrg,
         CitizenLinks,
+        CitizenTools,
         CitizenInfo,
         CitizenBio,
         FleetView,
         Tabs
+    },
+    computed: {
+        isOwner() {
+            const meta = this.$auth.user["https://uee.life/app_metadata"]
+            if(meta && meta.handle == this.citizen.info.handle && meta.handle_verified) {
+                return true
+            }
+            return false
+        }
     },
     data() {
         return {
@@ -55,6 +67,11 @@ export default {
             initialTab: "info"
         }
     },
+    methods: {
+        syncSuccess() {
+            this.$emit('refresh')
+        }
+    }
 }
 </script>
 

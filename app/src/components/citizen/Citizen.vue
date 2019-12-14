@@ -3,9 +3,9 @@
       <left-dock />
         <portal to="navigationPane">
             <div class="left-nav-button"><router-link to="/citizens">Search Citizens</router-link></div>
-            <div class="left-nav-button"><a :href="dossierLink">Official Dossier</a></div>
+            <div class="left-nav-button"><a :href="dossierLink" target="_blank">Official Dossier</a></div>
         </portal>
-      <citizen-main :citizen="citizen"/>
+      <citizen-main @refresh="refresh" :citizen="citizen"/>
       <right-dock />
   </div>
 </template>
@@ -47,9 +47,17 @@ export default {
         }
     },
     methods: {
-        async getCitizen() {
+        async getCitizen(skipcache=false) {
             try {
-                const { data } = await axios.get('https://api.uee.life/citizen/' + this.$route.params.handle)
+                let headers = {}
+                if(skipcache) {
+                    headers = {
+                        skipcache: 1
+                    }
+                }
+                const { data } = await axios.get('https://api.uee.life/citizen/' + this.$route.params.handle, {
+                    headers: headers
+                })
 
                 this.citizen.info = data.info
                 this.citizen.home = data.location
@@ -79,6 +87,9 @@ export default {
                 console.error(error)
             }
             this.loading = false
+        },
+        refresh() {
+            this.getCitizen(true)
         }
     },
     mounted() {

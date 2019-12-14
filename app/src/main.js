@@ -2,6 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import PortalVue from 'portal-vue'
 import axios from 'axios'
+import Toasted from 'vue-toasted'
+
+Vue.use(Toasted)
 
 import App from './App.vue'
 
