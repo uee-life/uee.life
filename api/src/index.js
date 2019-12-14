@@ -94,7 +94,7 @@ app.get('/organization/:id/founders', cache(60), async (req, res) => {
 });
 
 app.get('/organization/:id/members/:page', async (req, res) => {
-    res.send(await getOrgMembers(req.params.id, req.params.page));
+    res.send(await getOrgMembers(req.params.id, req.params.page, true));
 })
 
 app.get('/organization/:id/affiliates/:page', async (req, res) => {

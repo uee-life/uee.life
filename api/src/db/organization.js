@@ -1,7 +1,7 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
 
-async function fetchMembers(org, page=1, isMain=true) {
+async function fetchMembers(org, page=1, isMain) {
     let members = {
         count: 1,
         members: []
@@ -30,7 +30,7 @@ async function fetchMembers(org, page=1, isMain=true) {
         }
 
         console.log(data)
-        
+
         members = axios({
             url: url,
             method: 'POST',
