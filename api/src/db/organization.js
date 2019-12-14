@@ -15,6 +15,9 @@ async function fetchMembers(org, page=1, isMain=true) {
         }
     })*/
 
+    console.log("isMain: ")
+    console.log(isMain)
+
     try {
         const url = "https://robertsspaceindustries.com/api/orgs/getOrgMembers"
         let i = 0
@@ -26,6 +29,8 @@ async function fetchMembers(org, page=1, isMain=true) {
             page: page
         }
 
+        console.log(data)
+        
         members = axios({
             url: url,
             method: 'POST',
@@ -65,7 +70,9 @@ async function fetchMembers(org, page=1, isMain=true) {
 
             result = {
                 count: totalMembers,
-                members: members
+                members: members.sort((a, b) => {
+                    b.stars - a.stars
+                })
             }
             
             return result
