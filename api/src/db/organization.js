@@ -22,6 +22,7 @@ async function fetchMembers(org, page=1) {
             symbol: org,
             search: '',
             pagesize: 32,
+            main_org: "1",
             page: page
         }
 
@@ -56,7 +57,7 @@ async function fetchMembers(org, page=1) {
                     member = {
                         name: 'Redacted',
                         handle: 'Redacted',
-                        stars: 0
+                        stars: stars
                     }
                     members.push(member)
                 }
