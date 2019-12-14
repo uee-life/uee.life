@@ -119,9 +119,9 @@ async function syncCitizen(handle) {
             citizen.website
         ]
         await executeSQL(sql, data)
-        return true
+        return citizen
     } else {
-        return false
+        return null
     }
 }
 
@@ -131,8 +131,8 @@ async function startSync(token) {
         console.error(err)
         return {}
     })
-    if(await syncCitizen(user.app_metadata.handle)) {
-        return {result: "success"}
+    if(citizen = await syncCitizen(user.app_metadata.handle)) {
+        return {result: "success", citizen: citizen}
     } else {
         return {result: "failed"}
     }
