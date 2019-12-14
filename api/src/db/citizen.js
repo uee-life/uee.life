@@ -131,10 +131,14 @@ async function startSync(token) {
         console.error(err)
         return {}
     })
-    if(citizen = await syncCitizen(user.app_metadata.handle)) {
-        return {success: true, citizen: citizen}
+    if(user.app_metadata.handle_verified) {
+        if(citizen = await syncCitizen(user.app_metadata.handle)) {
+            return {success: true, citizen: citizen}
+        } else {
+            return {success: false, error: "Sync failed. Flint probably broke something :("}
+        }
     } else {
-        return {success: false}
+        return {success: false, error: "Your account is not yet verified! Please verify and try again."}
     }
 }
 
