@@ -1,7 +1,7 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
 
-async function fetchMembers(org, page=1) {
+async function fetchMembers(org, isMain=true, page=1) {
     let members = {
         count: 1,
         members: []
@@ -22,7 +22,7 @@ async function fetchMembers(org, page=1) {
             symbol: org,
             search: '',
             pagesize: 32,
-            main_org: "1",
+            main_org: isMain ? "1" : "0",
             page: page
         }
 
