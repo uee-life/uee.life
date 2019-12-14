@@ -97,6 +97,10 @@ app.get('/organization/:id/members/:page', async (req, res) => {
     res.send(await getOrgMembers(req.params.id, req.params.page));
 })
 
+app.get('/organization/:id/affiliates/:page', async (req, res) => {
+    res.send(await getOrgMembers(req.params.id, req.params.page, false));
+})
+
 app.get('/news', cache(60), async (req, res) => {
     let data = {"channel": "","series":"","type":"","text":"","sort":"publish_new","page":1};
     for (const prop in req.query) {
