@@ -164,7 +164,11 @@ app.get("/citizen/:handle/verify", checkJwt, async (req, res) => {
     res.send(await verifyCitizen(req.headers.authorization, req.params.handle));
 });
 
-app.get("/sync", checkJwt, async (req, res) => {
+app.post("/citizen/:handle/verify", checkJwt, async (req, res) => {
+    res.send(await verifyCitizen(req.headers.authorization, req.params.handle));
+});
+
+app.post("/sync", checkJwt, async (req, res) => {
     res.send(await startSync(req.headers.authorization))
 });
 
