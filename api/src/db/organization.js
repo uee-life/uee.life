@@ -1,7 +1,7 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
 
-async function fetchMembers(org, page=1, isMain) {
+async function fetchMembers(org, page, isMain) {
     let members = {
         count: 1,
         members: []
@@ -151,11 +151,11 @@ function sleep(ms) {
 }
   
 
-async function getOrgMembers(org, page) {
-    if (!page) {
+async function getOrgMembers(org, page=1, isMain=true) {
+    if(!parseInt(page)) {
         page = 1
     }
-    members = await fetchMembers(org, page)
+    members = await fetchMembers(org, page, isMain)
     console.log(members.count)
     console.log(members.members.length)
     total = members.count
