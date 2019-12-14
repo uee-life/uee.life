@@ -156,17 +156,9 @@ async function getOrgMembers(org, page=1, isMain=true) {
         page = 1
     }
     members = await fetchMembers(org, page, isMain)
-    console.log(members.count)
-    console.log(members.members.length)
-    total = members.count
-    current = members.members.length
-    /*while(current < total) {
-        page += 1
-        next = await fetchMembers(org, page)
-        members.members.concat(next.members)
-        current = members.members.length
-    }*/
-    await sleep(1000)
+
+    console.log({org: org, isMain: isMain, count: members.length})
+
     return members
 }
 
