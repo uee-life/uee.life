@@ -35,7 +35,7 @@ export default {
                         position: 'top-center',
                         duration: 3000
                     }
-                    this.$toasted.show("Synchronization Failed... Flint probably broke something :(", options)
+                    this.$toasted.show(res.data.error, options)
                     this.$emit('syncSuccess')
                 }
             }).catch((err) => {
