@@ -62,6 +62,7 @@ async function fetchMembers(org, page, isMain) {
                         console.log(thumbimg.attribs.src)
                     }
                     console.log(thumbimg.attribs)
+                    console.log(thumbimg)
 
                 } else {
                     stars = 0
