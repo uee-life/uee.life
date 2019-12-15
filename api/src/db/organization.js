@@ -47,10 +47,16 @@ async function fetchMembers(org, page, isMain) {
             $('li.member-item').each(function (i, el) {
                 let handle = $(el).find('span.nick').text()
                 let name = $(el).find('span.name').text()
-                let stars = parseInt($(el).find('span.stars').attr('style').match(/width\:\ (.*)\%/)[1])
-                if(stars) {
-                    stars = stars / 20
+                let starspan = $(el).find('span.stars')
+                if (starspan) {
+                    let stars = parseInt(starspan.attr('style').match(/width\:\ (.*)\%/)[1])
+                    if(stars) {
+                        stars = stars / 20
+                    }
+                } else {
+                    stars = 0
                 }
+
                 if(handle.trim() != '') {
                     member = {
                         name: name,
@@ -157,7 +163,7 @@ async function getOrgMembers(org, page=1, isMain=true) {
     }
     members = await fetchMembers(org, page, isMain)
 
-    console.log({org: org, isMain: isMain, count: members.length})
+    console.log({org: org, isMain: isMain})
 
     return members
 }
