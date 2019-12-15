@@ -47,6 +47,11 @@ export default {
 </script>
 
 <style scoped>
+    @font-face {
+        font-family: spaceage;
+        src:url("/fonts/spaceage.ttf");
+    }
+
     .page-head {
         display: flex;
         justify-content: space-between;
@@ -69,8 +74,8 @@ export default {
 
     .page-head-left .title {
         align-self: center;
-        font-family: 'Michroma';
-        font-size: 18px;
+        font-family: spaceage;
+        font-size: 20px;
     }
 
     .page-head-right {
