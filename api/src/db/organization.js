@@ -56,7 +56,8 @@ async function fetchMembers(org, page, isMain) {
                         stars = stars / 20
                     }
 
-                    thumb = $(el).find('span.thumb')
+                    thumbspan = $(el).find('span.thumb')
+                    console.log(thumbspan)
 
                 } else {
                     stars = 0
