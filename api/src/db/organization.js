@@ -50,6 +50,7 @@ async function fetchMembers(org, page, isMain) {
                 let starspan = $(el).find('span.stars')
                 if (starspan) {
                     let stars = parseInt(starspan.attr('style').match(/width\:\ (.*)\%/)[1])
+                    
                     if(stars) {
                         stars = stars / 20
                     }
