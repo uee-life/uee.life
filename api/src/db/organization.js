@@ -49,14 +49,15 @@ async function fetchMembers(org, page, isMain) {
                 let name = $(el).find('span.name').text()
                 let starspan = $(el).find('span.stars').attr('style')
                 let thumb = 'https://robertsspaceindustries.com/rsi/static/images/account/avatar_default_big.jpg'
+                let stars = 0
                 if (starspan) {
-                    let stars = parseInt(starspan.match(/width\:\ (.*)\%/)[1])
+                    stars = parseInt(starspan.match(/width\:\ (.*)\%/)[1])
 
                     if(stars) {
                         stars = stars / 20
                     }
 
-                    thumbspan = $(el).find('span.thumb')
+                    thumbspan = $(el).find('span.thumb').find('img')
                     console.log(thumbspan)
 
                 } else {
