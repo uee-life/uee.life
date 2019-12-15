@@ -58,7 +58,7 @@ async function fetchMembers(org, page, isMain) {
                     }
 
                     thumbimg = $(el).find('span.thumb').find('img')[0]
-                    if(thumbimg.attribs) {
+                    if(thumbimg) {
                         console.log(thumbimg.attribs.src)
                     }
 
