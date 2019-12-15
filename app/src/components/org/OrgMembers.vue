@@ -2,13 +2,17 @@
     <div class="org-members">
         <div v-if="members" class="results">
             <div v-for="(member, index) in members" :key="member.handle + index" class='org-cell'>
-                <router-link :to="citizenLink(member.handle)">
+                <router-link :to="citizenLink(member.handle)" :class='checkRedaction(member, "")'>
                     <div class="left">
+                        <div class="thumb">
+                            <img :src="member.thumb"/>
+                        </div>
                         <div class="identity">
-                            <h3>{{member.handle}}</h3>
+                            <h3 :class='checkRedaction(member, "")'>{{member.handle}}</h3>
                             <span class="symbol"><img class="star" src="@/assets/star.png" v-for="n in parseInt(member.stars)" :key="n"></span>
                         </div>
                     </div>
+                    <div :class='checkRedaction(member, "mask")'></div>
                 </router-link>
             </div>
         </div>
@@ -29,29 +33,59 @@ export default {
     props: ['members'],
     methods: {
         citizenLink(handle) {
-            return `/citizens/${handle}`
+            if(handle == "Redacted") {
+                return this.$router.currentRoute
+            } else {
+                return `/citizens/${handle}`
+            }
+        },
+        checkRedaction(member, cls) {
+            if(member.handle == "Redacted") {
+                return cls + " redacted"
+            } else {
+                return cls
+            }
         }
     }
 }
 </script>
 
 <style scoped>
+
+
+
     .org-cell {
         display: flex;
         flex-grow: 1;
         margin: 5px;
     }
 
+    .org-cell .mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.1;
+    }
+
+    .org-cell .mask.redacted {
+        background-color: #ff2222;
+    }
+
     .org-cell>a {
         display: flex;
-        align-items: center;
-        justify-content: center;
         background: url('/images/fading-bars.png') repeat;
-        padding: 20px;
+        padding: 5px;
         position: relative;
         height: fit-content;
         border: 1px solid #546f84;
         flex-grow: 1;
+        text-decoration: none;
+    }
+
+    .org-cell>a.redacted {
+        border: 1px solid #ff2222;
     }
 
     .org-cell>a>.left {
@@ -80,6 +114,11 @@ export default {
         flex-direction: column;
         justify-content: center;
         margin: 0;
+        margin-left: 10px;
+    }
+
+    .org-cell>a>.left>.identity>h3.redacted {
+        color: #ff1111;
     }
 
     .org-cell>a>.left>.identity>h3 {

@@ -18,10 +18,17 @@
                 </template>
 
                 <template slot="tab-title-members">
-                    MEMBERS
+                    MEMBERS ({{memberCount}})
                 </template>
                 <template slot="tab-content-members">
                     <org-members :members="members" />
+                </template>
+
+                <template slot="tab-title-affiliates">
+                    AFFILIATES ({{affiliateCount}})
+                </template>
+                <template slot="tab-content-affiliates">
+                    <org-members :members="affiliates" />
                 </template>
             </tabs>
         </div>
@@ -36,10 +43,10 @@ import OrgMembers from '@/components/org/OrgMembers.vue'
 
 export default {
     name: 'org-main',
-    props: ['org', 'members', 'fleet'],
+    props: ['org', 'members', 'memberCount', 'affiliates', 'affiliateCount', 'fleet'],
     data() {
         return {
-            tabs: ["info", "fleet", "members"],
+            tabs: ["info", "fleet", "members", "affiliates"],
             initialTab: "info"
         }
     },

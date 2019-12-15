@@ -5,7 +5,13 @@
             <div class="left-nav-button"><router-link to="/orgs">Search Orgs</router-link></div>
             <div class="left-nav-button"><a :href="spectrumLink">Spectrum</a></div>
         </portal>
-        <org-main :org="org" :members="members" :fleet="ships" />
+        <org-main 
+            :org="org" 
+            :members="members" 
+            :memberCount="memberCount" 
+            :affiliates="affiliates"
+            :affiliateCount="affiliateCount"
+            :fleet="ships" />
         <right-dock />
         <!--fleet-view :ships="ships" /-->
     </div>
@@ -33,6 +39,10 @@ export default {
             },
             members: [],
             memberCount: 0,
+            memberPage: 1,
+            affiliates: [],
+            affiliateCount: 0,
+            affiliatePage: 1,
             ships: [
                     {
                     id: 1,
@@ -108,22 +118,61 @@ export default {
             await this.getOrgMembers(page)
             //eslint-disable-next-line
             console.log(`members: ${this.members.length}, count: ${this.memberCount}`)
-            while(this.members.length < this.memberCount && page < 10) {
+            while(this.members.length < this.memberCount && page < 3) {
                 page = page + 1
                 await this.getOrgMembers(page)
                 //eslint-disable-next-line
                 console.log(`members: ${this.members.length}, count: ${this.memberCount}`)
             }
+            this.members.sort((a, b) => {
+                return b.stars - a.stars;
+            })
+        },
+        async getOrgAffiliates(page=1) {
+            //eslint-disable-next-line
+            console.log(`loading page ${page}`)
+            const sid = this.$route.params.org
+            await axios.get(`https://api.uee.life/organization/${sid}/affiliates/${page}`).then((res) => {
+                if(res.status == 200) {
+                    if(page > 1) {
+                        this.affiliates = this.affiliates.concat(res.data.members)
+                    } else {
+                        this.affiliates = res.data.members
+                        this.affiliateCount = res.data.count
+                    }
+                }
+            }).catch((error) => {
+                // eslint-disable-next-line
+                console.error(error)
+            })
+        },
+        async getAllAffiliates() {
+            let page = 1
+            await this.getOrgAffiliates(page)
+            //eslint-disable-next-line
+            console.log(`members: ${this.affiliates.length}, count: ${this.affiliateCount}`)
+            while(this.affiliates.length < this.affiliateCount && page < 4) {
+                page = page + 1
+                await this.getOrgAffiliates(page)
+                //eslint-disable-next-line
+                console.log(`members: ${this.affiliates.length}, count: ${this.affiliateCount}`)
+            }
+            this.affiliates.sort((a, b) => {
+                return b.stars - a.stars;
+            })
         }
     },
     mounted() {
         this.getOrg()
         this.getAllMembers()
+        this.getAllAffiliates()
     },
     watch: {
         route: {
             handler: function () {
                 this.getOrg();
+                this.getAllMembers();
+                this.getAllAffiliates();
             }
         },
         org: {
