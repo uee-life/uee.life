@@ -48,12 +48,16 @@ async function fetchMembers(org, page, isMain) {
                 let handle = $(el).find('span.nick').text()
                 let name = $(el).find('span.name').text()
                 let starspan = $(el).find('span.stars').attr('style')
+                let thumb = 'https://robertsspaceindustries.com/rsi/static/images/account/avatar_default_big.jpg'
                 if (starspan) {
                     let stars = parseInt(starspan.match(/width\:\ (.*)\%/)[1])
 
                     if(stars) {
                         stars = stars / 20
                     }
+
+                    thumb = $(el).find('span.thumb').find('img').attribs.src
+
                 } else {
                     stars = 0
                 }
@@ -62,14 +66,16 @@ async function fetchMembers(org, page, isMain) {
                     member = {
                         name: name,
                         handle: handle,
-                        stars: stars
+                        stars: stars,
+                        thumb: thumb
                     }
                     members.push(member)
                 } else {
                     member = {
                         name: 'Redacted',
                         handle: 'Redacted',
-                        stars: stars
+                        stars: stars,
+                        thumb: thumb
                     }
                     members.push(member)
                 }
