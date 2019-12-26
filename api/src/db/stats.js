@@ -21,7 +21,7 @@ function loadStat(stat) {
     console.log(sql)
     const res = await executeSQL(sql, [stat])
     console.log(res)
-    return res
+    return res[0].value
 }
 
 function saveStat(stat, value) {
