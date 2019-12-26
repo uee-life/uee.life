@@ -43,6 +43,8 @@ async function latestCitizen() {
 
     latest = ""
 
+    console.log(result)
+
     if(result) {
         data = result[0].details.response.body.app_metadata
         if(data.handle_verified) {
