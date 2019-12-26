@@ -18,7 +18,9 @@ var management = new ManagementClient({
 
 function loadStat(stat) {
     sql = "SELECT value FROM stats WHERE stat=?"
-    const res = executeSQL(sql, [stat])[0].value
+    console.log(sql)
+    const res = executeSQL(sql, [stat])
+    console.log(res)
     return res
 }
 
@@ -43,8 +45,6 @@ async function latestCitizen() {
 
     latest = ""
 
-    console.log(result)
-0
     if(result.length) {
         data = result[0].details.response.body.app_metadata
         if(data.handle_verified) {
