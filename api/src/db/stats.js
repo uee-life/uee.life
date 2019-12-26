@@ -16,7 +16,7 @@ var management = new ManagementClient({
     }
 });
 
-function loadStat(stat) {
+async function loadStat(stat) {
     sql = "SELECT value FROM stats WHERE stat=?"
     console.log(sql)
     const res = await executeSQL(sql, [stat])
@@ -51,10 +51,10 @@ async function latestCitizen() {
             latest = data.handle
             saveStat("latestCitizen", latest)
         } else {
-            latest = loadStat("latestCitizen")
+            latest = await loadStat("latestCitizen")
         }
     } else {
-        latest = loadStat("latestCitizen")
+        latest = await loadStat("latestCitizen")
     }
 
     return latest
