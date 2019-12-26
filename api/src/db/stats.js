@@ -19,7 +19,7 @@ var management = new ManagementClient({
 function loadStat(stat) {
     sql = "SELECT value FROM stats WHERE stat=?"
     console.log(sql)
-    const res = executeSQL(sql, [stat])
+    const res = await executeSQL(sql, [stat])
     console.log(res)
     return res
 }
