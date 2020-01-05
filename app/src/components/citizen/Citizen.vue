@@ -75,6 +75,7 @@ export default {
                 // eslint-disable-next-line
                 console.error(error)
             }
+
             this.loading = false
         },
         async getOrg() {

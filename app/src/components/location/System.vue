@@ -24,7 +24,6 @@
             </div>      
         </location>
         <right-dock />
-        <!--fleet-view :ships="ships" /-->
     </div>
 </template>
 

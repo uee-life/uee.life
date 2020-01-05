@@ -13,7 +13,7 @@
             :affiliateCount="affiliateCount"
             :fleet="ships" />
         <right-dock />
-        <!--fleet-view :ships="ships" /-->
+        <fleet-view :ships="ships" />
     </div>
 </template>
 
