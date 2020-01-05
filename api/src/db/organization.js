@@ -31,7 +31,7 @@ async function fetchMembers(org, page, isMain) {
 
         console.log(data)
 
-        members = axios({
+        members = await axios({
             url: url,
             method: 'POST',
             headers: {
