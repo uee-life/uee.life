@@ -48,7 +48,7 @@ export default {
     components: {
         Pagination
     },
-    data() {
+    data: () => {
         return {
             currentPage: 1,
             members: [],
@@ -109,21 +109,24 @@ export default {
             // eslint-disable-next-line
             console.log(this.memberCount)            
             // eslint-disable-next-line
-            console.log(Math.ceil(this.memberCount / 37))
-            return Math.ceil(this.memberCount / 37)
+            console.log(Math.ceil(this.memberCount / 32))
+            return Math.ceil(this.memberCount / 32)
         }
     },
     mounted() {
+        this.currentPage = 1
         this.getMembers()
     },
     watch: {
         route: {
             handler: function () {
+                this.currentPage = 1
                 this.getMembers()
             }
         },
         affiliate: {
             handler: function() {
+                this.currentPage = 1
                 this.getMembers()
             }
         }

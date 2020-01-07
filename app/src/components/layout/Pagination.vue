@@ -6,6 +6,14 @@
             >
             ←
         </PageButton>
+        <span v-if="hiddenBefore">
+        <PageNumber
+            v-if="hiddenBefore"
+            :pageNumber="1"
+            :currentPage="currentPage"
+            @loadPage="onLoadPage"/>
+            ...
+        </span>
         <PageNumber
             v-for="page in pages"
             :key="page"
@@ -13,6 +21,15 @@
             :currentPage="currentPage"
             @loadPage="onLoadPage"
             />
+        
+        <span v-if="hiddenAfter">    
+            ...
+        <PageNumber
+            v-if="hiddenAfter"
+            :pageNumber="pageCount"
+            :currentPage="currentPage"
+            @loadPage="onLoadPage"/>
+        </span>
         <PageButton
             :disabled="isNextButtonDisabled"
             @click.native="nextPage"
@@ -42,6 +59,11 @@ export default {
         PageButton,
         PageNumber
     },
+    data() {
+        return {
+            maxPageNums: 8
+        }
+    },
     methods: {
         nextPage() {
             this.$emit('nextPage')
@@ -60,10 +82,29 @@ export default {
         isNextButtonDisabled() {
             return this.currentPage === this.pageCount
         },
+        hiddenBefore() {
+            return this.currentPage >= this.maxPageNums / 2
+        },
+        hiddenAfter() {
+            return this.currentPage <= this.pageCount - (this.maxPageNums / 2) + 1
+        },
         pages() {
             // eslint-disable-next-line
             console.log(this.pageCount)
-            return Array.from([...Array(this.pageCount).keys()].map(x => ++x));
+            let end = this.pageCount
+            let offset = 1
+            if(this.pageCount > this.maxPageNums) {
+                end = this.maxPageNums - 3
+                if(this.currentPage < (this.maxPageNums / 2)) {
+                    //
+                } else {
+                    offset = this.currentPage - (this.maxPageNums / 2) + 2
+                    if(offset > this.pageCount - (this.maxPageNums / 2)) {
+                        offset = this.pageCount - (this.maxPageNums / 2)
+                    }
+                }
+            }
+            return Array.from([...Array(end).keys()].map(x => x + offset));
         }
     }
 }
