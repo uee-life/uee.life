@@ -24,13 +24,37 @@
             </span>
             <span class="text small">Use the box on the left to search</span>
         </div>
+        <pagination 
+            @nextPage="pageChangeHandler('next')"
+            @prevPage="pageChangeHandler('previous')"
+            @loadPage="pageChangeHandler" 
+            :currentPage="currentPage" 
+            :pageCount="pageCount"/>
     </div>
 </template>
 
 <script>
+import axios from "axios"
+import Pagination from '@/components/layout/Pagination.vue'
+
 export default {
     name: 'org-members',
-    props: ['members'],
+    props: {
+        affiliate: {
+            type: Boolean,
+            default: false
+        }
+    },
+    components: {
+        Pagination
+    },
+    data() {
+        return {
+            currentPage: 1,
+            members: [],
+            memberCount: 1,
+        }
+    },
     methods: {
         citizenLink(handle) {
             if(handle == "Redacted") {
@@ -44,6 +68,63 @@ export default {
                 return cls + " redacted"
             } else {
                 return cls
+            }
+        },
+        pageChangeHandler(value) {
+            switch (value) {
+                case 'next':
+                    this.currentPage += 1
+                    break
+                case 'previous':
+                    this.currentPage -= 1
+                    break
+                default:
+                    this.currentPage = value
+            }
+            this.getMembers(this.currentPage)
+        },
+        async getMembers() {
+            const org = this.$route.params.org
+            let type = "members"
+            if(this.affiliate) {
+                type = "affiliates"
+            }
+            await axios.get(`https://api.uee.life/organization/${org}/${type}/${this.currentPage}`).then((res) => {
+                if(res.status == 200) {
+                    this.members = res.data.members
+                    this.memberCount = res.data.count
+                    this.members.sort((a, b) => {
+                        return b.stars - a.stars;
+                    })
+                }
+            }).error((err) => {
+                // eslint-disable-next-line
+                console.error(err)
+            })
+
+        }
+    },
+    computed: {
+        pageCount() {
+            // eslint-disable-next-line
+            console.log(this.memberCount)            
+            // eslint-disable-next-line
+            console.log(Math.ceil(this.memberCount / 37))
+            return Math.ceil(this.memberCount / 37)
+        }
+    },
+    mounted() {
+        this.getMembers()
+    },
+    watch: {
+        route: {
+            handler: function () {
+                this.getMembers()
+            }
+        },
+        affiliate: {
+            handler: function() {
+                this.getMembers()
             }
         }
     }

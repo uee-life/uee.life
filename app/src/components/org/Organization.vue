@@ -13,7 +13,6 @@
             :affiliateCount="affiliateCount"
             :fleet="ships" />
         <right-dock />
-        <fleet-view :ships="ships" />
     </div>
 </template>
 
@@ -95,84 +94,40 @@ export default {
                 console.error(error)
             }
         },
-        async getOrgMembers(page=1) {
-            //eslint-disable-next-line
-            console.log(`loading page ${page}`)
+        async getOrgMembers() {
             const sid = this.$route.params.org
-            await axios.get(`https://api.uee.life/organization/${sid}/members/${page}`).then((res) => {
+            await axios.get(`https://api.uee.life/organization/${sid}/members/1`).then((res) => {
                 if(res.status == 200) {
-                    if(page > 1) {
-                        this.members = this.members.concat(res.data.members)
-                    } else {
-                        this.members = res.data.members
-                        this.memberCount = res.data.count
-                    }
+                    this.memberCount = res.data.count
                 }
             }).catch((error) => {
                 // eslint-disable-next-line
                 console.error(error)
             })
         },
-        async getAllMembers() {
-            let page = 1
-            await this.getOrgMembers(page)
-            //eslint-disable-next-line
-            console.log(`members: ${this.members.length}, count: ${this.memberCount}`)
-            while(this.members.length < this.memberCount && page < 3) {
-                page = page + 1
-                await this.getOrgMembers(page)
-                //eslint-disable-next-line
-                console.log(`members: ${this.members.length}, count: ${this.memberCount}`)
-            }
-            this.members.sort((a, b) => {
-                return b.stars - a.stars;
-            })
-        },
-        async getOrgAffiliates(page=1) {
-            //eslint-disable-next-line
-            console.log(`loading page ${page}`)
+        async getOrgAffiliates() {
             const sid = this.$route.params.org
-            await axios.get(`https://api.uee.life/organization/${sid}/affiliates/${page}`).then((res) => {
+            await axios.get(`https://api.uee.life/organization/${sid}/affiliates/1`).then((res) => {
                 if(res.status == 200) {
-                    if(page > 1) {
-                        this.affiliates = this.affiliates.concat(res.data.members)
-                    } else {
-                        this.affiliates = res.data.members
-                        this.affiliateCount = res.data.count
-                    }
+                    this.affiliateCount = res.data.count
                 }
             }).catch((error) => {
                 // eslint-disable-next-line
                 console.error(error)
             })
         },
-        async getAllAffiliates() {
-            let page = 1
-            await this.getOrgAffiliates(page)
-            //eslint-disable-next-line
-            console.log(`members: ${this.affiliates.length}, count: ${this.affiliateCount}`)
-            while(this.affiliates.length < this.affiliateCount && page < 4) {
-                page = page + 1
-                await this.getOrgAffiliates(page)
-                //eslint-disable-next-line
-                console.log(`members: ${this.affiliates.length}, count: ${this.affiliateCount}`)
-            }
-            this.affiliates.sort((a, b) => {
-                return b.stars - a.stars;
-            })
-        }
     },
     mounted() {
         this.getOrg()
-        this.getAllMembers()
-        this.getAllAffiliates()
+        this.getOrgMembers()
+        this.getOrgAffiliates()
     },
     watch: {
         route: {
             handler: function () {
                 this.getOrg();
-                this.getAllMembers();
-                this.getAllAffiliates();
+                this.getOrgMembers();
+                this.getOrgAffiliates();
             }
         },
         org: {

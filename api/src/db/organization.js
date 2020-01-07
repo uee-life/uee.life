@@ -58,7 +58,7 @@ async function fetchMembers(org, page, isMain) {
                     }
 
                     thumbimg = $(el).find('span.thumb').find('img')[0]
-                    if(thumbimg) {
+                    if(thumbimg && thumbimg.attribs.src) {
                         thumb = `https://robertsspaceindustries.com${thumbimg.attribs.src}`
                     }
 

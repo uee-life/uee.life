@@ -21,14 +21,14 @@
                     MEMBERS ({{memberCount}})
                 </template>
                 <template slot="tab-content-members">
-                    <org-members :members="members" />
+                    <org-members />
                 </template>
 
                 <template slot="tab-title-affiliates">
                     AFFILIATES ({{affiliateCount}})
                 </template>
                 <template slot="tab-content-affiliates">
-                    <org-members :members="affiliates" />
+                    <org-members :affiliate="true"/>
                 </template>
             </tabs>
         </div>
