@@ -108,7 +108,7 @@ export const useAuth0 = ({
             }
           }
         }
-        var errorStr = getUrlVars().error_description.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
+        var errorStr = getUrlVars().error_description.replace(/[\u00A0-\u9999<>&]/gim, function(i) {
           return '&#' + i.charCodeAt(0) + ';';
         });
         Vue.toasted.show(decodeURI(errorStr), options)
