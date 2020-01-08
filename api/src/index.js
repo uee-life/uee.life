@@ -156,8 +156,6 @@ app.post('/search/org', async (req, res) => {
 });
 
 app.get('/search/org', cache(600), async (req, res) => {
-    console.log("**********************************")
-    console.log(req.query)
     res.send(await searchOrgs(req.query));
 });
 
