@@ -155,6 +155,10 @@ app.post('/search/org', async (req, res) => {
     res.send(await searchOrgs(req.body));
 });
 
+app.get('/search/org', cache(600), async (req, res) => {
+    res.send(await searchOrgs(req.query.q));
+});
+
 // Secure API calls
 
 app.get("/user", checkJwt, async (req, res) => {
