@@ -1,9 +1,12 @@
 import Vue from 'vue'
+import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import PortalVue from 'portal-vue'
 import axios from 'axios'
 import Toasted from 'vue-toasted'
+import 'es6-promise/auto'
 
+Vue.use(Vuex)
 Vue.use(Toasted)
 
 import App from './App.vue'
@@ -46,6 +49,23 @@ Vue.use(Auth0Plugin, {
     );
   }
 });
+
+const store = new Vuex.Store({
+  state: {
+    user: {}
+  },
+  mutations: {
+    SET_USER(state, user) {
+      state.user = user
+    }
+  },
+  actions: {
+    setUser(user) {
+      AudioContext.commit('SET_USER', user)
+    }
+  }
+});
+
 
 // Global components
 import SectionTitle from '@/components/layout/SectionTitle.vue'
@@ -103,7 +123,10 @@ const router = new VueRouter({
   routes: routes
 })
 
-new Vue({
+const app = new Vue({
+  store,
   router,
   render: h => h(App),
 }).$mount('#app')
+
+export const getApp = () => app;

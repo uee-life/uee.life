@@ -61,6 +61,7 @@ export default {
           // eslint-disable-next-line
           console.log(res)
           this.user = res.data
+          this.$store.commit('setUser', res.data)
         }).catch((error) => {
           // eslint-disable-next-line
           console.error(error)

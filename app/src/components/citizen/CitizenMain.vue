@@ -25,6 +25,13 @@
                     <fleet-view :ships="citizen.ships"/>
                 </template>
 
+                <template v-if="$auth.isAuthenticated && isOwner" slot="tab-title-location">
+                    LOCATION
+                </template>
+                <template v-if="$auth.isAuthenticated && isOwner" slot="tab-content-location">
+                    <citizen-location :citizen="citizen"/>
+                </template>
+
             </tabs>
         </div>
   </div>
@@ -36,6 +43,7 @@ import CitizenLinks from '@/components/citizen/CitizenLinks.vue'
 import CitizenInfo from '@/components/citizen/CitizenInfo.vue'
 import CitizenBio from '@/components/citizen/CitizenBio.vue'
 import CitizenTools from '@/components/citizen/CitizenTools.vue'
+import CitizenLocation from '@/components/citizen/CitizenLocation.vue'
 
 import Tabs from '@/components/layout/Tabs.vue'
 import FleetView from '@/components/fleet/FleetView.vue'
@@ -49,6 +57,7 @@ export default {
         CitizenTools,
         CitizenInfo,
         CitizenBio,
+        CitizenLocation,
         FleetView,
         Tabs
     },
@@ -71,11 +80,27 @@ export default {
         syncSuccess() {
             this.$emit('refresh')
         }
+    },
+    watch: {
+        "citizen.info": {
+            handler: function() {
+                this.tabs = ["info","ships"]
+                if(this.$auth.isAuthenticated && this.isOwner) {
+                    this.tabs.push("location")
+                }
+            }
+        }
+    },
+    mounted() {
+        this.tabs = ["info","ships"]
+        if(this.$auth.isAuthenticated && this.isOwner) {
+            this.tabs.push("location")
+        }
     }
 }
 </script>
 
-<style scoped>
+<style>
     .citizen-main {
         width: 100%;
         padding: 10px;

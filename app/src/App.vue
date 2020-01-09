@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import axios from "axios"
 import PageHead from '@/components/layout/PageHead.vue'
 import NavBar from '@/components/layout/NavBar.vue'
 import PageFoot from '@/components/layout/PageFoot.vue'
@@ -20,14 +21,33 @@ export default {
     NavBar,
     PageFoot
   },
-  data() {
-    return {
-      user: {
-        app_metadata: {
-          handle: ""
-        }
+  methods: {
+    async getUser() {
+        const token = await this.$auth.getTokenSilently();
+        axios({
+          url: `https://api.uee.life/user`,
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }).then((res) => {
+          // eslint-disable-next-line
+          console.log(res)
+          this.$store.commit('setUser', res.data)
+        }).catch((error) => {
+          // eslint-disable-next-line
+          console.error(error)
+        })
+      },
+
+  },
+  mounted() {
+    this.$nextTick(() => {
+      let authed = this.$auth.isAuthenticated
+      if(authed) {
+        this.getUser()
       }
-    }
+    })
   }
 }
 </script>

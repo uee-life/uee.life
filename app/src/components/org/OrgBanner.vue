@@ -8,6 +8,7 @@
           </div>
           <div class="org-summary">
               <h1>{{org.name}} /  <span class="tag">{{ tag }}</span></h1>
+              <div class="org-model">{{org.model}}</div>
           </div>
         </div>
       </div>
@@ -107,5 +108,13 @@ export default {
 
     .org-summary {
       padding-top: 73px;
+    }
+    
+    .org-summary .org-model::before {
+      content: "[ "
+    }
+
+    .org-summary .org-model::after {
+      content: " ]"
     }
 </style>

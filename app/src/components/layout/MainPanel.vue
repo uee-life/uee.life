@@ -1,6 +1,6 @@
 <template>
     <div :class="computedClass">
-        <section-title v-if="title" :text="title" size="medium" />
+        <section-title v-if="title" :text="title" :size="titleSize" />
         <div :class="contentClass">
             <slot></slot>
         </div>
@@ -26,6 +26,10 @@ export default {
         contentClass: {
             type: String,
             default: "content"
+        },
+        titleSize: {
+            type: String,
+            default: "medium"
         }
     },
     computed: {
