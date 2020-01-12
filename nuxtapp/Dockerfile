@@ -5,7 +5,7 @@ COPY package*.json ./
 RUN npm install
 COPY ./ .
 RUN npm run build
-RUN npm run start
+ENTRYPOINT npm run start
 
 FROM nginx as production-stage
 RUN mkdir /app
