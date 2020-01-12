@@ -1,16 +1,10 @@
 {
 	"folders": [
 		{
-			"path": "D:\\User\\Documents\\GitHub\\nodetest"
-		},
-		{
-			"path": "D:\\User\\Documents\\GitHub\\NodeJS Tutorial"
-		},
-		{
 			"path": "."
 		},
 		{
-			"path": "D:\\User\\Documents\\GitHub\\Service-API"
+			"path": "D:\\User\\Documents\\GitHub\\example-auth0"
 		}
 	],
 	"settings": {}

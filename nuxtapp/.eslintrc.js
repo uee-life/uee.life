@@ -1,23 +1,20 @@
 module.exports = {
   root: true,
+  parser: 'babel-eslint',
   env: {
     browser: true,
     node: true
   },
-  parserOptions: {
-    parser: 'babel-eslint'
-  },
-  extends: [
-    '@nuxtjs',
-    'prettier',
-    'prettier/vue',
-    'plugin:prettier/recommended',
-    'plugin:nuxt/recommended'
-  ],
+  extends: 'standard',
+  // required to lint *.vue files
   plugins: [
-    'prettier'
+    'html'
   ],
   // add your custom rules here
   rules: {
-  }
+    "vue/html-indent": "off",
+    "indent": "off",
+    "vue/singleline-html-element-content-newline": "off"
+  },
+  globals: {}
 }
