@@ -11,7 +11,7 @@
 
 <script>
 import MainHeader from '@/components/layout/MainHeader'
-import MainFooter from '@/components/Layout/MainFooter'
+import MainFooter from '@/components/layout/MainFooter'
 import Navbar from '@/components/layout/Navbar'
 
 export default {
