@@ -39,5 +39,5 @@ module.exports = {
   ** Plugins
   */
 
-  //plugins: ['~/plugins/vue-notifications']
+  plugins: ['~/plugins/vue-notifications']
 }
