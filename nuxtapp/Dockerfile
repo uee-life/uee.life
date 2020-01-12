@@ -4,8 +4,8 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY ./ .
-RUN nuxt build
-RUN nuxt start
+RUN npm run build
+RUN npm run start
 
 FROM nginx as production-stage
 RUN mkdir /app
