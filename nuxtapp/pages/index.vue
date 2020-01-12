@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="content">
-      <h1>Hello, {{ loggedUser ? loggedUser.username : 'friend' }}!</h1>
+      <h1>Hello, {{ loggedUser ? loggedUser.nickname : 'friend' }}!</h1>
       <p>
         This is a super simple example of how to use <a href="https://github.com/nuxt/nuxt.js" target="_blank">Nuxt.js</a> and <a href="https://auth0.com" target="_blank">Auth0</a> together.
       </p>

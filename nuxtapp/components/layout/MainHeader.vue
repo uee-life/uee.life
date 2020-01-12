@@ -9,7 +9,7 @@
         <div class="page-head-right">
             <div class="user">
                 <div v-if='isAuthenticated' class="welcome">
-                    Welcome, {{ loggedUser ? loggedUser.username : 'friend' }}!
+                    Welcome, {{ loggedUser ? loggedUser.nickname : 'friend' }}!
                 </div>
                 <div v-if='isAuthenticated'>
                     [ <nuxt-link to="/auth/sign-off"> Log Out </nuxt-link> ]
