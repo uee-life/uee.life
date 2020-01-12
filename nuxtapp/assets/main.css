@@ -38,22 +38,22 @@ a:hover {
 }
 
 .corner.top {
-  top: -2px;
+  top: -1px;
   border-top: 1px solid #dbf3ff;
 }
 
 .corner.bottom {
-  bottom: -2px;
+  bottom: -1px;
   border-bottom: 1px solid #dbf3ff;
 }
 
 .corner.left {
-  left: -2px;
+  left: -1px;
   border-left: 1px solid #dbf3ff;
 }
 
 .corner.right {
-  right: -2px;
+  right: -1px;
   border-right: 1px solid #dbf3ff;
 }
 

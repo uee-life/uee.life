@@ -1,7 +1,6 @@
 <template>
   <div class="nav-bar" id="nav-bar">
       <div class="nav-left">
-        <nuxt-link class="nav-button" to="/">Home</nuxt-link>
         <nuxt-link class="nav-button" to="/citizens">Citizens</nuxt-link>
         <nuxt-link class="nav-button" to="/orgs">Organizations</nuxt-link>
         <nuxt-link class="nav-button" to="/systems">Star Systems</nuxt-link>
@@ -33,6 +32,7 @@ export default {
 
 <style scoped>
     .nav-bar {
+        box-sizing: border-box;
         display: flex;
         justify-content: space-between;
         flex-grow: 1;
@@ -86,7 +86,7 @@ export default {
     a:hover {
         color: #dbf3ff;
     }
-    a.nuxt-link-exact-active {
+    a.nuxt-link-active {
         color: #dbf3ff;
         border: none;
         font-weight: 600;

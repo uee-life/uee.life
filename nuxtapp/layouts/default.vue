@@ -1,8 +1,8 @@
 <template>
   <div class="app">
+    <main-header />
+    <navbar />
     <div class="main">
-      <main-header />
-      <navbar />
       <nuxt />
     </div>
   </div>
@@ -28,6 +28,7 @@ export default {
 }
 .main {
   margin: 0 auto;
+  padding: 0 10px;
 }
 .app::before {
   position: fixed;
