@@ -19,7 +19,9 @@
     "jwt-decode": "2.2.0",
     "normalize.css": "^8.0.1",
     "nuxt": "latest",
-    "uuid": "3.3.2"
+    "sweetalert": "^2.1.2",
+    "uuid": "3.3.2",
+    "vue-notifications": "^1.0.2"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.6",

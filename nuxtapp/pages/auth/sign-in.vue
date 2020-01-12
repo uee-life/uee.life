@@ -1,5 +1,5 @@
 <template>
-  <div id="auth0-lock"/>
+  <div class="lock" id="auth0-lock"/>
 </template>
 
 <script>
@@ -11,3 +11,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .lock {
+    margin-top: 50px;
+  }
+</style>

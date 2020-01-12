@@ -23,7 +23,24 @@ const getOptions = (container) => {
         scope: 'openid profile email',
         state: secret
       }
-    }
+    },
+    theme: {
+      logo: 'https://uee.life/images/uee.life.logo.jpg',
+      primaryColor: 'rgb(11, 35, 49)'
+    },
+    languageDictionary: {
+      title: "UEE.Life Authentication"
+    },
+    additionalSignUpFields: [{
+      name: 'handle',
+      placeholder: 'RSI Handle',
+      validator: function(handle) {
+        return {
+          valid: handle.length > 1,
+          hint: "Must specify your RSI Handle"
+        }
+      }
+    }]
   }
 }
 

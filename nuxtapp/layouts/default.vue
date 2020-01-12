@@ -5,16 +5,19 @@
     <div class="main">
       <nuxt />
     </div>
+    <main-footer />
   </div>
 </template>
 
 <script>
 import MainHeader from '@/components/layout/MainHeader'
+import MainFooter from '@/components/Layout/MainFooter'
 import Navbar from '@/components/layout/Navbar'
 
 export default {
   components: {
     MainHeader,
+    MainFooter,
     Navbar
   }
 }

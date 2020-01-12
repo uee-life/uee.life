@@ -11,10 +11,18 @@ const getQueryParams = () => {
 
 export const extractInfoFromHash = () => {
   if (process.SERVER_BUILD) return
+  let err, err_msg = ''
+  const params = getQueryParams()
+  if ('error' in params) {
+    err = params['error'],
+    err_msg = params['error_description']
+  }
   const { id_token, state } = getQueryParams()
   return {
-    token: id_token,
-    secret: state
+    token: params['id_token'],
+    secret: params['state'],
+    error: err,
+    error_msg: err_msg
   }
 }
 

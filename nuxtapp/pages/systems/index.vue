@@ -1,6 +1,6 @@
 <template>
   <div>
-      <h1>Coming Soon!</h1>
+      <nuxt-link to="/systems/stanton">Stanton System</nuxt-link>
   </div>
 </template>
 

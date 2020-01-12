@@ -34,5 +34,10 @@ module.exports = {
   env: {
     AUTH0_CLIENT_ID: '',
     AUTH0_CLIENT_DOMAIN: ''
-  }
+  },
+  /*
+  ** Plugins
+  */
+
+  //plugins: ['~/plugins/vue-notifications']
 }
