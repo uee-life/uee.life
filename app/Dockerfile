@@ -8,3 +8,5 @@ COPY package*.json ./
 RUN npm install
 ADD . ${APP_ROOT}
 RUN npm run build
+
+ENV HOST 0.0.0.0
