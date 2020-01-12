@@ -1,14 +1,10 @@
-FROM node:current as build-stage
+FROM node:current
 
-WORKDIR /app
+ENV APP_ROOT /src
+
+RUN mkdir ${APP_ROOT}
+WORKDIR ${APP_ROOT}
 COPY package*.json ./
 RUN npm install
-COPY ./ .
+ADD . ${APP_ROOT}
 RUN npm run build
-ENTRYPOINT npm run start
-
-FROM nginx as production-stage
-RUN mkdir /app
-COPY --from=build-stage /app /app
-COPY nginx.conf /etc/nginx/nginx.conf
-
