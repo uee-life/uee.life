@@ -3,6 +3,9 @@ app/node_modules
 app/dist
 api/node_modules
 api/dist
+app_old/node_modules
+app_old/dist
+app/.nuxt
 
 # local env files
 .env.local
