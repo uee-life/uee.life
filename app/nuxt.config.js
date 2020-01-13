@@ -3,7 +3,10 @@ module.exports = {
   ** Router config
   */
   router: {
-    middleware: 'check-auth'
+    middleware: [
+      'check-auth',
+      'mobile'
+    ]
   },
   /*
   ** Headers of the page

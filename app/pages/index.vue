@@ -17,7 +17,7 @@
             <p>
                 Now featuring:
                 <ul>
-                    <li>System Information! (Check it out: <router-link to="/system/stanton">Stanton System</router-link>)</li>
+                    <li>System Information! (Check it out: <nuxt-link to="/system/stanton">Stanton System</nuxt-link>)</li>
                     <li>Site Stats!</li>
                     <li>Updated Official and Community Links!</li>
                     <li>Verified Citizen persistance! (prereq for location/fleet management)</li>
@@ -34,7 +34,7 @@
                 </ul>
             </p>
             <p>Come back regularly to keep up with all updates.</p>
-            <p>And don't forget to visit your profile page <router-link to="/profile">here</router-link> to verify your account!</p>
+            <p>And don't forget to visit your profile page <nuxt-link to="/profile">here</nuxt-link> to verify your account!</p>
             <p>This site is by the community, for the community, so if you have any thoughts on what
                 you would like to see here, please let me know at: 
                 <a href="mailto:capnflinttv@gmail.com">capnflinttv@gmail.com</a>
@@ -57,18 +57,24 @@ import SiteStats from '@/components/widgets/SiteStats'
 import LatestCitizen from '@/components/widgets/LatestCitizen'
 
 export default {
-  components: {
-    NewsFeed,
-    OfficialLinks,
-    CommunityLinks,
-    SiteStats,
-    LatestCitizen
-  },
-  computed: mapGetters([
-    'isAuthenticated',
-    'loggedUser'
-  ]),
-  data() {
+    layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
+    components: {
+        NewsFeed,
+        OfficialLinks,
+        CommunityLinks,
+        SiteStats,
+        LatestCitizen
+    },
+    computed: {
+        ...mapGetters([
+            'isAuthenticated',
+            'loggedUser'
+        ]),
+        isMobile() {
+            return ({ isMobile }) => isMobile ? true : false
+        }
+    },
+    asyncData() {
         return {
             newsHeight: "height: 100px",
             buttonText: "Read More",

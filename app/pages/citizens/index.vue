@@ -37,7 +37,7 @@
 import axios from 'axios'
 
 export default {
-    data() {
+    asyncData() {
         return {
             result: "",
             input: ""

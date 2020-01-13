@@ -23,8 +23,8 @@ export default {
     mounted() {
         const timeline = new TimelineLite()
         timeline.to(".citizen-bio", 1, {opacity: 1})
-        timeline.to(".citizen-bio", 1, {width:"100%"})
-        timeline.to(".citizen-bio .content", 1, {width: "100%", height: "200px"})
+        timeline.to(".citizen-bio", 0.6, {width:"100%"})
+        timeline.to(".citizen-bio .content", 0.6, {width: "100%", height: "200px"})
         timeline.to(".citizen-bio .content", 1, {opacity: 1}) 
     }
 }
@@ -33,6 +33,7 @@ export default {
 <style>
     .citizen-bio {
         display: block;
+        box-sizing: border-box;
         position: relative;
         min-width: 105px;
         min-height: 50px;

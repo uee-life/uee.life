@@ -4,7 +4,7 @@
       <left-nav />
     </portal>
     <portal to="rightDock">
-
+        <citizen-org :citizen="citizen"/>
     </portal>
     <portal to="navigationPane">
       <div class="left-nav-button"><router-link to="/citizens">Search Citizens</router-link></div>
@@ -46,9 +46,10 @@ import { mapGetters } from 'vuex'
 
 import CitizenInfo from '@/components/citizen/CitizenInfo'
 import CitizenBio from '@/components/citizen/CitizenBio'
+import CitizenOrg from '@/components/citizen/CitizenOrg'
 
 export default {
-  data() {
+  asyncData() {
     return {
         tabs: ['info', 'ships'],
         initialTab: 'info', 
@@ -63,7 +64,8 @@ export default {
   },
   components: {
     CitizenInfo,
-    CitizenBio
+    CitizenBio,
+    CitizenOrg
   },
   computed: {
         ...mapGetters([

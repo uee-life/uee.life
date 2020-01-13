@@ -8,7 +8,7 @@
             <span class="corner bottom right"></span>
         </div>
         <div class="info">
-            <div class="line-item"><div>UEE Citizen Record:</div><div>{{ citizen.info.record }}</div></div>
+            <div class="line-item"><div>UEE Record:</div><div>{{ citizen.info.record }}</div></div>
             <div class="line-item"><div>Name:</div><div>{{citizen.info.name}}</div></div>
             <div class="line-item"><div>Handle:</div><div>{{citizen.info.handle}}</div></div>
             <div class="line-item"><div>Enlisted:</div><div>{{citizen.info.enlisted}}</div></div>
@@ -79,6 +79,7 @@ export default {
         height: 250px;
     }
     .portrait{
+        box-sizing: border-box;
         width: 50px;
         height: 50px;
         padding: 7px;
