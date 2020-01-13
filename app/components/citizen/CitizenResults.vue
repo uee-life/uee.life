@@ -1,11 +1,11 @@
 <template>
-  <div class='citizen-results'>
-    <portal to="leftDock">
-        <dock-item title="find citizens" mainClass="search-box">
-            <input class="search-input" @keyup.enter="getResults()" v-model="input" placeholder="Citizen Handle"/>
-        </dock-item>
-    </portal>
-    <section-title text="citizen registry" size="large"/>
+    <div class="citizen-results">
+        <portal to="leftDock">
+            <dock-item title="find citizens" mainClass="search-box">
+                <input class="search-input" @keyup.enter="getResults()" v-model="input" placeholder="Citizen Handle"/>
+            </dock-item>
+        </portal>
+        <section-title text="citizen registry" size="large"/>
         <div v-if="result" class="results">
             <div class="org-cell">
                 <router-link class="no-decor" :to="citizenLink">
@@ -30,13 +30,14 @@
             </span>
             <span class="text small">Use the box on the left to search</span>
         </div>
-  </div>
+    </div>
 </template>
 
 <script>
 import axios from 'axios'
 
 export default {
+    name: 'citizen-results',
     data() {
         return {
             result: "",
@@ -63,6 +64,7 @@ export default {
             return `/citizens/${this.result.handle}`;
         }
     }
+
 }
 </script>
 

@@ -35,4 +35,17 @@ module.exports = {
     AUTH0_CLIENT_ID: '',
     AUTH0_CLIENT_DOMAIN: ''
   },
+
+  /*
+  ** Global Components
+  */
+  plugins: [
+    '~/plugins/layout.js',
+    '~/plugins/widgets.js'
+  ],
+
+  /*
+  ** Modules
+  */
+  modules: ['portal-vue/nuxt']
 }

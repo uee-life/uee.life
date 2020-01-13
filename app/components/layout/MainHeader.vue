@@ -11,9 +11,6 @@
                 <div v-if='isAuthenticated' class="welcome">
                     Welcome, {{ loggedUser ? loggedUser.nickname : 'friend' }}!
                 </div>
-                <div v-if='isAuthenticated'>
-                    [ <nuxt-link to="/auth/sign-off"> Log Out </nuxt-link> ]
-                </div>
                 <div v-else>
                     Welcome! Please <nuxt-link to="/auth/sign-in">Log In / Sign Up</nuxt-link>
                 </div>

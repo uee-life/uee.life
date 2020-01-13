@@ -14,11 +14,14 @@
   },
   "dependencies": {
     "auth0-lock": "11.8.1",
+    "axios": "^0.19.1",
     "core-js": "^2.0.0",
+    "gsap": "^3.0.5",
     "js-cookie": "2.2.0",
     "jwt-decode": "2.2.0",
     "normalize.css": "^8.0.1",
     "nuxt": "latest",
+    "portal-vue": "^2.1.7",
     "sweetalert": "^2.1.2",
     "uuid": "3.3.2",
     "vue-notifications": "^1.0.2"
