@@ -46,6 +46,19 @@ export const unsetToken = () => {
   //}
 }
 
+export const getToken = (req) => {
+  if (process.SERVER_BUILD) { 
+    if (!req.headers.cookie) return
+    const jwtCookie = req.headers.cookie.split(';').find(c => c.trim().startsWith('jwt='))
+    if (!jwtCookie) { return }
+    const jwt = jwtCookie.split('=')[1]
+    return jwt
+  } else if(process.client) {
+    if (!window && !window.localStorage.token) return
+    return window.localStorage.token
+  }
+}
+
 export const getUserFromCookie = (req) => {
   if (!req.headers.cookie) return
   const jwtCookie = req.headers.cookie.split(';').find(c => c.trim().startsWith('jwt='))

@@ -13,6 +13,7 @@ export const mutations = {
 
 export const actions = {
   setUser (state, auth0user, token) {
+    if(auth0user){
     const user = {
       username: auth0user.nickname,
       email: auth0user.email,
@@ -22,7 +23,8 @@ export const actions = {
       picture: auth0user.picture,
       token: token
     }
-    commit('SET_USER', user)
+    this.commit('SET_USER', user)
+  }
   }
 }
 
