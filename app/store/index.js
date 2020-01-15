@@ -13,18 +13,20 @@ export const mutations = {
 
 export const actions = {
   setUser (state, auth0user, token) {
+    console.log('xxx')
+    console.log(auth0user)
     if(auth0user){
-    const user = {
-      username: auth0user.nickname,
-      email: auth0user.email,
-      email_verified: auth0user.email_verified,
-      handle: auth0user['https://uee.life/app_metadata'].handle,
-      handle_verified: auth0user['https://uee.life/app_metadata'].handle_verified,
-      picture: auth0user.picture,
-      token: token
+      const user = {
+        username: auth0user.nickname,
+        email: auth0user.email,
+        email_verified: auth0user.email_verified,
+        handle: auth0user['https://uee.life/app_metadata'].handle,
+        handle_verified: auth0user['https://uee.life/app_metadata'].handle_verified,
+        picture: auth0user.picture,
+        token: token
+      }
+      this.commit('SET_USER', user)
     }
-    this.commit('SET_USER', user)
-  }
   }
 }
 

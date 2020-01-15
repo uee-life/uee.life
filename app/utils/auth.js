@@ -46,25 +46,32 @@ export const unsetToken = () => {
   //}
 }
 
-export const getToken = (req) => {
-  if (process.SERVER_BUILD) { 
-    if (!req.headers.cookie) return
-    const jwtCookie = req.headers.cookie.split(';').find(c => c.trim().startsWith('jwt='))
-    if (!jwtCookie) { return }
-    const jwt = jwtCookie.split('=')[1]
-    return jwt
-  } else if(process.client) {
-    if (!window && !window.localStorage.token) return
-    return window.localStorage.token
-  }
+export const getTokenFromCookie = (req) => {
+  console.log('getTokenFromCookie')
+  if (!req.headers.cookie) return
+  
+  const jwtCookie = req.headers.cookie.split(';').find(c => c.trim().startsWith('jwt='))
+  if (!jwtCookie) { return }
+  console.log(jwtCookie)
+  const jwt = jwtCookie.split('=')[1]
+  return jwt
 }
 
 export const getUserFromCookie = (req) => {
   if (!req.headers.cookie) return
   const jwtCookie = req.headers.cookie.split(';').find(c => c.trim().startsWith('jwt='))
   if (!jwtCookie) return
+  console.log(jwtCookie)
   const jwt = jwtCookie.split('=')[1]
   return jwtDecode(jwt)
+}
+
+export const getTokenFromLocalStorage = () => {
+  let jwt = undefined
+  if(process.browser) {
+    jwt = window.localStorage.token
+  }
+  return jwt ? jwt : undefined
 }
 
 export const getUserFromLocalStorage = () => {
@@ -72,6 +79,7 @@ export const getUserFromLocalStorage = () => {
   if(process.browser) {
     json = window.localStorage.user
   }
+  console.log(json)
   return json ? JSON.parse(json) : undefined
 }
 

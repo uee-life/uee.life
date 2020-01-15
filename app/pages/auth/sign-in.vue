@@ -6,8 +6,10 @@
 export default {
   middleware: 'anonymous',
   mounted () {
-    const showLogin = require('~/utils/lock').showLogin
-    showLogin('auth0-lock')
+    this.$nextTick(() => {
+      const showLogin = require('~/utils/lock').showLogin
+      showLogin('auth0-lock')
+    })
   }
 }
 </script>
