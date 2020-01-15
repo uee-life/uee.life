@@ -74,7 +74,7 @@ export const getters = {
   loggedCitizen (state) {
     return state.citizen
   },
-  getToken (state) {
+  accessToken (state) {
     return state.token
   }
 }

@@ -47,7 +47,7 @@
 <script>
 import axios from 'axios'
 import { mapGetters } from 'vuex'
-import { TimelineLite } from 'gsap'
+import { gsap } from 'gsap'
 
 import NewsFeed from '@/components/news/NewsFeed'
 import OfficialLinks from '@/components/widgets/OfficialLinks'
@@ -84,14 +84,13 @@ export default {
     },
     methods: {
         toggleNews() {
-            const tl = new TimelineLite()
             if(this.showing) {
-                tl.to(".site-news", 0.5, {height: '100px'})
+                gsap.to(".site-news", 0.5, {height: '100px'})
                 //this.newsHeight = "height: 100px";
                 this.buttonText = "Read More";
                 this.showing = false;
             } else {
-                tl.fromTo(".site-news", 0.5, {height: '100px'}, {height: 'auto'})
+                gsap.fromTo(".site-news", 0.5, {height: '100px'}, {height: 'auto'})
                 this.buttonText = "Hide";
                 this.showing = true;
             }

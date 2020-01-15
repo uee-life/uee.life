@@ -12,13 +12,13 @@ import swal from 'sweetalert'
 export default {
     name: 'citizen-tools',
     computed : {
-        ...mapGetters(['getToken'])
+        ...mapGetters(['accessToken'])
     },
     methods: {
         async sync() {
             // eslint-disable-next-line
             console.log('Syncing...')
-            const token = this.getToken;
+            const token = this.accessToken;
             axios({
                 url: `https://api.uee.life/sync`,
                 method: 'POST',

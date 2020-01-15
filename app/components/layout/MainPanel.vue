@@ -42,7 +42,6 @@ export default {
 
 <style>
     .main-panel {
-        display: block;
         position: relative;
         padding: 15px;
         margin-bottom: 20px;
