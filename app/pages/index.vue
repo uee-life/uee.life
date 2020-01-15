@@ -14,8 +14,7 @@
                 <h3>UEE.life v0.1.2 now live!</h3>
                 <div class="date"><i>Updated: 12 Dec 2949</i></div>
             </div>
-            <p>
-                Now featuring:
+            <div>Now featuring:
                 <ul>
                     <li>System Information! (Check it out: <nuxt-link to="/system/stanton">Stanton System</nuxt-link>)</li>
                     <li>Site Stats!</li>
@@ -23,8 +22,8 @@
                     <li>Verified Citizen persistance! (prereq for location/fleet management)</li>
                     <li>Visual Upgrade!</li>
                 </ul>
-            </p>
-            <p>
+            </div>
+            <div>
                 Coming Soon:
                 <ul>
                     <li>Set your home location!</li>
@@ -32,7 +31,7 @@
                     <li>Enhanced location information!</li>
                     <li>Mobile Browser Support! (I know, I know!!!)</li>
                 </ul>
-            </p>
+            </div>
             <p>Come back regularly to keep up with all updates.</p>
             <p>And don't forget to visit your profile page <nuxt-link to="/profile">here</nuxt-link> to verify your account!</p>
             <p>This site is by the community, for the community, so if you have any thoughts on what

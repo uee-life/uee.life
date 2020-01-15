@@ -2,6 +2,7 @@
   <div>
     <portal to="leftDock">
       <left-nav />
+      <citizen-tools />
     </portal>
     <portal to="rightDock">
         <citizen-org :citizen="citizen"/>
@@ -47,6 +48,7 @@ import { mapGetters } from 'vuex'
 import CitizenInfo from '@/components/citizen/CitizenInfo'
 import CitizenBio from '@/components/citizen/CitizenBio'
 import CitizenOrg from '@/components/citizen/CitizenOrg'
+import CitizenTools from '@/components/citizen/CitizenTools'
 
 export default {
   asyncData() {
@@ -65,7 +67,8 @@ export default {
   components: {
     CitizenInfo,
     CitizenBio,
-    CitizenOrg
+    CitizenOrg,
+    CitizenTools
   },
   computed: {
         ...mapGetters([

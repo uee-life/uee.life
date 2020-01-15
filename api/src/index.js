@@ -69,19 +69,19 @@ const checkJwt = jwt({
 });
 
 // Public API calls
-app.get('/citizen/:handle', cache(60), async (req, res) => {
+app.get('/citizen/:handle', cache(600), async (req, res) => {
     res.send(await getCitizen(req.params.handle));
 });
 
-app.get('/citizen/:handle/info', cache(60), async (req, res) => {
+app.get('/citizen/:handle/info', cache(600), async (req, res) => {
     res.send(await getCitizenInfo(req.params.handle));
 })
 
-app.get('/citizen/:handle/ships', cache(60), async (req, res) => {
+app.get('/citizen/:handle/ships', cache(600), async (req, res) => {
     res.send(await getCitizenShips(req.params.handle));
 });
 
-app.get('/citizen/:handle/location', cache(60), async(req, res) => {
+app.get('/citizen/:handle/location', cache(600), async(req, res) => {
     res.send(await getCitizenLocation(req.params.handle))
 })
 

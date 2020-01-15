@@ -71,4 +71,5 @@ export default {
   flex-grow: 1;
   flex-basis: 300px;
 }
+ 
 </style>
