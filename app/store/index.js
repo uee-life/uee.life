@@ -8,6 +8,7 @@ export const state = () => {
     user: null,
     token: null,
     citizen: null,
+    authorizing: false
   }
 }
 
@@ -21,8 +22,8 @@ export const mutations = {
   SET_CITIZEN (state, citizen) {
     state.citizen = citizen || null
   },
-  SET_AUTH (state, auth) {
-    state.auth = auth || null
+  SET_AUTHORIZING (state, auth) {
+    state.authorizing = auth || false
   }
 }
 
@@ -35,7 +36,8 @@ export const actions = {
         email_verified: auth0user.email_verified,
         handle: auth0user['https://uee.life/app_metadata'].handle,
         handle_verified: auth0user['https://uee.life/app_metadata'].handle_verified,
-        picture: auth0user.picture
+        picture: auth0user.picture,
+        verificationCode: auth0user.verificationCode ? auth0user.verificationCode : null
       }
 
       return dispatch('getCitizen', user).then((user) => {
@@ -76,5 +78,8 @@ export const getters = {
   },
   accessToken (state) {
     return state.token
+  },
+  isAuthorizing (state) {
+    return state.authorizing
   }
 }

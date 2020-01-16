@@ -118,7 +118,8 @@ export default {
     },
     mounted() {
         this.getStats()
-    }
+    },
+    transition: "default"
 }
 </script>
 

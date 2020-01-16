@@ -37,6 +37,11 @@ export const setToken = (token, access_token) => {
   //}
 }
 
+export const updateAccessToken = (access_token) => {
+  if (process.SERVER_BUILD) return
+  window.localStorage.setItem('access_token', access_token)
+}
+
 export const unsetToken = () => {
   if (process.SERVER_BUILD) return
   //if(process.browser) {

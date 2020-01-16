@@ -48,3 +48,4 @@ const getOptions = (container) => {
 
 export const showLogin = (container) => getLock(getOptions(container)).show()
 export const logout = () => getLock().logout({ returnTo: getBaseUrl() })
+export const checkSession = (opt, cb) => getLock().checkSession(opt, cb)

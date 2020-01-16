@@ -6,7 +6,7 @@
         <nuxt-link class="nav-button" to="/systems">Star Systems</nuxt-link>
       </div>
       <div class="nav-right">
-        <nuxt-link class="nav-button" to="/tools">Tools</nuxt-link>
+        <nuxt-link class="nav-button" to="/auth/refresh">Tools</nuxt-link>
         <nuxt-link v-if="isAuthenticated" class="nav-button" to="/profile">Profile</nuxt-link>
         <nuxt-link v-if="!isAuthenticated" class="nav-button" to="/auth/sign-in">Sign In</nuxt-link>
         <nuxt-link v-else to="/auth/sign-off" class="nav-button">Sign Off</nuxt-link>

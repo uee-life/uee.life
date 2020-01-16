@@ -14,7 +14,7 @@ export default {
     } else {
       setToken(token, access_token)
     }
-    //this.$router.replace('/')
+    this.$router.replace('/')
   }
 }
 </script>

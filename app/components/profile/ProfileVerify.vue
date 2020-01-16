@@ -65,6 +65,7 @@ export default {
 
     .profile-verify input {
         color: #dbf3ff;
+        background: none;
         width: 450px;
     }
     .verify-code {

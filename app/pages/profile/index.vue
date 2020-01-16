@@ -2,7 +2,7 @@
   <div class="profile">
     <portal to="navigationPane"></portal>
     <div class="profile-main">
-      <profile-verify v-if="!verified" :user="user" :errors="errors.verification" @verify="verifyHandle"/>
+      <profile-verify v-if="!verified" :user="loggedUser" :errors="errors.verification" @verify="verifyHandle"/>
       <profile-info v-if="user" :user="user"/>
       <div v-if="debug" class="debug">
         <pre>{{ JSON.stringify(user, null, 2) }}</pre>
@@ -28,8 +28,8 @@ export default {
     },
     data() {
       return {
+        debug: true,
         user: null,
-        debug: false,
         errors: {
           verification: ""
         }
@@ -85,7 +85,7 @@ export default {
           } else {
             this.errors.verification = ""
           }
-          this.user = res.data.user
+          this.$store.commit('setUser', res.data.user)
         }).catch(function(err) {
           // eslint-disable-next-line
           console.error(err)

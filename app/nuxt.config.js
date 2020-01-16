@@ -60,5 +60,14 @@ module.exports = {
         cancelButtonColor: '#ff7674'
       }
     ]
-  ]
+  ],
+
+  /*
+  **
+  */
+
+  transition: {
+    name: 'default',
+    mode: 'out-in'
+  },
 }
