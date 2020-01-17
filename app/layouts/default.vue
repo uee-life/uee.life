@@ -66,7 +66,6 @@ export default {
 }
 
 .content {
-  padding-top: 10px;
   margin: 10px;
   flex-grow: 1;
   flex-basis: 300px;
