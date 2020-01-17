@@ -1,9 +1,9 @@
 <template>
     <div class="content">
       <portal to="leftDock">    
-        <left-nav />
         <official-links />
         <community-links />
+        <left-nav />
       </portal>
       <portal to="rightDock">
         <site-stats :stats="stats" />
@@ -118,8 +118,7 @@ export default {
     },
     mounted() {
         this.getStats()
-    },
-    transition: "default"
+    }
 }
 </script>
 

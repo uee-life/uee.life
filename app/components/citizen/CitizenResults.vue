@@ -73,8 +73,6 @@ export default {
         position: relative;
         width: 100%;
         padding: 10px;
-        padding-top: 20px;
-        margin-top: 30px;
     }
 
     .no-results {
@@ -104,13 +102,12 @@ export default {
         align-items: center;
     }
 
-    .search-box .search-input {
+    .search-box .content .search-input {
         margin: 5px;
+        width: calc(100% - 10px);
+        box-sizing: border-box;
     }
 
-    .search-box .search-button {
-        margin: 5px;
-    }
     .results {
         position: relative;
         display: flex;

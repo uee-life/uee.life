@@ -5,31 +5,30 @@
             <input class="search-input" @keyup.enter="getResults()" v-model="input" placeholder="Citizen Handle"/>
         </dock-item>
     </portal>
-    <section-title text="citizen registry" size="large"/>
-        <div v-if="result" class="results">
-            <div class="org-cell">
-                <router-link class="no-decor" :to="citizenLink">
-                    <span class="left">
-                        <span class="thumb">
-                            <img :src="result.portrait" />
-                        </span>
-                        <span class="identity">
-                            <h3 class="name">{{result.name}}</h3>
-                            <span class="symbol">{{result.handle}}</span>
-                            <span v-if="result.org" class="org">Organization: {{result.org}}</span>
-                        </span>
+    <div v-if="result" class="results">
+        <div class="org-cell">
+            <router-link class="no-decor" :to="citizenLink">
+                <span class="left">
+                    <span class="thumb">
+                        <img :src="result.portrait" />
                     </span>
-                </router-link>
-            </div>
+                    <span class="identity">
+                        <h3 class="name">{{result.name}}</h3>
+                        <span class="symbol">{{result.handle}}</span>
+                        <span v-if="result.org" class="org">Organization: {{result.org}}</span>
+                    </span>
+                </span>
+            </router-link>
         </div>
-        <div v-else class="no-results">
-            <span class="text big">
-                No Results
-                <div class="endcap left"></div>
-                <div class="endcap right"></div>
-            </span>
-            <span class="text small">Use the box on the left to search</span>
-        </div>
+    </div>
+    <div v-else class="no-results">
+        <span class="text big">
+            No Results
+            <div class="endcap left"></div>
+            <div class="endcap right"></div>
+        </span>
+        <span class="text small">Use the box on the left to search</span>
+    </div>
   </div>
 </template>
 
@@ -37,6 +36,7 @@
 import axios from 'axios'
 
 export default {
+    layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
     asyncData() {
         return {
             result: "",
@@ -102,8 +102,10 @@ export default {
         align-items: center;
     }
 
-    .search-box .search-input {
+    .search-box .content .search-input {
         margin: 5px;
+        width: calc(100% - 10px);
+        box-sizing: border-box;
     }
 
     .search-box .search-button {
@@ -175,6 +177,7 @@ export default {
     .org-cell>a>.left>.identity>.symbol {
         font-size: 15px;
         color: #739cb0;
+        margin-top: 3px;
     }
 
     .org-cell>a>.right {

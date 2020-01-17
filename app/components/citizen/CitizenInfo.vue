@@ -75,8 +75,9 @@ export default {
 <style scoped>
     .citizen-info {
         display: flex;
+        flex-wrap: wrap;
         width: 100%;
-        height: 250px;
+        height: fit-content;
     }
     .portrait{
         box-sizing: border-box;
@@ -84,6 +85,7 @@ export default {
         height: 50px;
         padding: 7px;
         margin-right: 20px;
+        margin-bottom: 10px;
         background: url('/images/fading-bars.png') repeat;
         position: relative;
         opacity: 0;

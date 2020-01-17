@@ -1,27 +1,27 @@
 <template>
   <div class="app">
-    <main-header />
-    <navbar />
+    <mobile-header />
+    <mobile-navbar />
     <div class="main">
       <dock name="leftDock" />
       <nuxt class="content" />
       <dock name="rightDock" />
     </div>
-    <main-footer />
+    <mobile-footer />
   </div>
 </template>
 
 <script>
-import MainHeader from '@/components/layout/MainHeader'
-import MainFooter from '@/components/layout/MainFooter'
-import Navbar from '@/components/layout/Navbar'
+import MobileHeader from '@/components/layout/MobileHeader'
+import MobileFooter from '@/components/layout/MobileFooter'
+import MobileNavbar from '@/components/layout/MobileNavbar'
 import Dock from '@/components/layout/Dock'
 
 export default {
   components: {
-    MainHeader,
-    MainFooter,
-    Navbar,
+    MobileHeader,
+    MobileFooter,
+    MobileNavbar,
     Dock
   }
 }

@@ -1,20 +1,20 @@
 <template>
   <div class="app">
-    <main-header />
-    <navbar />
+    <default-header />
+    <default-navbar />
     <div class="main">
       <dock name="leftDock" />
       <nuxt class="content" />
       <dock name="rightDock" />
     </div>
-    <main-footer />
+    <default-footer />
   </div>
 </template>
 
 <script>
-import MainHeader from '@/components/layout/MainHeader'
-import MainFooter from '@/components/layout/MainFooter'
-import Navbar from '@/components/layout/Navbar'
+import DefaultHeader from '@/components/layout/DefaultHeader'
+import DefaultFooter from '@/components/layout/DefaultFooter'
+import DefaultNavbar from '@/components/layout/DefaultNavbar'
 import Dock from '@/components/layout/Dock'
 
 import { Wormhole } from 'portal-vue'
@@ -22,9 +22,9 @@ Wormhole.trackInstances = false
 
 export default {
   components: {
-    MainHeader,
-    MainFooter,
-    Navbar,
+    DefaultHeader,
+    DefaultFooter,
+    DefaultNavbar,
     Dock
   }
 }
