@@ -51,41 +51,42 @@ import CitizenOrg from '@/components/citizen/CitizenOrg'
 import CitizenTools from '@/components/citizen/CitizenTools'
 
 export default {
-  asyncData() {
-    return {
-        tabs: ['info', 'ships'],
-        initialTab: 'info', 
-        citizen: {
-            info: {},
-            home: {},
-            ships: [],
-            org: {},
-            links: []
-        }
-    }
-  },
-  components: {
-    CitizenInfo,
-    CitizenBio,
-    CitizenOrg,
-    CitizenTools
-  },
-  computed: {
-        ...mapGetters([
-        'isAuthenticated', 
-        'loggedUser'
-    ]),
-        dossierLink() {
-            return `https://robertsspaceindustries.com/citizens/${this.$route.params.handle}`
-        },
-        isOwner() {
-            const meta = this.loggedUser["https://uee.life/app_metadata"]
-            if(meta && meta.handle == this.citizen.info.handle && meta.handle_verified) {
-                return true
+    layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
+    asyncData() {
+        return {
+            tabs: ['info', 'ships'],
+            initialTab: 'info', 
+            citizen: {
+                info: {},
+                home: {},
+                ships: [],
+                org: {},
+                links: []
             }
-            return false
         }
-  },
+    },
+    components: {
+        CitizenInfo,
+        CitizenBio,
+        CitizenOrg,
+        CitizenTools
+    },
+    computed: {
+            ...mapGetters([
+            'isAuthenticated', 
+            'loggedUser'
+        ]),
+            dossierLink() {
+                return `https://robertsspaceindustries.com/citizens/${this.$route.params.handle}`
+            },
+            isOwner() {
+                const meta = this.loggedUser["https://uee.life/app_metadata"]
+                if(meta && meta.handle == this.citizen.info.handle && meta.handle_verified) {
+                    return true
+                }
+                return false
+            }
+    },
     methods: {
         async getCitizen(skipcache=false) {
             try {
