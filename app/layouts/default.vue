@@ -72,4 +72,7 @@ export default {
   flex-basis: 300px;
 }
  
+ .dock {
+   width: 240px;
+ }
 </style>

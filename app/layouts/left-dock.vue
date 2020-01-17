@@ -3,9 +3,11 @@
     <main-header />
     <navbar />
     <div class="main">
-      <dock name="leftDock" />
+      <div class="dock-stack">
+        <dock name="leftDock" />
+        <dock name="rightDock" />
+      </div>
       <nuxt class="content" />
-      <dock name="rightDock" />
     </div>
     <main-footer />
   </div>
@@ -16,6 +18,9 @@ import MainHeader from '@/components/layout/MainHeader'
 import MainFooter from '@/components/layout/MainFooter'
 import Navbar from '@/components/layout/Navbar'
 import Dock from '@/components/layout/Dock'
+
+import { Wormhole } from 'portal-vue'
+Wormhole.trackInstances = false
 
 export default {
   components: {
@@ -68,8 +73,5 @@ export default {
   flex-grow: 1;
   flex-basis: 300px;
 }
-
- .dock {
-   width: 100%;
- }
+ 
 </style>

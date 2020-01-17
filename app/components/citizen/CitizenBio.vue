@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { TimelineLite } from 'gsap'
+import { gsap } from 'gsap'
 
 export default {
     name: "citizen-bio",
@@ -13,19 +13,18 @@ export default {
     watch: {
         'citizen.info': {
             handler: function() {
-                const timeline = new TimelineLite()
                 
-                timeline.to(".citizen-bio", 1, {width: "100%", height: "200px"})
-                timeline.to(".citizen-bio .content", 1, {opacity: 1})
+                gsap.to(".citizen-bio", 1, {duration: 1, width: "100%", height: "200px"})
+                gsap.to(".citizen-bio .content", {delay: 1, duration: 1, opacity: 1})
             }
         }
     },
     mounted() {
-        const timeline = new TimelineLite()
-        timeline.to(".citizen-bio", 1, {opacity: 1})
-        timeline.to(".citizen-bio", 0.6, {width:"100%"})
-        timeline.to(".citizen-bio .content", 0.6, {width: "100%", height: "200px"})
-        timeline.to(".citizen-bio .content", 1, {opacity: 1}) 
+
+        gsap.to(".citizen-bio", {duration: 1, opacity: 1})
+        gsap.to(".citizen-bio", 0.6, {width:"100%"})
+        gsap.to(".citizen-bio .content", {duration: 0.6, width: "100%", height: "200px"})
+        gsap.to(".citizen-bio .content", {delay: 1, duration: 1, opacity: 1}) 
     }
 }
 </script>

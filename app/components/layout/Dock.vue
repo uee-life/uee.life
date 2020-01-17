@@ -20,11 +20,7 @@ export default {
 <style>
     .dock {
         width: fit-content;
-        max-width: 240px;
-        height: 100%;
-        margin: 0px;
-        padding: 10px;
-        padding-top: 20px;
+        margin: 10px;
         position: relative;
     }
 </style>

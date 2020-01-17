@@ -70,4 +70,8 @@ module.exports = {
     name: 'default',
     mode: 'out-in'
   },
+  layoutTransition: {
+    name: 'default',
+    mode: 'out-in'
+  }
 }

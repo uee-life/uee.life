@@ -38,9 +38,10 @@ export default {
 <style>
     .dock-item {
         position: relative;
+        box-sizing: border-box;
         height: fit-content;
-        width: 220px;
-        min-width: 220px;
+        width: 100%;
+        min-width: 100%;
         margin-bottom: 20px;
         padding: 15px 10px;
         background: url('/images/fading-bars.png') repeat;

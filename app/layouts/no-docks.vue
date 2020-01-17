@@ -17,6 +17,9 @@ import MainFooter from '@/components/layout/MainFooter'
 import Navbar from '@/components/layout/Navbar'
 import Dock from '@/components/layout/Dock'
 
+import { Wormhole } from 'portal-vue'
+Wormhole.trackInstances = false
+
 export default {
   components: {
     MainHeader,
@@ -68,8 +71,5 @@ export default {
   flex-grow: 1;
   flex-basis: 300px;
 }
-
- .dock {
-   width: 100%;
- }
+ 
 </style>

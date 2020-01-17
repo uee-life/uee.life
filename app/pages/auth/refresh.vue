@@ -5,6 +5,7 @@
 <script>
 import { checkSecret, updateAccessToken } from '~/utils/auth'
 import { setSecret } from '~/utils/lock'
+import { addSeconds } from 'date-fns'
 
 export default {
     data() {
@@ -17,6 +18,9 @@ export default {
                 console.error(err)
             } else {
                 if(checkSecret(res.state)) {
+                    console.log(res)
+                    const expiry = addSeconds(new Date(), res.expiresIn)
+                    console.log(expiry)
                     updateAccessToken(res.accessToken)
                 }
             }
@@ -24,7 +28,7 @@ export default {
         },
         refreshAuth() {
             const checkSession = require('~/utils/lock').checkSession
-            checkSession({audience: "https://ueelife-api", response_type: "token", state: localStorage.secret}, this.handleAuth);
+            checkSession({audience: "https://ueelife-api", response_type: "token", state: localStorage.secret }, this.handleAuth);
         }
     },
     mounted() {
