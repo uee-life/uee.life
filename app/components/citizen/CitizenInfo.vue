@@ -14,20 +14,20 @@
             <div class="line-item"><div>Enlisted:</div><div>{{citizen.info.enlisted}}</div></div>
             <br>
             <div>
-                Home:
+                Home
             <ul>
                 <li class="line-item">
-                    <div>System</div>-
+                    <div>System:</div>
                     <div v-if="citizen.info.system"><router-link :to="systemLink">{{citizen.info.system}}</router-link></div>
                     <div v-else>Unknown</div>
                 </li>
                 <li class="line-item">
-                    <div>Planet</div>-
+                    <div>Planet:</div>
                     <div v-if="citizen.info.planet"><router-link :to="planetLink">{{citizen.info.planet}}</router-link></div>
                     <div v-else>Unknown</div>
                 </li>
                 <li class="line-item">
-                    <div>City:</div>-
+                    <div>City:</div>
                     <div v-if="citizen.info.home"><router-link :to="homeLink">{{citizen.info.home}}</router-link></div>
                     <div v-else>Unknown</div>
                 </li>
@@ -84,7 +84,6 @@ export default {
         width: 50px;
         height: 50px;
         padding: 7px;
-        margin-right: 20px;
         margin-bottom: 10px;
         background: url('/images/fading-bars.png') repeat;
         position: relative;
@@ -97,7 +96,10 @@ export default {
         opacity: 0;
     }
     .info {
-        width: 250px;
+        flex-basis: 250px;
+        flex-grow: 1;
+        max-width: 350px;
+        margin-left: 20px;
         opacity: 0;
     }
     .line-item {
