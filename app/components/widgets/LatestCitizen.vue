@@ -1,7 +1,7 @@
 <template>
     <dock-item title="Latest Citizen" mainClass="latest-citizen">
       <div v-if="citizen" >
-        <router-link :to="citizenLink"><img class="logo" :src="citizen.portrait" /></router-link>
+        <nuxt-link :to="citizenLink"><img class="logo" :src="citizen.portrait" /></nuxt-link>
         <div class="cit-name">
           {{ citizen.name }}
         </div>

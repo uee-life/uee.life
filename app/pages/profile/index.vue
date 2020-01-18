@@ -20,6 +20,7 @@ import ProfileVerify from '@/components/profile/ProfileVerify.vue'
 //import HomeSelect from '@/components/user/HomeSelect.vue'
 
 export default {
+    layout: 'no-dock',
     name: "profile",
     components: {
       ProfileInfo,
@@ -28,7 +29,7 @@ export default {
     },
     data() {
       return {
-        debug: true,
+        debug: false,
         user: null,
         errors: {
           verification: ""
@@ -61,10 +62,11 @@ export default {
           // eslint-disable-next-line
           console.log(res)
           this.user = res.data
-          this.$store.commit('setUser', res.data)
+          //this.$store.dispatch('setUser', res.data)
         }).catch((error) => {
           // eslint-disable-next-line
           console.error(error)
+          this.$router.push('/auth/refresh')
         })
       },
       async verifyHandle() {
@@ -85,7 +87,7 @@ export default {
           } else {
             this.errors.verification = ""
           }
-          this.$store.commit('setUser', res.data.user)
+          //this.$store.dispatch('setUser', res.data.user)
         }).catch(function(err) {
           // eslint-disable-next-line
           console.error(err)

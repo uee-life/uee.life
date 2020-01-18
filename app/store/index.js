@@ -1,7 +1,4 @@
 import axios from 'axios'
-import { WebAuth } from 'auth0-js'
-
-const config = require('~/config.json')
 
 export const state = () => {
   return {

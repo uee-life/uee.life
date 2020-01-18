@@ -3,7 +3,7 @@
       <div class="nav-left">
         <nuxt-link class="nav-button" to="/citizens">Citizens</nuxt-link>
         <nuxt-link class="nav-button" to="/orgs">Organizations</nuxt-link>
-        <nuxt-link class="nav-button" to="/systems">Star Systems</nuxt-link>
+        <nuxt-link class="nav-button" to="/system/stanton">Star Systems</nuxt-link>
       </div>
       <div class="nav-right">
         <nuxt-link class="nav-button" to="/auth/refresh">Tools</nuxt-link>
