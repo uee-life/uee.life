@@ -1,7 +1,7 @@
 <template>
   <div class='citizen-results'>
     <portal to="leftDock">
-        <dock-item title="find citizens" mainClass="search-box">
+        <dock-item title="find citizen" mainClass="search-box">
             <input class="search-input" @keyup.enter="getResults()" v-model="input" placeholder="Citizen Handle"/>
         </dock-item>
     </portal>
