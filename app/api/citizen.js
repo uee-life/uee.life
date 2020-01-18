@@ -19,21 +19,13 @@ export default {
         })
     },
     getOrg(org, cb, errorCb) {
-        try {
-            axios({
-                url: 'https://api.uee.life/organization/' + org,
-                method: 'GET'
-            }).then((data) => {
-                cb(data)
-            }).catch((err) => {
-                errorCb(err)
-            })
-
-            
-        } catch (error) {
-            // eslint-disable-next-line
-            console.error(error)
-        }
-        this.loading = false
+        axios({
+            url: 'https://api.uee.life/organization/' + org,
+            method: 'GET'
+        }).then((data) => {
+            cb(data)
+        }).catch((err) => {
+            errorCb(err)
+        })
     },
 }

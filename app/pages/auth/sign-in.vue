@@ -15,7 +15,5 @@ export default {
 </script>
 
 <style scoped>
-  .lock {
-    margin-top: 50px;
-  }
+  
 </style>

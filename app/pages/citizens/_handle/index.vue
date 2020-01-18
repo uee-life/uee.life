@@ -2,10 +2,10 @@
   <div>
     <portal to="leftDock">
       <left-nav />
-      <citizen-tools />
     </portal>
     <portal to="rightDock">
         <citizen-org :citizen="citizen"/>
+        <citizen-tools />
     </portal>
     <portal to="navigationPane">
       <div class="left-nav-button"><router-link to="/citizens">Search Citizens</router-link></div>
