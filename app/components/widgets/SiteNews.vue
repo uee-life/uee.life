@@ -66,7 +66,6 @@ export default {
     .site-news {
         display: flex;
         box-sizing: border-box;
-        min-width: 300px;
         flex-grow: 1;
     }
 

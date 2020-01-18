@@ -8,7 +8,7 @@ export const state = () => {
     user: null,
     token: null,
     citizen: null,
-    authorizing: false
+    isMobile: null
   }
 }
 
@@ -22,8 +22,8 @@ export const mutations = {
   SET_CITIZEN (state, citizen) {
     state.citizen = citizen || null
   },
-  SET_AUTHORIZING (state, auth) {
-    state.authorizing = auth || false
+  SET_MOBILE (state, isMobile) {
+    state.isMobile = isMobile || false
   }
 }
 
@@ -79,7 +79,7 @@ export const getters = {
   accessToken (state) {
     return state.token
   },
-  isAuthorizing (state) {
-    return state.authorizing
+  isMobile (state) {
+    return state.isMobile
   }
 }

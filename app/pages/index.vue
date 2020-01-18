@@ -40,11 +40,9 @@ export default {
     computed: {
         ...mapGetters([
             'isAuthenticated',
-            'loggedUser'
-        ]),
-        isMobile() {
-            return ({ isMobile }) => isMobile ? true : false
-        }
+            'loggedUser',
+            'isMobile'
+        ])
     },
     asyncData() {
         return {
