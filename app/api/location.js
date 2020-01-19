@@ -11,9 +11,9 @@ export default {
             errorCb(err)
         })
     },
-    getSatellites(satellite, cb, errorCb) {
+    getSatellites(planet, cb, errorCb) {
         axios({
-            url: 'https://api.uee.life/satellite/' + satellite,
+            url: 'https://api.uee.life/satellite/' + planet,
             method: 'GET'
         }).then((data) => {
             cb(data)

@@ -45,6 +45,8 @@ export default {
         height: 70px;
         border: 1px solid black;
         background: rgba(13, 46, 66, 0.5);
+        margin-bottom: 10px;
+        margin-top: 50px;
     }
 
     .page-head-left {

@@ -9,7 +9,7 @@
         <div class="page-head-right">
             <div class="user">
                 <div v-if='isAuthenticated' class="welcome">
-                    Welcome, <nuxt-link :to="citizenLink">{{ loggedCitizen ? loggedCitizen.info.name : 'friend' }}</nuxt-link>!
+                    Welcome, <nuxt-link :to="citizenLink">{{ loggedUser ? loggedUser.handle : 'Citizen' }}</nuxt-link>!
                 </div>
                 <div v-else>
                     Welcome! Please <nuxt-link to="/auth/sign-in">Log In / Sign Up</nuxt-link>
@@ -30,12 +30,11 @@ export default {
     computed: {
         ...mapGetters([
             'isAuthenticated', 
-            'loggedUser',
-            'loggedCitizen'
+            'loggedUser'
         ]),
         citizenLink() {
-            if(this.loggedCitizen) {
-                return `/citizens/${this.loggedCitizen.info.handle}`
+            if(this.loggedUser) {
+                return `/citizens/${this.loggedUser.handle}`
             } else {
                 return `/citizens`
             }

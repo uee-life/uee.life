@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { TimelineLite } from "gsap"
+import { gsap } from "gsap"
 
 export default {
     name: "citizen-info",
@@ -61,11 +61,10 @@ export default {
     watch: {
         'citizen.info': {
             handler: function() {
-                const timeline = new TimelineLite()
-                timeline.to(".portrait", 0.5, {opacity: 1})
-                timeline.to(".portrait", 1, {width: "150px", height: "150px"})
-                timeline.to(".portrait img", 0.5, {opacity: 1})
-                timeline.to(".citizen-info .info", 0.5, {opacity: 1})
+                gsap.to(".portrait", {duration: 0.5, opacity: 1})
+                gsap.to(".portrait", {duration: 0.5, width: "150px", height: "150px"})
+                gsap.to(".portrait img", {duration: 0.5, delay: 1, opacity: 1})
+                gsap.to(".citizen-info .info", {duration: 0.5, delay: 1.5, opacity: 1})
             }
         }
     }

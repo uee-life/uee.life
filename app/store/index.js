@@ -4,6 +4,7 @@ export const state = () => {
   return {
     user: null,
     token: null,
+    expires: null,
     citizen: null,
     isMobile: null
   }
@@ -15,6 +16,9 @@ export const mutations = {
   },
   SET_TOKEN (state, token) {
     state.token = token || null
+  },
+  SET_EXPIRY (state, expires) {
+    state.expires = expires || null
   },
   SET_CITIZEN (state, citizen) {
     state.citizen = citizen || null
@@ -42,10 +46,13 @@ export const actions = {
       })
     }
   },
-  storeToken({ commit }, token) {
-    const config = require('~/config.json')
-    if(token) {
+  storeToken({ commit }, { token, expiry }) {
+    console.log('storeToken')
+    console.log(token)
+    console.log(expiry)
+    if(token && expiry) {
       commit('SET_TOKEN', token)
+      commit('SET_EXPIRY', expiry)
     }
   },
   getCitizen({ commit }, user) {

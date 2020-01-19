@@ -22,6 +22,7 @@
 import axios from 'axios'
 
 export default {
+    layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
     name: 'search-main',
     data() {
         return {

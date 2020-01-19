@@ -1,6 +1,9 @@
 <template>
     <div class="location">
         <main-panel mainClass="location-panel">
+            <div class="location-image">
+                <img v-if="location.thumbnail" :src="location.thumbnail"/>
+            </div>
             <div class="location-info">
                 <h3 class="title"> {{ location.name }}</h3>
                 <p>
@@ -12,7 +15,6 @@
                 </p>
                 <p>{{ location.description }}</p>
             </div>
-            <img class="location-image" v-if="location.thumbnail" :src="location.thumbnail"/>
         </main-panel>
         <slot></slot>
         <div v-if="debug">{{ JSON.stringify(location, null, 2) }}</div>
@@ -21,6 +23,7 @@
 
 <script>
 import { gsap } from "gsap"
+import { mapGetters } from 'vuex'
 
 export default {
     name: 'location',
@@ -35,6 +38,9 @@ export default {
     components: {
     },
     computed: {
+        ...mapGetters([
+            'isMobile'
+        ]),
         mainTitle() {
             return `${this.location.name} ${this.type} ( ${this.location.affiliation} )`
         },
@@ -84,17 +90,27 @@ export default {
 
     .location-panel .content {
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     .location-image {
+        position: relative;
         flex-basis: 300px;
-        height: 300px;
+        flex-grow: 1;
+        max-width: 400px;  
+    }
+
+    .location-image>img {
+        width: 100%;
         border: 1px dotted #546f84;
     }
 
     .location-info {
         margin-bottom: 30px;
         margin: 0 20px;
+        flex-grow: 1;
+        flex-basis: 200px;
     }
 
     .location-info .title {

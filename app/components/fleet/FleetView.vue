@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { TimelineLite } from 'gsap'
+import { gsap } from 'gsap'
 import ShipSummary from '@/components/fleet/ShipSummary.vue'
 
 export default {
@@ -32,9 +32,7 @@ export default {
         }
     },
     mounted() {
-        const tl = new TimelineLite()
-        tl.to(".fleet-view .section-title", 1, {opacity: 1})
-        tl.to(".ships", 2, {opacity: 1})
+        gsap.to(".ships", {duration: 1, opacity: 1})
     }
 }
 </script>

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { TimelineLite } from "gsap"
+import { gsap } from "gsap"
 
 export default {
   name: "citizen-org",
@@ -30,17 +30,15 @@ export default {
     'citizen.org': {
       handler: function() {
         if(Object.keys(this.citizen.org).length === 0) {
-          const timeline = new TimelineLite()
-          timeline.to(".citizen-org .content", 0.5, {opacity: 0})
-          timeline.to(".citizen-org .section-title", 0.5, {opacity: 0})
-          timeline.to(".citizen-org", 1, {height: "50px"})
-          timeline.to(".citizen-org", 0, {display: "none"})
+          gsap.to(".citizen-org .content", {duration: 0.5, opacity: 0})
+          gsap.to(".citizen-org .section-title", {duration: 0.5, opacity: 0})
+          gsap.to(".citizen-org", {duration: 1, height: "50px"})
+          gsap.to(".citizen-org", {delay: 1, display: "none"})
         } else {
-          const timeline = new TimelineLite()
-          timeline.to(".citizen-org", 0, {display: "block"})
-          timeline.fromTo(".citizen-org", 0.6, {height: "50px"}, {height: "auto"})
-          timeline.to(".citizen-org .section-title", 0.5, {opacity: 1})
-          timeline.to(".citizen-org .content", 1, {opacity: 1})
+          gsap.to(".citizen-org", {display: "block"})
+          gsap.fromTo(".citizen-org", {height: "50px"}, {duration: 0.6, height: "auto"})
+          gsap.to(".citizen-org .section-title", {duration: 0.5, delay: 0.6, opacity: 1})
+          gsap.to(".citizen-org .content", {duration: 1, delay: 0.6, opacity: 1})
         }
       }
     }

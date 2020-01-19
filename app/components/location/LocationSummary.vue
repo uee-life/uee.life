@@ -38,8 +38,7 @@ export default {
 
     .summary {
         display: flex;
-        width: 400px;
-        min-width: 400px;
+        flex-basis: 250px;
         flex-grow: 1;
         margin: 10px;
         padding: 9px;

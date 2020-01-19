@@ -4,8 +4,8 @@
       <left-nav />
     </portal>
     <portal to="rightDock">
+        <citizen-tools v-if="isOwner"/>
         <citizen-org :citizen="citizen"/>
-        <citizen-tools />
     </portal>
     <portal to="navigationPane">
       <div class="left-nav-button"><router-link to="/citizens">Search Citizens</router-link></div>
@@ -80,8 +80,7 @@ export default {
                 return `https://robertsspaceindustries.com/citizens/${this.$route.params.handle}`
             },
             isOwner() {
-                const meta = this.loggedUser["https://uee.life/app_metadata"]
-                if(meta && meta.handle == this.citizen.info.handle && meta.handle_verified) {
+                if(this.loggedUser.handle == this.citizen.info.handle && this.loggedUser.handle_verified) {
                     return true
                 }
                 return false

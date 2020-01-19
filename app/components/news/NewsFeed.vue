@@ -29,7 +29,7 @@
 import axios from "axios"
 
 import NewsItem from '@/components/news/NewsItem.vue'
-import { TimelineLite } from 'gsap'
+import { gsap } from 'gsap'
 
 export default {
     name: "news-feed",
@@ -114,11 +114,11 @@ export default {
         enter: function (el) {
             var delay = (el.getAttribute('index') % 10) * 250
             setTimeout(function() {
-                new TimelineLite().to(el, 1, {opacity: 0.9})
+                gsap.to(el, {duration: 1, opacity: 0.9})
             }, delay)
         },
         leave: function(el) {
-            new TimelineLite().to(el, 2, {opacity: 0})
+            gsap.to(el, {duration: 2, opacity: 0})
         },
         loadMore: function() {
             if(!this.loading && this.more) {
@@ -143,7 +143,7 @@ export default {
         flex-basis: 500px;
         display: block;
         padding-top: 20px;
-        margin-top: 40px;
+        margin-top: 20px;
         margin-left: -10px;
         margin-right: -10px;
     }

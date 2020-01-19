@@ -45,7 +45,8 @@ module.exports = {
   */
   plugins: [
     '~/plugins/layout.js',
-    '~/plugins/widgets.js'
+    '~/plugins/widgets.js',
+    {src: '~/plugins/hamburger.js', ssr: false }
   ],
 
   /*
@@ -53,6 +54,7 @@ module.exports = {
   */
   modules: [
     'portal-vue/nuxt',
+    'cookie-universal-nuxt',
     [
       'nuxt-sweetalert2',
       {
@@ -66,7 +68,7 @@ module.exports = {
   **
   */
 
-  transition: {
+  pageTransition: {
     name: 'default',
     mode: 'out-in'
   },

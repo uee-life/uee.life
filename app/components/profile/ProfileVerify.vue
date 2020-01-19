@@ -12,34 +12,16 @@
 </template>
 
 <script>
-import { TimelineLite } from "gsap"
+import { gsap } from "gsap"
 
 export default {
-    name: "profile-info",
+    name: "profile-verify",
     props: ["user", "errors"],
     data() {
         return {
         }
     },
-    watch: {
-        'user': {
-            handler: function() {
-                const timeline = new TimelineLite()
-                timeline.to(".portrait", 0.5, {opacity: 1})
-                timeline.to(".portrait", 1, {width: "150px", height: "150px"})
-                timeline.to(".portrait img", 0.5, {opacity: 1})
-                timeline.to(".info", 0.5, {opacity: 1})
-            }
-        }
-    },
     computed: {
-        isVerified() {
-            if(this.user.app_metadata.handle_verified) {
-                return "Yes"
-            } else {
-                return "No"
-            }
-        },
         verificationCode() {
             return `[ueelife:${this.user.verificationCode}]`
         }
@@ -48,19 +30,24 @@ export default {
         async verify() {
             this.$emit('verify')
         }
-    }
+    },
+    mounted() {
+        gsap.to(".profile-verify", {duration: 0.5, opacity: 1})
+    },
 }
 </script>
 
 <style scoped>
     .profile-verify {
         position: relative;
+        box-sizing: border-box;
         display: flex;
         width: 100%;
         height: fit-content;
         padding: 10px;
         padding-top: 20px;
-        margin-top: 20px;
+        margin-bottom: 20px;
+        opacity: 0;
     }
 
     .profile-verify input {

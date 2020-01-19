@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { TimelineLite } from "gsap"
+import { gsap } from "gsap"
 
 export default {
     name: "profile-info",
@@ -24,16 +24,8 @@ export default {
         return {
         }
     },
-    watch: {
-        'user': {
-            handler: function() {
-                const timeline = new TimelineLite()
-                timeline.to(".portrait", 0.5, {opacity: 1})
-                timeline.to(".portrait", 1, {width: "150px", height: "150px"})
-                timeline.to(".portrait img", 0.5, {opacity: 1})
-                timeline.to(".info", 0.5, {opacity: 1})
-            }
-        }
+    mounted() {
+        gsap.to(".profile-info", {duration: 0.5, opacity: 1})
     },
     methods: {
         isVerified(item) {
@@ -55,7 +47,8 @@ export default {
         height: fit-content;
         padding: 10px;
         padding-top: 20px;
-        margin-top: 20px;
+        margin-bottom: 20px;
+        opacity: 0;
     }
 
     .profile-info .portrait{

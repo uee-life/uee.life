@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { TimelineLite } from "gsap"
+import { gsap } from "gsap"
 
 export default {
     name: "site-stats",
@@ -23,9 +23,7 @@ export default {
     },
     watch: {
       stats() {
-        const timeline = new TimelineLite()
-
-        timeline.to(".site-stats", 1, {opacity: 1})
+        gsap.to(".site-stats", {duration: 1, opacity: 1})
       }
     }
 }

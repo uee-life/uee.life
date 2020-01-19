@@ -1,12 +1,9 @@
 <template>
   <div class="profile">
-    <portal to="navigationPane"></portal>
-    <div class="profile-main">
-      <profile-verify v-if="!verified" :user="loggedUser" :errors="errors.verification" @verify="verifyHandle"/>
-      <profile-info v-if="user" :user="user"/>
-      <div v-if="debug" class="debug">
-        <pre>{{ JSON.stringify(user, null, 2) }}</pre>
-      </div>
+    <profile-verify v-if="!verified || debug" :user="user" :errors="errors.verification" @verify="verifyHandle"/>
+    <profile-info v-if="user" :user="user"/>
+    <div v-if="debug" class="debug">
+      <pre>{{ JSON.stringify(user, null, 2) }}</pre>
     </div>
   </div>
 </template>
@@ -20,7 +17,7 @@ import ProfileVerify from '@/components/profile/ProfileVerify.vue'
 //import HomeSelect from '@/components/user/HomeSelect.vue'
 
 export default {
-    layout: 'no-dock',
+    layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
     name: "profile",
     components: {
       ProfileInfo,
@@ -102,11 +99,10 @@ export default {
     position: relative;
     width: 100%;
     display: flex;
-  }
-
-  .profile-main {
     width: 100%;
     padding: 10px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
   }
 
   .debug {

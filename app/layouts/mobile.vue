@@ -1,8 +1,7 @@
 <template>
   <div class="app">
-    <mobile-header />
     <mobile-navbar />
-    <div class="main">
+    <div class="main" id="page-wrap">
       <dock name="leftDock" />
       <nuxt class="content" />
       <dock name="rightDock" />
@@ -34,6 +33,7 @@ export default {
   max-width: 100vw;
   padding-bottom: 90px;
   font-family: Electrolize;
+  margin-top: 65px;
 }
 .main {
   display: flex;

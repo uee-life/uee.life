@@ -17,8 +17,10 @@
     "auth0-js": "^9.12.2",
     "auth0-lock": "11.8.1",
     "axios": "^0.19.1",
+    "cookie-universal-nuxt": "^2.1.0",
     "core-js": "^2.0.0",
     "date-fns": "^2.9.0",
+    "date-fns-tz": "^1.0.9",
     "gsap": "^3.0.5",
     "js-cookie": "2.2.0",
     "jwt-decode": "2.2.0",
@@ -28,6 +30,7 @@
     "portal-vue": "^2.1.7",
     "sweetalert": "^2.1.2",
     "uuid": "3.3.2",
+    "vue-burger-menu": "^2.0.3",
     "vue-notifications": "^1.0.2"
   },
   "devDependencies": {

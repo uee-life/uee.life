@@ -19,7 +19,6 @@
 </template>
 
 <script>
-//import {TimelineLite} from 'gsap'
 
 export default {
     name: "news-item",
@@ -28,11 +27,6 @@ export default {
         style () {
             return 'background: url("' + this.item.image + '"); background-size: cover; background-position: center center;'
         }
-    },
-    mounted() {
-        //const timeline = new TimelineLite()
-
-        //timeline.to(".news-item", 1, {opacity: 0.9})
     }
 }
 </script>
