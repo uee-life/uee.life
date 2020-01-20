@@ -16,7 +16,7 @@ async function loadCitizen(handle) {
 }
 
 async function loadCitizenLocation(handle) {
-    sql = "select a.handle, c.name as system, d.name as location, e.name as base from citizen a left join systems c on a.home_system = c.id left join locations d on a.home_location = d.id left join pois e on a.home_base = e.id where a.handle=?"
+    sql = "select c.name as system, d.name as location, e.name as base from citizen a left join systems c on a.home_system = c.id left join locations d on a.home_location = d.id left join pois e on a.home_base = e.id where a.handle=?"
     const rows = await executeSQL(sql, [handle])
     if(rows.length > 0) {
         return rows[0]
