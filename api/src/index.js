@@ -197,7 +197,7 @@ app.post("/sync", checkJwt, async (req, res) => {
 });
 
 app.post("/citizen/:handle/location", checkJwt, async (req, res) => {
-    res.send(await setLocation(req.headers.authorization, req.params.handle))
+    res.send(await setLocation(req.headers.authorization, req.params.handle, res.data))
 })
 
 // starting the server

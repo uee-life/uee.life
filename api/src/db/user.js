@@ -146,7 +146,7 @@ async function setLocation(token, handle, location) {
         return {
             success: true,
             error: "",
-            user: res   // user with verified flag set
+            user: user   // user with verified flag set
         }
     } else {
         return {
