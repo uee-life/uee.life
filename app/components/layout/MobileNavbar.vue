@@ -6,7 +6,9 @@
         <nuxt-link class="nav-button" to="/citizens">Citizen Registry</nuxt-link>
         <nuxt-link class="nav-button" to="/orgs">Org Registry</nuxt-link>
         <nuxt-link class="nav-button" to="/system/stanton">System Directory</nuxt-link>
-        <nuxt-link v-if="isAuthenticated" class="nav-button" to="/profile">Profile</nuxt-link>
+        <br>
+        <nuxt-link v-if="isAuthenticated" class="nav-button" :to="citizenLink">My Profile</nuxt-link>
+        <nuxt-link v-if="isAuthenticated" class="nav-button" to="/settings">settings</nuxt-link>
         <nuxt-link v-if="!isAuthenticated" class="nav-button" to="/auth/sign-in">Sign In</nuxt-link>
         <nuxt-link v-else to="/auth/sign-off" class="nav-button">Sign Off</nuxt-link>
       </Slide>
@@ -21,7 +23,15 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'navbar',
-  computed: mapGetters(['isAuthenticated']),
+  computed: {
+    ...mapGetters([
+      'isAuthenticated',
+      'loggedUser'
+    ]),
+    citizenLink() {
+      return `/citizens/${this.loggedUser.handle}`
+    }
+  }
 }
 </script>
 

@@ -31,13 +31,11 @@ export default {
       handler: function() {
         if(Object.keys(this.citizen.org).length === 0) {
           gsap.to(".citizen-org .content", {duration: 0.5, opacity: 0})
-          gsap.to(".citizen-org .section-title", {duration: 0.5, opacity: 0})
           gsap.to(".citizen-org", {duration: 1, height: "50px"})
           gsap.to(".citizen-org", {delay: 1, display: "none"})
         } else {
           gsap.to(".citizen-org", {display: "block"})
           gsap.fromTo(".citizen-org", {height: "50px"}, {duration: 0.6, height: "auto"})
-          gsap.to(".citizen-org .section-title", {duration: 0.5, delay: 0.6, opacity: 1})
           gsap.to(".citizen-org .content", {duration: 1, delay: 0.6, opacity: 1})
         }
       }

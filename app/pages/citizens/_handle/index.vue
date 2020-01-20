@@ -35,8 +35,8 @@
             <template v-if="isAuthenticated && isOwner" slot="tab-content-location">
                 <citizen-location :citizen="citizen"/>
             </template>
-
         </tabs>
+        <edit-location :current="citizen.info"/>
     </div>
   </div>
 </template>
@@ -50,6 +50,8 @@ import CitizenBio from '@/components/citizen/CitizenBio'
 import CitizenOrg from '@/components/citizen/CitizenOrg'
 import CitizenTools from '@/components/citizen/CitizenTools'
 
+import EditLocation from '@/components/citizen/edit/EditLocation'
+
 export default {
     layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
     asyncData() {
@@ -62,14 +64,16 @@ export default {
                 ships: [],
                 org: {},
                 links: []
-            }
+            },
+            editing: false
         }
     },
     components: {
         CitizenInfo,
         CitizenBio,
         CitizenOrg,
-        CitizenTools
+        CitizenTools,
+        EditLocation
     },
     computed: {
             ...mapGetters([

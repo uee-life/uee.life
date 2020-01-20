@@ -46,6 +46,7 @@ module.exports = {
   plugins: [
     '~/plugins/layout.js',
     '~/plugins/widgets.js',
+    '~/plugins/isMobile.js',
     {src: '~/plugins/hamburger.js', ssr: false }
   ],
 

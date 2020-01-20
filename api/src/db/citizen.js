@@ -6,7 +6,17 @@ const {manager} = require('./manager')
 const {executeSQL} = require('./mariadb')
 
 async function loadCitizen(handle) {
-    sql = "select a.id, a.created, b.*, c.name as system, d.name as planet, e.name as home from citizen_sync b left join citizen a on a.handle=b.handle left join systems c on a.home_system = c.id left join locations d on a.home_location = d.id left join pois e on a.home_base = e.id where a.handle=?"
+    sql = "select a.id, a.created, a.verified, b.* from citizen_sync b left join citizen a on a.handle=b.handle where a.handle=?"
+    const rows = await executeSQL(sql, [handle])
+    if(rows.length > 0) {
+        return rows[0]
+    } else {
+        return null
+    }
+}
+
+async function loadCitizenLocation(handle) {
+    sql = "select a.id, a.created, c.name as system, d.name as location, e.name as base from systems c on a.home_system = c.id left join locations d on a.home_location = d.id left join pois e on a.home_base = e.id where a.handle=?"
     const rows = await executeSQL(sql, [handle])
     if(rows.length > 0) {
         return rows[0]
@@ -30,9 +40,6 @@ async function fetchCitizen(handle) {
         info.org = $('span:contains("Spectrum Identification (SID)")', '#public-profile').next().text()
         info.orgRank = $('span:contains("Organization rank")', '#public-profile').next().text()
         info.website = $('span:contains("Website")', '#public-profile').next().attr('href')
-        info.system = null
-        info.planet = null
-        info.home = null
         return info
     } catch (error) {
         console.error(error)
@@ -41,7 +48,7 @@ async function fetchCitizen(handle) {
 }
 
 
-async function fetchShips(handle) {
+async function loadShips(handle) {
     return [
         /*{
             id: 1,
@@ -73,10 +80,16 @@ async function getCitizen(handle) {
     citizen = {}
     citizen.info = await loadCitizen(handle)
     if(citizen.info) {
-        citizen.ships = await fetchShips(handle)
+        citizen.ships = await loadShips(handle)
+        citizen.home = await loadCitizenLocation(handle)
     } else {
         citizen.info = await fetchCitizen(handle)
         citizen.ships = []
+        citizen.home = {
+            system: null,
+            location: null,
+            base: null
+        }
     }
 
     return citizen
@@ -93,12 +106,8 @@ async function getCitizenShips(handle) {
 }
 
 async function getCitizenLocation(handle) {
-    citizen = await getCitizen(handle)
-    return {
-        system: citizen.system,
-        planet: citizen.planet,
-        home: citizen.home
-    }
+    location = await getCitizenLocation(handle)
+    return location
 }
 
 async function syncCitizen(handle) {

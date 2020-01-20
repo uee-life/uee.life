@@ -31,6 +31,7 @@ import axios from "axios"
 import NewsItem from '@/components/news/NewsItem.vue'
 import { gsap } from 'gsap'
 
+
 export default {
     name: "news-feed",
     data() {
@@ -142,7 +143,7 @@ export default {
         display: flex;
         flex-basis: 500px;
         display: block;
-        padding-top: 20px;
+        padding-top: 10px;
         margin-top: 20px;
         margin-left: -10px;
         margin-right: -10px;

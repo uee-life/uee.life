@@ -1,16 +1,14 @@
 <template>
   <main-panel title="Site News" mainClass="site-news" id="site-news" :style="newsHeight">
             <div class="title">
-                <h3>UEE.life v0.1.2 now live!</h3>
-                <div class="date"><i>Updated: 12 Dec 2949</i></div>
+                <h3>UEE.life v0.2 with Mobile Browser Support!</h3>
+                <div class="date"><i>Updated: 19 Jan 2950</i></div>
             </div>
-            <div>Now featuring:
+            <div>New features:
                 <ul>
-                    <li>System Information! (Check it out: <nuxt-link to="/system/stanton">Stanton System</nuxt-link>)</li>
-                    <li>Site Stats!</li>
-                    <li>Updated Official and Community Links!</li>
-                    <li>Verified Citizen persistance! (prereq for location/fleet management)</li>
-                    <li>Visual Upgrade!</li>
+                    <li>Comletely re-written site using NUXT.js</li>
+                    <li>Full mobile browser support!</li>
+                    <li>Visual and bug fixes!</li>
                 </ul>
             </div>
             <div>
@@ -19,11 +17,10 @@
                     <li>Set your home location!</li>
                     <li>Add ships to your fleet!</li>
                     <li>Enhanced location information!</li>
-                    <li>Mobile Browser Support! (I know, I know!!!)</li>
                 </ul>
             </div>
             <p>Come back regularly to keep up with all updates.</p>
-            <p>And don't forget to visit your profile page <nuxt-link to="/profile">here</nuxt-link> to verify your account!</p>
+            <p>And don't forget to visit your settings page <nuxt-link to="/settings">here</nuxt-link> to verify your account!</p>
             <p>This site is by the community, for the community, so if you have any thoughts on what
                 you would like to see here, please let me know at: 
                 <a href="mailto:capnflinttv@gmail.com">capnflinttv@gmail.com</a>
@@ -76,6 +73,8 @@ export default {
 
     .site-news .title h3 {
         margin: 0px;
+        font-size: calc(14px + (18 - 14) * ((100vw - 300px) / (1600 - 300)));
+        line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));
     }
 
     .site-news .title .date {
@@ -88,8 +87,8 @@ export default {
         width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
-        margin-left: 10%;
-        margin-right: 10%;
+        margin-left: 10px;
+        margin-right: 10px;
     }
 
     .site-news>.content>h3 {

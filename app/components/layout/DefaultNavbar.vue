@@ -34,7 +34,7 @@ export default {
         justify-content: space-between;
         flex-grow: 1;
         border: 1px solid #546f84;
-        margin: 10px;
+        margin: 10px 10px 20px 10px;
         padding: 5px;
         background: url('/images/fading-bars.png') repeat;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);

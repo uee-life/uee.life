@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { gsap } from 'gsap'
 import axios from "axios"
 import { mapGetters } from 'vuex'
 import swal from 'sweetalert'
@@ -48,11 +49,18 @@ export default {
                 console.error(err)
             })
         }
+    },
+    mounted() {
+        gsap.to('.citizen-tools', {duration: 0.5, opacity: 1})
     }
 }
 </script>
 
 <style>
+    .citizen-tools {
+        opacity: 0;
+    }
+
     .tool-button {
         cursor: pointer;
     }

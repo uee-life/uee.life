@@ -10,7 +10,7 @@
         <site-stats :stats="stats" />
         <latest-citizen :citizen="citizen" />
       </portal>
-      <site-news v-if="!isMobile"/>
+      <site-news v-if="!isMobile" style="margin-bottom: 30px"/>
       <news-feed />
     </div>
 </template>
@@ -40,8 +40,7 @@ export default {
     computed: {
         ...mapGetters([
             'isAuthenticated',
-            'loggedUser',
-            'isMobile'
+            'loggedUser'
         ])
     },
     asyncData() {

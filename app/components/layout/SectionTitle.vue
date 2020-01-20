@@ -75,7 +75,7 @@ export default {
         top: -20px;
     }
     .section-title.large>.text {
-        font-size: 20px;
+        font-size: 18px;
         margin-left: 20px;
     }
 </style>

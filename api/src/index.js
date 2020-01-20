@@ -23,10 +23,12 @@ const {
     getSatellite, 
     getPOIs, 
     getPOI
-} = require('./db/location.js');
+} = require('./db/location');
 const {
     getStats
 } = require('./db/stats');
+
+const { syncShips } = require('./db/ships')
 
 
 // defining the Express app
@@ -67,6 +69,10 @@ const checkJwt = jwt({
     issuer: `https://ueelife.auth0.com/`,
     algorithms: ['RS256']
 });
+
+app.get('/ships/sync', async (req, res) => {
+    res.send(await syncShips())
+})
 
 // Public API calls
 app.get('/citizen/:handle', cache(600), async (req, res) => {

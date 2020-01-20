@@ -8,6 +8,7 @@ import { setSecret } from '~/utils/lock'
 import { addSeconds } from 'date-fns'
 
 export default {
+    layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
     data() {
         return {
         }

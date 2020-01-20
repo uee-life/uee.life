@@ -20,7 +20,7 @@ export default {
 <style>
     .dock {
         width: fit-content;
-        margin: 10px;
+        margin: 0 10px;
         position: relative;
     }
 </style>
