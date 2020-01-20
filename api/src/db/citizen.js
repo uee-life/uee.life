@@ -17,7 +17,7 @@ async function loadCitizen(handle) {
     }
 
     sql = "select a.id, a.created, a.verified, b.* from citizen_sync b left join citizen a on a.handle=b.handle where a.handle=?"
-    const rows = await executeSQL(sql, [handle])
+    rows = await executeSQL(sql, [handle])
     if(rows.length > 0) {
         citizen = rows[0]
     } else if (data.verified){
