@@ -4,7 +4,7 @@
       <left-nav />
     </portal>
     <portal to="rightDock">
-        <citizen-tools v-if="isOwner"/>
+        <citizen-tools v-if="isOwner" @edit="edit" @save="save" :editing="editing"/>
         <citizen-org :citizen="citizen"/>
     </portal>
     <portal to="navigationPane">
@@ -12,7 +12,7 @@
       <div class="left-nav-button"><a :href="dossierLink" target="_blank">Official Dossier</a></div>
     </portal>
 
-    <citizen-info :citizen="citizen"/>
+    <citizen-info :citizen="citizen" :editing="editing"/>
     <div>
         <tabs :tabs="tabs" :initialTab="initialTab">
             <template slot="tab-title-info">
@@ -36,12 +36,13 @@
                 <citizen-location :citizen="citizen"/>
             </template>
         </tabs>
-        <!--edit-location :current="citizen.info"/-->
+        <edit-location :current="citizen.home" />
     </div>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import axios from 'axios'
 import { mapGetters } from 'vuex'
 
@@ -54,7 +55,7 @@ import EditLocation from '@/components/citizen/edit/EditLocation'
 
 export default {
     layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
-    asyncData() {
+    data() {
         return {
             tabs: ['info', 'ships'],
             initialTab: 'info', 
@@ -91,6 +92,12 @@ export default {
             }
     },
     methods: {
+        edit() {
+            this.editing = true
+        },
+        save() {
+            this.editing = false
+        },
         async getCitizen(skipcache=false) {
             try {
                 let headers = {}
@@ -104,7 +111,7 @@ export default {
                 })
 
                 this.citizen.info = data.info
-                this.citizen.home = data.location
+                this.citizen.home = data.home
                 this.citizen.ships = data.ships
                 this.citizen.links = []
                 if(data.info.website){

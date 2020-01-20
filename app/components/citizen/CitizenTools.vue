@@ -1,6 +1,8 @@
 <template>
   <dock-item title="Tools" mainClass="citizen-tools">
     <div class="tool-button" @click="sync">Sync Profile</div>
+    <div v-if="!editing" class="tool-button" @click="edit">Edit Profile</div>
+    <div v-else class="tool-button" @click="save">Save Changes</div>
   </dock-item>
 </template>
 
@@ -12,10 +14,17 @@ import swal from 'sweetalert'
 
 export default {
     name: 'citizen-tools',
+    props: ['editing'],
     computed : {
         ...mapGetters(['accessToken'])
     },
     methods: {
+        edit() {
+            this.$emit('edit')
+        },
+        save() {
+            this.$emit('save')
+        },
         async sync() {
             // eslint-disable-next-line
             console.log('Syncing...')

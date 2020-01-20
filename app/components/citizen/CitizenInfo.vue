@@ -14,26 +14,7 @@
             <div class="line-item"><div>Handle:</div><div>{{citizen.info.handle}}</div></div>
             <div class="line-item"><div>Enlisted:</div><div>{{citizen.info.enlisted}}</div></div>
             <br>
-            <div>
-                Home
-            <ul>
-                <li class="line-item">
-                    <div>System:</div>
-                    <div v-if="citizen.info.system"><router-link :to="systemLink">{{citizen.info.system}}</router-link></div>
-                    <div v-else>Unknown</div>
-                </li>
-                <li class="line-item">
-                    <div>Planet:</div>
-                    <div v-if="citizen.info.planet"><router-link :to="planetLink">{{citizen.info.planet}}</router-link></div>
-                    <div v-else>Unknown</div>
-                </li>
-                <li class="line-item">
-                    <div>City:</div>
-                    <div v-if="citizen.info.home"><router-link :to="homeLink">{{citizen.info.home}}</router-link></div>
-                    <div v-else>Unknown</div>
-                </li>
-            </ul>
-            </div>
+            <citizen-location :home="citizen.home" :editing="editing"/>
         </div>
   </div>
 </template>
@@ -41,22 +22,16 @@
 <script>
 import { gsap } from "gsap"
 
+import CitizenLocation from '@/components/citizen/CitizenLocation'
+
 export default {
     name: "citizen-info",
-    props: ["citizen"],
+    props: ["citizen", "editing"],
+    components: {
+        CitizenLocation
+    },
     data() {
         return {
-        }
-    },
-    computed: {
-        systemLink() {
-            return `/system/${this.citizen.info.system}`
-        },
-        planetLink() {
-            return `/planet/${this.citizen.info.planet}`
-        },
-        homeLink() {
-            return `/poi/${this.citizen.info.home}`
         }
     },
     watch: {
