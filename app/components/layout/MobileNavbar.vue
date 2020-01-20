@@ -1,6 +1,6 @@
 <template>
   <div class="nav-bar" id="nav-bar">
-    <no-ssr>
+    <client-only placeholder="">
       <Slide class='slide'>
         <nuxt-link class="nav-button" to="/">Home</nuxt-link>
         <nuxt-link class="nav-button" to="/citizens">Citizen Registry</nuxt-link>
@@ -10,7 +10,7 @@
         <nuxt-link v-if="!isAuthenticated" class="nav-button" to="/auth/sign-in">Sign In</nuxt-link>
         <nuxt-link v-else to="/auth/sign-off" class="nav-button">Sign Off</nuxt-link>
       </Slide>
-      </no-ssr>
+      </client-only>
       <span class="title">uee.life</span>
       <img class="logo" alt="logo" src="~assets/logo.png">
   </div>
@@ -41,7 +41,7 @@ export default {
         display: flex;
         justify-content: center;
         flex-grow: 1;
-        border: 1px solid #546f84;
+        border-bottom: 1px solid #546f84;
         padding: 5px;
         background: rgba(13, 46, 66, 0.8);
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -122,9 +122,9 @@ export default {
     .slide .bm-burger-bars {
       background-color: #39ced8;
     }
-    .line-style {
+    .slide .line-style {
       position: absolute;
-      height: 20%;
+      height: 15%;
       left: 0;
       right: 0;
     }

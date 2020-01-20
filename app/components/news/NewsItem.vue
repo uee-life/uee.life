@@ -4,7 +4,9 @@
             <div class="content">
             <div class="background" :style="style"></div>
             <div class="mask"></div>
-            <img class="article-image" :src="item.image" />
+            <div class="article-image">
+                <img :src="item.image" />
+            </div>
             <div class="news-item-info">
                 <div><b>{{ item.title }}</b></div>
                 <div>Posted: {{ item.posted }}</div>
@@ -33,10 +35,15 @@ export default {
 
 <style>
     .article-image {
-        width: 170px;
-        margin-left: 1px;
-        border: 2px solid black;
+        max-width: 170px;
+        flex-basis: 90%;
+        flex-grow: 1;
         z-index: 2;
+    }
+
+    .article-image>img {
+        width: 100%;
+        border: 2px solid black;
     }
 
     .news-item {

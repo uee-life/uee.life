@@ -1,7 +1,7 @@
 <template>
     <div class="content">
       <portal to="leftDock">    
-          <site-news v-if="isMobile"/>
+        <site-news v-if="isMobile"/>
         <official-links v-if="!isMobile" />
         <community-links v-if="!isMobile" />
         <left-nav />
