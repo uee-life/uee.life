@@ -6,13 +6,28 @@ const {manager} = require('./manager')
 const {executeSQL} = require('./mariadb')
 
 async function loadCitizen(handle) {
+    let data = {}
+    let citizen = null
+    sql = "select id, created, verified FROM citizen WHERE handle=?"
+    const rows = await executeSQL(sql, [handle])
+    if(rows.length > 0) {
+        // user found
+        data = rows[0]
+        data.verified = data.verified ? true : false
+    }
+
     sql = "select a.id, a.created, a.verified, b.* from citizen_sync b left join citizen a on a.handle=b.handle where a.handle=?"
     const rows = await executeSQL(sql, [handle])
     if(rows.length > 0) {
-        return rows[0]
-    } else {
-        return null
+        citizen = rows[0]
+    } else if (data.verified){
+        // no sync data for some reason, but is verified. Sync data and try again.
+        citizen = await syncCitizen(handle)
+        citizen.id = data.id
+        citizen.created = data.created
+        citizen.verified = data.verified
     }
+    return citizen
 }
 
 async function loadCitizenLocation(handle) {

@@ -2,7 +2,7 @@
     <div id="citizen-info" class="citizen-info">
         <div class="portrait" id="portrait">
             <img class="portrait-img" :src="citizen.info.portrait" />
-            <span v-if="citizen.info.verified" class="verified"><img src="~assets/star.png" /></span>
+            <span class="verified"><img v-if="citizen.info.verified" src="~assets/star.png" /></span>
             <span class="corner top left"></span>
             <span class="corner top right"></span>
             <span class="corner bottom left"></span>
@@ -73,11 +73,17 @@ export default {
     }
 
     .portrait .verified {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 50px;
         opacity: 0;
     }
 
     .portrait .verified>img {
         opacity: 1;
+        width: 100%;
+        height: auto;
     }
 
     .info {
