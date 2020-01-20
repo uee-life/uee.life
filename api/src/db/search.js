@@ -6,7 +6,7 @@ async function searchOrgs(query) {
     // update here to allow mulitple search objects/terms (i.e. searching by size)
     const searchData = {
         sort: "default",
-        search: query.q,
+        search: query.search,
         commitment: [],
         roleplay: [],
         size: [],

@@ -35,17 +35,7 @@ export default {
             try {
                 const { data } = await axios.get('https://api.uee.life/search/org', {
                     params: {
-                    sort: "default",
-                    search: this.input,
-                    commitment: [],
-                    roleplay: [],
-                    size: [],
-                    model: [],
-                    activity: [],
-                    language: [],
-                    recruiting: [],
-                    pagesize: 12,
-                    page: 1
+                        search: this.input
                     }
                 })
                 this.result = data.data.html
