@@ -138,7 +138,6 @@ async function saveLocation(handle, location) {
 
 async function setLocation(token, handle, location) {
     console.log("setting Location!")
-    console.log(location.system.name)
     const user = await getUser(token)
 
     if(handle == user.citizen.info.handle) {
