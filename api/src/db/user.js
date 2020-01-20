@@ -142,7 +142,7 @@ async function setLocation(token, handle, location) {
 
     if(handle == user.citizen.info.handle) {
         saveLocation(handle, location)
-        //user.home = location
+        user.home = location
         return {
             success: true,
             error: "",
