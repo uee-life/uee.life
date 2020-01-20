@@ -1,7 +1,7 @@
 <template>
   <div class="app">
-    <mobile-navbar />
     <div class="main" id="page-wrap">
+      <mobile-navbar />
       <dock name="leftDock" />
       <nuxt class="content" />
       <dock name="rightDock" />
