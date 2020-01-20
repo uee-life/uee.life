@@ -2,7 +2,8 @@
     <div id="citizen-info" class="citizen-info">
         <div class="portrait" id="portrait">
             <img class="portrait-img" :src="citizen.info.portrait" />
-                <span class="corner top left"></span>
+            <span v-if="citizen.info.verified" class="verified"><img src="~assets/star.png" /></span>
+            <span class="corner top left"></span>
             <span class="corner top right"></span>
             <span class="corner bottom left"></span>
             <span class="corner bottom right"></span>
@@ -64,6 +65,7 @@ export default {
                 gsap.to(".portrait", {duration: 0.5, opacity: 1})
                 gsap.to(".portrait", {duration: 0.5, width: "150px", height: "150px"})
                 gsap.to(".portrait img", {duration: 0.5, delay: 1, opacity: 1})
+                gsap.to(".portrait .verified", {duration: 0.5, delay: 1.5, opacity: 1})
                 gsap.to(".citizen-info .info", {duration: 0.5, delay: 1.5, opacity: 1})
             }
         }
@@ -94,6 +96,15 @@ export default {
         height: 136px;
         opacity: 0;
     }
+
+    .portrait .verified {
+        opacity: 0;
+    }
+
+    .portrait .verified>img {
+        opacity: 1;
+    }
+
     .info {
         flex-basis: 250px;
         flex-grow: 1;

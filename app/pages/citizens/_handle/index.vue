@@ -36,7 +36,7 @@
                 <citizen-location :citizen="citizen"/>
             </template>
         </tabs>
-        <edit-location :current="citizen.info"/>
+        <!--edit-location :current="citizen.info"/-->
     </div>
   </div>
 </template>
@@ -84,7 +84,7 @@ export default {
                 return `https://robertsspaceindustries.com/citizens/${this.$route.params.handle}`
             },
             isOwner() {
-                if(this.loggedUser.handle == this.citizen.info.handle && this.loggedUser.handle_verified) {
+                if(this.loggedUser && this.loggedUser.handle == this.citizen.info.handle && this.loggedUser.handle_verified) {
                     return true
                 }
                 return false

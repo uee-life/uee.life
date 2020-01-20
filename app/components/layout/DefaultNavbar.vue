@@ -7,7 +7,7 @@
       </div>
       <div class="nav-right">
         <nuxt-link class="nav-button" to="/auth/refresh">Tools</nuxt-link>
-        <nuxt-link v-if="isAuthenticated" class="nav-button" to="/profile">Profile</nuxt-link>
+        <nuxt-link v-if="isAuthenticated" class="nav-button" to="/settings">Settings</nuxt-link>
         <nuxt-link v-if="!isAuthenticated" class="nav-button" to="/auth/sign-in">Sign In</nuxt-link>
         <nuxt-link v-else to="/auth/sign-off" class="nav-button">Sign Off</nuxt-link>
       </div>
