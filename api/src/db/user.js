@@ -129,6 +129,31 @@ async function verifyCitizen(token, handle) {
     }
 }
 
+async function saveLocation(handle, location) {
+    console.log(handle)
+    console.log(location)
+    sql = "UPDATE citizen SET (home_location = ?, home_location = ?, home_base = ?) WHERE handle=?"
+}
+
+async function setLocation(token, handle, location) {
+    const user = await getUser(token)
+
+    if(handle == user.citizen.handle) {
+        saveLocation(handle, location)
+        return {
+            success: true,
+            error: "",
+            user: res   // user with verified flag set
+        }
+    } else {
+        return {
+            success: false,
+            error: "Cannot edit another citizen's location!",
+            user: user
+        }
+    }
+}
+
 async function purgeCitizen(handle) {
     sql = "DELETE FROM citizen_sync WHERE handle=?"
     await executeSQL(sql, [handle])
@@ -165,5 +190,6 @@ async function checkCitizen(handle, verified) {
 module.exports = {
     getUser,
     verifyCitizen,
-    updateHandle
+    updateHandle,
+    setLocation
 }
