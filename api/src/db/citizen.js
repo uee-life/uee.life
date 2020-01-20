@@ -54,6 +54,7 @@ async function fetchCitizen(handle) {
         info.org = $('span:contains("Spectrum Identification (SID)")', '#public-profile').next().text()
         info.orgRank = $('span:contains("Organization rank")', '#public-profile').next().text()
         info.website = $('span:contains("Website")', '#public-profile').next().attr('href')
+        info.verified = 0
         return info
     } catch (error) {
         console.error(error)

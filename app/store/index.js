@@ -6,7 +6,8 @@ export const state = () => {
     token: null,
     expires: null,
     citizen: null,
-    isMobile: null
+    isMobile: false,
+    saving: false
   }
 }
 
@@ -25,6 +26,9 @@ export const mutations = {
   },
   SET_MOBILE (state, isMobile) {
     state.isMobile = isMobile || false
+  },
+  SET_SAVING (state, isSaving) {
+    state.saving = isSaving || false
   }
 }
 
@@ -41,7 +45,7 @@ export const actions = {
         verificationCode: auth0user.verificationCode ? auth0user.verificationCode : null
       }
 
-      return dispatch('getCitizen', user).then((user) => {
+      return dispatch('loadCitizen', user).then((user) => {
         commit('SET_USER', user)
       })
     }
@@ -55,7 +59,7 @@ export const actions = {
       commit('SET_EXPIRY', expiry)
     }
   },
-  getCitizen({ commit }, user) {
+  loadCitizen({ commit }, user) {
     console.log(user.handle)
     axios({
       url: `https://api.uee.life/citizen/${user.handle}`,
@@ -67,6 +71,9 @@ export const actions = {
         console.error(err)
     })
     return user
+  },
+  setCitizen({ commit }, citizen) {
+    commit('SET_CITIZEN', citizen)
   }
 }
 
@@ -85,5 +92,8 @@ export const getters = {
   },
   isMobile (state) {
     return state.isMobile
+  },
+  isSaving (state) {
+    return state.isSaving
   }
 }

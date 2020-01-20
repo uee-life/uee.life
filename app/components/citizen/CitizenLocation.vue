@@ -44,7 +44,7 @@
 
 <script>
 import axios from "axios"
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
     name: 'citizen-location',
@@ -77,6 +77,12 @@ export default {
         }
     },
     methods: {
+        ...mapMutations({
+            setSaving: 'SET_SAVING'
+        }),
+        ...mapActions([
+            'setCitizen'
+        ]),
         loadSystems() {
             axios({
                 url: 'https://api.uee.life/systems',
@@ -127,6 +133,7 @@ export default {
         },
         save() {
             console.log('saving location data...')
+            this.setSaving(true)
             const data = {
                 system: this.system,
                 location: this.location,
@@ -141,9 +148,11 @@ export default {
                 },
                 data: data
             }).then((res) => {
-                console.log(res.data)
+                console.log(res.data.user.citizen)
+                this.setCitizen(res.data.user.citizen)
+                this.setSaving(false)
             }).catch((err) => {
-                console.err(err)
+                console.error(err)
             })
         }
     },

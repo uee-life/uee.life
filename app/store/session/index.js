@@ -30,7 +30,7 @@ export const actions = {
                 verificationCode: auth0user.verificationCode ? auth0user.verificationCode : null
             }
 
-            return dispatch('getCitizen', user).then((user) => {
+            return dispatch('loadCitizen', user).then((user) => {
                 commit('SET_USER', user)
             })
         }
