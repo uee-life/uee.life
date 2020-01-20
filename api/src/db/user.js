@@ -130,6 +130,7 @@ async function verifyCitizen(token, handle) {
 }
 
 async function saveLocation(handle, location) {
+    console.log("saving location...")
     console.log(handle)
     console.log(location)
     sql = "UPDATE citizen SET (home_location = ?, home_location = ?, home_base = ?) WHERE handle=?"
@@ -138,8 +139,6 @@ async function saveLocation(handle, location) {
 async function setLocation(token, handle, location) {
     console.log("setting Location!")
     const user = await getUser(token)
-    console.log(handle)
-    console.log(user)
 
     if(handle == user.citizen.info.handle) {
         saveLocation(handle, location)
