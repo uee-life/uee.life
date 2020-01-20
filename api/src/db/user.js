@@ -141,7 +141,7 @@ async function setLocation(token, handle, location) {
     console.log(handle)
     console.log(user)
 
-    if(handle == user.citizen.handle) {
+    if(handle == user.citizen.info.handle) {
         saveLocation(handle, location)
         return {
             success: true,
