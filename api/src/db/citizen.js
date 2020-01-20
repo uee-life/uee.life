@@ -68,7 +68,7 @@ async function fetchCitizen(handle) {
         info.portrait = baseURI + $('div.thumb', '#public-profile').children()[0].attribs.src
         info.org = $('span:contains("Spectrum Identification (SID)")', '#public-profile').next().text()
         info.orgRank = $('span:contains("Organization rank")', '#public-profile').next().text()
-        info.website = $('span:contains("Website")', '#public-profile').next().attr('href')
+        info.website = $('span:contains("Website")', '#public-profile').next().attr('href') || ''
         info.verified = 0
         return info
     } catch (error) {
