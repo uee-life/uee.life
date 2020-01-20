@@ -9,7 +9,7 @@ async function loadCitizen(handle) {
     let data = {}
     let citizen = null
     sql = "select id, created, verified FROM citizen WHERE handle=?"
-    const rows = await executeSQL(sql, [handle])
+    let rows = await executeSQL(sql, [handle])
     if(rows.length > 0) {
         // user found
         data = rows[0]
