@@ -21,9 +21,9 @@ async function loadCitizenLocation(handle) {
         location: null,
         base: null
     }
-    sql_system = "SELECT b.id, b.name FROM citizen a LEFT JOIN systems b ON a.home_system = b.id WHERE a.handle=?"
-    sql_location = "SELECT b.id, b.name FROM citizen a LEFT JOIN locations b ON a.home_location = b.id WHERE a.handle=?"
-    sql_base = "SELECT b.id, b.name FROM citizen a LEFT JOIN pois b ON a.home_base = b.id WHERE a.handle=?"
+    sql_system = "SELECT b.id, b.name FROM systems b LEFT JOIN citizen a ON a.home_system = b.id WHERE a.handle=?"
+    sql_location = "SELECT b.id, b.name FROM locations b LEFT JOIN citizen a ON a.home_location = b.id WHERE a.handle=?"
+    sql_base = "SELECT b.id, b.name FROM pois b LEFT JOIN citizen a ON a.home_base = b.id WHERE a.handle=?"
     const rows = await executeSQL(sql_system, [handle])
     if(rows.length > 0) {
         home.system = rows[0]
