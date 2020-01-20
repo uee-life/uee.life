@@ -42,9 +42,10 @@ export const setToken = (ctx, token, access_token, token_expiry) => {
   ctx.$cookies.set('jwt_expires', expires)
 }
 
-export const updateAccessToken = (access_token) => {
+export const updateAccessToken = (access_token, expires) => {
   if (process.SERVER_BUILD) return
   window.localStorage.setItem('access_token', access_token)
+  window.localStorage.setItem('access_token_expiry', expires)
 }
 
 export const unsetToken = (ctx) => {

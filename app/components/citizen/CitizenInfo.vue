@@ -2,7 +2,7 @@
     <div id="citizen-info" class="citizen-info">
         <div class="portrait" id="portrait">
             <img class="portrait-img" :src="citizen.info.portrait" />
-            <span class="verified"><img v-if="citizen.info.verified" src="~assets/star.png" /></span>
+            <span class="verified"><img v-if="citizen.info.verified" src="~assets/verified.png" /></span>
             <span class="corner top left"></span>
             <span class="corner top right"></span>
             <span class="corner bottom left"></span>
@@ -60,10 +60,12 @@ export default {
         width: 50px;
         height: 50px;
         padding: 7px;
+        margin: 0;
         margin-bottom: 10px;
         background: url('/images/fading-bars.png') repeat;
         position: relative;
         opacity: 0;
+        align-self: auto;
     }
 
     .portrait img {
@@ -75,8 +77,8 @@ export default {
     .portrait .verified {
         position: absolute;
         bottom: 0;
-        right: 0;
-        width: 50px;
+        right: 8px;
+        width: 35px;
         opacity: 0;
     }
 

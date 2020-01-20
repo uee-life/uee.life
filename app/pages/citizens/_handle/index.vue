@@ -63,7 +63,8 @@ export default {
                 org: {},
                 links: []
             },
-            editing: false
+            editing: false,
+            loading: false
         }
     },
     components: {

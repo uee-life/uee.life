@@ -22,9 +22,10 @@ export default {
                     console.log(res)
                     const expiry = addSeconds(new Date(), res.expiresIn)
                     console.log(expiry)
-                    updateAccessToken(res.accessToken)
+                    updateAccessToken(res.accessToken, expiry)
                 }
             }
+            this.$store.commit('REFRESH_TOKEN', false)
             this.$router.go(-1)
         },
         refreshAuth() {

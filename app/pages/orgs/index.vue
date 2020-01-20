@@ -33,7 +33,8 @@ export default {
     methods: {
         async getResults() {
             try {
-                const { data } = await axios.post('https://api.uee.life/search/org', {
+                const { data } = await axios.get('https://api.uee.life/search/org', {
+                    params: {
                     sort: "default",
                     search: this.input,
                     commitment: [],
@@ -45,6 +46,7 @@ export default {
                     recruiting: [],
                     pagesize: 12,
                     page: 1
+                    }
                 })
                 this.result = data.data.html
                     .replace(/\/media/g, 'https://robertsspaceindustries.com/media')

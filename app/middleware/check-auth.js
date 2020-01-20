@@ -1,5 +1,5 @@
 import { getUserFromCookie, getUserFromLocalStorage } from '~/utils/auth'
-import { strict } from 'assert';
+import { subSeconds, isAfter, getMilliseconds } from 'date-fns'
 
 export default function ({ store, req }) {
    // If nuxt generate, pass this middleware
@@ -9,5 +9,12 @@ export default function ({ store, req }) {
   if(loggedUser) {
     store.dispatch('setUser', loggedUser['user'])
     store.dispatch('storeToken', { token: loggedUser['token'], expiry: loggedUser['token_expiry'] })
+
+    let now = new Date()
+    let expiry = new Date(loggedUser['token_expiry'])
+    if (isAfter(now, subSeconds(expiry, 600))) {
+      console.log("Token expired or about to expire. Refreshing...")
+      store.commit('REFRESH_TOKEN', true)
+    } 
   }
 }

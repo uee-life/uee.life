@@ -5,6 +5,7 @@ export const state = () => {
     user: null,
     token: null,
     expires: null,
+    refresh: false,
     citizen: null,
     isMobile: false,
     saving: false
@@ -20,6 +21,9 @@ export const mutations = {
   },
   SET_EXPIRY (state, expires) {
     state.expires = expires || null
+  },
+  REFRESH_TOKEN (state, refresh) {
+    state.refresh = refresh || false
   },
   SET_CITIZEN (state, citizen) {
     state.citizen = citizen || null
@@ -52,8 +56,6 @@ export const actions = {
   },
   storeToken({ commit }, { token, expiry }) {
     console.log('storeToken')
-    console.log(token)
-    console.log(expiry)
     if(token && expiry) {
       commit('SET_TOKEN', token)
       commit('SET_EXPIRY', expiry)
@@ -95,5 +97,8 @@ export const getters = {
   },
   isSaving (state) {
     return state.isSaving
+  },
+  needsRefresh (state) {
+    return state.refresh
   }
 }

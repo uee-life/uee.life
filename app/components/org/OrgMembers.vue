@@ -97,7 +97,7 @@ export default {
                         return b.stars - a.stars;
                     })
                 }
-            }).error((err) => {
+            }).catch((err) => {
                 // eslint-disable-next-line
                 console.error(err)
             })

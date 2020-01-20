@@ -7,8 +7,10 @@
             <div>New features:
                 <ul>
                     <li>Comletely re-written site using NUXT.js</li>
-                    <li>Full mobile browser support!</li>
+                    <li>Verified citizen now have a fancy verified badge on their portrait: <img style="width: 30px; margin-bottom: -10px;" src="~assets/verified.png" />
+                    <li>Org member/affiliate lists now work! (With pagination for large orgs! *cough*TEST*cough*)</li>
                     <li>Visual and bug fixes!</li>
+                    <li>Full mobile browser support!</li>
                 </ul>
             </div>
             <div>

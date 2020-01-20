@@ -4,37 +4,37 @@
         <ul>
             <li class="line-item">
                 <div>System:</div>
-                <div v-if="editing">
+                <template v-if="editing">
                     <select v-model="system">
-                    <option disabled value="">Select System</option>
-                    <option value="">Not Selected</option>
-                    <option v-for="loc in data.systems" :key="loc.id" :value="{id: loc.id, name: loc.name}">{{ loc.name }}</option>
-                </select>
-                </div>
+                        <option disabled value="">Select System</option>
+                        <option value="">Not Selected</option>
+                        <option v-for="loc in data.systems" :key="loc.id" :value="{id: loc.id, name: loc.name}">{{ loc.name }}</option>
+                    </select>
+                </template>
                 <div v-else-if="home.system"><router-link :to="systemLink">{{home.system.name}}</router-link></div>
                 <div v-else>Unknown</div>
             </li>
             <li class="line-item">
                 <div>Location:</div>
-                <div v-if="editing">
+                <template v-if="editing">
                     <select v-if="system && data.locations.length" v-model="location">
                         <option disabled value="">Select Location</option>
                         <option value="">Not Selected</option>
                         <option v-for="loc in data.locations" :key="loc.id" :value="{id: loc.id, name: loc.name}">{{ loc.name }}</option>
                     </select>
-                </div>
+                </template>
                 <div v-else-if="home.location"><router-link :to="locationLink">{{home.location.name}}</router-link></div>
                 <div v-else>Unknown</div>
             </li>
             <li class="line-item">
                 <div>Base:</div>
-                <div v-if="editing">
+                <template v-if="editing">
                     <select v-if="location && data.bases.length" v-model="base">
                         <option disabled value="">Select Home Base</option>
                         <option value="">Not Selected</option>
                         <option v-for="loc in data.bases" :key="loc.id" :value="{id: loc.id, name: loc.name}">{{ loc.name }}</option>
                     </select>
-                </div>
+                </template>
                 <div v-else-if="home.base"><router-link :to="baseLink">{{home.base.name}}</router-link></div>
                 <div v-else>Unknown</div>
             </li>
@@ -186,5 +186,16 @@ export default {
     .line-item {
         display: flex;
         justify-content: space-between;
+    }
+
+    .line-item select {
+        color: #39ced8;
+        background: url('/images/fading-bars.png') repeat;
+        border: 1px solid #546f84;
+        margin: 2px;
+    }
+
+    .line-item select option {
+        background-color: rgb(13, 46, 66);
     }
 </style>

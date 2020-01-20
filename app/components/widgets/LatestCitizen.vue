@@ -1,14 +1,17 @@
 <template>
     <dock-item title="Latest Citizen" mainClass="latest-citizen">
-      <div v-if="citizen" >
-        <nuxt-link :to="citizenLink"><img class="logo" :src="citizen.portrait" /></nuxt-link>
+      <template v-if="citizen" >
+        <nuxt-link class="portrait" :to="citizenLink">
+          <img class="image" :src="citizen.portrait" />
+          <img class="verified" src="~assets/verified.png" />
+        </nuxt-link>
         <div class="cit-name">
           {{ citizen.name }}
         </div>
         <div class="cit-handle">
           {{ citizen.handle }}
         </div>
-      </div>
+      </template>
     </dock-item>
 </template>
 
@@ -46,11 +49,20 @@ export default {
     align-items: center;
     opacity: 1;
   }
-  .logo {
+  .portrait {
+    position: relative;
     width: 165px;
     height: 165px; 
     align-self: center;
     margin: 10px;
+  }
+
+  .portrait .verified {
+    position: absolute;
+    bottom: 0;
+    right: 5px;
+    bottom: 8px;
+    width: 45px;
   }
   .cit-name {
     align-self: center;

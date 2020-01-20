@@ -47,6 +47,7 @@ module.exports = {
     '~/plugins/layout.js',
     '~/plugins/widgets.js',
     '~/plugins/isMobile.js',
+    '~/plugins/checkRefresh.js',
     {src: '~/plugins/hamburger.js', ssr: false }
   ],
 
