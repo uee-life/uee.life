@@ -167,10 +167,6 @@ app.get('/stats', cache(600), async (req, res) => {
     res.send(await getStats());
 })
 
-app.post('/search/org', async (req, res) => {
-    res.send(await searchOrgsOld(req.body));
-});
-
 app.get('/search/org', cache(600), async (req, res) => {
     console.log(req.query)
     res.send(await searchOrgs(req.query));

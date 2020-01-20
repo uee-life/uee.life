@@ -9,6 +9,7 @@
                     <li>Comletely re-written site using NUXT.js</li>
                     <li>Verified citizen now have a fancy verified badge on their portrait: <img style="width: 30px; margin-bottom: -10px;" src="~assets/verified.png" />
                     <li>Org member/affiliate lists now work! (With pagination for large orgs! *cough*TEST*cough*)</li>
+                    <li>Pick your home! You visit your profile page once verified, click the "Edit Profile" option then choose your home! (Currently limited to the Stanton system)</li>
                     <li>Visual and bug fixes!</li>
                     <li>Full mobile browser support!</li>
                 </ul>

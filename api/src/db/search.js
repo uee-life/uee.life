@@ -27,17 +27,6 @@ async function searchOrgs(query) {
     }
 }
 
-async function searchOrgsOld(searchData) {
-    try {
-        const { data } = await axios.post('https://robertsspaceindustries.com/api/orgs/getOrgs', searchData);
-        return data
-    } catch (error) {
-        console.error(error)
-        return {error: 'unable to search orgs'}
-    }
-}
-
 module.exports = {
-    searchOrgs,
-    searchOrgsOld
+    searchOrgs
 };
