@@ -145,7 +145,7 @@ async function setLocation(token, handle, location) {
     const user = await getUser(token)
 
     if(handle == user.citizen.info.handle) {
-        saveLocation(handle, location)
+        await saveLocation(handle, location)
         user.home = location
         return {
             success: true,
