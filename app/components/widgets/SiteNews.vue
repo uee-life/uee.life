@@ -10,15 +10,19 @@
                     <li>Verified citizen now have a fancy verified badge on their portrait: <img style="width: 30px; margin-bottom: -10px;" src="~assets/verified.png" />
                     <li>Org member/affiliate lists now work! (With pagination for large orgs! *cough*TEST*cough*)</li>
                     <li>Pick your home! You visit your profile page once verified, click the "Edit Profile" option then choose your home! (Currently limited to the Stanton system)</li>
-                    <li>Visual and bug fixes!</li>
+                    <li>New in-site authentication dialog!</li>
+                    <li>Moons updated to Planet Tech v4 images! (thanks to /r/Ilunes for the photograhy!)</li>
+                    <li>Many Visual and bug fixes!</li>
                     <li>Full mobile browser support!</li>
+                    <li>Even! More! Exclamations!!!</li>
                 </ul>
             </div>
             <div>
                 Coming Soon:
                 <ul>
-                    <li>Set your home location!</li>
-                    <li>Add ships to your fleet!</li>
+                    <li>Fleet Management!</li>
+                    <li>Event Calendar!</li>
+                    <li>Org Management!</li>
                     <li>Enhanced location information!</li>
                 </ul>
             </div>

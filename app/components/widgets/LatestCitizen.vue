@@ -1,6 +1,6 @@
 <template>
     <dock-item title="Latest Citizen" mainClass="latest-citizen">
-      <template v-if="citizen" >
+      <div v-if="citizen" >
         <nuxt-link class="portrait" :to="citizenLink">
           <img class="image" :src="citizen.portrait" />
           <img class="verified" src="~assets/verified.png" />
@@ -11,7 +11,7 @@
         <div class="cit-handle">
           {{ citizen.handle }}
         </div>
-      </template>
+      </div>
     </dock-item>
 </template>
 
