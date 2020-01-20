@@ -1,5 +1,6 @@
 <template>
   <div class="nav-bar" id="nav-bar">
+    <no-ssr>
       <Slide class='slide'>
         <nuxt-link class="nav-button" to="/">Home</nuxt-link>
         <nuxt-link class="nav-button" to="/citizens">Citizen Registry</nuxt-link>
@@ -9,6 +10,7 @@
         <nuxt-link v-if="!isAuthenticated" class="nav-button" to="/auth/sign-in">Sign In</nuxt-link>
         <nuxt-link v-else to="/auth/sign-off" class="nav-button">Sign Off</nuxt-link>
       </Slide>
+      </no-ssr>
       <span class="title">uee.life</span>
       <img class="logo" alt="logo" src="~assets/logo.png">
   </div>
