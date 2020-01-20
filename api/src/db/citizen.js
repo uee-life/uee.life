@@ -16,13 +16,27 @@ async function loadCitizen(handle) {
 }
 
 async function loadCitizenLocation(handle) {
-    sql = "select c.name as system, d.name as location, e.name as base from citizen a left join systems c on a.home_system = c.id left join locations d on a.home_location = d.id left join pois e on a.home_base = e.id where a.handle=?"
-    const rows = await executeSQL(sql, [handle])
-    if(rows.length > 0) {
-        return rows[0]
-    } else {
-        return null
+    let home = {
+        system: null,
+        location: null,
+        base: null
     }
+    sql_system = "SELECT b.id, b.name FROM citizen a LEFT JOIN systems b ON a.home_system = b.id WHERE a.handle=?"
+    sql_location = "SELECT b.id, b.name FROM citizen a LEFT JOIN locations b ON a.home_location = b.id WHERE a.handle=?"
+    sql_base = "SELECT b.id, b.name FROM citizen a LEFT JOIN pois b ON a.home_base = b.id WHERE a.handle=?"
+    const rows = await executeSQL(sql_system, [handle])
+    if(rows.length > 0) {
+        home.system = rows[0]
+        const lrows = await executeSQL(sql_location, [handle])
+        if(lrows.length > 0) {
+            home.location = lrows[0]
+            const brows = await executeSQL(sql_base, [handle])
+            if(brows.length > 0) {
+                home.base = brows[0]
+            }
+        }
+    }
+    return home
 }
 
 async function fetchCitizen(handle) {
