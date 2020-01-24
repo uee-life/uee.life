@@ -57,9 +57,9 @@ export default {
           }
         }).then((res) => {
           // eslint-disable-next-line
-          console.log(res)
+          console.log(res.data)
           this.user = res.data
-          //this.$store.dispatch('setUser', res.data)
+          this.$store.dispatch('setUser', res.data)
         }).catch((error) => {
           // eslint-disable-next-line
           console.error(error)
@@ -81,10 +81,11 @@ export default {
           console.log(res)
           if(!res.data.success) {
             this.errors.verification = "Unable to verify token. Did you copy it to your bio?"
-            this.$swal.fire("FAILED", "Unable to verify token. Did you copy it to your bio?", 'error')
+            this.$swal.fire("FAILED", res.data.msg, 'error')
           } else {
-            this.$swal.fire("SUCCESS", "Profile successfully verified!", 'success')
+            this.$swal.fire("SUCCESS", res.data.msg, 'success')
             this.errors.verification = ""
+            this.getUser()
           }
           //this.$store.dispatch('setUser', res.data.user)
         }).catch(function(err) {

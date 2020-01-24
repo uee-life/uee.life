@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { getUserFromCookie, getUserFromLocalStorage } from '~/utils/auth'
+import { subSeconds, isAfter } from 'date-fns'
 
 export const state = () => {
   return {
@@ -37,14 +39,40 @@ export const mutations = {
 }
 
 export const actions = {
+  loadUser ({ dispatch, commit }, req) {
+    if (process.server && !req) return
+    const loggedUser = process.server ? getUserFromCookie(req) : getUserFromLocalStorage()
+
+    if(loggedUser) {
+      dispatch('setUser', loggedUser['user'])
+      dispatch('storeToken', { token: loggedUser['token'], expiry: loggedUser['token_expiry']})
+
+      let now = new Date()
+      let expiry = new Date(loggedUser['token_expiry'])
+      if (isAfter(now, subSeconds(expiry, 600))) {
+        console.log("Token expired or about to expire. Refreshing...")
+        commit('REFRESH_TOKEN', true)
+      } 
+    }
+  },
   setUser ({ dispatch, commit }, auth0user) {
+    console.log(auth0user)
+    let handle = ''
+    let handle_verified = ''
+    if(auth0user.app_metadata) {
+      handle = auth0user.app_metadata.handle
+      handle_verified = auth0user.app_metadata.handle_verified
+    } else {
+      handle = auth0user['https://uee.life/app_metadata'].handle
+      handle_verified = auth0user['https://uee.life/app_metadata'].handle_verified
+    }
     if(auth0user){
       const user = {
         username: auth0user.nickname,
         email: auth0user.email,
         email_verified: auth0user.email_verified,
-        handle: auth0user['https://uee.life/app_metadata'].handle,
-        handle_verified: auth0user['https://uee.life/app_metadata'].handle_verified,
+        handle: handle,
+        handle_verified: handle_verified,
         picture: auth0user.picture,
         verificationCode: auth0user.verificationCode ? auth0user.verificationCode : null
       }
