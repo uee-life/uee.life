@@ -81,7 +81,9 @@ export default {
           console.log(res)
           if(!res.data.success) {
             this.errors.verification = "Unable to verify token. Did you copy it to your bio?"
+            this.$swal.fire("FAILED", "Unable to verify token. Did you copy it to your bio?", 'error')
           } else {
+            this.$swal.fire("SUCCESS", "Profile successfully verified!", 'success')
             this.errors.verification = ""
           }
           //this.$store.dispatch('setUser', res.data.user)

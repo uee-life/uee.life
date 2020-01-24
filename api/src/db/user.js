@@ -98,6 +98,7 @@ async function setVerified(user) {
         handle_verified: true
     }
     const res = await management.updateAppMetadata(params, metadata).then(function(user) {
+        console.log(user)
         return user
     }).catch(function(err) {
         console.error(err)
@@ -117,13 +118,13 @@ async function verifyCitizen(token, handle) {
         checkCitizen(user.app_metadata.handle, true)
         return {
             success: true,
-            error: "",
+            msg: "Successfully verified citizen!",
             user: res   // user with verified flag set
         }
     } else {
         return {
             success: false,
-            error: "Code missing or doesn't match. Did you copy the code to your bio?",
+            msg: "Code missing or doesn't match. Did you copy the code to your bio?",
             user: user
         }
     }
