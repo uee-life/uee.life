@@ -31,9 +31,18 @@ export default {
             this.$emit('verify')
         }
     },
-    mounted() {
-        gsap.to(".profile-verify", {duration: 0.5, opacity: 1})
+    watch: {
+        user: function() {
+            this.$nextTick(() => {
+                gsap.to(".profile-verify", {duration: 0.5, opacity: 1})
+            })
+        }
     },
+    mounted() {
+        if(this.user) {
+            gsap.to(".profile-verify", {duration: 0.5, opacity: 1})
+        }
+    }
 }
 </script>
 
