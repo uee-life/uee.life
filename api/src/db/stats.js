@@ -47,7 +47,7 @@ async function latestCitizen() {
 
     if(result.length) {
         data = result[0].details.response.body.app_metadata
-        if(data.handle_verified) {
+        if(data.handle_verified && data.handle != 'Capn_Flint') {
             latest = data.handle
             saveStat("latestCitizen", latest)
         } else {
