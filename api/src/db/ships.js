@@ -1,4 +1,5 @@
 const axios = require("axios")
+const {executeSQL} = require('./mariadb')
 
 const manufacturers = {
     'Origin Jumpworks GmbH': 1,
@@ -71,32 +72,37 @@ const focus = {
     'Dropship':31,
 }
 
+function saveShip(ship) {
+    sql = 'INSERT INTO ships (short_name, manufacturer, model, size, max_crew, cargo, type, focus) values (?, ?, ?, ?, ?, ?, ?, ?)'
+    args = [ship.short_name, ship.manufacturer, ship.model, ship.size, ship.max_crew, ship.cargo, ship.type, ship.focus]
+    res = await executeSQL(sql, args)
+    console.log(res)
+}
+
 async function syncShips() {
     let result = await axios({
         url: 'https://calculator-api-259617.appspot.com/mongoDocuments/ships',
         method: 'GET'
     }).then((res) => {
-        let ships = []
         for (i in res.data) {
             const item = res.data[i]
-            console.log(item)
             ship = {}
             ship.short_name = item.ship.localName
             ship.manufacturer = manufacturers[item.ship.manufacturer]
             ship.model = item.ship.name
             ship.size = sizes[item.ship.size]
             ship.max_crew = item.ship.maxCrew
-            ship.cargoCapacity = item.ship.cargoCapacity
+            ship.cargo = item.ship.cargoCapacity
             ship.type = types[item.ship.type]
             ship.focus = focus[item.ship.focus]
-            console.log(ship)
-            ships.push(ship)
+            saveShip(ship)
         }
-        return ships[0]
+        return {success: true, count: res.data.length()}
     }).catch((err) => {
         console.error(err)
+        return {success: false}
     })
-    return {success: "Success!", result: result}
+    return result
 }
 
 module.exports = {
