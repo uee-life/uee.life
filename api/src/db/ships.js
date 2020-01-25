@@ -87,6 +87,7 @@ async function syncShips() {
             ship.cargoCapacity = item.ship.cargoCapacity
             ship.type = types[item.ship.type]
             ship.focus = focus[item.ship.focus]
+            console.log(ship)
             ships.push(ship)
         }
         return ships[0]
