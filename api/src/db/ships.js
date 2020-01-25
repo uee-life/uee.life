@@ -5,7 +5,7 @@ async function syncShips() {
         url: 'https://calculator-api-259617.appspot.com/mongoDocuments/ships',
         method: 'GET'
     }).then((res) => {
-        return res
+        return res.data.length
     }).catch((err) => {
         console.error(err)
     })
