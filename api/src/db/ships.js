@@ -77,7 +77,8 @@ async function syncShips() {
         method: 'GET'
     }).then((res) => {
         let ships = []
-        for (item in res.data) {
+        for (i in res.data) {
+            const item = res.data[i]
             console.log(item)
             ship = {}
             ship.short_name = item.ship.localName
