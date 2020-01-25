@@ -1,7 +1,7 @@
 const axios = require("axios")
 
 async function syncShips() {
-    let result = axios({
+    let result = await axios({
         url: 'https://calculator-api-259617.appspot.com/mongoDocuments/ships',
         method: 'GET'
     }).then((res) => {
