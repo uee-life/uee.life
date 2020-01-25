@@ -78,6 +78,7 @@ async function syncShips() {
     }).then((res) => {
         let ships = []
         for (item in res.data) {
+            console.log(item)
             ship = {}
             ship.short_name = item.ship.localName
             ship.manufacturer = manufacturers[item.ship.manufacturer]
