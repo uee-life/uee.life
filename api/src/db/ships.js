@@ -79,6 +79,12 @@ function saveShip(ship) {
     console.log(res)
 }
 
+function clearShips() {
+    sql = 'DELETE FROM ships'
+    res = await executeSQL(sql, [])
+    console.log(res)
+}
+
 async function syncShips() {
     let result = await axios({
         url: 'https://calculator-api-259617.appspot.com/mongoDocuments/ships',
