@@ -110,6 +110,12 @@ async function syncShips() {
     return result
 }
 
+async function getCitizenShips(handle) {
+    sql = "select a.id, a.name, c.* from ship_map a left join citizen b on a.citizen = b.id left join ship_view c on a.ship = c.id where b.handle=?"
+    const ships = await execute(sql)
+    return ships
+}
+
 async function getShips() {
     sql = 'select * from ship_view order by make, model'
     const ships = await executeSQL(sql)
@@ -126,5 +132,6 @@ async function getShips() {
 
 module.exports = {
     syncShips,
-    getShips
+    getShips,
+    getCitizenShips
 };

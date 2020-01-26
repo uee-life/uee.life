@@ -12,7 +12,6 @@ const jwksRsa = require('jwks-rsa')
 const {
     getCitizen, 
     getCitizenInfo, 
-    getCitizenShips, 
     getCitizenLocation, 
     startSync
 } = require('./db/citizen');
@@ -40,7 +39,8 @@ const {
 
 const { 
     syncShips,
-    getShips
+    getShips,
+    getCitizenShips
 } = require('./db/ships')
 
 
