@@ -100,7 +100,7 @@ app.get('/citizen/:handle/info', cache(600), async (req, res) => {
     res.send(await getCitizenInfo(req.params.handle));
 })
 
-app.get('/citizen/:handle/ships', cache(600), async (req, res) => {
+app.get('/citizen/:handle/ships', async (req, res) => {
     res.send(await getCitizenShips(req.params.handle));
 });
 
