@@ -113,7 +113,7 @@ async function syncShips() {
 async function getShips() {
     sql = 'select * from ship_view'
     const ships = await executeSQL(sql)
-    const makes = await executeSQL('select * from ship_manufacturers')
+    const makes = await executeSQL('select * from ship_make')
     const types = await executeSQL('select * from ship_types')
     const focus = await executeSQL('select * from ship_focus')
     return {
