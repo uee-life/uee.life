@@ -38,7 +38,10 @@ const {
     getStats
 } = require('./db/stats');
 
-const { syncShips } = require('./db/ships')
+const { 
+    syncShips,
+    getShips
+} = require('./db/ships')
 
 
 // defining the Express app
@@ -82,6 +85,10 @@ const checkJwt = jwt({
 
 app.get('/ships/sync', async (req, res) => {
     res.send(await syncShips())
+})
+
+app.get('/ships', async (req, res) => {
+    res.send(await getShips())
 })
 
 // Public API calls

@@ -110,6 +110,12 @@ async function syncShips() {
     return result
 }
 
+async function getShips() {
+    sql = 'select * from ship_view'
+    return await executeSQL(sql, [])
+}
+
 module.exports = {
-    syncShips
+    syncShips,
+    getShips
 };
