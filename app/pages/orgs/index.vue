@@ -89,6 +89,8 @@ export default {
 
     .search-box .search-input {
         margin: 5px;
+        width: calc(100% - 10px);
+        box-sizing: border-box;
     }
 
     .search-box .search-button {

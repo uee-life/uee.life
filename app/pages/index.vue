@@ -9,6 +9,8 @@
       <portal to="rightDock">
         <site-stats :stats="stats" />
         <latest-citizen :citizen="citizen" />
+        <discord />
+        <made-by />
       </portal>
       <site-news v-if="!isMobile" style="margin-bottom: 30px"/>
       <news-feed />
@@ -26,6 +28,8 @@ import CommunityLinks from '@/components/widgets/CommunityLinks'
 import SiteStats from '@/components/widgets/SiteStats'
 import LatestCitizen from '@/components/widgets/LatestCitizen'
 import SiteNews from '@/components/widgets/SiteNews'
+import Discord from '@/components/widgets/Discord'
+import MadeBy from '@/components/widgets/MadeBy'
 
 export default {
     layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
@@ -35,7 +39,9 @@ export default {
         CommunityLinks,
         SiteStats,
         LatestCitizen,
-        SiteNews
+        SiteNews,
+        Discord,
+        MadeBy
     },
     computed: {
         ...mapGetters([

@@ -1,15 +1,19 @@
 <template>
-  <div id="ship-summary" class="ship-summary">
-      <img :src="shipImage" />
-      <div class="ship-info">
-          <div><i><b>"{{ ship.name }}"</b></i></div>
-          <div>{{ ship.manufacturer }} {{ ship.make }} {{ ship.model }}</div>
-      </div>
-                <span class="corner top left"></span>
-          <span class="corner top right"></span>
-          <span class="corner bottom left"></span>
-          <span class="corner bottom right"></span>
-  </div>
+    <div id="ship-summary" class="ship-summary">
+        <img :src="shipImage" />
+        <img class="manufacturer" :src="manufacturerImage" />
+        <div class="ship-info">
+            <div v-if="ship.name"><i><b>"{{ ship.name }}"</b></i></div>
+            <h5>{{ ship.model }}</h5>
+            <div>{{ ship.type }} - {{ ship.focus }}</div>
+            <div>Crew: {{ ship.max_crew }}</div>
+            <div>Cargo: {{ ship.cargo }}</div>
+        </div>
+        <span class="corner top left"></span>
+        <span class="corner top right"></span>
+        <span class="corner bottom left"></span>
+        <span class="corner bottom right"></span>
+    </div>
 </template>
 
 <script>
@@ -18,7 +22,10 @@ export default {
     props: ["ship"],
     computed: {
         shipImage: function() {
-            return "/images/ships/" + [this.ship.manufacturer, this.ship.make].concat(this.ship.model.split(" ")).join(" ").trim().split(/\s+/).join("_") + ".jpg"
+            return "images/ships/" + this.ship.short_name + ".jpg"
+        },
+        manufacturerImage: function () {
+            return `images/manufacturers/${this.ship.make_abbr}.png`
         }
     }
 }
@@ -26,8 +33,9 @@ export default {
 
 <style scoped>
     img {
-        width: 170px;
-        margin-left: 1px;
+        max-width: 170px;
+        flex-basis: 90%;
+        flex-grow: 1;
     }
 
     .ship-summary {
@@ -44,5 +52,17 @@ export default {
 
     .ship-info {
         margin-left: 10px;
+        z-index: 2;
+    }
+
+    .ship-info>h5 {
+        font-size: 14px;
+    }
+
+    .manufacturer {
+        position: absolute;
+        right: 0;
+        width: 100px;
+        opacity: 0.8;
     }
 </style>

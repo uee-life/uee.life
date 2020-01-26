@@ -50,6 +50,6 @@ export default {
     .ships {
         display: flex;
         flex-wrap: wrap;
-        opacity: 0;
+        opacity: 1;
     }
 </style>

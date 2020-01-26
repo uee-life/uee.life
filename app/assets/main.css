@@ -38,22 +38,22 @@ a:hover {
 
 .corner.top {
   top: -1px;
-  border-top: 1px solid #dbf3ff;
+  border-top: 1px solid #546f84;
 }
 
 .corner.bottom {
   bottom: -1px;
-  border-bottom: 1px solid #dbf3ff;
+  border-bottom: 1px solid #546f84;
 }
 
 .corner.left {
   left: -1px;
-  border-left: 1px solid #dbf3ff;
+  border-left: 1px solid #546f84;
 }
 
 .corner.right {
   right: -1px;
-  border-right: 1px solid #dbf3ff;
+  border-right: 1px solid #546f84;
 }
 
 .corner {
@@ -67,18 +67,18 @@ position: absolute;
 top: 0;
 height: 100%;
 width: 6px;
-border-top: 1px solid #dbf3ff;
-border-bottom: 1px solid #dbf3ff;
+border-top: 1px solid #546f84;
+border-bottom: 1px solid #546f84;
 }
 
 .endcap.left {
 left: 0;
-border-left: 1px solid #dbf3ff;
+border-left: 1px solid #546f84;
 }
 
 .endcap.right {
 right: 0;
-border-right: 1px solid #dbf3ff;
+border-right: 1px solid #546f84;
 }
 
 .hidden {
