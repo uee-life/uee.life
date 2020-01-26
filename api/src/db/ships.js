@@ -112,7 +112,16 @@ async function syncShips() {
 
 async function getShips() {
     sql = 'select * from ship_view'
-    return await executeSQL(sql, [])
+    const ships = await executeSQL(sql)
+    const manufacturers = await executeSQL('select * from ship_manufacturers')
+    const types = await executeSQL('select * from ship_types')
+    const focus = await executeSQL('select * from ship_focus')
+    return {
+        ships: ships,
+        types: types,
+        focus: focus,
+        manufacturers: manufacturers
+    }
 }
 
 module.exports = {
