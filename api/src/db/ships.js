@@ -77,13 +77,11 @@ async function saveShip(ship) {
     sql = 'INSERT INTO ships (short_name, manufacturer, model, size, max_crew, cargo, type, focus) values (?, ?, ?, ?, ?, ?, ?, ?)'
     args = [ship.short_name, ship.manufacturer, ship.model, ship.size, ship.max_crew, ship.cargo, ship.type, ship.focus]
     res = await executeSQL(sql, args)
-    console.log(res)
 }
 
 async function clearShips() {
     sql = 'DELETE FROM ships'
     res = await executeSQL(sql, [])
-    console.log(res)
 }
 
 async function syncShips() {
