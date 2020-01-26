@@ -104,7 +104,7 @@ async function syncShips() {
             ship.focus = focus[item.ship.focus]
             saveShip(ship)
         }
-        return {success: true, count: res.data.length()}
+        return {success: true, count: res.data.length}
     }).catch((err) => {
         console.error(err)
         return {success: false}
