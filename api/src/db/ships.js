@@ -70,6 +70,7 @@ const focus = {
     'Heavy Refuelling':29,
     'Exploration':30,
     'Dropship':31,
+    'Passenger': 32
 }
 
 async function saveShip(ship) {
