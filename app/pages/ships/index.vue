@@ -1,7 +1,6 @@
 <template>
     <div class="org-main" id="org-main">
-        <input type="text" v-model="search" placeholder="Search..." />
-        <fleet-view :ships="filteredList"/>
+        <fleet-view :ships="ships"/>
     </div>
 </template>
 
@@ -32,15 +31,6 @@ export default {
                 this.ships = res.data.ships
             }).catch((err) => {
                 console.error(err)
-            })
-        }
-    },
-    computed: {
-        filteredList() {
-            return this.ships.filter(ship => {
-                return ship.make.toLowerCase().includes(this.search.toLowerCase()) ||
-                    ship.short_name.toLowerCase().includes(this.search.toLowerCase()) ||
-                    ship.model.toLowerCase().includes(this.search.toLowerCase())
             })
         }
     },

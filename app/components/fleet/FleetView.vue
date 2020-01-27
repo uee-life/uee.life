@@ -1,15 +1,15 @@
 <template>
     <div id="fleet-view" class="fleet-view">
-        <div class="display-style">Display: <a @click="show('large')">Large</a> | <a @click="show('small')">Small</a> | <a @click="show('table')">Table</a></div>
-        <div v-if="ships.length > 0" class="ships">
+        <div class="display-style"><template v-if="!isMobile">Display: <a @click="show('large')">Large</a> | <a @click="show('small')">Small</a> | <a @click="show('table')">Table</a> | </template><input type="text" v-model="search" placeholder="Filter list..." /></div>
+        <div v-if="filteredShips.length > 0" class="ships">
             <template v-if="isMobile || display == 'small'">
-                <ship-summary-small v-for="(s, index) in ships" :key="s.id" :ship="s" :index="index" />
+                <ship-summary-small v-for="(s, index) in filteredShips" :key="s.id" :ship="s" :index="index" />
             </template>
-            <template v-else-if="ships.length > 0 && display == 'table'">
-                <ship-table :ships="ships" />
+            <template v-else-if="display == 'table'">
+                <ship-table :ships="filteredShips" />
             </template>
             <template v-else>
-                <ship-summary v-for="(s, index) in ships" :key="s.id" :ship="s" :index="index" />
+                <ship-summary v-for="(s, index) in filteredShips" :key="s.id" :ship="s" :index="index" />
             </template>
         </div>
         <div v-else class="no-ships">
@@ -41,12 +41,22 @@ export default {
     },
     data() {
         return {
-            display: 'large'
+            display: 'large',
+            search: ''
         }
     },
     methods: {
         show(display) {
             this.display = display
+        }
+    },
+    computed: {
+        filteredShips() {
+            return this.ships.filter(ship => {
+                return ship.make.toLowerCase().includes(this.search.toLowerCase()) ||
+                    ship.short_name.toLowerCase().includes(this.search.toLowerCase()) ||
+                    ship.model.toLowerCase().includes(this.search.toLowerCase())
+            })
         }
     },
     mounted() {
