@@ -196,12 +196,13 @@ async function test() {
         $(el).find('li').each(function(i, el) {
             $(el).replaceWith('* ' + $(el).text() + '\n')
         })
-        $(el).replaceWith($(el).text() + '\n\n')
+        $(el).replaceWith($(el).text() + '\n')
     })
     $('ol').each(function(i, el) {
         $(el).find('li').each(function(i, el) {
             $(el).replaceWith('# ' + $(el).text())
         })
+        $(el).replaceWith($(el).text() + '\n')
     })
 
     $('p').each(function (i, el) {
