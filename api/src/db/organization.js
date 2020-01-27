@@ -141,8 +141,12 @@ function getMarkdown($, chunk) {
     chunk.find('strong').each(function (i, el) {
         $(el).replaceWith('*' + $(el).text() + '*')
     })
-    chunk.find('strike').each(function (i, el) {
+    chunk.find('del').each(function (i, el) {
         $(el).replaceWith('-' + $(el).text() + '-')
+    })
+    chunk.find('a').each(function (i, el) {
+
+        $(el).replaceWith('[' + $(el).text() + '](' + $el.attr('href') + ')')
     })
     return chunk.html()
 }
