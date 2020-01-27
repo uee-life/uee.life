@@ -136,7 +136,7 @@ tagmap = {
 
 }
 
-function getMarkdown(chunk) {
+function getMarkdown($, chunk) {
     console.log(chunk)
     let res = ""
     chunk.find('strong').each(function (i, el) {
@@ -159,7 +159,7 @@ async function test() {
     let markdown = ""
 
     $('p').each(function (i, el) {
-        markdown = markdown + getMarkdown($(el)) + '\n\n'
+        markdown = markdown + getMarkdown($, $(el)) + '\n\n'
     })
 
     return markdown
