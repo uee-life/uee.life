@@ -147,6 +147,9 @@ function getMarkdown($, chunk) {
     chunk.find('a').each(function (i, el) {
         $(el).replaceWith('[' + $(el).text() + '](' + $(el).attr('href') + ')')
     })
+    chunk.find('br').each(function (i, el) {
+        $(el).replacewith('\n')
+    })
     return chunk.text() + '\n\n'
 }
 
