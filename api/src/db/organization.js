@@ -141,7 +141,8 @@ function getMarkdown($, chunk) {
     chunk.find('strong').each(function (i, el) {
         content = $(el).text()
         console.log(content)
-        replace = $(`*${content}*`)
+        replace = $('*' + content + '*')
+        console.log(replace)
         $(el).replaceWith(replace)
     })
     return chunk.html()
