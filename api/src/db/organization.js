@@ -165,25 +165,36 @@ async function test() {
     let markdown = ""
 
     $('h2').each(function (i, el) {
-        $(el).replaceWith('h6. ' + $(el).text() + '\n')
+        $(el).replaceWith('h2. ' + $(el).text() + '\n')
     })
 
     $('h3').each(function (i, el) {
-        $(el).replaceWith('h6. ' + $(el).text() + '\n')
+        $(el).replaceWith('h3. ' + $(el).text() + '\n')
     })
     $('h4').each(function (i, el) {
-        $(el).replaceWith('h6. ' + $(el).text() + '\n')
+        $(el).replaceWith('h4. ' + $(el).text() + '\n')
     })
     $('h5').each(function (i, el) {
-        $(el).replaceWith('h6. ' + $(el).text() + '\n')
+        $(el).replaceWith('h5. ' + $(el).text() + '\n')
     })
     $('h6').each(function (i, el) {
         $(el).replaceWith('h6. ' + $(el).text() + '\n')
     })
+    $('strong').each(function (i, el) {
+        $(el).replaceWith('*' + $(el).text() + '*')
+    })
+    $('del').each(function (i, el) {
+        $(el).replaceWith('-' + $(el).text() + '-')
+    })
+    $('a').each(function (i, el) {
+        $(el).replaceWith('[' + $(el).text() + '](' + $(el).attr('href') + ')')
+    })
+    $('br').each(function (i, el) {
+        $(el).replaceWith('\n')
+    })
 
     $('p').each(function (i, el) {
         $(el).replaceWith($(el).text() + '\n\n')
-        getMarkdown($, $(el))
     })
 
     return $.text()
