@@ -15,7 +15,7 @@ const {
     getCitizenLocation, 
     startSync
 } = require('./db/citizen');
-const {getOrganization, getOrgFounders, getOrgMembers} = require('./db/organization');
+const {getOrganization, getOrgFounders, getOrgMembers, test} = require('./db/organization');
 const {getNews} = require('./db/news');
 const {searchOrgs} = require('./db/search');
 const {
@@ -82,6 +82,13 @@ const checkJwt = jwt({
     issuer: `https://ueelife.auth0.com/`,
     algorithms: ['RS256']
 });
+
+
+
+app.get('/test', async(req, res) => {
+    res.send(await test())
+})
+
 
 app.get('/ships/sync', async (req, res) => {
     res.send(await syncShips())
