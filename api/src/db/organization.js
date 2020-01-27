@@ -192,6 +192,11 @@ async function test() {
     $('br').each(function (i, el) {
         $(el).replaceWith('\n')
     })
+    $('ul').each(function(i, el) {
+        $(el).find('li').each(function(i, el) {
+            $(el).replaceWith('* ' + $(el).text())
+        })
+    })
 
     $('p').each(function (i, el) {
         $(el).replaceWith($(el).text() + '\n\n')
