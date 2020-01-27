@@ -165,20 +165,20 @@ async function test() {
     let markdown = ""
 
     $('h2').each(function (i, el) {
-        $(el).replaceWith('h2. ' + $(el).text() + '\n')
+        $(el).replaceWith('h2. ' + $(el).text() + '\n\n')
     })
 
     $('h3').each(function (i, el) {
-        $(el).replaceWith('h3. ' + $(el).text() + '\n')
+        $(el).replaceWith('h3. ' + $(el).text() + '\n\n')
     })
     $('h4').each(function (i, el) {
-        $(el).replaceWith('h4. ' + $(el).text() + '\n')
+        $(el).replaceWith('h4. ' + $(el).text() + '\n\n')
     })
     $('h5').each(function (i, el) {
-        $(el).replaceWith('h5. ' + $(el).text() + '\n')
+        $(el).replaceWith('h5. ' + $(el).text() + '\n\n')
     })
     $('h6').each(function (i, el) {
-        $(el).replaceWith('h6. ' + $(el).text() + '\n')
+        $(el).replaceWith('h6. ' + $(el).text() + '\n\n')
     })
     $('strong').each(function (i, el) {
         $(el).replaceWith('*' + $(el).text() + '*')
