@@ -146,7 +146,7 @@ function getMarkdown($, chunk) {
     })
     chunk.find('a').each(function (i, el) {
 
-        $(el).replaceWith('[' + $(el).text() + '](' + $el.attr('href') + ')')
+        $(el).replaceWith('[' + $(el).text() + '](' + $(el).attr('href') + ')')
     })
     return chunk.html()
 }
