@@ -140,9 +140,9 @@ function getMarkdown(chunk) {
     console.log(chunk)
     let res = ""
     chunk.find('strong').each(function (i, el) {
-        content = el.text()
+        content = $(el).text()
         replace = $(`*${content}*`)
-        el.replaceWith(replace)
+        $(el).replaceWith(replace)
     })
     return chunk.html()
 }
