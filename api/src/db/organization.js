@@ -139,11 +139,7 @@ tagmap = {
 function getMarkdown($, chunk) {
     let res = ""
     chunk.find('strong').each(function (i, el) {
-        content = $(el).text()
-        console.log(content)
-        replace = '*' + content + '*'
-        console.log(replace)
-        $(el).replaceWith(replace)
+        $(el).replaceWith('*' + $(el).text() + '*')
     })
     return chunk.html()
 }
