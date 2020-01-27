@@ -200,7 +200,7 @@ async function test() {
     })
     $('ol').each(function(i, el) {
         $(el).find('li').each(function(i, el) {
-            $(el).replaceWith('# ' + $(el).text())
+            $(el).replaceWith('# ' + $(el).text() + '\n')
         })
         $(el).replaceWith($(el).text() + '\n')
     })
