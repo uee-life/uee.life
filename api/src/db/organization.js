@@ -169,10 +169,11 @@ async function test() {
     })
 
     $('p').each(function (i, el) {
-        markdown = markdown + getMarkdown($, $(el)) + '\n\n'
+        $(el).replaceWith($(el).text() + '\n\n')
+        getMarkdown($, $(el))
     })
 
-    return markdown
+    return $.text()
 }
 
 async function fetchOrgFounders(org) {
