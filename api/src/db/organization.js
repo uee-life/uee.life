@@ -169,7 +169,7 @@ async function test() {
         getMarkdown($, $(el)) + '\n\n'
     })
 
-    return $().text()
+    return $.text()
 }
 
 async function fetchOrgFounders(org) {
