@@ -145,7 +145,6 @@ function getMarkdown($, chunk) {
         $(el).replaceWith('-' + $(el).text() + '-')
     })
     chunk.find('a').each(function (i, el) {
-
         $(el).replaceWith('[' + $(el).text() + '](' + $(el).attr('href') + ')')
     })
     return chunk.html()
@@ -162,11 +161,15 @@ async function test() {
 
     let markdown = ""
 
-    $('p').each(function (i, el) {
-        markdown = markdown + getMarkdown($, $(el)) + '\n\n'
+    $('h2').each(function (i, el) {
+        $(el).replaceWith('h2. ' + $(el).text())
     })
 
-    return markdown
+    $('p').each(function (i, el) {
+        getMarkdown($, $(el)) + '\n\n'
+    })
+
+    return $().text()
 }
 
 async function fetchOrgFounders(org) {
