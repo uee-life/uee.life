@@ -165,7 +165,20 @@ async function test() {
     let markdown = ""
 
     $('h2').each(function (i, el) {
-        $(el).replaceWith('h2. ' + $(el).text() + '\n\n')
+        $(el).replaceWith('h6. ' + $(el).text() + '\n')
+    })
+
+    $('h3').each(function (i, el) {
+        $(el).replaceWith('h6. ' + $(el).text() + '\n')
+    })
+    $('h4').each(function (i, el) {
+        $(el).replaceWith('h6. ' + $(el).text() + '\n')
+    })
+    $('h5').each(function (i, el) {
+        $(el).replaceWith('h6. ' + $(el).text() + '\n')
+    })
+    $('h6').each(function (i, el) {
+        $(el).replaceWith('h6. ' + $(el).text() + '\n')
     })
 
     $('p').each(function (i, el) {
