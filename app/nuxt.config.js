@@ -48,7 +48,8 @@ module.exports = {
     '~/plugins/widgets.js',
     '~/plugins/isMobile.js',
     '~/plugins/checkRefresh.js',
-    {src: '~/plugins/hamburger.js', ssr: false }
+    { src: '~/plugins/vue-good-table', ssr: false },
+    { src: '~/plugins/hamburger', ssr: false },
   ],
 
   /*

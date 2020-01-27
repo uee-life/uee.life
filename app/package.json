@@ -31,6 +31,7 @@
     "sweetalert": "^2.1.2",
     "uuid": "3.3.2",
     "vue-burger-menu": "^2.0.3",
+    "vue-good-table": "^2.18.1",
     "vue-notifications": "^1.0.2"
   },
   "devDependencies": {

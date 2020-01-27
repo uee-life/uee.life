@@ -1,10 +1,18 @@
 <template>
     <div id="fleet-view" class="fleet-view">
+        <div class="display-style">Display: <a @click="show('large')">Large</a> | <a @click="show('small')">Small</a> | <a @click="show('table')">Table</a></div>
         <div v-if="ships.length > 0" class="ships">
-            <ship-summary v-if="!isMobile" v-for="(s, index) in ships" :key="s.id" :ship="s" :index="index" />
-            <ship-summary-small v-if="isMobile" v-for="(s, index) in ships" :key="s.id" :ship="s" :index="index" />
+            <template v-if="isMobile || display == 'small'">
+                <ship-summary-small v-for="(s, index) in ships" :key="s.id" :ship="s" :index="index" />
+            </template>
+            <template v-else-if="ships.length > 0 && display == 'table'">
+                <ship-table :ships="ships" />
+            </template>
+            <template v-else>
+                <ship-summary v-for="(s, index) in ships" :key="s.id" :ship="s" :index="index" />
+            </template>
         </div>
-        <div class="no-ships" v-else>
+        <div v-else class="no-ships">
             No ships currently listed
         </div>
     </div>
@@ -14,12 +22,14 @@
 import { gsap } from 'gsap'
 import ShipSummary from '@/components/fleet/ShipSummary'
 import ShipSummarySmall from '@/components/fleet/ShipSummarySmall'
+import ShipTable from '@/components/fleet/ShipTable'
 
 export default {
     name: "fleet-view",
     components: {
         ShipSummary,
-        ShipSummarySmall
+        ShipSummarySmall,
+        ShipTable
     },
     props: {
         ships: {
@@ -31,6 +41,12 @@ export default {
     },
     data() {
         return {
+            display: 'large'
+        }
+    },
+    methods: {
+        show(display) {
+            this.display = display
         }
     },
     mounted() {
@@ -40,11 +56,17 @@ export default {
 </script>
 
 <style scoped>
+    .display-style {
+        margin-bottom: 10px;
+    }
     .fleet-view {
         position: relative;
         margin-bottom: 20px;
         margin-left: -5px;
         margin-right: -5px;
+    }
+    .fleet-view a {
+        cursor: pointer;
     }
     .no-ships {
         text-align: center;

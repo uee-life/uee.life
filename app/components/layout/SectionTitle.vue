@@ -56,7 +56,7 @@ export default {
     }
 
     .section-title.small {
-      top: -8px;
+      top: -10px;
     }
     .section-title.small>.text {
       font-size: 10px;
@@ -64,7 +64,7 @@ export default {
     }
 
     .section-title.medium {
-        top: -13px;
+        top: -15px;
     }
     .section-title.medium>.text {
         font-size: 14px;
@@ -72,7 +72,7 @@ export default {
     }
 
     .section-title.large {
-        top: -20px;
+        top: -22px;
     }
     .section-title.large>.text {
         font-size: 18px;
