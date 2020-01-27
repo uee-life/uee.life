@@ -147,7 +147,7 @@ function getMarkdown($, chunk) {
     chunk.find('a').each(function (i, el) {
         $(el).replaceWith('[' + $(el).text() + '](' + $(el).attr('href') + ')')
     })
-    return chunk.html()
+    return chunk.text() + '\n\n'
 }
 
 async function test() {
@@ -162,11 +162,11 @@ async function test() {
     let markdown = ""
 
     $('h2').each(function (i, el) {
-        $(el).replaceWith('h2. ' + $(el).text())
+        $(el).replaceWith('h2. ' + $(el).text() + '\n\n')
     })
 
     $('p').each(function (i, el) {
-        getMarkdown($, $(el)) + '\n\n'
+        markdown = markdown + getMarkdown($, $(el)) + '\n\n'
     })
 
     return $.text()
