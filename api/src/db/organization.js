@@ -137,7 +137,7 @@ tagmap = {
 }
 
 function getMarkdown(chunk) {
-    return chunk.text()
+    return chunk.html()
 }
 
 async function test() {
