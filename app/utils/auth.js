@@ -80,7 +80,6 @@ export const getUserFromCookie = (req) => {
 
 export const getUserFromLocalStorage = () => {
   console.log('getting from storage')
-  console.log(process.browser)
   let json = undefined
   let token = undefined
   let expires = undefined
@@ -93,6 +92,8 @@ export const getUserFromLocalStorage = () => {
   user['token'] = token
   user['token_expiry'] = expires
   user['user'] = json ? JSON.parse(json) : undefined
+  console.log('user')
+  console.log(user)
   return user
 }
 

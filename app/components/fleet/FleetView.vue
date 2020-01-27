@@ -1,8 +1,8 @@
 <template>
     <div id="fleet-view" class="fleet-view">
         <div v-if="ships.length > 0" class="ships">
-            <ship-summary v-for="(s, index) in ships" :key="s.id" :ship="s" :index="index">
-            </ship-summary>
+            <ship-summary v-if="!isMobile" v-for="(s, index) in ships" :key="s.id" :ship="s" :index="index" />
+            <ship-summary-small v-if="isMobile" v-for="(s, index) in ships" :key="s.id" :ship="s" :index="index" />
         </div>
         <div class="no-ships" v-else>
             No ships currently listed
@@ -12,12 +12,14 @@
 
 <script>
 import { gsap } from 'gsap'
-import ShipSummary from '@/components/fleet/ShipSummary.vue'
+import ShipSummary from '@/components/fleet/ShipSummary'
+import ShipSummarySmall from '@/components/fleet/ShipSummarySmall'
 
 export default {
     name: "fleet-view",
     components: {
-        ShipSummary
+        ShipSummary,
+        ShipSummarySmall
     },
     props: {
         ships: {
@@ -41,6 +43,8 @@ export default {
     .fleet-view {
         position: relative;
         margin-bottom: 20px;
+        margin-left: -5px;
+        margin-right: -5px;
     }
     .no-ships {
         text-align: center;

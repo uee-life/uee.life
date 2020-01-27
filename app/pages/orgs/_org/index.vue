@@ -75,26 +75,40 @@ export default {
             fleet: [
                     {
                     id: 1,
-                    manufacturer: "Anvil",
-                    make: "Hornet",
-                    model: "F7a",
-                    name: "Bulldog",
+                    make: "Anvil",
+                    make_abbr: "ANVL",
+                    model: "Hornet F7c",
+                    short_name: 'ANVL_Hornet_F7c',
                     size: "Light",
-                    crew: 8
+                    type: "Combat",
+                    focus: "Medium Fighter",
+                    max_crew: 1,
+                    cargo: 0,
+                    owner: "Capn_Flint"
                 },
                 {
                     id: 2,
-                    manufacturer: "Aegis",
-                    make: "Avenger",
-                    model: "Titan",
-                    name: "Penguin",
+                    make: "Aegis",
+                    make_abbr: "AEGS",
+                    model: "Avenger Titan",
+                    short_name: "AEGS_Avenger_Titan",
+                    type: "Transport",
+                    focus: "Light Freight",
+                    max_crew: 1,
+                    cargo: 8,
+                    owner: "Capn_Flint"
                 },
                 {
                     id: 3,
-                    manufacturer: "RSI",
-                    make: "Constellation",
-                    model: "Phoenix",
-                    name: "Shark",
+                    make: "RSI",
+                    make_abbr: 'RSI',
+                    model: "Constellation Phoenix",
+                    short_name: "RSI_Constellation_Phoenix",
+                    type: "Exploration",
+                    focus: "Touring",
+                    max_crew: 4,
+                    cargo: 96,
+                    owner: "Capn_Flint"
                 }
                 ]
         }

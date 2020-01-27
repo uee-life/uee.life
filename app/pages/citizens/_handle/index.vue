@@ -23,7 +23,7 @@
             </template>
 
             <template slot="tab-title-ships">
-                SHIPS
+                SHIPS ({{ citizen.ships.length }})
             </template>
             <template slot="tab-content-ships">
                 <fleet-view :ships="citizen.ships"/>
@@ -50,6 +50,8 @@ import CitizenBio from '@/components/citizen/CitizenBio'
 import CitizenOrg from '@/components/citizen/CitizenOrg'
 import CitizenTools from '@/components/citizen/CitizenTools'
 
+import FleetView from '@/components/fleet/FleetView'
+
 export default {
     layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
     data() {
@@ -71,7 +73,8 @@ export default {
         CitizenInfo,
         CitizenBio,
         CitizenOrg,
-        CitizenTools
+        CitizenTools,
+        FleetView
     },
     computed: {
         ...mapGetters([
@@ -113,7 +116,6 @@ export default {
                 console.log(res.data.info)
                 this.citizen.info = res.data.info
                 this.citizen.home = res.data.home
-                this.citizen.ships = res.data.ships
                 this.citizen.links = []
                 if(res.data.info.website){
                     this.citizen.links.push({text: "Website", url: res.data.info.website})
@@ -128,6 +130,16 @@ export default {
             })
 
             this.loading = false
+        },
+        async getShips() {
+            axios({
+                url: `https://api.uee.life/citizen/${this.$route.params.handle}/ships`,
+                method: 'GET'
+            }).then((res) => {
+                this.citizen.ships = res.data
+            }).catch((err) => {
+                console.error(err)
+            })
         },
         async getOrg() {
             try {
@@ -146,11 +158,13 @@ export default {
     },
     mounted() {
         this.getCitizen()
+        this.getShips()
     },
     watch: {
         $route() {
             if(this.$route.params.handle) {
                 this.getCitizen()
+                this.getShips()
             }
         },
         saving() {

@@ -59,14 +59,14 @@ export const actions = {
     console.log(auth0user)
     let handle = ''
     let handle_verified = ''
-    if(auth0user.app_metadata) {
-      handle = auth0user.app_metadata.handle
-      handle_verified = auth0user.app_metadata.handle_verified
-    } else {
-      handle = auth0user['https://uee.life/app_metadata'].handle
-      handle_verified = auth0user['https://uee.life/app_metadata'].handle_verified
-    }
     if(auth0user){
+      if(auth0user.app_metadata) {
+        handle = auth0user.app_metadata.handle
+        handle_verified = auth0user.app_metadata.handle_verified
+      } else {
+        handle = auth0user['https://uee.life/app_metadata'].handle
+        handle_verified = auth0user['https://uee.life/app_metadata'].handle_verified
+      }
       const user = {
         username: auth0user.nickname,
         email: auth0user.email,

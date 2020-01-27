@@ -9,7 +9,6 @@
       <portal to="rightDock">
         <site-stats :stats="stats" />
         <latest-citizen :citizen="citizen" />
-        <discord />
         <made-by />
       </portal>
       <site-news v-if="!isMobile" style="margin-bottom: 30px"/>

@@ -6,7 +6,6 @@
         <div class="ship-info">
             <h5>{{ ship.model }}</h5>
             <div>{{ ship.type }} - {{ ship.focus }}</div>
-            <div>ID: {{ ship.id }}</div>
             <div v-if="ship.owner">Owner: <nuxt-link :to="citizenLink">{{ship.owner}}</nuxt-link></div>
         </div>
         <span class="corner top left"></span>
@@ -36,16 +35,16 @@ export default {
 
 <style scoped>
     img {
-        max-width: 170px;
+        max-width: 75px;
         flex-basis: 90%;
         flex-grow: 1;
     }
 
     .ship-summary {
         display: flex;
-        flex-basis: 400px;
         flex-grow: 1;
         margin: 5px;
+        margin-bottom: 10px;
         padding: 9px;
         position: relative;
         background: url('/images/fading-bars.png') repeat;
@@ -55,16 +54,20 @@ export default {
     .ship-info {
         margin-left: 10px;
         z-index: 2;
+        font-size: calc(12px + (14 - 12) * ((100vw - 300px) / (1600 - 300)));
+        line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));
     }
 
     .ship-info>h5 {
-        font-size: 14px;
+        font-size: calc(13px + (16 - 13) * ((100vw - 300px) / (1600 - 300)));
+        line-height: calc(1.5em + (1.5 - 1.4) * ((100vw - 300px)/(1600 - 300)));
     }
 
     .manufacturer {
         position: absolute;
         right: 0;
-        width: 100px;
+        align-self: center;
+        width: 70px;
         opacity: 0.8;
     }
 </style>
