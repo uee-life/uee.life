@@ -151,7 +151,7 @@ async function test() {
 
     let markdown = ""
 
-    $('li.member-item').each(function (i, el) {
+    $('p').each(function (i, el) {
         markdown = markdown + getMarkdown(el)
     })
 
