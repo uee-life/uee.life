@@ -54,6 +54,12 @@ code {
   background: rgba(13, 46, 66, 0.5);
 }
 
+input {
+  border: 1px solid #546f84;
+  background: rgba(13, 46, 66, 0.5);
+  color: #dbf3ff;
+}
+
 /*h1 {
   font-size: 40px;
   font-weight: 200;

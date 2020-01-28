@@ -53,6 +53,7 @@ export default {
         padding-left: 10px;
         padding-right: 10px;
         text-shadow: 0px 0px 15px rgba(57, 206, 216, 0.5);
+        color: #dbf3ff;
     }
 
     .section-title.small {
@@ -68,7 +69,7 @@ export default {
     }
     .section-title.medium>.text {
         font-size: 14px;
-        margin-left: 40px;
+        margin-left: 30px;
     }
 
     .section-title.large {

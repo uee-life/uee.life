@@ -1,6 +1,6 @@
 <template>
     <div id="fleet-view" class="fleet-view">
-        <div class="display-style"><template v-if="!isMobile">Display: <a @click="show('large')">Large</a> | <a @click="show('small')">Small</a> | <a @click="show('table')">Table</a> | </template><input type="text" v-model="search" placeholder="Filter list..." /></div>
+        <div class="display-style"><template v-if="!isMobile">Display: <a @click="show('large')">Large</a> | <a @click="show('small')">Small</a> | <a @click="show('table')">Table</a> | </template><input class="filter-box" type="text" v-model="search" placeholder="Filter list..." /></div>
         <div v-if="filteredShips.length > 0" class="ships">
             <template v-if="isMobile || display == 'small'">
                 <ship-summary-small v-for="(s, index) in filteredShips" :key="s.id" :ship="s" :index="index" />
