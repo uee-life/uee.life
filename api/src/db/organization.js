@@ -137,7 +137,7 @@ tagmap = {
 }
 
 async function convertToMarkdown(html) {
- 
+    console.log(html)
     const $ = cheerio.load(html)
 
     $('blockquote').each(function (i, el) {
