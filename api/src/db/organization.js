@@ -192,7 +192,7 @@ async function convertToMarkdown(html) {
     })
 
     $('p').each(function (i, el) {
-        $(el).replaceWith($(el).html() + '\n\n')
+        $(el).replaceWith($(el).html() + '\n')
     })
 
     return $.text().replace('\t', '')
