@@ -141,7 +141,7 @@ async function convertToMarkdown(html) {
     const $ = cheerio.load(html)
 
     $('blockquote').each(function (i, el) {
-        $(el).replaceWith($(el).html(.replace(/\n/g, '')))
+        $(el).replaceWith($(el).html().replace(/\n/g, ''))
         $(el).find('br').each(function(i, el) {
             $(el).replaceWith('\n> ')
         })
