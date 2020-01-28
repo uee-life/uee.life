@@ -139,16 +139,6 @@ tagmap = {
 async function convertToMarkdown(html) {
     const $ = cheerio.load(html)
 
-    $('blockquote').each(function (i, el) {
-        console.log($(el).html())
-        $(el).replaceWith('> ' + $(el).html())
-        console.log($(el).html())
-        $(el).find('br').each(function(i, el) {
-            $(el).replaceWith('\n> ')
-        })
-        //$(el).replaceWith('> ' + $(el).html())
-    })
-
     $('h2').each(function (i, el) {
         $(el).replaceWith('## ' + $(el).text() + '\n\n')
     })
@@ -193,11 +183,19 @@ async function convertToMarkdown(html) {
         $(el).replaceWith($(el).text() + '\n')
     })
 
+    $('blockquote').each(function (i, el) {
+
+        $(el).find('br').each(function(i, el) {
+            $(el).replaceWith('\n> ')
+        })
+        $(el).replaceWith('> ' + $(el).html())
+    })
+
     /*$('p').each(function (i, el) {
         $(el).replaceWith($(el).html())
     })*/
 
-    return $.text().replace(/\t/g, '')
+    return $.text().replace(/\t/g, '').replace(/\>\s+/, '> ')
 }
 
 async function test() {
