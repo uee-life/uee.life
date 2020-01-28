@@ -183,7 +183,7 @@ async function convertToMarkdown(html) {
 
     $('blockquote').each(function (i, el) {
         $(el).find('br').each(function(i, el2) {
-            $(el2).replaceWith('>> ')
+            $(el2).replaceWith('> ')
         })
         $(el).replaceWith('> ' + $(el).html().replace(/\n/g, ''))
     })
