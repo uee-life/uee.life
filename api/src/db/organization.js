@@ -138,10 +138,12 @@ tagmap = {
 async function convertToMarkdown(html) {
     const $ = cheerio.load(html)
 
+    $('h1').each(function (i, el) {
+        $(el).replaceWith('# ' + $(el).text() + '\n\n')
+    })
     $('h2').each(function (i, el) {
         $(el).replaceWith('## ' + $(el).text() + '\n\n')
     })
-
     $('h3').each(function (i, el) {
         $(el).replaceWith('### ' + $(el).text() + '\n\n')
     })
