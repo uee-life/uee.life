@@ -117,7 +117,7 @@ async function fetchOrg(org) {
         info.roles.primary = $('ul.focus', '#organization').find('li.primary').find('img').attr('alt')
         info.roles.secondary = $('ul.focus', '#organization').find('li.secondary').find('img').attr('alt')
         info.intro = $('div.join-us', '#organization').find('div.markitup-text').html()
-        info.history = convertToMarkdown($('h2:contains("History")', '#organization').next().html())
+        info.history = await convertToMarkdown($('h2:contains("History")', '#organization').next().html())
         info.manifesto = $('h2:contains("Manifesto")', '#organization').next().html()
         info.charter = $('h2:contains("Charter")', '#organization').next().html()
         info.founders = await fetchOrgFounders(org)
