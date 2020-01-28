@@ -137,11 +137,12 @@ tagmap = {
 }
 
 async function convertToMarkdown(html) {
-    console.log(html)
     const $ = cheerio.load(html)
 
     $('blockquote').each(function (i, el) {
+        console.log($(el).html())
         $(el).replaceWith('> ' + $(el).html().replace(/\n/g, ''))
+        console.log($(el).html())
         $(el).find('br').each(function(i, el) {
             $(el).replaceWith('\n> ')
         })
