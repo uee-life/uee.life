@@ -1,3 +1,5 @@
+const cheerio = require('cheerio')
+
 function convertToMarkdown(html) {
     const $ = cheerio.load(html)
 
