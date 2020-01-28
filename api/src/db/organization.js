@@ -186,7 +186,7 @@ async function convertToMarkdown(html) {
         $(el).find('br').each(function(i, el2) {
             $(el2).replaceWith('foobar')
         })
-        $(el).replaceWith('> ' + $(el).html())
+        $(el).replaceWith('> ' + $(el).html().replace(/^\s+/, ''))
     })
 
     /*$('p').each(function (i, el) {
