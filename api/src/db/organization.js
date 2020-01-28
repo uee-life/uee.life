@@ -176,7 +176,7 @@ async function convertToMarkdown(html) {
         $(el).replaceWith('[' + $(el).text() + '](' + $(el).attr('href') + ')')
     })
     $('br').each(function (i, el) {
-        $(el).replaceWith('\n')
+        $(el).remove()
     })
     $('ul').each(function(i, el) {
         $(el).find('li').each(function(i, el) {
