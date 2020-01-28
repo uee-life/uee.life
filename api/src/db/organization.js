@@ -170,7 +170,7 @@ async function test() {
         $(el).find('br').each(function(i, el) {
             $(el).replaceWith('\n> ')
         })
-        $(el).replaceWith('> ' + $(el).html() + '\n')
+        $(el).replaceWith('> ' + $(el).html())
     })
 
     $('h2').each(function (i, el) {
