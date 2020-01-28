@@ -53,6 +53,8 @@ export default {
 
     .ship-info {
         margin-left: 10px;
+        padding-right: 55px;
+        flex-grow: 1;
         z-index: 2;
         font-size: calc(12px + (14 - 12) * ((100vw - 300px) / (1600 - 300)));
         line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));

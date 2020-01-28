@@ -55,6 +55,7 @@ export default {
     .ship-info {
         margin-left: 10px;
         z-index: 2;
+        flex-grow: 1;
     }
 
     .ship-info>h5 {
