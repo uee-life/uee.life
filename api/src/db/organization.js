@@ -167,9 +167,7 @@ async function convertToMarkdown(html) {
     $('a').each(function (i, el) {
         $(el).replaceWith('[' + $(el).text() + '](' + $(el).attr('href') + ')')
     })
-    $('br').each(function (i, el) {
-        $(el).remove()
-    })
+
     $('ul').each(function(i, el) {
         $(el).find('li').each(function(i, el) {
             $(el).replaceWith('* ' + $(el).text())
