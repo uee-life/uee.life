@@ -186,6 +186,9 @@ async function test() {
     $('del').each(function (i, el) {
         $(el).replaceWith('-' + $(el).text() + '-')
     })
+    $('code').each(function (i, el) {
+        $(el).replaceWith('`' + $(el).text() + '`')
+    })
     $('a').each(function (i, el) {
         $(el).replaceWith('[' + $(el).text() + '](' + $(el).attr('href') + ')')
     })
@@ -203,6 +206,9 @@ async function test() {
             $(el).replaceWith('# ' + $(el).text() + '\n')
         })
         $(el).replaceWith($(el).text() + '\n')
+    })
+    $('blockquote').each(function (i, el) {
+        $(el).replaceWith('> ' + $(el).text() + '\n')
     })
 
     $('p').each(function (i, el) {
