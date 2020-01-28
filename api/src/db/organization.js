@@ -136,24 +136,7 @@ tagmap = {
 
 }
 
-function getMarkdown($, chunk) {
-    let res = ""
-    chunk.find('strong').each(function (i, el) {
-        $(el).replaceWith('*' + $(el).text() + '*')
-    })
-    chunk.find('del').each(function (i, el) {
-        $(el).replaceWith('-' + $(el).text() + '-')
-    })
-    chunk.find('a').each(function (i, el) {
-        $(el).replaceWith('[' + $(el).text() + '](' + $(el).attr('href') + ')')
-    })
-    chunk.find('br').each(function (i, el) {
-        $(el).replaceWith('\n')
-    })
-    return chunk.text() + '\n\n'
-}
-
-async function test() {
+async function convertToMarkdown() {
     const html = '<p>Page Under Construction. Please check back soon!<br />test</p>' +
 				'<h2>H2</h2><h3>H3</h3><h4>H4</h4><h5>H5</h5><h6>H6</h6><p>Paragraph</p>' +
                 '<p>A paragraph with <strong>bold</strong> and <del>strike</del> plus a ' +
@@ -163,8 +146,6 @@ async function test() {
                 '<p>a multiline<br />quote with <strong>strength</strong></p></blockquote><p><code>code</code></p>'
  
     const $ = cheerio.load(html)
-
-    let markdown = ""
 
     $('blockquote').each(function (i, el) {
         $(el).find('br').each(function(i, el) {
@@ -218,10 +199,14 @@ async function test() {
     })
 
     $('p').each(function (i, el) {
-        $(el).replaceWith($(el).text() + '\n\n')
+        $(el).replaceWith($(el).html() + '\n\n')
     })
 
     return $.text()
+}
+
+async function test() {
+    return convertToMarkdown()
 }
 
 async function fetchOrgFounders(org) {
