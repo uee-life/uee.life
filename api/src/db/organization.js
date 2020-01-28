@@ -195,7 +195,7 @@ async function convertToMarkdown(html) {
         $(el).replaceWith($(el).html() + '\n')
     })
 
-    return $.text().replace('\t', '')
+    return $.text().replace(/\t/g, '')
 }
 
 async function test() {
