@@ -182,7 +182,7 @@ async function convertToMarkdown(html) {
         $(el).find('li').each(function(i, el) {
             $(el).replaceWith('* ' + $(el).text() + '\n')
         })
-        $(el).replaceWith($(el).text() + '\n')
+        $(el).replaceWith($(el).text().trim() + '\n')
     })
     $('ol').each(function(i, el) {
         $(el).find('li').each(function(i, el) {
@@ -195,7 +195,7 @@ async function convertToMarkdown(html) {
         $(el).replaceWith($(el).html() + '\n\n')
     })
 
-    return $.text()
+    return $.text().replace('\t', '')
 }
 
 async function test() {
