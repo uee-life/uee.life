@@ -156,7 +156,7 @@ async function convertToMarkdown(html) {
         $(el).replaceWith('###### ' + $(el).text() + '\n\n')
     })
     $('strong').each(function (i, el) {
-        $(el).replaceWith('*' + $(el).text() + '*')
+        $(el).replaceWith('**' + $(el).text() + '**')
     })
     $('del').each(function (i, el) {
         $(el).replaceWith('~~' + $(el).text() + '~~')
