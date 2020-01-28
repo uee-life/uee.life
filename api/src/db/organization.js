@@ -166,6 +166,13 @@ async function test() {
 
     let markdown = ""
 
+    $('blockquote').each(function (i, el) {
+        $(el).find('br').each(function(i, el) {
+            $(el).replaceWith('\n> ')
+        })
+        $(el).replaceWith('> ' + $(el).html() + '\n')
+    })
+
     $('h2').each(function (i, el) {
         $(el).replaceWith('h2. ' + $(el).text() + '\n\n')
     })
@@ -208,9 +215,6 @@ async function test() {
             $(el).replaceWith('# ' + $(el).text() + '\n')
         })
         $(el).replaceWith($(el).text() + '\n')
-    })
-    $('blockquote').each(function (i, el) {
-        $(el).replaceWith('> ' + $(el).text() + '\n')
     })
 
     $('p').each(function (i, el) {
