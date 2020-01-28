@@ -144,7 +144,7 @@ async function convertToMarkdown(html) {
         $(el).find('br').each(function(i, el) {
             $(el).replaceWith('\n> ')
         })
-        $(el).replaceWith('> ' + $(el).html())
+        $(el).replaceWith('> ' + $(el).html().replace(/\n/g, ''))
     })
 
     $('h2').each(function (i, el) {
