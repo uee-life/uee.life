@@ -180,13 +180,13 @@ async function convertToMarkdown(html) {
     })
     $('ul').each(function(i, el) {
         $(el).find('li').each(function(i, el) {
-            $(el).replaceWith('* ' + $(el).text() + '\n')
+            $(el).replaceWith('* ' + $(el).text())
         })
         $(el).replaceWith($(el).text().trim() + '\n')
     })
     $('ol').each(function(i, el) {
         $(el).find('li').each(function(i, el) {
-            $(el).replaceWith('1. ' + $(el).text() + '\n')
+            $(el).replaceWith('1. ' + $(el).text())
         })
         $(el).replaceWith($(el).text() + '\n')
     })
