@@ -6,20 +6,20 @@
         </template>
         <template slot="tab-content-overview">
           <main-panel>
-                <div v-html="org.intro"></div>
+                <div  class="org-intro" v-if="org.intro" v-html="$md.render(org.intro)"></div>
           </main-panel>
             <div class="info">
               <main-panel title="roles" mainClass="info-panel">
                 <ul class="info-items">
-                  <li v-if="org.roles" class="line-item"><span>Primary Role</span>-<span>{{ org.roles.primary }}</span></li>
-                  <li v-if="org.roles" class="line-item"><span>Secondary Role</span>-<span>{{ org.roles.secondary }}</span></li>
+                  <li v-if="org.roles" class="line-item"><span>Primary Role</span><span>{{ org.roles.primary }}</span></li>
+                  <li v-if="org.roles" class="line-item"><span>Secondary Role</span><span>{{ org.roles.secondary }}</span></li>
                 </ul>
               </main-panel>
               <main-panel title="headquarters" mainClass="info-panel">
                 <ul class="info-items">
-                  <li class="line-item"><div>System</div>-<div>Unknown</div></li>
-                  <li class="line-item"><div>Planet</div>-<div>Unknown</div></li>
-                  <li class="line-item"><div>City:</div>-<div>Unknown</div></li>
+                  <li class="line-item"><div>System</div><div>Unknown</div></li>
+                  <li class="line-item"><div>Planet</div><div>Unknown</div></li>
+                  <li class="line-item"><div>City:</div><div>Unknown</div></li>
                 </ul>
               </main-panel>
               <main-panel title="founders" mainClass="info-panel">
@@ -39,7 +39,7 @@
         </template>
         <template slot="tab-content-history">
             <main-panel title="History">
-                <div v-html="org.history"></div>
+                <div v-if="org.history" v-html="$md.render(org.history)"></div>
             </main-panel>
         </template>
 
@@ -48,7 +48,7 @@
         </template>
         <template slot="tab-content-manifesto">
             <main-panel title="Manifesto">
-                <div v-html="org.manifesto"></div>
+                <div v-if="org.manifesto" v-html="$md.render(org.manifesto)"></div>
             </main-panel>
         </template>
 
@@ -57,7 +57,7 @@
         </template>
         <template slot="tab-content-charter">
             <main-panel title="Charter">
-                <div v-html="org.charter"></div>
+                <div v-if="org.charter" v-html="$md.render(org.charter)"></div>
             </main-panel>
         </template>
     </tabs>
@@ -101,14 +101,15 @@ export default {
     }
 
     .org-info .info .info-panel {
-      min-width: 300px;
+      flex-basis: 250px;
       margin-left: 10px;
       margin-right: 10px;
       flex-grow: 1;
     }
 
-    .org-info .info-items {
-      padding-inline-start: 0;
+    ul.info-items {
+      padding-left: 0;
+      margin: 0 20px 0 20px;
     }
 
     .org-info .info .line-item {
@@ -116,5 +117,9 @@ export default {
         justify-content: space-between;
         flex-wrap: wrap;
         padding-left: 0px;
+    }
+
+    .org-intro {
+      text-align: center;
     }
 </style>

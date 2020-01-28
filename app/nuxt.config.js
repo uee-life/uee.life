@@ -56,6 +56,7 @@ module.exports = {
   ** Modules
   */
   modules: [
+    '@nuxtjs/markdownit',
     'portal-vue/nuxt',
     'cookie-universal-nuxt',
     [
@@ -66,6 +67,11 @@ module.exports = {
       }
     ]
   ],
+
+  markdownit: {
+    injected: true,
+    breaks: true,
+  },
 
   /*
   **
