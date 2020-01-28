@@ -182,11 +182,10 @@ async function convertToMarkdown(html) {
     })
 
     $('blockquote').each(function (i, el) {
-        $(el).replaceWith($(el).html())
         $(el).find('br').each(function(i, el2) {
             $(el2).replaceWith('>> ')
         })
-        $(el).replaceWith('> ' + $(el).html())
+        $(el).replaceWith('> ' + $(el).html().replace(/\n/g, ''))
     })
 
     /*$('p').each(function (i, el) {
