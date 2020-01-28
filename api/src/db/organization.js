@@ -117,7 +117,7 @@ async function fetchOrg(org) {
         info.roles.primary = $('ul.focus', '#organization').find('li.primary').find('img').attr('alt')
         info.roles.secondary = $('ul.focus', '#organization').find('li.secondary').find('img').attr('alt')
         info.intro = $('div.join-us', '#organization').find('div.markitup-text').html()
-        info.history = $('h2:contains("History")', '#organization').next().html()
+        info.history = convertToMarkdown($('h2:contains("History")', '#organization').next().html())
         info.manifesto = $('h2:contains("Manifesto")', '#organization').next().html()
         info.charter = $('h2:contains("Charter")', '#organization').next().html()
         info.founders = await fetchOrgFounders(org)
@@ -136,14 +136,7 @@ tagmap = {
 
 }
 
-async function convertToMarkdown() {
-    const html = '<p>Page Under Construction. Please check back soon!<br />test</p>' +
-				'<h2>H2</h2><h3>H3</h3><h4>H4</h4><h5>H5</h5><h6>H6</h6><p>Paragraph</p>' +
-                '<p>A paragraph with <strong>bold</strong> and <del>strike</del> plus a ' +
-                '<a href="http://uee.life" rel="nofollow" title="link title">link</a></p>' +
-                '<ul><li>bullet</li><li>bullet 2</li></ul><ol><li>number</li></ol>' +
-                '<blockquote>' +
-                '<p>a multiline<br />quote with <strong>strength</strong></p></blockquote><p><code>code</code></p>'
+async function convertToMarkdown(html) {
  
     const $ = cheerio.load(html)
 
@@ -155,26 +148,26 @@ async function convertToMarkdown() {
     })
 
     $('h2').each(function (i, el) {
-        $(el).replaceWith('h2. ' + $(el).text() + '\n\n')
+        $(el).replaceWith('## ' + $(el).text() + '\n\n')
     })
 
     $('h3').each(function (i, el) {
-        $(el).replaceWith('h3. ' + $(el).text() + '\n\n')
+        $(el).replaceWith('### ' + $(el).text() + '\n\n')
     })
     $('h4').each(function (i, el) {
-        $(el).replaceWith('h4. ' + $(el).text() + '\n\n')
+        $(el).replaceWith('#### ' + $(el).text() + '\n\n')
     })
     $('h5').each(function (i, el) {
-        $(el).replaceWith('h5. ' + $(el).text() + '\n\n')
+        $(el).replaceWith('##### ' + $(el).text() + '\n\n')
     })
     $('h6').each(function (i, el) {
-        $(el).replaceWith('h6. ' + $(el).text() + '\n\n')
+        $(el).replaceWith('###### ' + $(el).text() + '\n\n')
     })
     $('strong').each(function (i, el) {
         $(el).replaceWith('*' + $(el).text() + '*')
     })
     $('del').each(function (i, el) {
-        $(el).replaceWith('-' + $(el).text() + '-')
+        $(el).replaceWith('~~' + $(el).text() + '~~')
     })
     $('code').each(function (i, el) {
         $(el).replaceWith('`' + $(el).text() + '`')
@@ -193,7 +186,7 @@ async function convertToMarkdown() {
     })
     $('ol').each(function(i, el) {
         $(el).find('li').each(function(i, el) {
-            $(el).replaceWith('# ' + $(el).text() + '\n')
+            $(el).replaceWith('1. ' + $(el).text() + '\n')
         })
         $(el).replaceWith($(el).text() + '\n')
     })
