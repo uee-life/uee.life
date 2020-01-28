@@ -185,8 +185,8 @@ async function convertToMarkdown(html) {
 
     $('blockquote').each(function (i, el) {
 
-        $(el).find('br').each(function(i, el) {
-            $(el).replaceWith('foobar')
+        $(el).find('br').each(function(i, el2) {
+            $(el2).replaceWith('foobar')
         })
         $(el).replaceWith('> ' + $(el).html())
     })
