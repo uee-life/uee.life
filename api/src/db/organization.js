@@ -111,7 +111,6 @@ async function fetchOrg(org) {
         info.banner = baseURI + $('div.banner', '#organization').find('img').attr('src')
         info.logo = baseURI + $('div.logo', '#organization').find('img').attr('src')
         info.count = $('div.logo', '#organization').find('span').text().split(" ")[0]
-        info.bio = $('div.body').text()
         info.model = $('ul.tags', '#organization').find('li.model').text()
         info.roles = {}
         info.roles.primary = $('ul.focus', '#organization').find('li.primary').find('img').attr('alt')
