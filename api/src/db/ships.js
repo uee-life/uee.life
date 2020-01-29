@@ -135,5 +135,6 @@ async function getShips() {
 module.exports = {
     syncShips,
     getShips,
-    getCitizenShips
+    getCitizenShips,
+    saveShip
 };

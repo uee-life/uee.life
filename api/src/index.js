@@ -40,7 +40,8 @@ const {
 const { 
     syncShips,
     getShips,
-    getCitizenShips
+    getCitizenShips,
+    saveShip
 } = require('./db/ships')
 
 
@@ -204,6 +205,10 @@ app.post("/sync", checkJwt, async (req, res) => {
 
 app.post("/citizen/:handle/location", checkJwt, async (req, res) => {
     res.send(await setLocation(req.headers.authorization, req.params.handle, req.body))
+})
+
+app.post('/ships/add', checkJwt, async (req, res) => {
+    res.send(await saveShip(req.body))
 })
 
 // starting the server
