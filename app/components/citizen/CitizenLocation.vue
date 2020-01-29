@@ -1,9 +1,11 @@
 <template>
-    <div>
-        Home
-        <ul>
-            <li class="line-item">
-                <div>System:</div>
+    <div class="citizen-location">
+        <div class="labels">
+            <span>System:</span>
+            <span>Location:</span>
+            <span>Base:</span>
+        </div>
+        <div class="data">
                 <template v-if="editing">
                     <select v-model="system">
                         <option disabled value="">Select System</option>
@@ -11,11 +13,9 @@
                         <option v-for="loc in data.systems" :key="loc.id" :value="{id: loc.id, name: loc.name}">{{ loc.name }}</option>
                     </select>
                 </template>
-                <div v-else-if="home.system"><router-link :to="systemLink">{{home.system.name}}</router-link></div>
-                <div v-else>Unknown</div>
-            </li>
-            <li class="line-item">
-                <div>Location:</div>
+                <span v-else-if="home.system"><router-link :to="systemLink">{{home.system.name}}</router-link></span>
+                <span v-else>Unknown</span>
+            <span>
                 <template v-if="editing">
                     <select v-if="system && data.locations.length" v-model="location">
                         <option disabled value="">Select Location</option>
@@ -25,9 +25,8 @@
                 </template>
                 <div v-else-if="home.location"><router-link :to="locationLink">{{home.location.name}}</router-link></div>
                 <div v-else>Unknown</div>
-            </li>
-            <li class="line-item">
-                <div>Base:</div>
+            </span>
+            <span>
                 <template v-if="editing">
                     <select v-if="location && data.bases.length" v-model="base">
                         <option disabled value="">Select Home Base</option>
@@ -37,8 +36,8 @@
                 </template>
                 <div v-else-if="home.base"><router-link :to="baseLink">{{home.base.name}}</router-link></div>
                 <div v-else>Unknown</div>
-            </li>
-        </ul>
+            </span>
+        </div>
     </div>
 </template>
 
@@ -183,6 +182,24 @@ export default {
 </script>
 
 <style scoped>
+    .citizen-location {
+        display: flex;
+    }
+    .citizen-location .labels {
+        display: flex;
+        flex-direction: column;
+        font-family: 'Michroma';
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+    .citizen-location .data {
+        display: flex;
+        flex-direction: column;
+        font-size: 14px;
+        line-height: 19.5px;
+        margin-left: 10px;
+        color: #dbf3ff;
+    }
     .line-item {
         display: flex;
         justify-content: space-between;

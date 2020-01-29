@@ -100,7 +100,7 @@ export default {
         display: flex;
         flex-direction: column;
         font-size: 14px;
-        line-height: 20px;
+        line-height: 19.5px;
         min-width: 95px;
         margin-right: 85px;
         color: #dbf3ff;

@@ -57,6 +57,10 @@ export default {
     margin: 10px;
   }
 
+  .portrait .image {
+    width: 165px;
+  }
+
   .portrait .verified {
     position: absolute;
     bottom: 0;

@@ -1,5 +1,5 @@
 <template>
-    <div id="citizen-info" class="citizen-info">
+    <div id="citizen-info" :class="componentClass">
         <div class="portrait" id="portrait">
             <img class="portrait-img" :src="citizen.info.portrait" />
             <span class="verified"><img v-if="citizen.info.verified" src="~assets/verified.png" /></span>
@@ -9,12 +9,22 @@
             <span class="corner bottom right"></span>
         </div>
         <div class="info">
-            <div class="line-item"><div>UEE Record:</div><div>{{ citizen.info.record }}</div></div>
-            <div class="line-item"><div>Name:</div><div>{{citizen.info.name}}</div></div>
-            <div class="line-item"><div>Handle:</div><div>{{citizen.info.handle}}</div></div>
-            <div class="line-item"><div>Enlisted:</div><div>{{citizen.info.enlisted}}</div></div>
+            <div class="citizen-data">
+                <div class="labels">
+                    <span>UEE Record: </span>
+                    <span>Name: </span>
+                    <span>Handle: </span>
+                    <span>Enlisted: </span>
+                </div>
+                <div class="data">
+                    <span>{{ citizen.info.record }}</span>
+                    <span>{{ citizen.info.name }}</span>
+                    <span>{{ citizen.info.handle }}</span>
+                    <span>{{ citizen.info.enlisted }}</span>
+                </div>
+            </div>
             <br>
-            <citizen-location :home="citizen.home" :editing="editing"/>
+        <citizen-location :home="citizen.home" :editing="editing"/>
         </div>
   </div>
 </template>
@@ -34,11 +44,26 @@ export default {
         return {
         }
     },
+    computed: {
+        componentClass() {
+            if(this.isMobile) {
+                return "citizen-info mobile"
+            } else {
+                return "citizen-info"
+            }
+        }
+    },
     watch: {
         'citizen.info': {
             handler: function() {
+                let size = ""
+                if(this.isMobile) {
+                    size = "200px"
+                } else {
+                    size = "150px"
+                }
                 gsap.to(".portrait", {duration: 0.5, opacity: 1})
-                gsap.to(".portrait", {duration: 0.5, width: "150px", height: "150px"})
+                gsap.to(".portrait", {duration: 0.5, width: size, height: size})
                 gsap.to(".portrait img", {duration: 0.5, delay: 1, opacity: 1})
                 gsap.to(".portrait .verified", {duration: 0.5, delay: 1.5, opacity: 1})
                 gsap.to(".citizen-info .info", {duration: 0.5, delay: 1.5, opacity: 1})
@@ -55,6 +80,11 @@ export default {
         width: 100%;
         height: fit-content;
     }
+
+    .citizen-info.mobile {
+        justify-content: center;
+    }
+
     .portrait{
         box-sizing: border-box;
         width: 50px;
@@ -69,8 +99,8 @@ export default {
     }
 
     .portrait img {
-        width: 136px;
-        height: 136px;
+        width: 100%;
+        height: 100%;
         opacity: 0;
     }
 
@@ -89,14 +119,32 @@ export default {
     }
 
     .info {
+        display: flex;
+        flex-direction: column;
         flex-basis: 250px;
         flex-grow: 1;
         max-width: 350px;
         margin-left: 20px;
         opacity: 0;
     }
-    .line-item {
+
+    .citizen-data {
         display: flex;
-        justify-content: space-between;
+    }
+
+    .citizen-data .labels {
+        display: flex;
+        flex-direction: column;
+        font-family: 'Michroma';
+        font-size: 12px;
+        text-transform: uppercase;
+    }
+    .citizen-data .data {
+        display: flex;
+        flex-direction: column;
+        font-size: 14px;
+        line-height: 19.5px;
+        margin-left: 10px;
+        color: #dbf3ff;
     }
 </style>
