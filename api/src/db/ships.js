@@ -120,7 +120,7 @@ async function getShips() {
     sql = 'select * from ship_view order by make, model'
     const ships = await executeSQL(sql)
     const makes = await executeSQL('select * from ship_make')
-    const types = await executeSQL('select * from ship_types')
+    const types = await executeSQL('select * from ship_type')
     const focus = await executeSQL('select * from ship_focus')
     return {
         ships: ships,
