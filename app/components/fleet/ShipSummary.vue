@@ -92,7 +92,7 @@ export default {
         text-transform: uppercase;
         font-family: 'Michroma';
         font-size: 12px;
-        width: 120px;
+        width: 125px;
     }
 
     .ship-info div div.data {
@@ -103,6 +103,7 @@ export default {
         line-height: 20px;
         min-width: 95px;
         margin-right: 85px;
+        color: #dbf3ff;
     }
 
     .ship-info>h5 {
