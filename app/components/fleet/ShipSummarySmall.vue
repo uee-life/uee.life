@@ -1,5 +1,5 @@
 <template>
-    <div id="ship-summary" class="ship-summary">
+    <div class="ship-summary" @click="selected" :title="ship.model">
         <section-title v-if="ship.name" :text="ship.name"/>
         <img :src="shipImage" />
         <img class="manufacturer" :src="manufacturerImage" />
@@ -29,6 +29,11 @@ export default {
         citizenLink: function () {
             return `/citizens/${this.ship.owner}`
         }
+    },
+    methods: {
+        selected() {
+            this.$emit('selected', this.ship)
+        }
     }
 }
 </script>
@@ -49,6 +54,7 @@ export default {
         position: relative;
         background: url('/images/fading-bars.png') repeat;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        cursor: pointer;
     }
 
     .ship-info {
@@ -58,11 +64,6 @@ export default {
         z-index: 2;
         font-size: calc(12px + (14 - 12) * ((100vw - 300px) / (1600 - 300)));
         line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));
-    }
-
-    .ship-info>h5 {
-        font-size: calc(13px + (16 - 13) * ((100vw - 300px) / (1600 - 300)));
-        line-height: calc(1.5em + (1.5 - 1.4) * ((100vw - 300px)/(1600 - 300)));
     }
 
     .manufacturer {

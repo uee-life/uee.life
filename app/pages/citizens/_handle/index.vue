@@ -5,13 +5,13 @@
     </portal>
     <portal to="rightDock">
         <citizen-tools v-if="isOwner" @syncSuccess="refresh" @edit="edit" @save="save" :editing="editing"/>
-        <citizen-org :citizen="citizen"/>
+        <citizen-org v-if="citizen.org" :citizen="citizen"/>
     </portal>
     <portal to="navigationPane">
       <div class="left-nav-button"><router-link to="/citizens">Search Citizens</router-link></div>
       <div class="left-nav-button"><a :href="dossierLink" target="_blank">Official Dossier</a></div>
     </portal>
-
+    <template v-if="citizen.info">
     <citizen-info :citizen="citizen" :editing="editing"/>
     <div>
         <tabs :tabs="tabs" :initialTab="initialTab">
@@ -37,6 +37,10 @@
             </template>
         </tabs>
     </div>
+    </template>
+    <template v-else>
+        <h3>Citizen Not Found...</h3>
+    </template>
   </div>
 </template>
 
@@ -62,7 +66,7 @@ export default {
                 info: {},
                 home: {},
                 ships: [],
-                org: {},
+                org: null,
                 links: []
             },
             editing: false,
@@ -113,17 +117,16 @@ export default {
                 method: 'GET',
                 headers: headers
             }).then(async (res) => {
-                console.log(res.data.info)
                 this.citizen.info = res.data.info
                 this.citizen.home = res.data.home
                 this.citizen.links = []
-                if(res.data.info.website){
+                if(res.data.info && res.data.info.website){
                     this.citizen.links.push({text: "Website", url: res.data.info.website})
                 }
-                if(res.data.info.org) {
+                if(res.data.info && res.data.info.org) {
                     await this.getOrg()
                 } else {
-                    this.citizen.org = {}
+                    this.citizen.org = null
                 }
             }).catch((err) => {
                 console.error(err)
@@ -162,7 +165,7 @@ export default {
     },
     watch: {
         $route() {
-            if(this.$route.params.handle) {
+            if(this.$route.params && this.$route.params.handle) {
                 this.getCitizen()
                 this.getShips()
             }

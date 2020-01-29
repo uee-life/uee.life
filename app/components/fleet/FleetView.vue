@@ -1,15 +1,22 @@
 <template>
     <div id="fleet-view" class="fleet-view">
-        <div class="display-style"><template v-if="!isMobile">Display: <a @click="show('large')">Large</a> | <a @click="show('small')">Small</a> | <a @click="show('table')">Table</a> | </template><input class="filter-box" type="text" v-model="search" placeholder="Filter list..." /></div>
+        <div class="view-controls">
+            <div class="display-style">
+                <template v-if="!isMobile">Display: <a @click="show('large')">Large</a> | <a @click="show('small')">Small</a> | <a @click="show('table')">Table</a></template>
+            </div>
+            <div class="filter">
+                <input class="filter-box" type="text" v-model="search" placeholder="Filter list..." />
+            </div>
+        </div>
         <div v-if="filteredShips.length > 0" class="ships">
             <template v-if="isMobile || display == 'small'">
-                <ship-summary-small v-for="(s, index) in filteredShips" :key="s.id" :ship="s" :index="index" />
+                <ship-summary-small @selected="selected" v-for="(s, index) in filteredShips" :key="s.id" :ship="s" :index="index" />
             </template>
             <template v-else-if="display == 'table'">
-                <ship-table :ships="filteredShips" />
+                <ship-table  @selected="selected" :ships="filteredShips" />
             </template>
             <template v-else>
-                <ship-summary v-for="(s, index) in filteredShips" :key="s.id" :ship="s" :index="index" />
+                <ship-summary @selected="selected" v-for="(s, index) in filteredShips" :key="s.id" :ship="s" :index="index" />
             </template>
         </div>
         <div v-else class="no-ships">
@@ -48,6 +55,9 @@ export default {
     methods: {
         show(display) {
             this.display = display
+        },
+        selected(ship) {
+            this.$emit('selected', ship)
         }
     },
     computed: {
@@ -66,8 +76,13 @@ export default {
 </script>
 
 <style scoped>
-    .display-style {
+    .view-controls {
+        margin: 5px;
         margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .display-style {
     }
     .fleet-view {
         position: relative;
