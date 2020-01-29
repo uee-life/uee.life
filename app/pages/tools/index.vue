@@ -1,12 +1,15 @@
 <template>
-  <div>
+  <div class="tools">
       <h1>Coming Soon!</h1>
+      <nuxt-link to="/ships">ships</nuxt-link>
   </div>
 </template>
 
 <script>
-export default {
+import { mapGetters } from 'vuex'
 
+export default {
+  name: 'tools'
 }
 </script>
 

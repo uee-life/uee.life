@@ -101,7 +101,7 @@ export default {
         flex-direction: column;
         font-size: 14px;
         line-height: 19.5px;
-        min-width: 95px;
+        min-width: 100px;
         margin-right: 85px;
         color: #dbf3ff;
     }
