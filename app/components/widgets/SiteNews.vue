@@ -1,7 +1,7 @@
 <template>
   <main-panel title="Site News" mainClass="site-news" id="site-news" :style="newsHeight">
             <div class="title">
-                <h3>UEE.life v0.2.1 Live</h3>
+                <h3>UEE.life v0.2.1  - Bug Patch</h3>
                 <div class="date"><i>Updated: 7 Feb 2950</i></div>
             </div>
             <div>v0.2.1 Bug fix patch:
