@@ -1,9 +1,15 @@
 <template>
   <main-panel title="Site News" mainClass="site-news" id="site-news" :style="newsHeight">
             <div class="title">
-                <h3>UEE.life v0.2 with Mobile Browser Support!</h3>
-                <div class="date"><i>Updated: 19 Jan 2950</i></div>
+                <h3>UEE.life v0.2.1 Live</h3>
+                <div class="date"><i>Updated: 7 Feb 2950</i></div>
             </div>
+            <div>v0.2.1 Bug fix patch:
+                <ul>
+                    <li>Session management fix preventing infinite refresh loops</li>
+                    <li>Layout and visual fixes</li>
+                    <li>Updated libraries</li>
+                </ul>
             <div>New features:
                 <ul>
                     <li>Comletely re-written site using NUXT.js</li>
