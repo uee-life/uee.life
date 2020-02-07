@@ -5,9 +5,14 @@
 </template>
 
 <script>
+import { gsap } from 'gsap'
+
 export default {
   name: "left-nav",
-  //props: ["links"],
+  //props: ["links"],,
+  mounted() {
+    gsap.to('.left-nav', {duration: 0.5, opacity: 1})
+  }
 }
 </script>
 

@@ -33,7 +33,7 @@ export default {
   max-width: 100vw;
   padding-bottom: 90px;
   font-family: Electrolize;
-  padding-top: 75px;
+  padding-top: 55px;
 }
 .main {
   display: flex;

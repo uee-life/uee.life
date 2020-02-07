@@ -2,6 +2,9 @@
   <div class="profile">
     <profile-verify v-if="!verified || debug" :user="user" :errors="errors.verification" @verify="verifyHandle"/>
     <profile-info v-if="user" :user="user"/>
+    <div v-else class="loading">
+              <img src="~/assets/loading.gif" >
+    </div>
     <div v-if="debug" class="debug">
       <pre>{{ JSON.stringify(user, null, 2) }}</pre>
     </div>
@@ -112,4 +115,10 @@ export default {
     display: flex;
     overflow: hidden;
   }
+
+.loading {
+  position: absolute;
+  width: 100%;
+  margin-top: 20px;
+}
 </style>

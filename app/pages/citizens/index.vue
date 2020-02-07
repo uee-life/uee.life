@@ -72,7 +72,6 @@ export default {
         width: 100%;
         padding: 10px;
         padding-top: 20px;
-        margin-top: 30px;
     }
 
     .no-results {

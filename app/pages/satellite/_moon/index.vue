@@ -6,9 +6,9 @@
             <div v-if="satellite" class="left-nav-button"><router-link :to="planetLink">Planet: {{satellite.planet}}</router-link></div>
             <div class="left-nav-button"><a target="_blank" :href="starmapLink">Open in Starmap</a></div>
             </dock-item>
-        </portal>
-        <location :location="satellite" type="Satellite">
+            <location :location="satellite" type="Satellite">
         </location>
+        </portal>
     </div>
 </template>
 
@@ -77,5 +77,6 @@ export default {
     .satellite {
         width: 100%;
         display: flex;
+        margin: 20px 10px 0;
     }
 </style>

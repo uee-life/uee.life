@@ -1,6 +1,9 @@
 <template>
     <div class="org-members">
-        <div v-if="members" class="results">
+        <div v-if="loading" class="loading">
+            <img src="~assets/loading.gif">
+        </div>
+        <div v-else-if="members" class="results">
             <div v-for="(member, index) in members" :key="member.handle + index" class='org-cell'>
                 <router-link :to="citizenLink(member.handle)" :class='checkRedaction(member, "")'>
                     <div class="left">
@@ -53,6 +56,7 @@ export default {
             currentPage: 1,
             members: [],
             memberCount: 1,
+            loading: true
         }
     },
     methods: {
@@ -96,6 +100,7 @@ export default {
                     this.members.sort((a, b) => {
                         return b.stars - a.stars;
                     })
+                    this.loading = false
                 }
             }).catch((err) => {
                 // eslint-disable-next-line
@@ -135,8 +140,6 @@ export default {
 </script>
 
 <style scoped>
-
-
 
     .org-cell {
         display: flex;

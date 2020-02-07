@@ -128,8 +128,13 @@ border-right: 1px solid #546f84;
 opacity: 0;
 }
 
+.default-leave {
+  margin-left: 500px;
+}
+
 .default-enter-active,
 .default-leave-active {
+  margin-left: 500px;
   transition-property: opacity;
   transition-timing-function: ease-in-out;
   transition-duration: 500ms;
@@ -137,4 +142,16 @@ opacity: 0;
 .default-enter,
 .default-leave-to {
   opacity: 0;
+  margin-left: 500px;
+}
+
+.loading {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 25px;
+}
+
+.loading>img {
+  width: 150px;
 }

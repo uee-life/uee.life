@@ -1,8 +1,8 @@
 <template>
     <div class="location">
         <main-panel mainClass="location-panel">
-            <div class="location-image">
-                <img v-if="location.thumbnail" :src="location.thumbnail"/>
+            <div v-if="location.thumbnail" class="location-image">
+                <img :src="location.thumbnail"/>
             </div>
             <div class="location-info">
                 <h3 class="title"> {{ location.name }}</h3>
@@ -108,7 +108,7 @@ export default {
 
     .location-info {
         margin-bottom: 30px;
-        margin: 0 20px;
+        margin: 0 10px;
         flex-grow: 1;
         flex-basis: 200px;
     }

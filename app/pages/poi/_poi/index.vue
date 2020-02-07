@@ -3,12 +3,11 @@
         <portal to="leftDock">
             <dock-item title="nav">
             <div v-if="poi" class="left-nav-button"><router-link :to="systemLink">System: {{poi.system}}</router-link></div>
-            <div v-if="poi" class="left-nav-button"><router-link :to="planetLink">Planet: {{poi.planet}}</router-link></div>
+            <div v-if="poi" class="left-nav-button"><router-link :to="planetLink">Planet: {{poi.parent}}</router-link></div>
             <div class="left-nav-button"><a target="_blank" :href="starmapLink">Open in Starmap</a></div>
             </dock-item>
         </portal>
-        <location :location="poi" type="POI">
-        </location>
+        <location :location="poi" type="POI" />
     </div>
 </template>
 
@@ -53,7 +52,7 @@ export default {
             return `/system/${this.poi.system}`
         },
         planetLink() {
-            return `/planet/${this.poi.planet}`
+            return `/planet/${this.poi.parent}`
         }
     },
     mounted() {
@@ -73,5 +72,6 @@ export default {
     .poi {
         width: 100%;
         display: flex;
+        margin: 20px 10px 0;
     }
 </style>

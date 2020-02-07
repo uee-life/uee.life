@@ -15,6 +15,14 @@ export default {
 }
 </script>
 
-<style scoped>
-  
+<style> 
+.lock.content {
+  position: absolute;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.auth0-lock input {
+  background: white;
+}
 </style>

@@ -44,7 +44,7 @@ export default {
     .main-panel {
         position: relative;
         padding: 15px;
-        margin-bottom: 20px;
+        margin-top: 20px;
         background: url('/images/fading-bars.png') repeat;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         font-size: calc(13px + (16 - 13) * ((100vw - 300px) / (1600 - 300)));

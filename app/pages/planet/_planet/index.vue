@@ -5,8 +5,12 @@
             <div v-if="planet" class="left-nav-button"><nuxt-link :to="systemLink">System: {{planet.system}}</nuxt-link></div>
             <div class="left-nav-button"><a target="_blank" :href="starmapLink">Open in Starmap</a></div>
             </dock-item>
+            <location :location="planet" type="Planet"></location>
         </portal>
-        <location :location="planet" type="Planet">
+        <portal to="rightDock">
+            
+        </portal>
+            <!--location :location="planet" type="Planet"-->
             <div class="location-tabs">
                 <tabs :tabs="tabs" :initialTab="initialTab">
                     <template slot="tab-title-satellites">
@@ -24,7 +28,7 @@
                     </template>
                 </tabs>
             </div>
-        </location>
+        <!--/location-->
     </div>
 </template>
 
@@ -128,5 +132,6 @@ export default {
     .planet {
         width: 100%;
         display: flex;
+        margin: 20px 10px 0;
     }
 </style>

@@ -6,7 +6,7 @@
                 <router-link to="/">{{ source.name }}</router-link>
             </div>
         </portal>
-        <section-title :text="title" size="large"/>
+        <section-title :text="title" size="medium"/>
         <transition-group
             name="staggered-fade"
             tag="div"

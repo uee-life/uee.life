@@ -7,7 +7,7 @@
 </template>
 
 <script>
-
+import { gsap } from 'gsap'
 export default {
     name: 'official-links',
     components: {
@@ -22,6 +22,9 @@ export default {
                 {name: "Community Hub", url: "https://robertsspaceindustries.com/community"},
             ]
         }
+    },
+    mounted() {
+        gsap.to('.official-links', {duration: 0.5, opacity: 1})
     }
 }
 </script>

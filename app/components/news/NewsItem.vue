@@ -50,7 +50,6 @@ export default {
         display: flex;
         margin: 10px;
         padding: 9px;
-        border: 0.2px solid grey;
         position: relative;
         opacity: 1;
         flex-grow: 1;

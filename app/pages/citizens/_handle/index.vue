@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class='citizen'>
     <portal to="leftDock">
       <left-nav />
     </portal>
@@ -11,32 +11,35 @@
       <div class="left-nav-button"><router-link to="/citizens">Search Citizens</router-link></div>
       <div class="left-nav-button"><a :href="dossierLink" target="_blank">Official Dossier</a></div>
     </portal>
-    <template v-if="citizen.info">
-    <citizen-info :citizen="citizen" :editing="editing"/>
-    <div>
-        <tabs :tabs="tabs" :initialTab="initialTab">
-            <template slot="tab-title-info">
-                INFO
-            </template>
-            <template slot="tab-content-info">
-                <citizen-bio :bio="citizen.info.bio"/>
-            </template>
-
-            <template slot="tab-title-ships">
-                SHIPS ({{ citizen.ships.length }})
-            </template>
-            <template slot="tab-content-ships">
-                <fleet-view :ships="citizen.ships"/>
-            </template>
-
-            <template v-if="isAuthenticated && isOwner" slot="tab-title-location">
-                LOCATION
-            </template>
-            <template v-if="isAuthenticated && isOwner" slot="tab-content-location">
-                <citizen-location :citizen="citizen"/>
-            </template>
-        </tabs>
+    <div v-if="loading" class="loading">
+        <img src="~/assets/loading.gif" >
     </div>
+    <template v-else-if="citizen.info">
+        <citizen-info :citizen="citizen" :editing="editing"/>
+        <div class="citizen-tabs">
+            <tabs :tabs="tabs" :initialTab="initialTab">
+                <template slot="tab-title-info">
+                    INFO
+                </template>
+                <template slot="tab-content-info">
+                    <citizen-bio :bio="citizen.info.bio"/>
+                </template>
+
+                <template slot="tab-title-ships">
+                    SHIPS ({{ citizen.ships.length }})
+                </template>
+                <template slot="tab-content-ships">
+                    <fleet-view :ships="citizen.ships"/>
+                </template>
+
+                <template v-if="isAuthenticated && isOwner" slot="tab-title-location">
+                    LOCATION
+                </template>
+                <template v-if="isAuthenticated && isOwner" slot="tab-content-location">
+                    <citizen-location :citizen="citizen"/>
+                </template>
+            </tabs>
+        </div>
     </template>
     <template v-else>
         <h3>Citizen Not Found...</h3>
@@ -58,6 +61,7 @@ import FleetView from '@/components/fleet/FleetView'
 
 export default {
     layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
+    name: 'citizen',
     data() {
         return {
             tabs: ['info', 'ships'],
@@ -70,7 +74,7 @@ export default {
                 links: []
             },
             editing: false,
-            loading: false
+            loading: true
         }
     },
     components: {
@@ -181,5 +185,11 @@ export default {
 </script>
 
 <style>
+.citizen.content {
+    margin-top: 20px;
+}
 
+.citizen-tabs {
+    margin-top: 20px;
+}
 </style>

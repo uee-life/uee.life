@@ -51,15 +51,13 @@ export default {
 <style>
 
     .tab-titles {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 
     .tab-title {
         display: inline-block;
         margin: 0 5px;
-        padding: 10px;
-        padding-bottom: 8px;
-        font-size: 16px;
+        font-size: 14px;
         font-family: 'Michroma';
         letter-spacing: 0.8px;
         text-decoration: none;

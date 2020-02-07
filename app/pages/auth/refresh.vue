@@ -1,5 +1,7 @@
 <template>
-    <div>Refreshing</div>
+    <div class="loading">
+        <img src="~/assets/loading.gif" >
+    </div>
 </template>
 
 <script>
@@ -15,18 +17,26 @@ export default {
     },
     methods: {
         handleAuth(err, res) {
+            this.$store.commit('REFRESH_TOKEN', false)
             if(err) {
-                console.error(err)
+                console.error(err.error)
+                if(err.error === 'login_required') {
+                    this.$router.push('/auth/sign-in')
+                } else {
+                    this.$router.push('/')
+                }
             } else {
                 if(checkSecret(res.state)) {
                     console.log(res)
                     const expiry = addSeconds(new Date(), res.expiresIn)
                     console.log(expiry)
                     updateAccessToken(res.accessToken, expiry)
+                    this.$router.go(-1)
+                } else {
+                    console.log('invalid request, secret no match')
+                    this.$router.push('/auth/sign-off')
                 }
             }
-            this.$store.commit('REFRESH_TOKEN', false)
-            this.$router.go(-1)
         },
         refreshAuth() {
             const checkSession = require('~/utils/lock').checkSession
@@ -40,5 +50,9 @@ export default {
 </script>
 
 <style>
-
+.loading {
+  position: absolute;
+  width: 100%;
+  margin-top: 20px;
+}
 </style>

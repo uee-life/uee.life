@@ -4,7 +4,7 @@
             <location-summary v-for="(loc, index) in pois" :key="loc.code" :loc="loc" :link="getLink(loc.code)" :index="index">
                 <div>Type: {{ loc.subtype }}</div>
                 <div>Affiliation: {{ loc.affiliation }}</div>
-                <div>Location: {{ loc.planet }}</div>
+                <div>Location: {{ loc.parent }}</div>
             </location-summary>
         </div>
         <div class="no-pois" v-else>

@@ -13,7 +13,6 @@ export const extractInfoFromHash = () => {
   if (process.SERVER_BUILD) return
   let err, err_msg = ''
   const params = getQueryParams()
-  console.log(params)
   if ('error' in params) {
     err = params['error'],
     err_msg = params['error_description']
@@ -33,6 +32,7 @@ export const setToken = (ctx, token, access_token, token_expiry) => {
   if (process.SERVER_BUILD) return
 
   const expires = addSeconds(new Date(), token_expiry)
+
   window.localStorage.setItem('token', token)
   window.localStorage.setItem('access_token', access_token)
   window.localStorage.setItem('access_token_expiry', expires)
@@ -57,6 +57,7 @@ export const unsetToken = (ctx) => {
     window.localStorage.removeItem('user')
     window.localStorage.removeItem('secret')
     ctx.$cookies.remove('jwt')
+    ctx.$cookies.remove('jwt_expires')
     window.localStorage.setItem('logout', Date.now())
   //}
 }
@@ -68,12 +69,11 @@ export const getUserFromCookie = (req) => {
   const jwtCookie = cookies.find(c => c.trim().startsWith('jwt='))
   const expiryCookie = cookies.find(c => c.trim().startsWith('jwt_expires='))
   if (!jwtCookie) return
-  console.log(jwtCookie)
-  console.log(expiryCookie)
+  const expiry = new Date(decodeURIComponent(expiryCookie.split('=')[1]).replace(/"/g, ''))
   const jwt = jwtCookie.split('=')[1]
   const user = {}
-  user['token'] = null
-  user['token_expiry'] = null
+  user['token'] = jwt
+  user['token_expiry'] = expiry
   user['user'] = jwtDecode(jwt) || null
   return user
 }
@@ -92,8 +92,6 @@ export const getUserFromLocalStorage = () => {
   user['token'] = token
   user['token_expiry'] = expires
   user['user'] = json ? JSON.parse(json) : undefined
-  console.log('user')
-  console.log(user)
   return user
 }
 

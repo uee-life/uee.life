@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { gsap } from 'gsap'
 
 export default {
     name: 'community-links',
@@ -23,6 +24,9 @@ export default {
                 {name: "SC Ship Viewer", url: "https://www.starship42.com"}
             ]
         }
+    },
+    mounted() {
+        gsap.to('.community-links', {duration: 0.5, opacity: 1})
     }
 }
 </script>

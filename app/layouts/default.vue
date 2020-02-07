@@ -3,7 +3,7 @@
     <default-header />
     <default-navbar />
     <div class="main">
-      <dock name="leftDock" />
+      <dock name="leftDock" class="leftDock"/>
       <nuxt class="content" />
       <dock name="rightDock" />
     </div>
@@ -72,6 +72,10 @@ export default {
 }
  
  .dock {
-   width: 240px;
+   max-width: 240px;
+ }
+
+ .leftDock {
+   min-width: 240px;
  }
 </style>

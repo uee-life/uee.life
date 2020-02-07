@@ -1,10 +1,10 @@
 <template>
     <router-link class="summary" :to="link">
-      <img v-if="loc.thumbnail" :src="loc.thumbnail" />
-          <div class="summary-info">
-          <div><h3 class="summary-name">{{ loc.name }}</h3></div>
-          <slot></slot>
-      </div>
+        <div v-if="loc.thumbnail" class="thumbnail"><img :src="loc.thumbnail" /></div>
+        <div class="summary-info">
+            <div><h3 class="summary-name">{{ loc.name }}</h3></div>
+            <slot></slot>
+        </div>
         <span class="corner top left"></span>
           <span class="corner top right"></span>
           <span class="corner bottom left"></span>
@@ -29,10 +29,12 @@ export default {
 </script>
 
 <style scoped>
-    .summary img {
-        width: 100px;
+    .thumbnail {
         height: 100px;
-        margin-left: 1px;
+    }
+
+    .thumbnail>img {
+        height: 100%;
         border: 1px dotted #546f84;
     }
 
@@ -50,7 +52,7 @@ export default {
     }
 
     .summary-info {
-        margin-left: 10px;
+        margin: 0 10px;
     }
 
     .summary-name {
