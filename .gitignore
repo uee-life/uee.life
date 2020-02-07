@@ -21,6 +21,7 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+*.code-workspace
 
 # Sensitive Files
 *_config.json
