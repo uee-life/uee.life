@@ -10,6 +10,7 @@
                     <li>Layout and visual fixes</li>
                     <li>Updated libraries</li>
                 </ul>
+            </div>
             <div>New features:
                 <ul>
                     <li>Comletely re-written site using NUXT.js</li>
