@@ -1,5 +1,5 @@
 <template>
-  <main-panel id="profile-info" title="User Profile" mainClass="profile-info">
+  <main-panel id="profile-info" title="User Profile" class="profile-info">
       <div v-if="user" class="info">
           <div class="line-item"><div>Username: </div> <div> {{user.username}}</div></div>
           <div class="line-item"><div>Email: </div> <div> {{user.email}}</div></div>
@@ -43,7 +43,6 @@ export default {
     .profile-info {
         position: relative;
         display: flex;
-        width: fit-content;
         height: fit-content;
         padding: 10px;
         padding-top: 20px;
@@ -67,7 +66,10 @@ export default {
         opacity: 0;
     }
     .profile-info .info {
-        width: 300px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        justify-content: space-between;
         opacity: 1;
         color: #dbf3ff;
     }

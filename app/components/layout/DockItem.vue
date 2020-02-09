@@ -1,9 +1,7 @@
 <template>
-    <div :class="computedClass">
+    <div class="dock-item">
         <section-title v-if="title" :text="title" />
-        <content :class="contentClass">
-            <slot></slot>
-        </content>
+        <slot></slot>
         <span class="corner top left"></span>
         <span class="corner top right"></span>
         <span class="corner bottom left"></span>
@@ -19,18 +17,6 @@ export default {
         title: {
             type: String,
             default: ""
-        },
-        mainClass: {
-            type: String,
-        },
-        contentClass: {
-            type: String,
-            default: "content"
-        }
-    },
-    computed: {
-        computedClass() {
-            return `dock-item ${this.mainClass}`
         }
     }
 }

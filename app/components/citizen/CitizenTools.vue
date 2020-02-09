@@ -1,5 +1,5 @@
 <template>
-  <dock-item title="Tools" mainClass="citizen-tools">
+  <dock-item title="Tools" class="citizen-tools">
     <div class="tool-button" @click="sync">Sync Profile</div>
     <div v-if="!editing" class="tool-button" @click="edit">Edit Profile</div>
     <div v-else class="tool-button" @click="save">Save Changes</div>

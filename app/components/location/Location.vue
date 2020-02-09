@@ -1,6 +1,7 @@
 <template>
     <div class="location">
-        <main-panel mainClass="location-panel">
+        <main-panel class="location-panel">
+            <div class="content">
             <div v-if="location.thumbnail" class="location-image">
                 <img :src="location.thumbnail"/>
             </div>
@@ -14,6 +15,7 @@
                     <span v-if="location.danger">Risk: <span class='value'>{{rating(location.danger)}}</span><br></span>
                 </p>
                 <p>{{ location.description }}</p>
+            </div>
             </div>
         </main-panel>
         <slot></slot>

@@ -1,11 +1,13 @@
 <template>
-  <dock-item :title="citizen.org.model" mainClass="citizen-org">
-      <nuxt-link :to="orgLink" class="org-link"><img class="logo" :src="citizen.org.logo" /></nuxt-link>
-      <div class="org-name">
-        {{ citizen.org.name }}
-      </div>
-      <div class="org-title">
-        Title: {{ citizen.info.orgRank }}
+  <dock-item :title="citizen.org.model" class="citizen-org">
+      <div class="content">
+        <nuxt-link :to="orgLink" class="org-link"><img class="logo" :src="citizen.org.logo" /></nuxt-link>
+        <div class="org-name">
+          {{ citizen.org.name }}
+        </div>
+        <div class="org-title">
+          Title: {{ citizen.info.orgRank }}
+        </div>
       </div>
   </dock-item>
 </template>

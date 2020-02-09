@@ -1,8 +1,8 @@
 
 var ManagementClient = require('auth0').ManagementClient;
-const {executeSQL} = require('./mariadb')
+const {executeSQL} = require('../mariadb')
 
-const { domain, clientId, clientSecret, scope, audience } = require("../config/auth_config.js");
+const { domain, clientId, clientSecret, scope, audience } = require("../../config/auth_config.js");
 
 var management = new ManagementClient({
     domain: domain,

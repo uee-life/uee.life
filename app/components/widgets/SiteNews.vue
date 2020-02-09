@@ -1,5 +1,6 @@
 <template>
-  <main-panel title="Site News" mainClass="site-news" id="site-news" :style="newsHeight">
+    <main-panel title="Site News" class="site-news" id="site-news" :style="newsHeight">
+        <div class="content">
             <div class="title">
                 <h3>UEE.life v0.2.1  - Bug Patch</h3>
                 <div class="date"><i>Updated: 7 Feb 2950</i></div>
@@ -40,7 +41,8 @@
                 <a href="mailto:capnflinttv@gmail.com">capnflinttv@gmail.com</a>
             </p>
             <div class="read-more" @click="toggleNews()">{{buttonText}}</div>
-        </main-panel>
+        </div>
+    </main-panel>
 </template>
 
 <script>

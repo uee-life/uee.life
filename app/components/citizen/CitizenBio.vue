@@ -1,6 +1,6 @@
 <template>
-    <main-panel class="citizen-bio" title="bio" titleSize="small" contentClass="content">
-        {{bio}}
+    <main-panel class="citizen-bio" title="bio" titleSize="small">
+        <div class="content">{{bio}}</div>
     </main-panel>
 </template>
 
