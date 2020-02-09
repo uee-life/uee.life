@@ -2,8 +2,8 @@ const axios = require("axios")
 const cheerio = require('cheerio')
 const jwt = require('jsonwebtoken')
 
-const {manager} = require('./manager')
-const {executeSQL} = require('./mariadb')
+const {manager} = require('../manager')
+const {executeSQL} = require('../mariadb')
 
 async function loadCitizen(handle) {
     let data = {}
@@ -77,40 +77,11 @@ async function fetchCitizen(handle) {
     }
 }
 
-
-async function loadShips(handle) {
-    return [
-        /*{
-            id: 1,
-            manufacturer: "Anvil",
-            make: "Hornet",
-            model: "F7a",
-            name: "Bulldog",
-            size: "Light",
-            crew: 8
-        },
-        {
-            id: 2,
-            manufacturer: "Aegis",
-            make: "Avenger",
-            model: "Titan",
-            name: "Penguin",
-        },
-        {
-            id: 3,
-            manufacturer: "RSI",
-            make: "Constellation",
-            model: "Phoenix",
-            name: "Shark",
-        }*/
-    ]
-}
-
 async function getCitizen(handle) {
     citizen = {}
     citizen.info = await loadCitizen(handle)
     if(citizen.info) {
-        citizen.ships = await loadShips(handle)
+        citizen.ships = []
         citizen.home = await loadCitizenLocation(handle)
     } else {
         citizen.info = await fetchCitizen(handle)

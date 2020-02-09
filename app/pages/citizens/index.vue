@@ -1,7 +1,7 @@
 <template>
   <div class='citizen-results'>
     <portal to="leftDock">
-        <dock-item title="find citizen" mainClass="search-box">
+        <dock-item title="find citizen" class="search-box">
             <input class="search-input" @keyup.enter="getResults()" v-model="input" placeholder="Citizen Handle"/>
         </dock-item>
     </portal>
@@ -93,12 +93,6 @@ export default {
     .no-results>.text.big {
         font-family: 'Michroma';
         font-size: 25px;
-    }
-
-    .search-box .content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
     }
 
     .search-box .content .search-input {

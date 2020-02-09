@@ -1,4 +1,4 @@
-const { domain, clientId, clientSecret, scope, audience } = require("../config/auth_config.js");
+const { domain, clientId, clientSecret, scope, audience } = require("../../config/auth_config.js");
 
 var ManagementClient = require('auth0').ManagementClient;
 

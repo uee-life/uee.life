@@ -1,5 +1,5 @@
 const axios = require("axios")
-const {executeSQL} = require('./mariadb')
+const {executeSQL} = require('../mariadb')
 
 const manufacturers = {
     'Origin Jumpworks GmbH': 1,
@@ -79,11 +79,6 @@ async function saveShip(ship) {
     res = await executeSQL(sql, args)
 }
 
-async function clearShips() {
-    sql = 'DELETE FROM ships'
-    res = await executeSQL(sql, [])
-}
-
 async function syncShips() {
     let result = await axios({
         url: 'https://calculator-api-259617.appspot.com/mongoDocuments/ships',
@@ -137,4 +132,4 @@ module.exports = {
     getShips,
     getCitizenShips,
     saveShip
-};
+}

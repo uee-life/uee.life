@@ -9,20 +9,20 @@
                 <div  class="org-intro" v-if="org.intro" v-html="$md.render(org.intro)"></div>
           </main-panel>
             <div class="info">
-              <main-panel title="roles" mainClass="info-panel">
+              <main-panel title="roles" class="info-panel">
                 <ul class="info-items">
                   <li v-if="org.roles" class="line-item"><span>Primary Role</span><span>{{ org.roles.primary }}</span></li>
                   <li v-if="org.roles" class="line-item"><span>Secondary Role</span><span>{{ org.roles.secondary }}</span></li>
                 </ul>
               </main-panel>
-              <main-panel title="headquarters" mainClass="info-panel">
+              <main-panel title="headquarters" class="info-panel">
                 <ul class="info-items">
                   <li class="line-item"><div>System</div><div>Unknown</div></li>
                   <li class="line-item"><div>Planet</div><div>Unknown</div></li>
                   <li class="line-item"><div>City:</div><div>Unknown</div></li>
                 </ul>
               </main-panel>
-              <main-panel title="founders" mainClass="info-panel">
+              <main-panel title="founders" class="info-panel">
                 <ul class="info-items">
                   <li v-for="f in org.founders" :key="f.handle" class="line-item">
                     <router-link :to="citizenLink(f.handle)">

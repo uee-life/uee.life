@@ -1,15 +1,17 @@
 <template>
-    <dock-item title="Latest Citizen" mainClass="latest-citizen">
-      <div v-if="citizen" >
-        <nuxt-link class="portrait" :to="citizenLink">
-          <img class="image" :src="citizen.portrait" />
-          <img class="verified" src="~assets/verified.png" />
-        </nuxt-link>
-        <div class="cit-name">
-          {{ citizen.name }}
-        </div>
-        <div class="cit-handle">
-          {{ citizen.handle }}
+    <dock-item title="Latest Citizen" class="latest-citizen">
+      <div class="content">
+        <div v-if="citizen" >
+          <nuxt-link class="portrait" :to="citizenLink">
+            <img class="image" :src="citizen.portrait" />
+            <img class="verified" src="~assets/verified.png" />
+          </nuxt-link>
+          <div class="cit-name">
+            {{ citizen.name }}
+          </div>
+          <div class="cit-handle">
+            {{ citizen.handle }}
+          </div>
         </div>
       </div>
     </dock-item>

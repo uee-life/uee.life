@@ -1,5 +1,5 @@
 <template>
-    <dock-item title="Official Links" mainClass="official-links">
+    <dock-item title="Official Links" class="official-links">
         <div v-for="link in links" :key="link.url" class="link">
             <a :href="link.url" target="_blank">{{link.name}}</a>
         </div>
@@ -30,23 +30,23 @@ export default {
 </script>
 
 <style scoped>
-    .official-links>.content {
+    .official-links {
         opacity: 1;
     }
 
-    .official-links>.content>.link::before {
+    .official-links>.link::before {
       content: "> "
     }
-    .official-links>.content>.link {
+    .official-links>.link {
         margin-left: 10px;
         margin-right: 10px;
         margin-bottom: 3px;
     }
-    .official-links>.content>.link>a {
+    .official-links>.link>a {
       text-decoration: none;
       color: #39ced8;
     }
-    .official-links>.content>.link>a:hover {
+    .official-links>.link>a:hover {
       color: #dbf3ff;    
     }
 </style>

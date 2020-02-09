@@ -1,23 +1,14 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
-const { convertToMarkdown } = require('./utils')
+const { convertToMarkdown } = require('../helper')
 
 async function fetchMembers(org, page, isMain) {
     let members = {
         count: 1,
         members: []
     }
-    /*await axios.get(`http://api.sc-tools.org/v1/orgs/${org}/json`).then(res => {
-        if(res.data.status == 'ok') {
-            console.log(res.data.orgs.members)
-            members = res.data.orgs.members;
-        } else {
-            members = []
-        }
-    })*/
 
-    console.log("isMain: ")
-    console.log(isMain)
+    console.log("isMain: ", isMain)
 
     try {
         const url = "https://robertsspaceindustries.com/api/orgs/getOrgMembers"
@@ -121,7 +112,6 @@ async function fetchOrg(org) {
         info.manifesto = await convertToMarkdown($('h2:contains("Manifesto")', '#organization').next().html())
         info.charter = await convertToMarkdown($('h2:contains("Charter")', '#organization').next().html())
         info.founders = await fetchOrgFounders(org)
-        //info.members = await fetchMembers(org)
         
         info.tag = org
 
@@ -166,12 +156,7 @@ async function getOrgFounders(org) {
 
 async function getOrganization(org) {
     return await fetchOrg(org)
-}
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-  
+} 
 
 async function getOrgMembers(org, page=1, isMain=true) {
     if(!parseInt(page)) {
