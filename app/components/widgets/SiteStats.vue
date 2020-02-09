@@ -1,12 +1,14 @@
 <template>
-    <dock-item title="Site Stats" mainClass="site-stats">
-      <div v-if="stats" class="citizen-stats">
-        Users:
-        <ul>
-        <li>Registered: <span class="stat">{{stats.users.total}}</span></li>
-        <li>Active: <span class="stat">{{stats.users.active}}</span></li>
-        <li>Verified: <span class="stat">{{stats.users.verified}}</span></li>
-        </ul>
+    <dock-item title="Site Stats" class="site-stats">
+      <div class="content">
+        <div v-if="stats" class="citizen-stats">
+          Users:
+          <ul>
+          <li>Registered: <span class="stat">{{stats.users.total}}</span></li>
+          <li>Active: <span class="stat">{{stats.users.active}}</span></li>
+          <li>Verified: <span class="stat">{{stats.users.verified}}</span></li>
+          </ul>
+        </div>
       </div>
     </dock-item>
 </template>

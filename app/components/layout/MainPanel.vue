@@ -1,9 +1,7 @@
 <template>
-    <div :class="computedClass">
+    <div class="main-panel">
         <section-title v-if="title" :text="title" :size="titleSize" />
-        <div :class="contentClass">
-            <slot></slot>
-        </div>
+        <slot></slot>
         <span class="corner top left"></span>
         <span class="corner top right"></span>
         <span class="corner bottom left"></span>
@@ -19,22 +17,9 @@ export default {
             type: String,
             default: ""
         },
-        mainClass: {
-            type: String,
-            default: ""
-        },
-        contentClass: {
-            type: String,
-            default: "content"
-        },
         titleSize: {
             type: String,
             default: "medium"
-        }
-    },
-    computed: {
-        computedClass() {
-            return `main-panel ${this.mainClass}`
         }
     }
 }
@@ -43,10 +28,11 @@ export default {
 <style>
     .main-panel {
         position: relative;
+        flex-grow: 1;
         padding: 15px;
         margin-top: 20px;
         background: url('/images/fading-bars.png') repeat;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        font-size: calc(13px + (16 - 13) * ((100vw - 300px) / (1600 - 300)));
+        font-size: calc(13px + (15 - 13) * ((100vw - 300px) / (1600 - 200)));
     }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <dock-item title="nav" mainClass="left-nav">
+  <dock-item title="nav" class="left-nav">
     <portal-target name="navigationPane"></portal-target>
   </dock-item>
 </template>
@@ -17,9 +17,6 @@ export default {
 </script>
 
 <style>
-    .left-nav .content {
-      opacity: 1;
-    }
 
     .left-nav-button::before {
       content: "> "

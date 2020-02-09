@@ -1,10 +1,10 @@
 const uuid = require('uuid/v4')
 const jwt = require('jsonwebtoken')
 
-const {executeSQL} = require('./mariadb')
-const {syncCitizen, getCitizen} = require('./citizen')
+const {executeSQL} = require('../mariadb')
+const {syncCitizen, getCitizen} = require('../citizen')
 
-const { domain, clientId, clientSecret, scope, audience } = require("../config/auth_config.js");
+const { domain, clientId, clientSecret, scope, audience } = require("../../config/auth_config.js");
 
 var ManagementClient = require('auth0').ManagementClient;
 

@@ -1,7 +1,7 @@
 <template>
     <div class="search-main">
         <portal to="leftDock">
-            <dock-item title="find orgs" mainClass="search-box">
+            <dock-item title="find orgs" class="search-box">
                 <input class="search-input" @keyup.enter="getResults()" v-model="input" placeholder="Org Handle"/>
             </dock-item>
         </portal>
@@ -79,12 +79,6 @@ export default {
     .no-results>.text.big {
         font-family: 'Michroma';
         font-size: 25px;
-    }
-
-    .search-box .content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
     }
 
     .search-box .search-input {

@@ -1,10 +1,13 @@
 <template>
   <div class="profile">
-    <profile-verify v-if="!verified || debug" :user="user" :errors="errors.verification" @verify="verifyHandle"/>
+    <portal to="leftDock">
     <profile-info v-if="user" :user="user"/>
     <div v-else class="loading">
               <img src="~/assets/loading.gif" >
     </div>
+    </portal>
+    <main-panel title="Settings">Coming soon...</main-panel>
+    <profile-verify v-if="!verified || debug" :user="user" :errors="errors.verification" @verify="verifyHandle"/>
     <div v-if="debug" class="debug">
       <pre>{{ JSON.stringify(user, null, 2) }}</pre>
     </div>

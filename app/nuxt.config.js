@@ -13,6 +13,10 @@ module.exports = {
   */
   head: {
     title: 'Your UEE Life',
+    script: [
+      { src: 'https://www.googletagmanager.com/gtag/js?id=UA-158029027-1', async: true },
+      { src: '/scripts/analytics.js' }
+    ],
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },

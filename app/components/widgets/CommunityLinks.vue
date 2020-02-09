@@ -1,5 +1,5 @@
 <template>
-    <dock-item title="Community Links" mainClass="community-links">
+    <dock-item title="Community Links" class="community-links">
         <div v-for="link in links" :key="link.url" class="link">
             <a :href="link.url" target="_blank">{{link.name}}</a>
         </div>
@@ -32,23 +32,23 @@ export default {
 </script>
 
 <style>
-    .community-links>.content {
+    .community-links {
         opacity: 1;
     }
 
-    .community-links>.content>.link::before {
+    .community-links>.link::before {
       content: "> "
     }
-    .community-links>.content>.link {
+    .community-links>.link {
         margin-left: 10px;
         margin-right: 10px;
         margin-bottom: 3px;
     }
-    .community-links>.content>.link>a {
+    .community-links>.link>a {
       text-decoration: none;
       color: #39ced8;
     }
-    .community-links>.content>.link>a:hover {
+    .community-links>.link>a:hover {
       color: #dbf3ff;    
     }
 </style>

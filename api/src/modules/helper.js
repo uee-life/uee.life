@@ -1,3 +1,6 @@
+const mcache = require('memory-cache');
+const jwt = require('express-jwt')
+const jwksRsa = require('jwks-rsa')
 const cheerio = require('cheerio')
 
 function convertToMarkdown(html) {
@@ -61,6 +64,39 @@ function convertToMarkdown(html) {
     return $.text().replace(/\t/g, '').replace(/\>\s+/, '> ')
 }
 
+const cache = (duration) => {
+    return (req, res, next) => {
+        let key = '__express__' + req.originalUrl || req.url
+        let cachedBody = mcache.get(key)
+        if(cachedBody && !req.headers.skipcache) {
+            res.send(cachedBody)
+            return
+        } else {
+            res.sendResponse = res.send
+            res.send = (body) => {
+                mcache.put(key, body, duration * 1000);
+                res.sendResponse(body)
+            }
+            next()
+        }
+    }
+}
+
+const checkJwt = jwt({
+    secret: jwksRsa.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: `https://ueelife.auth0.com/.well-known/jwks.json`
+    }),
+
+    audience: 'https://ueelife-api',
+    issuer: `https://ueelife.auth0.com/`,
+    algorithms: ['RS256']
+});
+
 module.exports = {
+    cache,
+    checkJwt,
     convertToMarkdown
 }

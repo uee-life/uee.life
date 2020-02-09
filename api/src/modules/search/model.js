@@ -1,8 +1,6 @@
 const axios = require("axios")
-const cheerio = require('cheerio')
 
 async function searchOrgs(query) {
-
     // update here to allow mulitple search objects/terms (i.e. searching by size)
     const searchData = {
         sort: "default",
