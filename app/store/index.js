@@ -52,7 +52,7 @@ export const actions = {
       console.log('initUser: ', res.data)
       dispatch('setUser', res.data)
     }).catch((error) => {
-      console.error(error)
+      console.error('/user error: ', error)
       window.localStorage.removeItem('token')
       window.localStorage.removeItem('access_token')
       window.localStorage.removeItem('access_token_expiry')
@@ -64,27 +64,9 @@ export const actions = {
     })
   },
 
-  setUser ({ dispatch, commit }, data) {
-    console.log(data)
-    let handle = ''
-    let handle_verified = ''
+  setUser ({ commit }, data) {
     if(data){
-      handle = data.app_metadata.handle
-      handle_verified = data.app_metadata.handle_verified
-
-      const user = {
-        username: data.nickname,
-        email: data.email,
-        email_verified: data.email_verified,
-        handle: handle,
-        handle_verified: handle_verified,
-        picture: data.picture,
-        verificationCode: data.verificationCode ? data.verificationCode : null
-      }
-
-      return dispatch('loadCitizen', user).then((user) => {
-        commit('SET_USER', user)
-      })
+      commit('SET_USER', data)
     }
   },
 

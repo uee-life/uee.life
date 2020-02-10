@@ -38,7 +38,7 @@ export const setToken = (ctx, token, access_token, token_expiry) => {
   window.localStorage.setItem('access_token_expiry', expires)
   window.localStorage.setItem('user', JSON.stringify(jwtDecode(token)))
 
-  ctx.$cookies.set('jwt', token)
+  ctx.$cookies.set('jwt', access_token)
   ctx.$cookies.set('jwt_expires', expires)
 }
 

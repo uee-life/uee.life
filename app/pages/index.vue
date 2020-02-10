@@ -18,7 +18,6 @@
 
 <script>
 import axios from 'axios'
-import { mapGetters } from 'vuex'
 import { gsap } from 'gsap'
 
 import NewsFeed from '@/components/news/NewsFeed'
@@ -41,12 +40,6 @@ export default {
         SiteNews,
         Discord,
         MadeBy
-    },
-    computed: {
-        ...mapGetters([
-            'isAuthenticated',
-            'loggedUser'
-        ])
     },
     asyncData() {
         return {

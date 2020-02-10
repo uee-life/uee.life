@@ -1,5 +1,7 @@
 <template>
-  <p>Signing off...</p>
+    <div class="loading">
+        <img src="~/assets/loading.gif" >
+    </div>
 </template>
 
 <script>

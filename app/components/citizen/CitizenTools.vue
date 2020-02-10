@@ -29,7 +29,7 @@ export default {
             // eslint-disable-next-line
             console.log('Syncing...')
             const token = this.accessToken;
-            const handle = this.loggedUser.handle
+            const handle = this.loggedUser.app_metadata.handle
             axios({
                 url: `https://api.uee.life/citizens/${handle}/sync`,
                 method: 'GET',

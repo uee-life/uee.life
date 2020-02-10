@@ -139,7 +139,7 @@ export default {
                 base: this.base
             }
             axios({
-                url: `https://api.uee.life/citizens/${this.loggedUser.handle}/location`,
+                url: `https://api.uee.life/citizens/${this.loggedUser.app_metadata.handle}/location`,
                 method: 'PUT',
                 headers: {
                     'Content-Type': "application/json; charset=utf-8",
