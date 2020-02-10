@@ -45,17 +45,18 @@ export default {
     },
     methods: {
         async getResults() {
-            try {
-                const { data } = await axios.get('https://api.uee.life/citizen/' + this.input + '/info')
+            axios({
+                url: `https://api.uee.life/citizens/${this.input}/info`,
+                method: "GET"
+            }).then((data) => {
                 if(data.error) {
                     this.result = '<div class="no-results"><span class="text big">No Results<div class="endcap left"></div><div class="endcap right"></div></span><span class="text small">That citizen was not found!</span></div>'
                 } else {
                     this.result = data
                 }
-            } catch (error) {
-                // eslint-disable-next-line
+            }).catch((error) => {
                 console.error(error)
-            }
+            })
         }
     },
     computed: {

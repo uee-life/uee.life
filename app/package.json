@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "@babel/runtime-corejs2": "^7.8.4",
+    "@nuxtjs/google-analytics": "^2.2.3",
     "babel-eslint": "^8.2.6",
     "eslint": "^5.16.0",
     "eslint-plugin-html": "^4.0.6",

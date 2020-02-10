@@ -7,20 +7,22 @@ const {
     getOrgMembers
 } = require('./model');
 
-router.get('/organization/:id', cache(60), async (req, res) => {
+router.get('/orgs/:id', cache(60), async (req, res) => {
     res.send(await getOrganization(req.params.id));
 });
 
-router.get('/organization/:id/founders', cache(60), async (req, res) => {
+router.get('/orgs/:id/founders', cache(60), async (req, res) => {
     res.send(await getOrgFounders(req.params.id));
 });
 
-router.get('/organization/:id/members/:page', async (req, res) => {
-    res.send(await getOrgMembers(req.params.id, req.params.page, true));
+router.get('/orgs/:id/members', async (req, res) => {
+    const page = req.query.page || 1
+    res.send(await getOrgMembers(req.params.id, page, true));
 })
 
-router.get('/organization/:id/affiliates/:page', async (req, res) => {
-    res.send(await getOrgMembers(req.params.id, req.params.page, false));
+router.get('/orgs/:id/affiliates', async (req, res) => {
+    const page = req.query.page || 1
+    res.send(await getOrgMembers(req.params.id, page, false));
 })
 
 module.exports = router

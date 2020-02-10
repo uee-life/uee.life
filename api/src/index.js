@@ -9,6 +9,7 @@ const morgan = require('morgan');
 const app = express();
 
 app.use(helmet());
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('combined'));

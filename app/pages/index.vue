@@ -66,7 +66,7 @@ export default {
         },
         async getCitizen(handle) {
             axios({
-            url: `https://api.uee.life/citizen/${handle}/info`,
+            url: `https://api.uee.life/citizens/${handle}/info`,
             method: 'GET'
             }).then((res) => {
             this.citizen = res.data

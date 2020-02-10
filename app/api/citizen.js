@@ -9,7 +9,7 @@ export default {
             }
         }
         axios({
-            url: 'https://api.uee.life/citizen/' + handle,
+            url: 'https://api.uee.life/citizens/' + handle,
             method: 'GET',
             headers: headers
         }).then((data) => {
@@ -20,7 +20,7 @@ export default {
     },
     getOrg(org, cb, errorCb) {
         axios({
-            url: 'https://api.uee.life/organization/' + org,
+            url: 'https://api.uee.life/orgs/' + org,
             method: 'GET'
         }).then((data) => {
             cb(data)

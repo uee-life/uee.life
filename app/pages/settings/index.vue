@@ -77,7 +77,7 @@ export default {
         const handle = this.loggedUser.handle
 
         axios({
-          url: `https://api.uee.life/citizen/${handle}/verify`,
+          url: `https://api.uee.life/citizens/${handle}/verify`,
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`

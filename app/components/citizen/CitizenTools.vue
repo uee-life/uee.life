@@ -16,7 +16,7 @@ export default {
     name: 'citizen-tools',
     props: ['editing'],
     computed : {
-        ...mapGetters(['accessToken'])
+        ...mapGetters(['loggedUser', 'accessToken'])
     },
     methods: {
         edit() {
@@ -29,9 +29,10 @@ export default {
             // eslint-disable-next-line
             console.log('Syncing...')
             const token = this.accessToken;
+            const handle = this.loggedUser.handle
             axios({
-                url: `https://api.uee.life/sync`,
-                method: 'POST',
+                url: `https://api.uee.life/citizens/${handle}/sync`,
+                method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

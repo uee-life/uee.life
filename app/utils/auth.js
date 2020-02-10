@@ -62,7 +62,7 @@ export const unsetToken = (ctx) => {
   //}
 }
 
-export const getUserFromCookie = (req) => {
+export const getTokenFromCookie = (req) => {
   console.log('getting from cookie')
   if (!req.headers.cookie) return
   const cookies = req.headers.cookie.split(';')
@@ -74,11 +74,10 @@ export const getUserFromCookie = (req) => {
   const user = {}
   user['token'] = jwt
   user['token_expiry'] = expiry
-  user['user'] = jwtDecode(jwt) || null
   return user
 }
 
-export const getUserFromLocalStorage = () => {
+export const getTokenFromLocalStorage = () => {
   console.log('getting from storage')
   let json = undefined
   let token = undefined
@@ -91,7 +90,6 @@ export const getUserFromLocalStorage = () => {
   const user = {}
   user['token'] = token
   user['token_expiry'] = expires
-  user['user'] = json ? JSON.parse(json) : undefined
   return user
 }
 

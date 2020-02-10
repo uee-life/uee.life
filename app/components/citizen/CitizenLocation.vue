@@ -139,8 +139,8 @@ export default {
                 base: this.base
             }
             axios({
-                url: `https://api.uee.life/citizen/${this.loggedUser.handle}/location`,
-                method: 'POST',
+                url: `https://api.uee.life/citizens/${this.loggedUser.handle}/location`,
+                method: 'PUT',
                 headers: {
                     'Content-Type': "application/json; charset=utf-8",
                     Authorization: `Bearer ${this.accessToken}`

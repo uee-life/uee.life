@@ -24,7 +24,7 @@ router.get('/citizen/:handle/ships', async (req, res) => {
 *   Protected APIs
 */
 
-router.post('/ships/add', checkJwt, async (req, res) => {
+router.post('/ships', checkJwt, async (req, res) => {
     res.send(await saveShip(req.body))
 })
 

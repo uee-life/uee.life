@@ -33,7 +33,7 @@ export default {
     },
     getSatellites(planet, cb, errorCb) {
         axios({
-            url: 'https://api.uee.life/satellite/' + planet,
+            url: `https://api.uee.life/planets/${planet}/satellites`,
             method: 'GET'
         }).then((data) => {
             cb(data)
@@ -41,9 +41,9 @@ export default {
             errorCb(err)
         })
     },
-    getPOIs(poi, cb, errorCb) {
+    getPOIs(planet, cb, errorCb) {
         axios({
-            url: 'https://api.uee.life/planets/' + poi,
+            url: `https://api.uee.life/planets/${playet}/pois`,
             method: 'GET'
         }).then((data) => {
             cb(data)
