@@ -34,7 +34,7 @@ async function loadCitizen(handle) {
     let data = {}
     let citizen = null
 
-    const sql = "select id, created FROM citizen WHERE handle=?"
+    let sql = "select id, created FROM citizen WHERE handle=?"
     let rows = await executeSQL(sql, [handle])
 
     if(rows.length > 0) {
