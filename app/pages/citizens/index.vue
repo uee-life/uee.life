@@ -52,7 +52,8 @@ export default {
                 if(data.error) {
                     this.result = '<div class="no-results"><span class="text big">No Results<div class="endcap left"></div><div class="endcap right"></div></span><span class="text small">That citizen was not found!</span></div>'
                 } else {
-                    this.result = data
+                    console.log('Data: ', data)
+                    this.result = data.data
                 }
             }).catch((error) => {
                 console.error(error)

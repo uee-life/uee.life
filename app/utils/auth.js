@@ -56,8 +56,10 @@ export const unsetToken = (ctx) => {
     window.localStorage.removeItem('access_token_expiry')
     window.localStorage.removeItem('user')
     window.localStorage.removeItem('secret')
-    ctx.$cookies.remove('jwt')
-    ctx.$cookies.remove('jwt_expires')
+    if (ctx.$cookies) {
+      ctx.$cookies.remove('jwt')
+      ctx.$cookies.remove('jwt_expires')
+    }
     window.localStorage.setItem('logout', Date.now())
   //}
 }
@@ -79,14 +81,13 @@ export const getTokenFromCookie = (req) => {
 
 export const getTokenFromLocalStorage = () => {
   console.log('getting from storage')
-  let json = undefined
   let token = undefined
   let expires = undefined
   if(process.browser) {
-    json = window.localStorage.user
     token = window.localStorage.access_token
     expires = window.localStorage.access_token_expiry
   }
+  if (!token || !expires) return
   const user = {}
   user['token'] = token
   user['token_expiry'] = expires

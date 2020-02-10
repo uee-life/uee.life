@@ -112,8 +112,9 @@ async function getInfo(handle) {
 }
 
 async function getShips(handle) {
-    citizen = await getCitizen(handle)
-    return citizen.ships
+    sql = "select a.id, a.name, c.short_name, c.make, c.make_abbr, c.model, c.size, c.max_crew, c.cargo, c.type, c.focus from ship_map a left join citizen b on a.citizen = b.id left join ship_view c on a.ship = c.id where b.handle=?"
+    const ships = await executeSQL(sql, [handle])
+    return ships
 }
 
 async function getLocation(handle) {

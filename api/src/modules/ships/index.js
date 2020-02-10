@@ -4,7 +4,6 @@ const router = require('express').Router()
 const { 
     syncShips,
     getShips,
-    getCitizenShips,
     saveShip
 } = require('./model')
 
@@ -15,10 +14,6 @@ router.get('/ships/sync', async (req, res) => {
 router.get('/ships', async (req, res) => {
     res.send(await getShips())
 })
-
-router.get('/citizen/:handle/ships', async (req, res) => {
-    res.send(await getCitizenShips(req.params.handle));
-});
 
 /*
 *   Protected APIs

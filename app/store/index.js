@@ -53,7 +53,14 @@ export const actions = {
       dispatch('setUser', res.data)
     }).catch((error) => {
       console.error(error)
-      commit('REFRESH_TOKEN', true)
+      window.localStorage.removeItem('token')
+      window.localStorage.removeItem('access_token')
+      window.localStorage.removeItem('access_token_expiry')
+      window.localStorage.removeItem('user')
+      window.localStorage.removeItem('secret')
+      this.$cookies.remove('jwt')
+      this.$cookies.remove('jwt_expires')
+      window.localStorage.setItem('logout', Date.now())
     })
   },
 

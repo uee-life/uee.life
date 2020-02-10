@@ -1,22 +1,25 @@
-import { getTokenFromCookie, getTokenFromLocalStorage } from '~/utils/auth'
+import { getTokenFromCookie, getTokenFromLocalStorage, unsetToken } from '~/utils/auth'
 import { subSeconds, isAfter } from 'date-fns'
 
-export default function ({ store, req, redirect }) {
+export default function (ctx) {
    // If nuxt generate, pass this middleware
-  if (process.server && !req) return
-  const data = process.server ? getTokenFromCookie(req) : getTokenFromLocalStorage()
-  
+   console.log('In check-auth.js')
+  if (process.server && !ctx.req) return
+  const data = process.server ? getTokenFromCookie(ctx.req) : getTokenFromLocalStorage()
+  console.log("stored data", data)
   if(data) {
     let now = new Date()
     let expiry = new Date(data['token_expiry'])
     if (isAfter(now, expiry)) {
       console.log("Token expired. Needs new login.")
-      return redirect('/auth/sign-off')
+      console.log(ctx)
+      unsetToken(ctx)
+      return ctx.redirect('/auth/sign-off')
     } else if (isAfter(now, subSeconds(expiry, 1800))) {
       // refresh if token has 30 minutes or less to go...
       console.log("Token expires soon. Refreshing...")
       store.commit('REFRESH_TOKEN', true)
     } 
-    store.dispatch('initUser', data)
+    ctx.store.dispatch('initUser', data)
   }
 }
