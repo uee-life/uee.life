@@ -39,7 +39,7 @@ export const mutations = {
 }
 
 export const actions = {
-  initUser ({ dispatch, commit, state }, data) {
+  initUser ({ dispatch }, data) {
     dispatch('setToken', { token: data['token'], expiry: data['token_expiry']})
 
     axios({
@@ -69,8 +69,8 @@ export const actions = {
     let handle = ''
     let handle_verified = ''
     if(data){
-      handle = auth0user.app_metadata.handle
-      handle_verified = auth0user.app_metadata.handle_verified
+      handle = data.app_metadata.handle
+      handle_verified = data.app_metadata.handle_verified
 
       const user = {
         username: data.nickname,
