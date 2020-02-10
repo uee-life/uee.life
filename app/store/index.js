@@ -39,60 +39,49 @@ export const mutations = {
 }
 
 export const actions = {
-  loadUser ({ dispatch, commit }, req) {
-    if (process.server && !req) return
-    const loggedUser = process.server ? getUserFromCookie(req) : getUserFromLocalStorage()
+  initUser ({ commit, dispatch }, data) {
 
-    if(loggedUser) {
-      dispatch('setUser', loggedUser['user'])
-      dispatch('storeToken', { token: loggedUser['token'], expiry: loggedUser['token_expiry']})
+    dispatch('setToken', { token: data['token'], expiry: data['token_expiry']})
 
-      let now = new Date()
-      let expiry = new Date(loggedUser['token_expiry'])
-      if (isAfter(now, subSeconds(expiry, 600))) {
-        console.log("Token expired or about to expire. Refreshing...")
-        commit('REFRESH_TOKEN', true)
-      } 
+    return axios({
+      url: 'https://api.uee.life/user',
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${data['token']}`
+      }
+    }).then((res) => {
+      commit('SET_USER', res.data)
+    }).catch((error) => {
+      console.error('/user error: ', error)
+      window.localStorage.removeItem('token')
+      window.localStorage.removeItem('access_token')
+      window.localStorage.removeItem('access_token_expiry')
+      window.localStorage.removeItem('user')
+      window.localStorage.removeItem('secret')
+      this.$cookies.remove('jwt')
+      this.$cookies.remove('jwt_expires')
+      window.localStorage.setItem('logout', Date.now())
+    })
+  },
+
+  setUser ({ commit }, data) {
+    if(data){
+      commit('SET_USER', data)
     }
   },
-  setUser ({ dispatch, commit }, auth0user) {
-    console.log(auth0user)
-    let handle = ''
-    let handle_verified = ''
-    if(auth0user){
-      if(auth0user.app_metadata) {
-        handle = auth0user.app_metadata.handle
-        handle_verified = auth0user.app_metadata.handle_verified
-      } else {
-        handle = auth0user['https://uee.life/app_metadata'].handle
-        handle_verified = auth0user['https://uee.life/app_metadata'].handle_verified
-      }
-      const user = {
-        username: auth0user.nickname,
-        email: auth0user.email,
-        email_verified: auth0user.email_verified,
-        handle: handle,
-        handle_verified: handle_verified,
-        picture: auth0user.picture,
-        verificationCode: auth0user.verificationCode ? auth0user.verificationCode : null
-      }
 
-      return dispatch('loadCitizen', user).then((user) => {
-        commit('SET_USER', user)
-      })
-    }
-  },
-  storeToken({ commit }, { token, expiry }) {
+  setToken({ commit }, { token, expiry }) {
     console.log('storeToken')
     if(token && expiry) {
       commit('SET_TOKEN', token)
       commit('SET_EXPIRY', expiry)
     }
   },
+
   loadCitizen({ commit }, user) {
     console.log(user.handle)
     axios({
-      url: `https://api.uee.life/citizen/${user.handle}`,
+      url: `https://api.uee.life/citizens/${user.handle}`,
       method: 'GET'
     }).then((res) => {
         commit('SET_CITIZEN', res.data)
@@ -102,6 +91,7 @@ export const actions = {
     })
     return user
   },
+
   setCitizen({ commit }, citizen) {
     commit('SET_CITIZEN', citizen)
   }

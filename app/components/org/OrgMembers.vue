@@ -93,7 +93,7 @@ export default {
             if(this.affiliate) {
                 type = "affiliates"
             }
-            await axios.get(`https://api.uee.life/organization/${org}/${type}/${this.currentPage}`).then((res) => {
+            await axios.get(`https://api.uee.life/orgs/${org}/${type}?page=${this.currentPage}`).then((res) => {
                 if(res.status == 200) {
                     this.members = res.data.members
                     this.memberCount = res.data.count

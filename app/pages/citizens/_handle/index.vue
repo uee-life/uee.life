@@ -93,7 +93,7 @@ export default {
             return `https://robertsspaceindustries.com/citizens/${this.$route.params.handle}`
         },
         isOwner() {
-            if(this.loggedUser && this.loggedUser.handle == this.citizen.info.handle && this.loggedUser.handle_verified) {
+            if(this.loggedUser && this.loggedUser.app_metadata.handle == this.citizen.info.handle && this.loggedUser.app_metadata.handle_verified) {
                 return true
             }
             return false
@@ -117,7 +117,7 @@ export default {
                 }
             }
             axios({
-                url: `https://api.uee.life/citizen/${this.$route.params.handle}`,
+                url: `https://api.uee.life/citizens/${this.$route.params.handle}`,
                 method: 'GET',
                 headers: headers
             }).then(async (res) => {
@@ -140,7 +140,7 @@ export default {
         },
         async getShips() {
             axios({
-                url: `https://api.uee.life/citizen/${this.$route.params.handle}/ships`,
+                url: `https://api.uee.life/citizens/${this.$route.params.handle}/ships`,
                 method: 'GET'
             }).then((res) => {
                 this.citizen.ships = res.data
@@ -150,7 +150,7 @@ export default {
         },
         async getOrg() {
             try {
-                const { data } = await axios.get('https://api.uee.life/organization/' + this.citizen.info.org)
+                const { data } = await axios.get('https://api.uee.life/orgs/' + this.citizen.info.org)
 
                 this.citizen.org = data
             } catch (error) {

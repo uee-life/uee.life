@@ -33,7 +33,7 @@ export default {
     methods: {
         async getResults() {
             try {
-                const { data } = await axios.get('https://api.uee.life/search/org', {
+                const { data } = await axios.get('https://api.uee.life/search/orgs', {
                     params: {
                         search: this.input
                     }

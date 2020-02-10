@@ -2,31 +2,60 @@ const axios = require("axios")
 const cheerio = require('cheerio')
 const jwt = require('jsonwebtoken')
 
-const {manager} = require('../manager')
-const {executeSQL} = require('../mariadb')
+const { manager } = require('../manager')
+const { executeSQL } = require('../mariadb')
+
+const { getUser } = require('../user/model')
+
+/*
+*   GET /citizen/<handle>
+*/
+async function getCitizen(handle) {
+    citizen = {}
+    citizen.info = await loadCitizen(handle)
+    if(citizen.info) {
+        citizen.ships = []
+        citizen.home = await loadCitizenLocation(handle)
+    } else {
+        citizen.info = await fetchCitizen(handle)
+        citizen.ships = []
+        citizen.home = {
+            system: null,
+            location: null,
+            base: null
+        }
+    }
+
+    return citizen
+};
+
 
 async function loadCitizen(handle) {
     let data = {}
     let citizen = null
-    sql = "select id, created, verified FROM citizen WHERE handle=?"
+
+    let sql = "select id, created FROM citizen WHERE handle=?"
     let rows = await executeSQL(sql, [handle])
+
     if(rows.length > 0) {
         // user found
         data = rows[0]
-        data.verified = data.verified ? true : false
-    }
 
-    sql = "select a.id, a.created, a.verified, b.* from citizen_sync b left join citizen a on a.handle=b.handle where a.handle=?"
-    rows = await executeSQL(sql, [handle])
-    if(rows.length > 0) {
-        citizen = rows[0]
-    } else if (data.verified){
-        // no sync data for some reason, but is verified. Sync data and try again.
-        citizen = await syncCitizen(handle)
+        sql = "select * from citizen_sync where handle=?"
+        rows = await executeSQL(sql, [handle])
+    
+        if(rows.length > 0) {
+            citizen = rows[0]
+        } else if (data.verified){
+            // no sync data for some reason, but is verified. Sync data and try again.
+            citizen = await syncCitizen(handle)
+        }
+    
         citizen.id = data.id
         citizen.created = data.created
-        citizen.verified = data.verified
+        citizen.verified = true
     }
+
     return citizen
 }
 
@@ -77,38 +106,52 @@ async function fetchCitizen(handle) {
     }
 }
 
-async function getCitizen(handle) {
-    citizen = {}
-    citizen.info = await loadCitizen(handle)
-    if(citizen.info) {
-        citizen.ships = []
-        citizen.home = await loadCitizenLocation(handle)
-    } else {
-        citizen.info = await fetchCitizen(handle)
-        citizen.ships = []
-        citizen.home = {
-            system: null,
-            location: null,
-            base: null
-        }
-    }
-
-    return citizen
-};
-
-async function getCitizenInfo(handle) {
+async function getInfo(handle) {
     citizen = await getCitizen(handle)
     return citizen.info
 }
 
-async function getCitizenShips(handle) {
-    citizen = await getCitizen(handle)
-    return citizen.ships
+async function getShips(handle) {
+    sql = "select a.id, a.name, c.short_name, c.make, c.make_abbr, c.model, c.size, c.max_crew, c.cargo, c.type, c.focus from ship_map a left join citizen b on a.citizen = b.id left join ship_view c on a.ship = c.id where b.handle=?"
+    const ships = await executeSQL(sql, [handle])
+    return ships
 }
 
-async function getCitizenLocation(handle) {
-    location = await getCitizenLocation(handle)
-    return location
+async function getLocation(handle) {
+    citizen = await getCitizen(handle)
+    return citizen.home
+}
+
+async function saveLocation(handle, loc) {
+    console.log("saving location...")
+    console.log(loc)
+    const sql = "UPDATE citizen SET home_system = ?, home_location = ?, home_base = ? WHERE handle=?"
+    const system = loc.system ? loc.system.id : null
+    const location = loc.location ? loc.location.id : null
+    const base = loc.base ? loc.base.id : null
+    const res = executeSQL(sql, [system, location, base, handle])
+    console.log(res)
+}
+
+async function setLocation(token, handle, location) {
+    console.log("setting Location!")
+    const user = await getUser(token)
+
+    if(handle == user.app_metadata.handle) {
+        await saveLocation(handle, location)
+        user.home = location
+        return {
+            success: true,
+            error: "",
+            user: user   // user with verified flag set
+        }
+    } else {
+        return {
+            success: false,
+            error: "Cannot edit another citizen's location!",
+            user: user
+        }
+    }
 }
 
 async function syncCitizen(handle) {
@@ -152,11 +195,43 @@ async function startSync(token) {
     }
 }
 
+async function purgeCitizen(handle) {
+    sql = "DELETE FROM citizen_sync WHERE handle=?"
+    await executeSQL(sql, [handle])
+}
+
+async function removeCitizen(handle) {
+    await executeSQL("DELETE FROM citizen WHERE handle=?", [handle])
+}
+
+async function createCitizen(handle) {
+
+    console.log("Creating citizen: " + handle)
+    // try to load citizen from DB
+    sql = "SELECT * FROM citizen WHERE handle=?"
+    const rows = await executeSQL(sql, [handle])
+
+    if(rows.length === 0) {
+        // if no record, add new record
+        sql = "INSERT INTO citizen (handle) values (?)"
+        await executeSQL(sql, [handle])
+        if(verified) {
+            await syncCitizen(handle)
+        } else {
+            purgeCitizen(handle)
+        }
+    }
+}
+
 module.exports = {
     getCitizen,
-    getCitizenInfo,
-    getCitizenShips,
-    getCitizenLocation,
+    fetchCitizen,
+    getInfo,
+    getShips,
+    getLocation,
+    setLocation,
+    createCitizen,
+    removeCitizen,
     syncCitizen,
     startSync
 };

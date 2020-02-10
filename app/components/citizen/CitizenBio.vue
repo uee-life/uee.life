@@ -39,7 +39,7 @@ export default {
         width: fit-content;
         height: fit-content;
         border-top: none;
-        padding: 5px;
+        padding: 10px;
         margin-bottom: 20px;
         opacity: 0;
     }
@@ -53,7 +53,6 @@ export default {
         opacity: 0;
         overflow: auto;
         align-self: flex-start;
-        margin-top: 10px;
     }
 
     /* width */

@@ -18,11 +18,10 @@ export default {
         ...mapGetters([
             'isAuthenticated', 
             'loggedUser',
-            'loggedCitizen'
         ]),
         citizenLink() {
-            if(this.loggedCitizen) {
-                return `/citizens/${this.loggedCitizen.info.handle}`
+            if(this.isAuthenticated && this.loggedUser) {
+                return `/citizens/${this.loggedUser.app_metadata.handle}`
             } else {
                 return `/citizens`
             }

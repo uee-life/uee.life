@@ -31,7 +31,7 @@ export default {
       'loggedUser'
     ]),
     citizenLink() {
-      return `/citizens/${this.loggedUser.handle}`
+      return `/citizens/${this.loggedUser.app_metadata.handle}`
     }
   }
 }

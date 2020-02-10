@@ -3,33 +3,44 @@ const router = require('express').Router()
 
 const {
     getCitizen, 
-    getCitizenInfo, 
-    getCitizenLocation, 
+    getInfo, 
+    getLocation,
+    getShips,
+    setLocation,
+    verifyCitizen,
     startSync
 } = require('./model');
 
 
-router.get('/citizen/:handle', cache(600), async (req, res) => {
+// retrieve citizen basic info
+router.get('/citizens/:handle', cache(600), async (req, res) => {
     res.send(await getCitizen(req.params.handle))
 })
 
-router.get('/citizen/:handle/info', cache(600), async (req, res) => {
-    res.send(await getCitizenInfo(req.params.handle));
+router.get('/citizens/:handle/info', cache(600), async (req, res) => {
+    res.send(await getInfo(req.params.handle));
 })
 
-router.get('/citizen/:handle/ships', async (req, res) => {
-    res.send(await getCitizenShips(req.params.handle));
+router.get('/citizens/:handle/ships', async (req, res) => {
+    res.send(await getShips(req.params.handle));
 });
 
-router.get('/citizen/:handle/location', cache(600), async(req, res) => {
-    res.send(await getCitizenLocation(req.params.handle))
+router.get('/citizens/:handle/location', cache(600), async(req, res) => {
+    res.send(await getLocation(req.params.handle))
 })
 
-/*
-*   Protected apis
-*/
+// Protected
+router.put("/citizens/:handle/location", checkJwt, async (req, res) => {
+    res.send(await setLocation(req.headers.authorization, req.params.handle, req.body))
+})
 
-router.post("/sync", checkJwt, async (req, res) => {
+// Protected
+router.get("/citizens/:handle/verify", checkJwt, async (req, res) => {
+    res.send(await verifyCitizen(req.headers.authorization, req.params.handle));
+});
+
+// Protected
+router.get("/citizens/:handle/sync", checkJwt, async (req, res) => {
     res.send(await startSync(req.headers.authorization))
 });
 

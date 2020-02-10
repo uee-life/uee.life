@@ -1,7 +1,7 @@
 <template>
   <div class="profile">
     <portal to="leftDock">
-    <profile-info v-if="user" :user="user"/>
+    <profile-info v-if="loggedUser" :user="loggedUser"/>
     <div v-else class="loading">
               <img src="~/assets/loading.gif" >
     </div>
@@ -40,44 +40,22 @@ export default {
       }
     },
     computed: {
-      ...mapGetters(['loggedUser', 'loggedCitizen', 'accessToken']),
+      ...mapGetters(['loggedUser', 'accessToken']),
       verified() {
-        if(this.loggedUser && this.loggedUser.handle_verified) {
+        if(this.loggedUser && this.loggedUser.app_metadata.handle_verified) {
           return true
         } else {
           return false
         }
       }
     },
-    mounted() {
-      this.getUser()
-    },
     methods: {
-      async getUser() {
-        const token = this.accessToken;
-        axios({
-          url: `https://api.uee.life/user`,
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }).then((res) => {
-          // eslint-disable-next-line
-          console.log(res.data)
-          this.user = res.data
-          this.$store.dispatch('setUser', res.data)
-        }).catch((error) => {
-          // eslint-disable-next-line
-          console.error(error)
-          this.$router.push('/auth/refresh')
-        })
-      },
       async verifyHandle() {
         const token = this.accessToken;
-        const handle = this.loggedUser.handle
+        const handle = this.loggedUser.app_metadata.handle
 
         axios({
-          url: `https://api.uee.life/citizen/${handle}/verify`,
+          url: `https://api.uee.life/citizens/${handle}/verify`,
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`
@@ -93,7 +71,7 @@ export default {
             this.errors.verification = ""
             this.getUser()
           }
-          //this.$store.dispatch('setUser', res.data.user)
+          this.$store.dispatch('setUser', res.data.user)
         }).catch(function(err) {
           // eslint-disable-next-line
           console.error(err)

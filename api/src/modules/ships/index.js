@@ -4,7 +4,6 @@ const router = require('express').Router()
 const { 
     syncShips,
     getShips,
-    getCitizenShips,
     saveShip
 } = require('./model')
 
@@ -16,15 +15,11 @@ router.get('/ships', async (req, res) => {
     res.send(await getShips())
 })
 
-router.get('/citizen/:handle/ships', async (req, res) => {
-    res.send(await getCitizenShips(req.params.handle));
-});
-
 /*
 *   Protected APIs
 */
 
-router.post('/ships/add', checkJwt, async (req, res) => {
+router.post('/ships', checkJwt, async (req, res) => {
     res.send(await saveShip(req.body))
 })
 

@@ -18,7 +18,6 @@
 
 <script>
 import axios from 'axios'
-import { mapGetters } from 'vuex'
 import { gsap } from 'gsap'
 
 import NewsFeed from '@/components/news/NewsFeed'
@@ -42,12 +41,6 @@ export default {
         Discord,
         MadeBy
     },
-    computed: {
-        ...mapGetters([
-            'isAuthenticated',
-            'loggedUser'
-        ])
-    },
     asyncData() {
         return {
             stats: null,
@@ -66,7 +59,7 @@ export default {
         },
         async getCitizen(handle) {
             axios({
-            url: `https://api.uee.life/citizen/${handle}/info`,
+            url: `https://api.uee.life/citizens/${handle}/info`,
             method: 'GET'
             }).then((res) => {
             this.citizen = res.data

@@ -9,7 +9,7 @@
         <div class="page-head-right">
             <div class="user">
                 <div v-if='isAuthenticated' class="welcome">
-                    Welcome, <nuxt-link :to="citizenLink">{{ loggedUser ? loggedUser.handle : 'Citizen' }}</nuxt-link>!
+                    Welcome, <nuxt-link :to="citizenLink">{{ loggedUser ? loggedUser.app_metadata.handle : 'Citizen' }}</nuxt-link>!
                 </div>
                 <div v-else>
                     Welcome! Please <nuxt-link to="/auth/sign-in">Log In / Sign Up</nuxt-link>
@@ -34,7 +34,7 @@ export default {
         ]),
         citizenLink() {
             if(this.loggedUser) {
-                return `/citizens/${this.loggedUser.handle}`
+                return `/citizens/${this.loggedUser.app_metadata.handle}`
             } else {
                 return `/citizens`
             }

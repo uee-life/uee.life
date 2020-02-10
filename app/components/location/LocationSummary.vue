@@ -53,6 +53,7 @@ export default {
 
     .summary-info {
         margin: 0 10px;
+        font-size: calc(13px + 3*(100vw - 300px)/1300)
     }
 
     .summary-name {

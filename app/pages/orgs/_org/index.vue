@@ -84,7 +84,7 @@ export default {
         async getOrg() {
             try {
                 const sid = this.$route.params.org
-                axios.get(`https://api.uee.life/organization/${sid}`).then((res) => {
+                axios.get(`https://api.uee.life/orgs/${sid}`).then((res) => {
 
                     if(res.status == 200) {
                         this.org = res.data
@@ -102,7 +102,7 @@ export default {
         },
         async getOrgMembers() {
             const sid = this.$route.params.org
-            await axios.get(`https://api.uee.life/organization/${sid}/members/1`).then((res) => {
+            await axios.get(`https://api.uee.life/orgs/${sid}/members?page=1`).then((res) => {
                 if(res.status == 200) {
                     this.memberCount = res.data.count
                 }
@@ -113,7 +113,7 @@ export default {
         },
         async getOrgAffiliates() {
             const sid = this.$route.params.org
-            await axios.get(`https://api.uee.life/organization/${sid}/affiliates/1`).then((res) => {
+            await axios.get(`https://api.uee.life/orgs/${sid}/affiliates?page=1`).then((res) => {
                 if(res.status == 200) {
                     this.affiliateCount = res.data.count
                 }

@@ -46,7 +46,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { mapGetters } from 'vuex'
 import { gsap } from 'gsap'
 export default {

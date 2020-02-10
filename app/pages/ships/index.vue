@@ -78,7 +78,7 @@ export default {
         addShip() {
 
             axios({
-                url: 'https://api.uee.life/ships/add',
+                url: 'https://api.uee.life/ships',
                 method: 'POST',
                 headers: {
                     'Content-Type': "application/json; charset=utf-8",
