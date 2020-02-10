@@ -39,18 +39,18 @@ export const mutations = {
 }
 
 export const actions = {
-  initUser ({ dispatch }, data) {
+  initUser ({ commit, dispatch }, data) {
+
     dispatch('setToken', { token: data['token'], expiry: data['token_expiry']})
 
-    axios({
+    return axios({
       url: 'https://api.uee.life/user',
       method: 'GET',
       headers: {
         Authorization: `Bearer ${data['token']}`
       }
     }).then((res) => {
-      console.log('initUser: ', res.data)
-      dispatch('setUser', res.data)
+      commit('SET_USER', res.data)
     }).catch((error) => {
       console.error('/user error: ', error)
       window.localStorage.removeItem('token')

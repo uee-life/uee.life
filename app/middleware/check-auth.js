@@ -6,7 +6,7 @@ export default function (ctx) {
    console.log('In check-auth.js')
   if (process.server && !ctx.req) return
   const data = process.server ? getTokenFromCookie(ctx.req) : getTokenFromLocalStorage()
-  
+
   if(data) {
     let now = new Date()
     let expiry = new Date(data['token_expiry'])
@@ -20,6 +20,6 @@ export default function (ctx) {
       console.log("Token expires soon. Refreshing...")
       store.commit('REFRESH_TOKEN', true)
     } 
-    ctx.store.dispatch('initUser', data)
+    return ctx.store.dispatch('initUser', data)
   }
 }
