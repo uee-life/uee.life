@@ -41,7 +41,7 @@ async function loadCitizen(handle) {
         // user found
         data = rows[0]
 
-        sql = "select * from citizen_sync where a.handle=?"
+        sql = "select * from citizen_sync where handle=?"
         rows = await executeSQL(sql, [handle])
     
         if(rows.length > 0) {
