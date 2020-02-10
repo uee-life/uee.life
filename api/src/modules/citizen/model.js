@@ -106,17 +106,17 @@ async function fetchCitizen(handle) {
     }
 }
 
-async function getCitizenInfo(handle) {
+async function getInfo(handle) {
     citizen = await getCitizen(handle)
     return citizen.info
 }
 
-async function getCitizenShips(handle) {
+async function getShips(handle) {
     citizen = await getCitizen(handle)
     return citizen.ships
 }
 
-async function getCitizenLocation(handle) {
+async function getLocation(handle) {
     citizen = await getCitizen(handle)
     return citizen.home
 }
