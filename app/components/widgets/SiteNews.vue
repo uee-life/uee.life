@@ -2,8 +2,13 @@
     <main-panel title="Site News" class="site-news" id="site-news" :style="newsHeight">
         <div class="content">
             <div class="title">
-                <h3>UEE.life v0.2.1  - Bug Patch</h3>
-                <div class="date"><i>Updated: 7 Feb 2950</i></div>
+                <h3>UEE.life v0.2.2  - Bug Patch</h3>
+                <div class="date"><i>Updated: 13 Feb 2950</i></div>
+            </div>
+            <div>v0.2.2 Bug fix patch:
+                <ul>
+                    <li>Fixed a critical issue where expired credentials caused a 500 error</li>
+                </ul>
             </div>
             <div>v0.2.1 Bug fix patch:
                 <ul>
