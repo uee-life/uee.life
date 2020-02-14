@@ -12,7 +12,6 @@ export default function (ctx) {
     let expiry = new Date(data['token_expiry'])
     if (isAfter(now, expiry)) {
       console.log("Token expired. Needs new login.")
-      console.log(ctx)
       unsetToken(ctx)
       return ctx.redirect('/auth/sign-off')
     } else if (isAfter(now, subSeconds(expiry, 1800))) {
