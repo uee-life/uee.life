@@ -10,7 +10,7 @@ const getQueryParams = () => {
 }
 
 export const extractInfoFromHash = () => {
-  if (process.SERVER_BUILD) return
+  if (process.server) return
   let err, err_msg = ''
   const params = getQueryParams()
   if ('error' in params) {
@@ -29,7 +29,7 @@ export const extractInfoFromHash = () => {
 }
 
 export const setToken = (ctx, token, access_token, token_expiry) => {
-  if (process.SERVER_BUILD) return
+  if (process.server) return
 
   const expires = addSeconds(new Date(), token_expiry)
 
@@ -43,13 +43,13 @@ export const setToken = (ctx, token, access_token, token_expiry) => {
 }
 
 export const updateAccessToken = (access_token, expires) => {
-  if (process.SERVER_BUILD) return
+  if (process.server) return
   window.localStorage.setItem('access_token', access_token)
   window.localStorage.setItem('access_token_expiry', expires)
 }
 
 export const unsetToken = (ctx) => {
-  if (process.SERVER_BUILD) return
+  if (process.server) return
   //if(process.browser) {
     window.localStorage.removeItem('token')
     window.localStorage.removeItem('access_token')
