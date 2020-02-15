@@ -155,3 +155,14 @@ opacity: 0;
 .loading>img {
   width: 150px;
 }
+
+select {
+  color: #39ced8;
+  background: url('/images/fading-bars.png') repeat;
+  border: 1px solid #546f84;
+  margin: 2px;
+}
+
+select option {
+  background-color: rgb(13, 46, 66);
+}

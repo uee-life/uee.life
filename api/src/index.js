@@ -17,6 +17,7 @@ app.use(morgan('combined'));
 
 app.use(require('./modules/citizen'))
 app.use(require('./modules/location'))
+app.use(require('./moduoles/POIs'))
 app.use(require('./modules/news'))
 app.use(require('./modules/orgs'))
 app.use(require('./modules/search'))
