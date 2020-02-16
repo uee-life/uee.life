@@ -75,7 +75,7 @@ export default {
             });
         },
         async getPOIs() {
-            const sid = this.$route.params.code
+            const sid = this.$route.params.system
             axios.get(`https://api.uee.life/systems/${sid}/pois`).then(res => {
                 if(res.status == 200) {
                     this.pois = res.data
