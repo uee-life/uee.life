@@ -9,6 +9,16 @@ async function getPOISpec() {
     return spec
 }
 
+async function getPOI(id) {
+    return await executeSQL('SELECT * FROM pois WHERE id=?', [id])
+}
+
+async function getPOIData(id) {
+    return await executeSQL('SELECT * FROM poi_data WHERE poi=?', [id])
+}
+
 module.exports = {
-    getPOISpec
+    getPOISpec,
+    getPOI,
+    getPOIData
 }
