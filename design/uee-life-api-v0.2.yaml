@@ -27,8 +27,6 @@ tags:
   description: Systems of the verse
 - name: locations
   description: Locations in each system
-- name: satellites
-  description: Orbital satellites (i.e. moons) of a location
 - name: pois
   description: Points of interest
 - name: ships
@@ -439,7 +437,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SystemInfo'
-  /systems/{code}/planets:
+  /systems/{code}/locations:
     get:
       tags:
       - systems
@@ -579,27 +577,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LocationList'
-  /satellites/{id}:
-    get:
-      tags:
-      - satellites
-      summary: Retrieve location data
-      description: Retrieve locationData
-      operationId: getSatellite
-      parameters: 
-      - name: id
-        in: path
-        description: location to retrieve
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Location'
   /pois:
     get:
       tags:
