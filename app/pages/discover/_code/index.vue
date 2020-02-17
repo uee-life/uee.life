@@ -31,7 +31,7 @@
 import axios from "axios"
 
 import Location from '@/components/location/Location.vue'
-import PlanetList from '@/components/location/PlanetList.vue'
+import LocationList from '@/components/location/LocationList.vue'
 import PoiList from '@/components/location/POIList.vue'
 
 export default {
@@ -39,7 +39,7 @@ export default {
     name: "system",
     components: {
         Location,
-        PlanetList,
+        LocationList,
         PoiList
     },
     data() {
@@ -54,7 +54,7 @@ export default {
     methods: {
         async getLocation() {
             const code = this.$route.params.code
-            axios.get(`https://api.uee.life/systems/${code}`).then(res => {
+            axios.get(`https://api.uee.life/locations/${code}`).then(res => {
                 if(res.status == 200) {
                     this.location = res.data
                 }
@@ -65,7 +65,7 @@ export default {
         },
         async getLocations() {
             const code = this.$route.params.code
-            axios.get(`https://api.uee.life/systems/${code}/planets`).then(res => {
+            axios.get(`https://api.uee.life/locations/${code}/locations`).then(res => {
                 if(res.status == 200) {
                     this.children = res.data
                 }
@@ -76,7 +76,7 @@ export default {
         },
         async getPOIs() {
             const sid = this.$route.params.code
-            axios.get(`https://api.uee.life/systems/${sid}/pois`).then(res => {
+            axios.get(`https://api.uee.life/locations/${sid}/pois`).then(res => {
                 if(res.status == 200) {
                     this.pois = res.data
                 }

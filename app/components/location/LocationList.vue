@@ -1,7 +1,7 @@
 <template>
     <div id="location-list" class="location-list">
         <div v-if="locations.length > 0" class="locations">
-            <location-summary v-for="(loc, index) in locations" :key="loc.code" :loc="loc" :link="getLink(loc.name)" :index="index">
+            <location-summary v-for="(loc, index) in locations" :key="loc.code" :loc="loc" :link="getLink(loc.code)" :index="index">
                 <div>Type: {{ loc.subtype }}</div>
                 <div>Affiliation: {{ loc.affiliation }}</div>
                 <div>Habitable: {{ isHabitable(loc) }}</div>
@@ -35,8 +35,8 @@ export default {
         }
     },
     methods: {
-        getLink(locName) {
-            return `/planet/${locName}`
+        getLink(code) {
+            return `/discover/${code}`
         },
         isHabitable(loc) {
             if(loc.habitable) {
@@ -46,7 +46,7 @@ export default {
             }
         },
         show() {
-            gsap.to(".planet-list", 1, {opacity: 1})
+            gsap.to(".location-list", 1, {opacity: 1})
         }
     },
     mounted() {

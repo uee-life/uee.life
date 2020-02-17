@@ -41,7 +41,7 @@ router.get('/locations/:code/locations', cache(60), async (req, res) => {
 })
 
 router.get('/locations/:code/pois', cache(60), async (req, res) => {
-    res.send(await getPOIs("", req.params.planet))
+    res.send(await getPOIs(req.params.code))
 })
 
 module.exports = router
