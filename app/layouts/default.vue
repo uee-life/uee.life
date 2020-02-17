@@ -75,7 +75,7 @@ export default {
    max-width: 240px;
  }
 
- .leftDock {
+ /*.leftDock {
    min-width: 240px;
- }
+ }*/
 </style>

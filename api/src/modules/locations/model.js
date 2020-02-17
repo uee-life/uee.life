@@ -1,6 +1,10 @@
 const {executeSQL} = require('../mariadb')
 
 
+async function addLocation(user, data) {
+    // add location
+}
+
 async function getLocationSpec() {
     const spec = {
         types: await executeSQL('SELECT * from location_types'),
@@ -19,6 +23,10 @@ async function getLocation(code) {
     return res
 }
 
+async function updateLocation(code, data) {
+    // update location
+}
+
 async function getLocationData(code) {
     res = {}
     rows = await executeSQL('SELECT * FROM location_data where code = ?', [code])
@@ -26,6 +34,10 @@ async function getLocationData(code) {
         res = rows[0]
     }
     return res
+}
+
+async function updateLocationData(code, data) {
+    // update location data
 }
 
 async function getLocations(code) {
@@ -44,9 +56,12 @@ async function getPOIs(code) {
 }
 
 module.exports = {
+    addLocation,
     getLocationSpec,
     getLocation,
+    updateLocation,
     getLocationData,
+    updateLocationData,
     getLocations,
     getPOIs
 }
