@@ -38,3 +38,5 @@ router.get('/pois/:id/data', cache(60), async (req, res) => {
 router.put('/pois/:id/data', checkJwt, async (req, res) => {
     res.send(await updatePOIData(req.user, req.params.id, req.body))
 })
+
+module.exports = router

@@ -23,3 +23,5 @@ router.get('/systems/:code/locations', cache(60), async (req, res) => {
 router.get('/systems/:code/pois', cache(60), async (req, res) => {
     res.send(await getPOIs(req.params.code));
 })
+
+module.exports = router
