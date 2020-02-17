@@ -1,0 +1,22 @@
+<template>
+    <div>
+        <latest-pois />
+        <geolocate />
+    </div>
+</template>
+
+<script>
+import Geolocate from '@/components/discover/Geolocate'
+import LatestPois from '@/components/discover/latestPOIs'
+export default {
+    name: 'Explore',
+    components: {
+        Geolocate,
+        LatestPois
+    }
+}
+</script>
+
+<style>
+
+</style>
