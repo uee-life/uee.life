@@ -42,7 +42,7 @@ async function updateLocationData(code, data) {
 
 async function getLocations(code) {
     locations = []
-    rows = await executeSQL('SELECT a.*, b.code from locs_view a left join locs_view b on a.parent_id = b.id where b.code = ?', [code])
+    rows = await executeSQL('SELECT a.* from locs_view a left join locs_view b on a.parent_id = b.id where b.code = ?', [code])
     if(rows.length > 0) {
         locations = rows
     }
