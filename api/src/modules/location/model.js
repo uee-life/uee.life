@@ -1,7 +1,7 @@
 const {executeSQL} = require('../mariadb')
 
 async function getSystems() {
-    return await executeSQL("SELECT a.id, a.name, b.affiliation FROM systems a LEFT JOIN affiliation b ON a.affiliation = b.id where a.name='stanton'")
+    return await executeSQL("SELECT id, name, affiliation FROM locs_view where type=6 and name='stanton'")
 }
 
 async function getSystem(sys) {
@@ -20,6 +20,10 @@ async function getPlanets(system) {
         planets = rows
     } 
     return planets;
+}
+
+async function getLocations(system) {
+    return await executeSQL('SELECT * FROM locs_view WHERE system_id = ?', [system])
 }
 
 async function getPlanet(planet) {
@@ -74,6 +78,7 @@ module.exports = {
     getSystems,
     getSystem,
     getPlanets,
+    getLocations,
     getPlanet,
     getSatellites,
     getSatellite,

@@ -53,7 +53,7 @@ export default {
     },
     methods: {
         async getLocation() {
-            const code = this.$route.params.code
+            const code = this.$route.params.location
             axios.get(`https://api.uee.life/locations/${code}`).then(res => {
                 if(res.status == 200) {
                     this.location = res.data
@@ -64,7 +64,7 @@ export default {
             });
         },
         async getLocations() {
-            const code = this.$route.params.code
+            const code = this.$route.params.location
             axios.get(`https://api.uee.life/locations/${code}/locations`).then(res => {
                 if(res.status == 200) {
                     this.children = res.data
@@ -75,7 +75,7 @@ export default {
             });
         },
         async getPOIs() {
-            const sid = this.$route.params.code
+            const sid = this.$route.params.location
             axios.get(`https://api.uee.life/locations/${sid}/pois`).then(res => {
                 if(res.status == 200) {
                     this.pois = res.data
