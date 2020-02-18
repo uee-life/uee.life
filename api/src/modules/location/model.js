@@ -1,7 +1,7 @@
 const {executeSQL} = require('../mariadb')
 
 async function getSystems() {
-    return await executeSQL("SELECT id, name, affiliation FROM locs_view where type=6 and name='stanton'")
+    return await executeSQL("SELECT id, name, affiliation FROM locs where type=6 and name='stanton'")
 }
 
 async function getSystem(sys) {
