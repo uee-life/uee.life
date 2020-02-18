@@ -50,8 +50,8 @@ async function getLocations(code) {
 }
 
 async function getPOIs(code) {
-    sql = "SELECT * FROM poi_view where parent_id=(select id from locs_view where code=?)"
-    rows = await executeSQL(sql, [code])
+    sql = "SELECT * FROM poi_view where parent_id=(select id from locs_view where code=?) or system_id=(select id from locs_view where code=?)"
+    rows = await executeSQL(sql, [code, code])
     return rows
 }
 
