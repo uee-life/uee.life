@@ -16,7 +16,7 @@ async function getLocationSpec() {
 
 async function getLocation(code) {
     res = {};
-    rows = await executeSQL("SELECT * FROM location_view WHERE code = ?", [code]);
+    rows = await executeSQL("SELECT * FROM locs_view WHERE code = ?", [code]);
     if(rows.length > 0) {
         res = rows[0]
     }
