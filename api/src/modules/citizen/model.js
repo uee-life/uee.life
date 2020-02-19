@@ -84,6 +84,7 @@ async function loadCitizenLocation(handle) {
 }
 
 async function fetchCitizen(handle) {
+    console.log("Fetching for:", handle)
     try {
         const baseURI = 'https://robertsspaceindustries.com'
         const resp = await axios.get(baseURI + '/citizens/' + handle)
@@ -99,6 +100,7 @@ async function fetchCitizen(handle) {
         info.orgRank = $('span:contains("Organization rank")', '#public-profile').next().text()
         info.website = $('span:contains("Website")', '#public-profile').next().attr('href') || ''
         info.verified = 0
+        console.log("info:", info)
         return info
     } catch (error) {
         console.error(error)
@@ -155,8 +157,11 @@ async function setLocation(token, handle, location) {
 }
 
 async function syncCitizen(handle) {
+
+    console.log('Syncing...')
     // get citizen data from RSI
     const citizen = await fetchCitizen(handle)
+    console.log(citizen)
     // update citizen data
     if(citizen) {
         sql = "REPLACE INTO citizen_sync (handle, record, name, bio, enlisted, portrait, org, orgrank, website) VALUES (?,?,?,?,?,?,?,?,?)"
