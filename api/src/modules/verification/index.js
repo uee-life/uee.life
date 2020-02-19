@@ -3,6 +3,8 @@ const { executeSQL } = require('../mariadb')
 
 const { getCitizen, createCitizen } = require('../citizen')
 
+const { getUser } = require('../user')
+
 async function setVerificationCode(user, code) {
     // delete old code
     await executeSQL("DELETE FROM verification WHERE email = ?", [user.email]);
