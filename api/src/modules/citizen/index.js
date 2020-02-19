@@ -7,9 +7,12 @@ const {
     getLocation,
     getShips,
     setLocation,
-    verifyCitizen,
     startSync
 } = require('./model');
+
+const {
+    verifyCitizen
+} = require('../verification')
 
 
 // retrieve citizen basic info
