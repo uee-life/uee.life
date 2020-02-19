@@ -46,7 +46,7 @@ async function loadCitizen(handle) {
     
         if(rows.length > 0) {
             citizen = rows[0]
-        } else if (data.verified){
+        } else {
             // no sync data for some reason, but is verified. Sync data and try again.
             citizen = await syncCitizen(handle)
         }
