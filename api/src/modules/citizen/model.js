@@ -48,7 +48,9 @@ async function loadCitizen(handle) {
             citizen = rows[0]
         } else {
             // no sync data for some reason, but is verified. Sync data and try again.
+            console.log('sync needed...')
             citizen = await syncCitizen(handle)
+            console.log(citizen)
         }
 
         citizen.id = data.id
