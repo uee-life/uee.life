@@ -43,8 +43,9 @@ async function loadCitizen(handle) {
 
         sql = "select * from citizen_sync where handle=?"
         rows = await executeSQL(sql, [handle])
-    
+        console.log('rows:', rows)
         if(rows.length > 0) {
+            console.log('boof')
             citizen = rows[0]
         } else if (data.verified){
             // no sync data for some reason, but is verified. Sync data and try again.
