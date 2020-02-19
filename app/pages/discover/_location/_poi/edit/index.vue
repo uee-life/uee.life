@@ -2,14 +2,15 @@
     <form @submit.prevent="updatePOI">
             <div>Select System:
             <select v-model="system">
-                <option v-for="sys in systems" :key="sys.id" :value="sys">{{ sys.name }}</option>
+                <option v-for="sys in systems" :key="sys.id" :value="sys.id">{{ sys.name }}</option>
             </select></div>
             <div>Select Location: 
             <select v-model="location">
                 <option v-for="loc in locations" :key="loc.id" :value="loc.id">{{ loc.name }}</option>
             </select></div>
             <div>name <input type=text v-model="name"></div>
-            <div>description <input type=text v-model="description"></div>
+            <div>code <input type=text v-model="code"></div>
+            <div>description<br><textarea type=text v-model="description"></textarea></div>
             <button type="submit">Compute</button>
     </form>
 </template>
@@ -23,6 +24,7 @@ export default {
             system: null,
             location: null,
             name: null,
+            code: null,
             description: null,
             systems: null,
             locations: null
@@ -33,10 +35,12 @@ export default {
             console.log('updating...')
         },
         loadData(poi) {
-            this.system = poi.system
-            this.location = poi.location
+            console.log(poi)
+            this.system = poi.system_id
+            this.location = poi.parent_id
             this.name = poi.name
             this.description = poi.description
+            this.code = poi.code
         },
         async getPoi() {
             const poi = this.$route.params.poi
@@ -60,9 +64,8 @@ export default {
             })
         },
         async getLocations(cb, errorCb) {
-            console.log(this.system.name)
             axios({
-                url: `https://api.uee.life/systems/${this.system.name}/locations`,
+                url: `https://api.uee.life/systems/${this.system}/locations`,
                 method: 'GET'
             }).then((res) => {
                 this.locations = res.data
@@ -73,6 +76,7 @@ export default {
     },
     mounted() {
         this.getSystems()
+        this.getPoi()
     },
     watch: {
         system() {
