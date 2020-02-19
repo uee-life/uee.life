@@ -7,9 +7,9 @@
     </div>
     </portal>
     <main-panel title="Settings">Coming soon...</main-panel>
-    <profile-verify v-if="!verified || debug" :user="user" :errors="errors.verification" @verify="verifyHandle"/>
+    <profile-verify v-if="!verified || debug" :user="loggedUser" :errors="errors.verification" @verify="verifyHandle"/>
     <div v-if="debug" class="debug">
-      <pre>{{ JSON.stringify(user, null, 2) }}</pre>
+      <pre>{{ JSON.stringify(loggedUser, null, 2) }}</pre>
     </div>
   </div>
 </template>

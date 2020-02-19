@@ -51,6 +51,7 @@ export default {
         position: relative;
         box-sizing: border-box;
         display: flex;
+        flex-direction: column;
         width: 100%;
         height: fit-content;
         padding: 10px;
@@ -72,6 +73,10 @@ export default {
     .verify-code>button {
         margin-left: 5px;
         padding: 10px;
+        color: #39CED8;
+        background-color: rgb(13, 46, 66);
+        border: none;
+        cursor: pointer;
     }
     .verify-code>span {
         margin-left: 15px;
