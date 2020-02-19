@@ -50,7 +50,7 @@ async function loadCitizen(handle) {
             // no sync data for some reason, but is verified. Sync data and try again.
             citizen = await syncCitizen(handle)
         }
-    
+        console.log('stuff:', citizen, data)
         citizen.id = data.id
         citizen.created = data.created
         citizen.verified = true
