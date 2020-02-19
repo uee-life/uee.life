@@ -43,15 +43,14 @@ async function loadCitizen(handle) {
 
         sql = "select * from citizen_sync where handle=?"
         rows = await executeSQL(sql, [handle])
-        console.log('rows:', rows)
+
         if(rows.length > 0) {
             citizen = rows[0]
         } else if (data.verified){
             // no sync data for some reason, but is verified. Sync data and try again.
-            console.log('sync needed...')
             citizen = await syncCitizen(handle)
         }
-        console.log('stuff:', citizen, data)
+
         citizen.id = data.id
         citizen.created = data.created
         citizen.verified = true
@@ -85,7 +84,6 @@ async function loadCitizenLocation(handle) {
 }
 
 async function fetchCitizen(handle) {
-    console.log("Fetching for:", handle)
     try {
         const baseURI = 'https://robertsspaceindustries.com'
         const resp = await axios.get(baseURI + '/citizens/' + handle)
@@ -101,7 +99,6 @@ async function fetchCitizen(handle) {
         info.orgRank = $('span:contains("Organization rank")', '#public-profile').next().text()
         info.website = $('span:contains("Website")', '#public-profile').next().attr('href') || ''
         info.verified = 0
-        console.log("info:", info)
         return info
     } catch (error) {
         console.error(error)
@@ -158,11 +155,9 @@ async function setLocation(token, handle, location) {
 }
 
 async function syncCitizen(handle) {
-
-    console.log('Syncing...')
     // get citizen data from RSI
     const citizen = await fetchCitizen(handle)
-    console.log(citizen)
+
     // update citizen data
     if(citizen) {
         sql = "REPLACE INTO citizen_sync (handle, record, name, bio, enlisted, portrait, org, orgrank, website) VALUES (?,?,?,?,?,?,?,?,?)"
