@@ -6,6 +6,7 @@ const {
 } = require('./model');
 
 router.get("/user", checkJwt, async (req, res) => {
+    console.log('/user called')
     res.send(await getUser(req.headers.authorization).catch(err => {
         console.error(err)
         return err
