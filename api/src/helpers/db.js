@@ -1,4 +1,4 @@
-const { executeSQL } = require('../mariadb')
+const { executeSQL } = require('../modules/mariadb')
 
 async function createCitizen(handle) {
     console.log("Creating citizen: " + handle)
