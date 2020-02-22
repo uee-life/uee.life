@@ -38,7 +38,7 @@ async function updateHandle(usr, handle) {
         handle: handle,
         handle_verified: false
     }
-    management.updateAppMetadata(params, metadata).then(function(user) {
+    await management.updateAppMetadata(params, metadata).then(function(user) {
         await removeCitizen(user.app_metadata.handle)
         return user
     }).catch(function(err) {
