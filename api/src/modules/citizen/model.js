@@ -11,6 +11,7 @@ const { getUser } = require('../user/model')
 *   GET /citizen/<handle>
 */
 async function getCitizen(handle) {
+    console.log('in getCitizen')
     citizen = {}
     citizen.info = await loadCitizen(handle)
     if(citizen.info) {
