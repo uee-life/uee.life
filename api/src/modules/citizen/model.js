@@ -140,6 +140,7 @@ async function saveLocation(handle, loc) {
 async function setLocation(token, handle, location) {
     console.log("setting Location!")
     const user = await getUser(token)
+    console.log(user)
 
     if(handle == user.app_metadata.handle) {
         await saveLocation(handle, location)
