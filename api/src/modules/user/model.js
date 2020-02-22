@@ -11,11 +11,10 @@ const {
 } = require('../citizen/model')
 
 
-async function getUser(user) {
-    userID = user.sub
+async function getUser(usr) {
 
     var params = {
-        id: userID
+        id: usr.sub
     }
     const user = await manager.getUser(params).then((res) => {
         return res
