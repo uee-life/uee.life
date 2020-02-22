@@ -1,15 +1,8 @@
-const { 
-    getVerificationCode,
-    setVerified
-} = require('../verification')
+import { getVerificationCode, setVerified } from '../verification';
 
-const { manager } = require('../manager')
+import { manager } from '../manager';
 
-const { 
-    getCitizen,
-    fetchCitizen, 
-    createCitizen 
-} = require('../citizen/model.js')
+import { getCitizen, fetchCitizen, createCitizen } from '../citizen/model';
 
 
 async function getUser(usr) {
@@ -131,7 +124,7 @@ async function getBioCode(handle) {
 }
 
 
-module.exports = {
+export default {
     getUser,
     updateHandle,
     sync,

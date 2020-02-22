@@ -5,7 +5,7 @@ const {
     getUser,
     verify,
     sync
-} = require('./model');
+} = require('./model').default;
 
 // Protected
 router.get("/user", checkJwt, async (req, res) => {
