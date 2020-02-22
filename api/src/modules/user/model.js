@@ -124,7 +124,7 @@ async function getBioCode(handle) {
 }
 
 
-export default {
+module.exports = {
     getUser,
     updateHandle,
     sync,
