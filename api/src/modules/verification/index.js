@@ -1,9 +1,9 @@
 const uuid = require('uuid/v4')
 const { executeSQL } = require('../mariadb')
 
-const { getCitizen, createCitizen } = require('../citizen')
+const { getCitizen, createCitizen } = require('../citizen/model')
 
-const { getUser } = require('../user')
+const { getUser } = require('../user/model')
 
 async function setVerificationCode(user, code) {
     // delete old code
