@@ -1,8 +1,9 @@
+const { getCitizen, fetchCitizen, createCitizen } = require('../citizen/model')
 const { getVerificationCode, setVerified } = require('../verification')
 
 const{ manager } = require('../manager')
 
-const { getCitizen, fetchCitizen, createCitizen } = require('../citizen/model')
+
 
 
 async function getUser(usr) {
