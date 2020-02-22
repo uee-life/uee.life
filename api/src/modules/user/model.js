@@ -8,7 +8,7 @@ const { manager } = require('../manager')
 const { 
     fetchCitizen, 
     createCitizen 
-} = require('../citizen/model')
+} = require('../citizen/model.js')
 
 
 async function getUser(usr) {
@@ -55,6 +55,7 @@ async function removeCitizen(handle) {
 
 async function sync(usr) {
     const user = await getUser(usr)
+    console.log(await getVerificationCode(user))
     if(user.app_metadata.handle_verified) {
         const result = await syncCitizen(user.app_metadata.handle).then((citizen) => {
             return {success: true, citizen: citizen}
