@@ -2,7 +2,7 @@
 const { executeSQL } = require('../mariadb')
 
 const { getUser } = require('../user/model')
-const { fetchCitizen } = require('../helpers/rsi')
+const { fetchCitizen } = require('../../helpers/rsi')
 
 /*
 *   GET /citizen/<handle>
