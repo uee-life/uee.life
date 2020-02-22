@@ -51,6 +51,7 @@ async function removeCitizen(handle) {
 async function sync(usr) {
     const user = await getUser(usr)
     console.log(await getVerificationCode(user))
+    console.log(await getCitizen(handle.app_metadata.handle))
     if(user.app_metadata.handle_verified) {
         const result = await syncCitizen(user.app_metadata.handle).then((citizen) => {
             return {success: true, citizen: citizen}
