@@ -1,8 +1,8 @@
-import { getVerificationCode, setVerified } from '../verification';
+const { getVerificationCode, setVerified } = require('../verification')
 
-import { manager } from '../manager';
+const{ manager } = require('../manager')
 
-import { getCitizen, fetchCitizen, createCitizen } from '../citizen/model';
+const { getCitizen, fetchCitizen, createCitizen } = require('../citizen/model')
 
 
 async function getUser(usr) {
