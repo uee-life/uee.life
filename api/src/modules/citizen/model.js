@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 const { manager } = require('../manager')
 const { executeSQL } = require('../mariadb')
 
-const { getUser } = require('../user/model').default
+const { getUser } = require('../user/model')
 
 /*
 *   GET /citizen/<handle>
