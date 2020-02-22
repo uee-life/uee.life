@@ -86,6 +86,7 @@ async function loadCitizenLocation(handle) {
 }
 
 async function fetchCitizen(handle) {
+    console.log('fetching citizen...')
     try {
         const baseURI = 'https://robertsspaceindustries.com'
         const resp = await axios.get(baseURI + '/citizens/' + handle)

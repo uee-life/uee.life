@@ -68,6 +68,7 @@ async function sync(usr) {
 }
 
 async function syncCitizen(handle) {
+    console.log('syncing...')
     // get citizen data from RSI
     const citizen = await fetchCitizen(handle)
 
