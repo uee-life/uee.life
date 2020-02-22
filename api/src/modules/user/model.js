@@ -6,6 +6,7 @@ const {
 const { manager } = require('../manager')
 
 const { 
+    getCitizen,
     fetchCitizen, 
     createCitizen 
 } = require('../citizen/model.js')
@@ -71,7 +72,7 @@ async function sync(usr) {
 async function syncCitizen(handle) {
     console.log('syncing...')
     // get citizen data from RSI
-    const citizen = await fetchCitizen(handle)
+    const citizen = await getCitizen(handle)
 
     // update citizen data
     if(citizen) {
