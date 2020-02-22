@@ -175,6 +175,5 @@ module.exports = {
     getShips,
     getLocation,
     setLocation,
-    createCitizen,
-    removeCitizen
+    createCitizen
 };
