@@ -1,5 +1,5 @@
-const { fetchCitizen } = require('../helpers/rsi')
-const { createCitizen } = require('../helpers/db')
+const { fetchCitizen } = require('../../helpers/rsi')
+const { createCitizen } = require('../../helpers/db')
 const { getVerificationCode, setVerified } = require('../verification')
 
 const{ manager } = require('../manager')
