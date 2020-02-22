@@ -156,73 +156,15 @@ async function setLocation(token, handle, location) {
     }
 }
 
-async function syncCitizen(handle) {
-    // get citizen data from RSI
-    const citizen = await fetchCitizen(handle)
-
-    // update citizen data
-    if(citizen) {
-        sql = "REPLACE INTO citizen_sync (handle, record, name, bio, enlisted, portrait, org, orgrank, website) VALUES (?,?,?,?,?,?,?,?,?)"
-        data = [
-            citizen.handle,
-            citizen.record,
-            citizen.name,
-            citizen.bio,
-            citizen.enlisted,
-            citizen.portrait,
-            citizen.org,
-            citizen.orgRank,
-            citizen.website
-        ]
-        await executeSQL(sql, data)
-        return citizen
-    } else {
-        return null
-    }
-}
-
-async function startSync(token) {
-    const userID = jwt.decode(token.slice(7)).sub
-    const user = await manager.getUser({id: userID}).catch((err) => {
-        console.error(err)
-        return {}
-    })
-    if(user.app_metadata.handle_verified) {
-        if(citizen = await syncCitizen(user.app_metadata.handle)) {
-            return {success: true, citizen: citizen}
-        } else {
-            return {success: false, error: "Sync failed. Flint probably broke something :("}
-        }
-    } else {
-        return {success: false, error: "Your account is not yet verified! Please verify and try again."}
-    }
-}
-
-async function purgeCitizen(handle) {
-    sql = "DELETE FROM citizen_sync WHERE handle=?"
-    await executeSQL(sql, [handle])
-}
-
-async function removeCitizen(handle) {
-    await executeSQL("DELETE FROM citizen WHERE handle=?", [handle])
-}
-
 async function createCitizen(handle) {
-
     console.log("Creating citizen: " + handle)
     // try to load citizen from DB
-    sql = "SELECT * FROM citizen WHERE handle=?"
-    const rows = await executeSQL(sql, [handle])
+    const rows = await executeSQL("SELECT * FROM citizen WHERE handle=?", [handle])
 
     if(rows.length === 0) {
         // if no record, add new record
-        sql = "INSERT INTO citizen (handle) values (?)"
-        await executeSQL(sql, [handle])
-        if(verified) {
-            await syncCitizen(handle)
-        } else {
-            purgeCitizen(handle)
-        }
+        await executeSQL("INSERT INTO citizen (handle) values (?)", [handle])
+        await syncCitizen(handle)
     }
 }
 
@@ -234,7 +176,5 @@ module.exports = {
     getLocation,
     setLocation,
     createCitizen,
-    removeCitizen,
-    syncCitizen,
-    startSync
+    removeCitizen
 };
