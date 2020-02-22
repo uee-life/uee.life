@@ -31,7 +31,7 @@ export default {
             const token = this.accessToken;
             const handle = this.loggedUser.app_metadata.handle
             axios({
-                url: `https://api.uee.life/citizens/${handle}/sync`,
+                url: `https://api.uee.life/user/sync`,
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`
