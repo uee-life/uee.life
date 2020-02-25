@@ -32,10 +32,10 @@
                     <fleet-view :ships="citizen.ships"/>
                 </template>
 
-                <template v-if="isAuthenticated && isOwner" slot="tab-title-location">
+                <template v-if="$auth.loggedIn && isOwner" slot="tab-title-location">
                     LOCATION
                 </template>
-                <template v-if="isAuthenticated && isOwner" slot="tab-content-location">
+                <template v-if="$auth.loggedIn && isOwner" slot="tab-content-location">
                     <citizen-location :citizen="citizen"/>
                 </template>
             </tabs>
@@ -49,8 +49,6 @@
 
 <script>
 import Vue from 'vue'
-import axios from 'axios'
-import { mapGetters } from 'vuex'
 
 import CitizenInfo from '@/components/citizen/CitizenInfo'
 import CitizenBio from '@/components/citizen/CitizenBio'
@@ -85,15 +83,14 @@ export default {
         FleetView
     },
     computed: {
-        ...mapGetters([
-            'isAuthenticated', 
-            'loggedUser'
-        ]),
+        user() {
+            return this.$auth.user
+        },
         dossierLink() {
             return `https://robertsspaceindustries.com/citizens/${this.$route.params.handle}`
         },
         isOwner() {
-            if(this.loggedUser && this.loggedUser.app_metadata.handle == this.citizen.info.handle && this.loggedUser.app_metadata.handle_verified) {
+            if(this.$auth.loggedIn && this.user['https://uee.life/app_metadata'].handle == this.citizen.info.handle && this.user['https://uee.life/app_metadata'].handle_verified) {
                 return true
             }
             return false
@@ -116,7 +113,7 @@ export default {
                     skipcache: 1
                 }
             }
-            axios({
+            this.$axios({
                 url: `https://api.uee.life/citizens/${this.$route.params.handle}`,
                 method: 'GET',
                 headers: headers
@@ -139,7 +136,7 @@ export default {
             this.loading = false
         },
         async getShips() {
-            axios({
+            this.$axios({
                 url: `https://api.uee.life/citizens/${this.$route.params.handle}/ships`,
                 method: 'GET'
             }).then((res) => {
@@ -149,14 +146,15 @@ export default {
             })
         },
         async getOrg() {
-            try {
-                const { data } = await axios.get('https://api.uee.life/orgs/' + this.citizen.info.org)
-
-                this.citizen.org = data
-            } catch (error) {
+            this.$axios({
+                url: 'https://api.uee.life/orgs/' + this.citizen.info.org,
+                method: 'GET'
+            }).then((res) => {
+                this.citizen.org = res.data
+            }).catch((error) => {
                 // eslint-disable-next-line
                 console.error(error)
-            }
+            })
             this.loading = false
         },
         refresh() {

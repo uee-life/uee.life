@@ -1,18 +1,17 @@
+const config = require('./config.json')
+
 module.exports = {
   buildModules: [
     ['@nuxtjs/google-analytics', {
       id: 'UA-158029027-1'
     }]
   ],
-  serverMiddleware: [
-    '~/middleware/no-ssr'
-  ],
+
   /*
   ** Router config
   */
   router: {
     middleware: [
-      'check-auth',
       'mobile'
     ]
   },
@@ -55,7 +54,6 @@ module.exports = {
     '~/plugins/layout.js',
     '~/plugins/widgets.js',
     '~/plugins/isMobile.js',
-    '~/plugins/checkRefresh.js',
     { src: '~/plugins/vue-good-table', ssr: false },
     { src: '~/plugins/hamburger', ssr: false },
   ],
@@ -64,6 +62,8 @@ module.exports = {
   ** Modules
   */
   modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/auth',
     '@nuxtjs/markdownit',
     'portal-vue/nuxt',
     'cookie-universal-nuxt',
@@ -75,6 +75,21 @@ module.exports = {
       }
     ]
   ],
+
+  auth: {
+    redirect: {
+      login: '/',
+      callback: '/auth/signed-in'
+    },
+    strategies: {
+      local: false,
+      auth0: {
+        domain: config.AUTH0_DOMAIN,
+        client_id: config.AUTH0_CLIENT_ID,
+        audience: config.AUTH0_AUDIENCE
+      }
+    }
+  },
 
   markdownit: {
     injected: true,

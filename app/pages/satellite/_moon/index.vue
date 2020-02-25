@@ -13,8 +13,6 @@
 </template>
 
 <script>
-import axios from "axios"
-
 import Location from '@/components/location/Location.vue'
 
 export default {
@@ -31,7 +29,7 @@ export default {
     methods: {
         async getSatellite() {
             const moon = this.$route.params.moon
-            axios.get(`https://api.uee.life/satellites/${moon}`).then(res => {
+            this.$axios.get(`https://api.uee.life/satellites/${moon}`).then(res => {
                 if(res.status == 200) {
                     this.satellite = res.data
                 }

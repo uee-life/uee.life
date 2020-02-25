@@ -8,11 +8,11 @@
         </div>
         <div class="page-head-right">
             <div class="user">
-                <div v-if='authenticated' class="welcome">
-                    Welcome, <nuxt-link :to="citizenLink">{{ loggedUser ? loggedUser.app_metadata.handle : 'Citizen' }}</nuxt-link>!
+                <div v-if='$auth.loggedIn' class="welcome">
+                    Welcome, <nuxt-link :to="citizenLink">{{ user ? user['https://uee.life/app_metadata'].handle : 'Citizen' }}</nuxt-link>!
                 </div>
                 <div v-else>
-                    Welcome! Please <nuxt-link to="/auth/sign-in">Log In / Sign Up</nuxt-link>
+                    Welcome! Please Log In Below
                 </div>
             </div>
             <div class="search">
@@ -28,13 +28,12 @@ import { mapGetters } from 'vuex'
 export default {
     name: 'main-header',
     computed: {
-        ...mapGetters('session', [
-            'authenticated', 
-            'loggedUser'
-        ]),
+        user() {
+            return this.$auth.user
+        },
         citizenLink() {
-            if(this.loggedUser) {
-                return `/citizens/${this.loggedUser.app_metadata.handle}`
+            if(this.user) {
+                return `/citizens/${this.user['https://uee.life/app_metadata'].handle}`
             } else {
                 return `/citizens`
             }

@@ -26,8 +26,6 @@
 </template>
 
 <script>
-import axios from "axios"
-
 import NewsItem from '@/components/news/NewsItem.vue'
 import { gsap } from 'gsap'
 
@@ -88,25 +86,22 @@ export default {
         },
         async getNews() {
             this.loading = true
-            try {
-
-                // Use Axios to make a call to the API
-                const { data } = await axios.get('https://api.uee.life/news?channel=' + this.search.channel + '&series=' + this.search.series + '&page=' + this.pages, {
-                    headers: {
-                        //Authorization: `Bearer ${token}`    // send the access token through the 'Authorization' header
-                    }
-                });
-
-                if(data.length < 10) {
+            
+            // Use Axios to make a call to the API
+            this.$axios({
+                url: 'https://api.uee.life/news?channel=' + this.search.channel + '&series=' + this.search.series + '&page=' + this.pages,
+                method: 'GET'
+            }).then((res) => {
+                if(res.data.length < 10) {
                     this.more = false
                 }
 
-                this.articles = this.articles.concat(data)
+                this.articles = this.articles.concat(res.data)
                 this.pages += 1;
-            } catch (error) {
+            }).catch((error) => {
                 // eslint-disable-next-line no-console
                 console.error(error) 
-            }
+            })
             this.loading = false
         },
         beforeEnter: function (el) {

@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { gsap } from 'gsap'
 
 import NewsFeed from '@/components/news/NewsFeed'
@@ -49,7 +48,7 @@ export default {
     },
     methods: {
         async getStats() {
-            axios({
+            this.$axios({
             url: 'https://api.uee.life/stats',
             method: 'GET'
             }).then((res) => {
@@ -58,7 +57,7 @@ export default {
             })
         },
         async getCitizen(handle) {
-            axios({
+            this.$axios({
             url: `https://api.uee.life/citizens/${handle}/info`,
             method: 'GET'
             }).then((res) => {

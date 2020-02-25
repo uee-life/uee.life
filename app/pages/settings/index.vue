@@ -1,23 +1,20 @@
 <template>
   <div class="profile">
     <portal to="leftDock">
-    <profile-info v-if="loggedUser" :user="loggedUser"/>
+    <profile-info v-if="user" :user="user"/>
     <div v-else class="loading">
               <img src="~/assets/loading.gif" >
     </div>
     </portal>
     <main-panel title="Settings">Coming soon...</main-panel>
-    <profile-verify v-if="!verified || debug" :user="loggedUser" :errors="errors.verification" @verify="verifyHandle"/>
+    <profile-verify v-if="!verified || debug" :user="user" :errors="errors.verification" @verify="verifyHandle"/>
     <div v-if="debug" class="debug">
-      <pre>{{ JSON.stringify(loggedUser, null, 2) }}</pre>
+      <pre>{{ JSON.stringify(user, null, 2) }}</pre>
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios"
-import { mapGetters } from 'vuex'
-
 import ProfileInfo from '@/components/profile/ProfileInfo.vue'
 import ProfileVerify from '@/components/profile/ProfileVerify.vue'
 //import HomeSelect from '@/components/user/HomeSelect.vue'
@@ -33,16 +30,17 @@ export default {
     data() {
       return {
         debug: false,
-        user: null,
         errors: {
           verification: ""
         }
       }
     },
     computed: {
-      ...mapGetters(['loggedUser', 'accessToken']),
+      user() {
+        return this.$auth.user
+      },
       verified() {
-        if(this.loggedUser && this.loggedUser.app_metadata.handle_verified) {
+        if(this.user && this.user['https://uee.life/app_metadata'].handle_verified) {
           return true
         } else {
           return false
@@ -52,14 +50,11 @@ export default {
     methods: {
       async verifyHandle() {
         const token = this.accessToken;
-        const handle = this.loggedUser.app_metadata.handle
+        const handle = this.user['https://uee.life/app_metadata'].handle
 
-        axios({
+        this.$axios({
           url: `https://api.uee.life/citizens/${handle}/verify`,
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+          method: 'GET'
         }).then((res) => {
           // eslint-disable-next-line
           console.log(res)

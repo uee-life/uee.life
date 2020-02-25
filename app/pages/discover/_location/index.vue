@@ -28,8 +28,6 @@
 </template>
 
 <script>
-import axios from "axios"
-
 import Location from '@/components/location/Location.vue'
 import LocationList from '@/components/location/LocationList.vue'
 import PoiList from '@/components/location/POIList.vue'
@@ -54,7 +52,7 @@ export default {
     methods: {
         async getLocation() {
             const code = this.$route.params.location
-            axios.get(`https://api.uee.life/locations/${code}`).then(res => {
+            this.$axios.get(`https://api.uee.life/locations/${code}`).then(res => {
                 if(res.status == 200) {
                     this.location = res.data
                 }
@@ -65,7 +63,7 @@ export default {
         },
         async getLocations() {
             const code = this.$route.params.location
-            axios.get(`https://api.uee.life/locations/${code}/locations`).then(res => {
+            this.$axios.get(`https://api.uee.life/locations/${code}/locations`).then(res => {
                 if(res.status == 200) {
                     this.children = res.data
                 }
@@ -76,7 +74,7 @@ export default {
         },
         async getPOIs() {
             const sid = this.$route.params.location
-            axios.get(`https://api.uee.life/locations/${sid}/pois`).then(res => {
+            this.$axios.get(`https://api.uee.life/locations/${sid}/pois`).then(res => {
                 if(res.status == 200) {
                     this.pois = res.data
                 }

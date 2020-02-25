@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
     layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
@@ -33,7 +32,7 @@ export default {
     methods: {
         async getResults() {
             try {
-                const { data } = await axios.get('https://api.uee.life/search/orgs', {
+                const { data } = await this.$axios.get('https://api.uee.life/search/orgs', {
                     params: {
                         search: this.input
                     }

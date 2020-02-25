@@ -5,8 +5,8 @@
           <div class="line-item"><div>Email: </div> <div> {{user.email}}</div></div>
           <div class="line-item"><div>Verified: </div> <div> {{ isVerified(user.email_verified) }}</div></div>
             <br />
-          <div class="line-item"><div>Handle: </div> <div> {{user.app_metadata.handle}}</div></div>
-          <div class="line-item"><div>Verified: </div> <div> {{ isVerified(user.app_metadata.handle_verified) }}</div></div>
+          <div class="line-item"><div>Handle: </div> <div> {{user['https://uee.life/app_metadata'].handle}}</div></div>
+          <div class="line-item"><div>Verified: </div> <div> {{ isVerified(user['https://uee.life/app_metadata'].handle_verified) }}</div></div>
       </div>
       <div v-else class="info-loading">
           <h3>Loading...</h3>

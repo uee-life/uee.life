@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
     name: 'edit-location',
@@ -36,7 +35,6 @@ export default {
     methods: {
         loadSystems() {
             this.getSystems((res) => {
-                console.log(res)
                 this.systems = res.data
             }, (err) => {
                 console.error(err)
@@ -44,7 +42,6 @@ export default {
         },
         loadLocations() {
             this.getLocations((res) => {
-                console.log(res.data)
                 this.locations = res.data
             }, (err) => {
                 console.error(err)
@@ -52,14 +49,13 @@ export default {
         },
         loadPOIs() {
             this.getPOIs((res) => {
-                console.log(res.data)
                 this.bases = res.data
             }, (err) => {
                 console.error(err)
             })
         },
         getSystems(cb, errorCb) {
-            axios({
+            this.$axios({
                 url: 'https://api.uee.life/systems',
                 method: 'GET'
             }).then((data) => {
@@ -69,8 +65,7 @@ export default {
             })
         },
         getLocations(cb, errorCb) {
-            console.log(this.system.name)
-            axios({
+            this.$axios({
                 url: `https://api.uee.life/systems/${this.system.name}/planets`,
                 method: 'GET'
             }).then((data) => {
@@ -81,7 +76,7 @@ export default {
         },
         getPOIs(cb, errorCb) {
             console.log(this.location.name)
-            axios({
+            this.$axios({
                 url: `https://api.uee.life/planets/${this.location.name}/pois`,
                 method: 'GET'
             }).then((data) => {

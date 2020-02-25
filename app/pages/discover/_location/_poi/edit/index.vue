@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
     data() {
@@ -44,7 +43,7 @@ export default {
         },
         async getPoi() {
             const poi = this.$route.params.poi
-            axios.get(`https://api.uee.life/pois/${poi}`).then(res => {
+            this.$axios.get(`https://api.uee.life/pois/${poi}`).then(res => {
                 if(res.status == 200) {
                     this.loadData(res.data)
                 }
@@ -54,7 +53,7 @@ export default {
             });
         },
         async getSystems(cb, errorCb) {
-            axios({
+            this.$axios({
                 url: 'https://api.uee.life/systems',
                 method: 'GET'
             }).then((res) => {
@@ -64,7 +63,7 @@ export default {
             })
         },
         async getLocations(cb, errorCb) {
-            axios({
+            this.$axios({
                 url: `https://api.uee.life/systems/${this.system}/locations`,
                 method: 'GET'
             }).then((res) => {

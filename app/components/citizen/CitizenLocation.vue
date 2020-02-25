@@ -42,8 +42,7 @@
 </template>
 
 <script>
-import axios from "axios"
-import { mapGetters, mapActions, mapMutations } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 
 export default {
     name: 'citizen-location',
@@ -61,10 +60,9 @@ export default {
         }
     },
     computed: {
-        ...mapGetters([
-            'loggedUser',
-            'accessToken'
-        ]),
+        user() {
+            return this.$auth.user
+        },
         systemLink() {
             return `/system/${this.home.system.name}`
         },
@@ -83,7 +81,7 @@ export default {
             'setCitizen'
         ]),
         loadSystems() {
-            axios({
+            this.$axios({
                 url: 'https://api.uee.life/systems',
                 method: 'GET'
             }).then((res) => {
@@ -98,7 +96,7 @@ export default {
         },
         loadLocations() {
             if(this.system) {
-                axios({
+                this.$axios({
                     url: `https://api.uee.life/systems/${this.system.name}/planets`,
                     method: 'GET'
                 }).then((res) => {
@@ -115,7 +113,7 @@ export default {
         },
         loadPOIs() {
             if(this.location) {
-                axios({
+                this.$axios({
                     url: `https://api.uee.life/planets/${this.location.name}/pois`,
                     method: 'GET'
                 }).then((res) => {
@@ -138,12 +136,11 @@ export default {
                 location: this.location,
                 base: this.base
             }
-            axios({
-                url: `https://api.uee.life/citizens/${this.loggedUser.app_metadata.handle}/location`,
+            this.$axios({
+                url: `https://api.uee.life/citizens/${this.user['https://uee.life/app_metadata'].handle}/location`,
                 method: 'PUT',
                 headers: {
-                    'Content-Type': "application/json; charset=utf-8",
-                    Authorization: `Bearer ${this.accessToken}`
+                    'Content-Type': "application/json; charset=utf-8"
                 },
                 data: data
             }).then((res) => {

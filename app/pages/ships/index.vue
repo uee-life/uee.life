@@ -25,9 +25,7 @@
 </template>
 
 <script>
-import axios from "axios"
 import { gsap } from 'gsap'
-import { mapGetters } from 'vuex'
 
 import FleetView from '@/components/fleet/FleetView.vue'
 
@@ -57,12 +55,9 @@ export default {
             }
         }
     },
-    computed: {
-        ...mapGetters(['accessToken'])
-    },
     methods: {
         getShips() {
-            axios({
+            this.$axios({
                 url: 'https://api.uee.life/ships',
                 method: 'GET'
             }).then((res) => {
@@ -77,12 +72,11 @@ export default {
         },
         addShip() {
 
-            axios({
+            this.$axios({
                 url: 'https://api.uee.life/ships',
                 method: 'POST',
                 headers: {
-                    'Content-Type': "application/json; charset=utf-8",
-                    Authorization: `Bearer ${this.accessToken}`
+                    'Content-Type': "application/json; charset=utf-8"
                 },
                 data: this.ship
             }).then((res) => {

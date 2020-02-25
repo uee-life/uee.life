@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
     name: 'citizen-results',
@@ -47,7 +46,7 @@ export default {
     methods: {
         async getResults() {
             try {
-                const { data } = await axios.get('https://api.uee.life/citizens/' + this.input + '/info')
+                const { data } = await this.$axios.get('https://api.uee.life/citizens/' + this.input + '/info')
                 if(data.error) {
                     this.result = '<div class="no-results"><span class="text big">No Results<div class="endcap left"></div><div class="endcap right"></div></span><span class="text small">That citizen was not found!</span></div>'
                 } else {

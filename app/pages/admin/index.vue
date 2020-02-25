@@ -8,7 +8,6 @@
 <script>
 import PoiTable from '@/components/admin/POITable'
 import PoiEdit from '@/components/admin/POIEdit'
-import axios from 'axios'
 
 export default {
     data() {
@@ -22,7 +21,7 @@ export default {
     },
     methods: {
         getPOIs() {
-            axios({
+            this.$axios({
                 url: 'https://api.uee.life/pois',
                 method: 'GET'
             }).then((res) => {

@@ -15,8 +15,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
     props: ["poi"],
     data() {
@@ -45,7 +43,7 @@ export default {
             console.log('updating...')
         },
         getSystems(cb, errorCb) {
-            axios({
+            this.$axios({
                 url: 'https://api.uee.life/systems',
                 method: 'GET'
             }).then((data) => {
@@ -56,7 +54,7 @@ export default {
         },
         getLocations(cb, errorCb) {
             console.log(this.system.name)
-            axios({
+            this.$axios({
                 url: `https://api.uee.life/systems/${this.system.code}/planets`,
                 method: 'GET'
             }).then((data) => {

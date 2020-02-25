@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
     data() {
@@ -403,7 +402,7 @@ export default {
             return Math.sqrt(d * d + z * z)
         },
         loadSystems() {
-            axios({
+            this.$axios({
                 url: 'https://api.uee.life/systems',
                 method: 'GET'
             }).then((res) => {
@@ -414,7 +413,7 @@ export default {
         },
         loadLocations() {
             if(this.system) {
-                axios({
+                this.$axios({
                     url: `https://api.uee.life/systems/${this.system.name}/planets`,
                     method: 'GET'
                 }).then((res) => {

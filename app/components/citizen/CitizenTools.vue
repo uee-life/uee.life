@@ -8,7 +8,6 @@
 
 <script>
 import { gsap } from 'gsap'
-import axios from "axios"
 import { mapGetters } from 'vuex'
 import swal from 'sweetalert'
 
@@ -16,7 +15,9 @@ export default {
     name: 'citizen-tools',
     props: ['editing'],
     computed : {
-        ...mapGetters(['loggedUser', 'accessToken'])
+        user() {
+            return this.$auth.user
+        }
     },
     methods: {
         edit() {
@@ -28,14 +29,10 @@ export default {
         async sync() {
             // eslint-disable-next-line
             console.log('Syncing...')
-            const token = this.accessToken;
-            const handle = this.loggedUser.app_metadata.handle
-            axios({
+            const handle = this.user['https://uee.life/app_metadata'].handle
+            this.$axios({
                 url: `https://api.uee.life/user/sync`,
-                method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+                method: 'GET'
             }).then((res) => {
                 // eslint-disable-next-line
                 console.log(res.data)
