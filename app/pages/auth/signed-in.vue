@@ -3,20 +3,20 @@
 </template>
 
 <script>
-import { setToken, checkSecret, extractInfoFromHash } from '~/utils/auth'
+import { mapActions } from 'vuex'
 
 export default {
-  layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
-  mounted () {
-    console.log('Signed in page mounted')
-    const { access_token, token_expiry, token, secret, error, error_msg } = extractInfoFromHash()
-    if (error !== undefined || !checkSecret(secret) || !token) {
-      console.error('Something happened with the Sign In request')
-      this.$swal.fire(error, decodeURIComponent(error_msg), 'warning')
-    } else {
-      setToken(this, token, access_token, token_expiry)
-    }
-    this.$router.replace('/')
+  name: 'Auth',
+  methods: mapActions('session', ['handleAuthentication']),
+  data () {
+    this.handleAuthentication().then(() => {
+      this.$router.replace('/')
+    }).catch(err => {
+      // some meaningful error handling here ...
+      //this.$swal.fire('Error', err, 'error')
+      console.error(err)
+    })
+    return {}
   }
 }
 </script>

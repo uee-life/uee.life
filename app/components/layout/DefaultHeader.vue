@@ -8,7 +8,7 @@
         </div>
         <div class="page-head-right">
             <div class="user">
-                <div v-if='isAuthenticated' class="welcome">
+                <div v-if='authenticated' class="welcome">
                     Welcome, <nuxt-link :to="citizenLink">{{ loggedUser ? loggedUser.app_metadata.handle : 'Citizen' }}</nuxt-link>!
                 </div>
                 <div v-else>
@@ -28,8 +28,8 @@ import { mapGetters } from 'vuex'
 export default {
     name: 'main-header',
     computed: {
-        ...mapGetters([
-            'isAuthenticated', 
+        ...mapGetters('session', [
+            'authenticated', 
             'loggedUser'
         ]),
         citizenLink() {

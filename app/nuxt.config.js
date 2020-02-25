@@ -4,6 +4,9 @@ module.exports = {
       id: 'UA-158029027-1'
     }]
   ],
+  serverMiddleware: [
+    '~/middleware/no-ssr'
+  ],
   /*
   ** Router config
   */

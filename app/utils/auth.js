@@ -21,7 +21,7 @@ export const extractInfoFromHash = () => {
   return {
     access_token: params['access_token'],
     token_expiry: params['expires_in'] ? params['expires_in'] : params['expiresIn'],
-    token: params['id_token'],
+    id_token: params['id_token'],
     secret: params['state'],
     error: err,
     error_msg: err_msg
@@ -33,32 +33,33 @@ export const setToken = (ctx, token, access_token, token_expiry) => {
 
   const expires = addSeconds(new Date(), token_expiry)
 
-  window.localStorage.setItem('token', token)
+  window.localStorage.setItem('id_token', token)
   window.localStorage.setItem('access_token', access_token)
-  window.localStorage.setItem('access_token_expiry', expires)
-  window.localStorage.setItem('user', JSON.stringify(jwtDecode(token)))
+  window.localStorage.setItem('token_expiry', expires)
 
-  ctx.$cookies.set('jwt', access_token)
-  ctx.$cookies.set('jwt_expires', expires)
+  ctx.$cookies.set('id_token', access_token)
+  ctx.$cookies.set('access_token', access_token)
+  ctx.$cookies.set('token_expiry', expires)
 }
 
 export const updateAccessToken = (access_token, expires) => {
   if (process.server) return
   window.localStorage.setItem('access_token', access_token)
-  window.localStorage.setItem('access_token_expiry', expires)
+  window.localStorage.setItem('token_expiry', expires)
 }
 
 export const unsetToken = (ctx) => {
   if (process.server) return
   //if(process.browser) {
-    window.localStorage.removeItem('token')
+    window.localStorage.removeItem('id_token')
     window.localStorage.removeItem('access_token')
-    window.localStorage.removeItem('access_token_expiry')
+    window.localStorage.removeItem('token_expiry')
     window.localStorage.removeItem('user')
     window.localStorage.removeItem('secret')
     if (ctx.$cookies) {
-      ctx.$cookies.remove('jwt')
-      ctx.$cookies.remove('jwt_expires')
+      ctx.$cookies.remove('id_token')
+      ctx.$cookies.remove('access_token')
+      ctx.$cookies.remove('token_expiry')
     }
     window.localStorage.setItem('logout', Date.now())
   //}
@@ -68,29 +69,35 @@ export const getTokenFromCookie = (req) => {
   console.log('getting from cookie')
   if (!req.headers.cookie) return
   const cookies = req.headers.cookie.split(';')
-  const jwtCookie = cookies.find(c => c.trim().startsWith('jwt='))
-  const expiryCookie = cookies.find(c => c.trim().startsWith('jwt_expires='))
-  if (!jwtCookie) return
-  const expiry = new Date(decodeURIComponent(expiryCookie.split('=')[1]).replace(/"/g, ''))
-  const jwt = jwtCookie.split('=')[1]
+  const id_token = cookies.find(c => c.trim().startsWith('id_token='))
+  const token_expiry = cookies.find(c => c.trim().startsWith('token_expiry='))
+  const access_token = cookies.find(c => c.trim().startsWith('access_token='))
+  if (!id_token) return
+  //const expiry = new Date(decodeURIComponent(expiryCookie.split('=')[1]).replace(/"/g, ''))
+
   const user = {}
-  user['token'] = jwt
-  user['token_expiry'] = expiry
+  user['id_token'] = id_token.split('=')[1]
+  user['access_token'] = access_token.split('=')[1]
+  user['token_expiry'] = token_expiry.split('=')[1]
   return user
 }
 
 export const getTokenFromLocalStorage = () => {
   console.log('getting from storage')
-  let token = undefined
-  let expires = undefined
+  let id_token = undefined
+  let access_token = undefined
+  let token_expiry = undefined
+
   if(process.browser) {
-    token = window.localStorage.access_token
-    expires = window.localStorage.access_token_expiry
+    id_token = localStorage.getItem('id_token')
+    access_token = localStorage.getItem('access_token')
+    token_expiry = localStorage.getItem('token_expiry')
   }
-  if (!token || !expires) return
+  if (!id_token) return
   const user = {}
-  user['token'] = token
-  user['token_expiry'] = expires
+  user['id_token'] = id_token
+  user['access_token'] = access_token
+  user['token_expiry'] = token_expiry
   return user
 }
 

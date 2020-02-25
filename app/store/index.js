@@ -52,7 +52,7 @@ export const actions = {
     }).then((res) => {
       commit('SET_USER', res.data)
     }).catch((error) => {
-      console.error('/user error: ', error)
+      console.error('/user error (store): ', error)
       window.localStorage.removeItem('token')
       window.localStorage.removeItem('access_token')
       window.localStorage.removeItem('access_token_expiry')
