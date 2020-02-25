@@ -30,6 +30,11 @@ router.get("/user/verify", checkJwt, async (req, res) => {
 })
 
 // Protected
+router.post("/user/verify", checkJwt, async (req, res) => {
+    res.send(await verify(req.user));
+})
+
+// Protected
 router.get("/user/sync", checkJwt, async (req, res) => {
     res.send(await sync(req.user))
 })
