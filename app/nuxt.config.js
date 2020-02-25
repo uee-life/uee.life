@@ -77,6 +77,7 @@ module.exports = {
   ],
 
   auth: {
+    plugins: ['~/plugins/auth.js'],
     redirect: {
       login: '/',
       callback: '/auth/signed-in'
