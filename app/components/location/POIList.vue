@@ -36,7 +36,7 @@ export default {
     },
     methods: {
         getLink(code) {
-            return `/poi/${code.split(".")[2]}`
+            return `/discover/${this.$route.params.location}/${code.split(".")[2]}`
         },
         show() {
             gsap.to(".poi-list", 1, {opacity: 1})

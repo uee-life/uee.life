@@ -7,9 +7,9 @@
       </div>
       <div class="nav-right">
         <nuxt-link class="nav-button" to="/tools">Tools</nuxt-link>
-        <nuxt-link v-if="isAuthenticated" class="nav-button" to="/settings">Settings</nuxt-link>
-        <nuxt-link v-if="!isAuthenticated" class="nav-button" to="/auth/sign-in">Sign In</nuxt-link>
-        <nuxt-link v-else to="/auth/sign-off" class="nav-button">Sign Off</nuxt-link>
+        <nuxt-link v-if="$auth.loggedIn" class="nav-button" to="/settings">Settings</nuxt-link>
+        <a v-if="!$auth.loggedIn" class="nav-button" @click="login()">Sign In</a>
+        <a v-else @click="logout()" class="nav-button">Sign Off</a>
       </div>
     <span class="corner top left"></span>
     <span class="corner top right"></span>
@@ -19,11 +19,24 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+const config = require('~/config.json')
 
 export default {
   name: 'navbar',
-  computed: mapGetters(['isAuthenticated']),
+  computed: {
+    user() {
+      return this.$auth.user
+    }
+  },
+  methods: {
+    login() {
+      this.$auth.loginWith('auth0')
+    },
+    logout() {
+      this.$auth.logout()
+      window.location = `https://ueelife.auth0.com/v2/logout?returnTo=http%3A%2F%2Flocalhost:3000&client_id=${config.AUTH0_CLIENT_ID}`
+    }
+  }
 }
 </script>
 

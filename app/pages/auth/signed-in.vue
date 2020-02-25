@@ -1,22 +1,48 @@
 <template>
-  <p>Signing in...</p>
+    <div class="loading">
+        <img src="~/assets/loading.gif" >
+    </div>
 </template>
 
 <script>
-import { setToken, checkSecret, extractInfoFromHash } from '~/utils/auth'
+const config = require('~/config.json')
 
 export default {
-  layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
-  mounted () {
-    console.log('Signed in page mounted')
-    const { access_token, token_expiry, token, secret, error, error_msg } = extractInfoFromHash()
-    if (error !== undefined || !checkSecret(secret) || !token) {
-      console.error('Something happened with the Sign In request')
-      this.$swal.fire(error, decodeURIComponent(error_msg), 'warning')
-    } else {
-      setToken(this, token, access_token, token_expiry)
+  methods: {
+    sanitize(s) {
+      var chars = {'<':'&lt;','>':'&gt;','"':'&quot;', '&':'&amp;', "'": '&#x27;', '/': '&#x2f;'};
+      s = s.replace(/[<>"'\/]/g, m => chars[m]);
+      return s
+    },
+    getQueryParams() {
+      const params = {}
+      this.$nuxt.$route.fullPath.replace(/([^(?|#)=&]+)(=([^&]*))?/g, ($0, $1, $2, $3) => {
+        params[$1] = $3
+      })
+      return params
+    },
+    getErrors() {
+      if (process.server) return
+      let err, err_msg = ''
+      const params = this.getQueryParams()
+      if ('error' in params) {
+        err = params['error'],
+        err_msg = this.sanitize(decodeURIComponent(params['error_description']))
+        this.$swal.fire({
+          title: err, 
+          text: err_msg, 
+          icon: 'warning',
+          onAfterClose: () => {
+            window.location = `https://ueelife.auth0.com/v2/logout?returnTo=http%3A%2F%2Flocalhost:3000&client_id=${config.AUTH0_CLIENT_ID}`
+          }
+        })
+        this.$router.replace('/')
+      }
     }
-    this.$router.replace('/')
+  },
+  mounted() {
+    // Check for errors encountered via the auth flow, display then clear their auth0 session
+    this.getErrors()
   }
 }
 </script>

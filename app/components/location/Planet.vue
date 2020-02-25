@@ -29,8 +29,6 @@
 </template>
 
 <script>
-import axios from "axios"
-
 import Location from '@/components/location/Location.vue'
 import MoonList from '@/components/location/MoonList.vue'
 import PoiList from '@/components/location/POIList.vue'
@@ -61,7 +59,7 @@ export default {
         },
         async getPlanet() {
             const planet = this.$route.params.planet
-            axios.get(`https://api.uee.life/planets/${planet}`).then(res => {
+            this.$axios.get(`https://api.uee.life/planets/${planet}`).then(res => {
                 if(res.status == 200) {
                     this.planet = res.data
                 }
@@ -72,7 +70,7 @@ export default {
         },
         async getSatellites() {
             const planet = this.$route.params.planet
-            axios.get(`https://api.uee.life/planets/${planet}/satellites`).then(res => {
+            this.$axios.get(`https://api.uee.life/planets/${planet}/satellites`).then(res => {
                 if(res.status == 200) {
                     this.satellites = res.data
                 }
@@ -83,7 +81,7 @@ export default {
         },
         async getPOIs() {
             const planet = this.$route.params.planet
-            axios.get(`https://api.uee.life/planets/${planet}/pois`).then(res => {
+            this.$axios.get(`https://api.uee.life/planets/${planet}/pois`).then(res => {
                 if(res.status == 200) {
                     this.pois = res.data
                 }

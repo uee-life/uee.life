@@ -42,7 +42,6 @@
 </template>
 
 <script>
-import axios from "axios"
 import { gsap } from 'gsap'
 
 import OrgBanner from '@/components/org/OrgBanner.vue'
@@ -84,7 +83,7 @@ export default {
         async getOrg() {
             try {
                 const sid = this.$route.params.org
-                axios.get(`https://api.uee.life/orgs/${sid}`).then((res) => {
+                this.$axios.get(`https://api.uee.life/orgs/${sid}`).then((res) => {
 
                     if(res.status == 200) {
                         this.org = res.data
@@ -102,7 +101,7 @@ export default {
         },
         async getOrgMembers() {
             const sid = this.$route.params.org
-            await axios.get(`https://api.uee.life/orgs/${sid}/members?page=1`).then((res) => {
+            await this.$axios.get(`https://api.uee.life/orgs/${sid}/members?page=1`).then((res) => {
                 if(res.status == 200) {
                     this.memberCount = res.data.count
                 }
@@ -113,7 +112,7 @@ export default {
         },
         async getOrgAffiliates() {
             const sid = this.$route.params.org
-            await axios.get(`https://api.uee.life/orgs/${sid}/affiliates?page=1`).then((res) => {
+            await this.$axios.get(`https://api.uee.life/orgs/${sid}/affiliates?page=1`).then((res) => {
                 if(res.status == 200) {
                     this.affiliateCount = res.data.count
                 }

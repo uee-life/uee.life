@@ -56,7 +56,6 @@ export default {
         height: fit-content;
         padding: 10px;
         padding-top: 20px;
-        margin-bottom: 20px;
         opacity: 0;
     }
 

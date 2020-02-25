@@ -1,0 +1,1241 @@
+openapi: 3.0.1
+info:
+  title: UEE Life API
+  description: 'This is the UEE Life API server.  You can find out more about     UEE Life
+    at [https://uee.life/about](https://uee.life/about) or on [Github](https://github.com/CapnFlint/uee.life).      For
+    this sample, you can use the api key `special-key` to test the authorization     filters.'
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.2.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+- url: https://api.uee.life
+tags:
+- name: citizens
+  description: Citizen Data
+- name: orgs
+  description: Organization Data
+- name: search
+  description: Search api
+- name: systems
+  description: Systems of the verse
+- name: locations
+  description: Locations in each system
+- name: pois
+  description: Points of interest
+- name: ships
+  description: Ship Data
+- name: stats
+  description: Site stats
+- name: news
+  description: Official news articles
+- name: user
+  description: User Data
+paths:
+  /citizens/{handle}:
+    get:
+      tags:
+      - citizens
+      summary: Find citizen by handle
+      description: Returns a single citizen
+      operationId: getCitizenByHandle
+      parameters:
+      - name: handle
+        in: path
+        description: handle of citizen to return
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Citizen'
+        400:
+          description: Invalid handle supplied
+          content: {}
+        404:
+          description: Citizen not found
+          content: {}
+  /citizens/{handle}/info:
+    get:
+      tags:
+      - citizens
+      summary: Retrieves citizens info
+      operationId: getCitizenInfo
+      parameters:
+      - name: handle
+        in: path
+        description: handle of citizen to return
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CitizenInfo'
+  /citizens/{handle}/ships:
+    get:
+      tags:
+      - citizens
+      summary: Retrieves citizens ships
+      operationId: getCitizenShips
+      parameters:
+      - name: handle
+        in: path
+        description: handle of citizen to return
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ships'
+    put:
+      tags:
+      - citizens
+      summary: Update Citizens Fleet
+      operationId: updateCitizenShips
+      parameters:
+      - name: handle
+        in: path
+        description: handle of citizen to return
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Citizen object that needs to be added to the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ships'
+        required: true
+      responses:
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Citizen not found
+          content: {}
+        405:
+          description: Validation exception
+          content: {}
+      security:
+      - api_key:
+        - write:citizen
+        - read:citizen
+      x-codegen-request-body-name: body
+  /citizens/{handle}/location:
+    get:
+      tags:
+      - citizens
+      summary: Retrieves citizens location
+      operationId: getCitizenLocation
+      parameters:
+      - name: handle
+        in: path
+        description: handle of citizen to return
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CitizenLocation'
+    put:
+      tags:
+      - citizens
+      summary: Update Citizen Location
+      operationId: updateCitizen
+      parameters:
+      - name: handle
+        in: path
+        description: handle of citizen to return
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Citizen object that needs to be added to the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Citizen'
+        required: true
+      responses:
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Citizen not found
+          content: {}
+        405:
+          description: Validation exception
+          content: {}
+      security:
+      - api_key:
+        - write:citizen
+        - read:citizen
+      x-codegen-request-body-name: body
+  /citizens/{handle}/verify:
+    get:
+      tags:
+      - citizens
+      summary: Triggers a verification step for a citizen
+      operationId: verifyCitizen
+      parameters:
+      - name: handle
+        in: path
+        description: handle of citizen to return
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+      security:
+      - api_key:
+        - write:citizen
+        - read:citizen
+  /citizens/{handle}/sync:
+    get:
+      tags:
+      - citizens
+      summary: Synchronizes citizen data with RSI
+      operationId: syncCitizen
+      parameters:
+      - name: handle
+        in: path
+        description: handle of citizen to return
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+      security:
+      - api_key:
+        - write:citizen
+        - read:citizen
+  /orgs/{tag}:
+    get:
+      tags:
+      - orgs
+      summary: Get org by tag
+      description: Returns a single organization
+      operationId: getOrgByTag
+      parameters:
+      - name: tag
+        in: path
+        description: tag of org to return
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Org'
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Org not found
+          content: {}
+  /orgs/{tag}/founders:
+    get:
+      tags:
+      - orgs
+      summary: Get founders for specified org
+      description: Returns a single organization
+      operationId: getOrgFounders
+      parameters:
+      - name: tag
+        in: path
+        description: tag of org to return
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgFounders'
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Org not found
+          content: {}
+  /orgs/{tag}/members:
+    get:
+      tags:
+      - orgs
+      summary: Get members for specified org
+      description: Returns org members
+      operationId: getOrgMembers
+      parameters:
+      - name: tag
+        in: path
+        description: tag of org to return
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: the page of results to retrieve
+        required: false
+        schema:
+          type: integer
+          default: 1
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgMembers'
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Org not found
+          content: {}
+  /orgs/{tag}/affiliates:
+    get:
+      tags:
+      - orgs
+      summary: Get Affiliates for specified org
+      description: Returns org affiliates
+      operationId: getOrgAffiliates
+      parameters:
+      - name: tag
+        in: path
+        description: tag of org to return
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: the page of results to retrieve
+        required: false
+        schema:
+          type: integer
+          default: 1
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgMembers'
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Org not found
+          content: {}
+  /orgs/{tag}/ships:
+    get:
+      tags:
+      - orgs
+      summary: Retrieves org ships
+      operationId: getOrgShips
+      parameters:
+      - name: tag
+        in: path
+        description: tag of org to retrieve ships for
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ships'
+  /search/orgs:
+    get:
+      tags:
+      - search
+      summary: Search for an org
+      description: Search for an org
+      operationId: searchOrgs
+      parameters:
+      - name: search
+        in: query
+        description: search term to use
+        required: false
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrgSearch'
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Org not found
+          content: {}
+  /systems:
+    get:
+      tags:
+      - systems
+      summary: Retrieve system list
+      description: Retrieve system list
+      operationId: getSystems
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemList'
+  /systems/{code}:
+    get:
+      tags:
+      - systems
+      summary: Retrieve system data
+      description: Retrieve system data
+      operationId: getSystem
+      parameters: 
+      - name: code
+        in: path
+        description: system to return
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemInfo'
+  /systems/{code}/locations:
+    get:
+      tags:
+      - systems
+      summary: Retrieve system data
+      description: Retrieve system data
+      operationId: getSystemPlanets
+      parameters: 
+      - name: code
+        in: path
+        description: system to return planets
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationList'
+  /systems/{code}/pois:
+    get:
+      tags:
+      - systems
+      summary: Retrieve system pois
+      description: Retrieve system pois
+      operationId: getSystemPOIs
+      parameters: 
+      - name: code
+        in: path
+        description: system to return pois
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationList'
+  /locations/spec:
+    get:
+      tags:
+      - locations
+      summary: Retrieve location specification
+      description: Retrieve location specification
+      operationId: getLocationSpec
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationSpec'
+  /locations/{code}:
+    get:
+      tags:
+      - locations
+      summary: Retrieve location data
+      description: Retrieve locationData
+      operationId: getLocation
+      parameters: 
+      - name: code
+        in: path
+        description: location to retrieve
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+  /locations/{code}/data:
+    get:
+      tags:
+      - locations
+      summary: Retrieve location data
+      description: Retrieve locationData
+      operationId: getLocationData
+      parameters: 
+      - name: code
+        in: path
+        description: location to retrieve
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationData'
+  /locations/{code}/locations:
+    get:
+      tags:
+      - locations
+      summary: Retrieve location orbital satellites/moons
+      description: Retrieve location satellites
+      operationId: getLocationSatellites
+      parameters: 
+      - name: code
+        in: path
+        description: location to retrieve
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationList'
+  /locations/{code}/pois:
+    get:
+      tags:
+      - locations
+      summary: Retrieve location pois
+      description: Retrieve location pois
+      operationId: getLocationPOIs
+      parameters: 
+      - name: code
+        in: path
+        description: location to retrieve
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationList'
+  /pois:
+    get:
+      tags:
+      - pois
+      summary: Retrieve poi specification
+      description: Retrieve poi specification
+      operationId: getPOIs
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationSpec'
+    post:
+      tags:
+      - pois
+      summary: Add a POI
+      operationId: addPOI
+      parameters:
+      - name: handle
+        in: path
+        description: handle of citizen to return
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Citizen object that needs to be added to the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ships'
+        required: true
+      responses:
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Citizen not found
+          content: {}
+        405:
+          description: Validation exception
+          content: {}
+      security:
+      - api_key:
+        - write:citizen
+        - read:citizen
+      x-codegen-request-body-name: body
+  /pois/spec:
+    get:
+      tags:
+      - pois
+      summary: Retrieve poi specification
+      description: Retrieve poi specification
+      operationId: getPOISpec
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationSpec'
+  /pois/{id}:
+    get:
+      tags:
+      - pois
+      summary: Retrieve POI info
+      description: Retrieve POI info
+      operationId: getPOI
+      parameters: 
+      - name: id
+        in: path
+        description: location to retrieve
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/POI'
+    put:
+      tags:
+      - pois
+      summary: Update POI
+      operationId: updatePOI
+      parameters:
+      - name: id
+        in: path
+        description: id of POI to update
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: POI data to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/POI'
+        required: true
+      responses:
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: POI not found
+          content: {}
+        405:
+          description: Validation exception
+          content: {}
+      security:
+      - api_key:
+        - write:locationdata
+      x-codegen-request-body-name: body
+  /pois/{id}/data:
+    get:
+      tags:
+      - pois
+      summary: Retrieve POI data
+      description: Retrieve POI data
+      operationId: getPOIData
+      parameters: 
+      - name: id
+        in: path
+        description: location to retrieve
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/POIData'
+    put:
+      tags:
+      - pois
+      summary: Update POI
+      operationId: updatePOIData
+      parameters:
+      - name: id
+        in: path
+        description: id of POI to update
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: POI data to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/POIData'
+        required: true
+      responses:
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: POI not found
+          content: {}
+        405:
+          description: Validation exception
+          content: {}
+      security:
+      - api_key:
+        - write:locationdata
+      x-codegen-request-body-name: body
+  /user:
+    get:
+      tags:
+      - user
+      summary: Get User Data
+      description: Returns user data for the logged in user
+      operationId: getUser
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Citizen'
+        400:
+          description: Invalid handle supplied
+          content: {}
+        404:
+          description: Citizen not found
+          content: {}
+      security:
+      - api_key:
+        - read:user
+  /stats:
+    get:
+      tags:
+      - stats
+      summary: Get stats
+      description: Returns stat data
+      operationId: getStats
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stats'
+  /news:
+    get:
+      tags:
+      - news
+      summary: Retrieve latest news
+      description: Retrieve latest news
+      operationId: getNews
+      parameters:
+      - name: channel
+        in: query
+        description: news channel to retrieve
+        required: false
+        schema:
+          type: string
+      - name: series
+        in: query
+        description: news series to retrieve
+        required: false
+        schema:
+          type: string
+      - name: type
+        in: query
+        description: type to search
+        required: false
+        schema:
+          type: string
+      - name: text
+        in: query
+        description: text search
+        required: false
+        schema:
+          type: string
+      - name: sort
+        in: query
+        description: sort order
+        required: false
+        schema:
+          type: string
+          default: "publish_new"
+      - name: page
+        in: query
+        description: pagination
+        required: false
+        schema:
+          type: integer
+          default: 1
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/News'
+  /ships:
+    get:
+      tags:
+      - ships
+      summary: Get Ship Data
+      description: Returns ship data for all ships
+      operationId: getShips
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ships'
+        400:
+          description: Invalid handle supplied
+          content: {}
+        404:
+          description: Citizen not found
+          content: {}
+components:
+  schemas:
+    Citizen:
+      type: object
+      properties:
+        info:
+          $ref: '#/components/schemas/CitizenInfo'
+        home:
+          $ref: '#/components/schemas/CitizenLocation'
+        ships:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ship'
+    CitizenInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        created:
+          type: string
+          format: date-time
+        verified:
+          type: integer
+          format: int32
+        record:
+          type: string
+        name:
+          type: string
+        bio:
+          type: string
+        enlisted:
+          type: string
+        portrait:
+          type: string
+        org:
+          type: string
+        orgrank:
+          type: string
+        website:
+          type: string
+        last_sync:
+          type: string
+          format: date-time
+    CitizenLocation:
+      type: object
+      properties:
+        system:
+          $ref: '#/components/schemas/LocationID'
+        location:
+          $ref: '#/components/schemas/LocationID'
+        base:
+          $ref: '#/components/schemas/LocationID'
+    LocationID:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    Ships:
+      type: array
+      items:
+        $ref: '#/components/schemas/Ship'
+    Ship:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        short_name:
+          type: string
+        make:
+          type: string
+        make_abbr:
+          type: string
+        model:
+          type: string
+        size:
+          type: string
+        max_crew:
+          type: integer
+          format: int64
+        cargo:
+          type: integer
+          format: int64
+        type:
+          type: string
+        focus:
+          type: string
+    Org:
+      type: object
+      properties:
+        tag:
+          type: string
+        name:
+          type: string
+        banner:
+          type: string
+        logo:
+          type: string
+        count:
+          type: string
+        model:
+          type: string
+        roles:
+          $ref: '#/components/schemas/OrgRole'
+        intro:
+          type: string
+        history:
+          type: string
+        manifesto:
+          type: string
+        charter:
+          type: string
+        founders:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrgFounder'
+    OrgFounders:
+      type: array
+      items:
+        $ref: '#/components/schemas/OrgFounder'
+    OrgFounder:
+      type: object
+      properties:
+        name:
+          type: string
+        handle:
+          type: string
+    OrgRole:
+      type: object
+      properties:
+        primary:
+          type: string
+        secondary:
+          type: string
+    OrgMembers:
+      type: object
+      properties:
+        count:
+          type: integer
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrgMember'
+    OrgMember:
+      type: object
+      properties:
+        name:
+          type: string
+        handle:
+          type: string
+        stars:
+          type: integer
+          format: int64
+        thumb:
+          type: string
+    OrgSearch:
+      type: object
+      properties:
+        success:
+          type: integer
+        code:
+          type: string
+        msg:
+          type: string
+        data:
+          $ref: '#/components/schemas/OrgSearchData'
+    OrgSearchData:
+      type: object
+      properties:
+        totalrows:
+          type: integer
+        html:
+          type: string
+    SystemList:
+      type: array
+      items:
+        $ref: '#/components/schemas/System'
+    System:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        affiliation:
+          type: string
+    SystemInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        code:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        affiliation:
+          type: string
+        thumbnail:
+          type: string
+    LocationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Location'
+    Location:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        code:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        subtype:
+          type: string
+        affiliation:
+          type: string
+        thumbnail:
+          type: string
+        habitable:
+          type: integer
+        danger:
+          type: integer
+        economy:
+          type: integer
+        population:
+          type: integer
+        designation:
+          type: string
+        parent:
+          type: string
+        system:
+          type: string
+        parent_id:
+          type: integer
+        system_id:
+          type: integer
+        coords:
+          type: string
+        custom:
+          type: integer
+    LocationSpecItem:
+      type: object
+      properties:
+        id: 
+          type: integer
+        value: 
+          type: string
+    LocationSpec:
+      type: object
+      properties:
+        types:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocationSpecItem'
+        subTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocationSpecItem'
+        affiliations:
+          type: array
+          items:
+            $ref: '#/components/schemas/LocationSpecItem'
+    LocationData:
+      type: object
+      properties:
+        id:
+          type: integer
+        code:
+          type: string
+        location:
+          type: integer
+        description:
+          type: string
+        designation:
+          type: string
+        habitable:
+          type: integer
+        danger:
+          type: integer
+        economy:
+          type: integer
+        population:
+          type: integer
+        thumbnail:
+          type: string
+    POI:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: integer
+        subtype:
+          type: integer
+        parent_id:
+          type: integer
+        system_id:
+          type: integer
+        custom:
+          type: boolean
+        discoverer:
+          type: integer
+    POIData:
+      type: object
+      properties:
+        poi:
+          type: integer
+        code:
+          type: string
+        description:
+          type: string
+        affiliation:
+          type: integer
+        habitable:
+          type: boolean
+        danger:
+          type: integer
+        economy:
+          type: integer
+        population:
+          type: integer
+        coords:
+          $ref: '#/components/schemas/POICoords'
+        thumbnail:
+          type: string
+    POICoords:
+      type: object
+      properties:
+        x:
+          type: integer
+        y:
+          type: integer
+        z:
+          type: integer
+    Stats:
+      type: object
+      properties:
+        latestCitizen:
+          type: string
+        users:
+          type: object
+          properties:
+            total:
+              type: integer
+            active:
+              type: integer
+            verified:
+              type: integer
+    News:
+      type: array
+      items:
+        $ref: '#/components/schemas/NewsItem'
+    NewsItem:
+      type: object
+      properties:
+        title:
+          type: string
+        link:
+          type: string
+        id:
+          type: string
+        image:
+          type: string
+        posted:
+          type: string
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header

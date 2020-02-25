@@ -1,8 +1,6 @@
 const uuid = require('uuid/v4')
 const { executeSQL } = require('../mariadb')
 
-const { getCitizen, createCitizen } = require('../citizen')
-
 async function setVerificationCode(user, code) {
     // delete old code
     await executeSQL("DELETE FROM verification WHERE email = ?", [user.email]);
@@ -24,16 +22,6 @@ async function getVerificationCode(user) {
     return code;
 }
 
-async function getCode(handle) {
-    code = await getCitizen(handle).then((citizen) => {
-        return citizen.info.bio.match(/\[ueelife\:[A-Za-z0-9\-]+\]/i)
-    }).catch(function (err) {
-        console.error(err)
-        return ""
-    })
-    return code
-}
-
 async function setVerified(user) {
     var params = {
         id: user.user_id
@@ -48,37 +36,10 @@ async function setVerified(user) {
         console.error(err)
         return null
     })
-
-    if(usr) {
-
-    }
     return usr
-}
-
-async function verifyCitizen(token, handle) {
-    const user = await getUser(token)
-    const validCode = await getVerificationCode(user)
-    const code = await getCode(handle)
-
-    if(code == `[ueelife:${validCode}]`) {
-        const res = setVerified(user)
-        setVerificationCode(user, uuid());
-        createCitizen(user.app_metadata.handle)
-        return {
-            success: true,
-            msg: "Successfully verified citizen!",
-            user: res   // user with verified flag set
-        }
-    } else {
-        return {
-            success: false,
-            msg: "Code missing or doesn't match. Did you copy the code to your bio?",
-            user: user
-        }
-    }
 }
 
 module.exports = {
     getVerificationCode,
-    verifyCitizen
+    setVerified
 }

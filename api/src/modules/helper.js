@@ -95,8 +95,17 @@ const checkJwt = jwt({
     algorithms: ['RS256']
 });
 
+function checkPermission (permission) {
+    return (req, res, next) => {
+        const { permissions } = req.user
+        if (permissions.includes(permission)) return next()
+        res.status(403).send()
+    }
+}
+
 module.exports = {
     cache,
     checkJwt,
+    checkPermission,
     convertToMarkdown
 }

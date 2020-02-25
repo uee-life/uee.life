@@ -12,8 +12,6 @@
 </template>
 
 <script>
-import axios from "axios"
-
 import Location from '@/components/location/Location.vue'
 
 export default {
@@ -30,7 +28,7 @@ export default {
     methods: {
         async getPoi() {
             const poi = this.$route.params.poi
-            axios.get(`https://api.uee.life/pois/${poi}`).then(res => {
+            this.$axios.get(`https://api.uee.life/pois/${poi}`).then(res => {
                 if(res.status == 200) {
                     this.poi = res.data
                 }

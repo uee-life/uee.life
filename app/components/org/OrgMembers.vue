@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import axios from "axios"
 import Pagination from '@/components/layout/Pagination.vue'
 
 export default {
@@ -93,7 +92,10 @@ export default {
             if(this.affiliate) {
                 type = "affiliates"
             }
-            await axios.get(`https://api.uee.life/orgs/${org}/${type}?page=${this.currentPage}`).then((res) => {
+            this.$axios({
+                url: `https://api.uee.life/orgs/${org}/${type}?page=${this.currentPage}`,
+                method: 'GET'
+            }).then((res) => {
                 if(res.status == 200) {
                     this.members = res.data.members
                     this.memberCount = res.data.count

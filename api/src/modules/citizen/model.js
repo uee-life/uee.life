@@ -1,16 +1,14 @@
-const axios = require("axios")
-const cheerio = require('cheerio')
-const jwt = require('jsonwebtoken')
 
-const { manager } = require('../manager')
 const { executeSQL } = require('../mariadb')
 
 const { getUser } = require('../user/model')
+const { fetchCitizen } = require('../../helpers/rsi')
 
 /*
 *   GET /citizen/<handle>
 */
 async function getCitizen(handle) {
+    console.log('in getCitizen')
     citizen = {}
     citizen.info = await loadCitizen(handle)
     if(citizen.info) {
@@ -43,7 +41,7 @@ async function loadCitizen(handle) {
 
         sql = "select * from citizen_sync where handle=?"
         rows = await executeSQL(sql, [handle])
-    
+
         if(rows.length > 0) {
             citizen = rows[0]
         } else {
@@ -52,7 +50,7 @@ async function loadCitizen(handle) {
             citizen = await syncCitizen(handle)
             console.log(citizen)
         }
-    
+
         citizen.id = data.id
         citizen.created = data.created
         citizen.verified = true
@@ -85,28 +83,7 @@ async function loadCitizenLocation(handle) {
     return home
 }
 
-async function fetchCitizen(handle) {
-    try {
-        const baseURI = 'https://robertsspaceindustries.com'
-        const resp = await axios.get(baseURI + '/citizens/' + handle)
-        const $ = cheerio.load(resp.data)
-        info = {}
-        info.handle = handle
-        info.record = $('span:contains("UEE Citizen Record")', '#public-profile').next().text()
-        info.name = $('div.profile.left-col', '#public-profile').find('div.info').find('p.entry').find('strong.value').html()
-        info.bio = $('span:contains("Bio")', '#public-profile').next().text()
-        info.enlisted = $("span:contains('Enlisted')", '#public-profile').next().text()
-        info.portrait = baseURI + $('div.thumb', '#public-profile').children()[0].attribs.src
-        info.org = $('span:contains("Spectrum Identification (SID)")', '#public-profile').next().text()
-        info.orgRank = $('span:contains("Organization rank")', '#public-profile').next().text()
-        info.website = $('span:contains("Website")', '#public-profile').next().attr('href') || ''
-        info.verified = 0
-        return info
-    } catch (error) {
-        console.error(error)
-        return null
-    }
-}
+
 
 async function getInfo(handle) {
     citizen = await getCitizen(handle)
@@ -138,6 +115,7 @@ async function saveLocation(handle, loc) {
 async function setLocation(token, handle, location) {
     console.log("setting Location!")
     const user = await getUser(token)
+    console.log(user)
 
     if(handle == user.app_metadata.handle) {
         await saveLocation(handle, location)
@@ -156,72 +134,15 @@ async function setLocation(token, handle, location) {
     }
 }
 
-async function syncCitizen(handle) {
-    // get citizen data from RSI
-    const citizen = await fetchCitizen(handle)
-    // update citizen data
-    if(citizen) {
-        sql = "REPLACE INTO citizen_sync (handle, record, name, bio, enlisted, portrait, org, orgrank, website) VALUES (?,?,?,?,?,?,?,?,?)"
-        data = [
-            citizen.handle,
-            citizen.record,
-            citizen.name,
-            citizen.bio,
-            citizen.enlisted,
-            citizen.portrait,
-            citizen.org,
-            citizen.orgRank,
-            citizen.website
-        ]
-        await executeSQL(sql, data)
-        return citizen
-    } else {
-        return null
-    }
-}
-
-async function startSync(token) {
-    const userID = jwt.decode(token.slice(7)).sub
-    const user = await manager.getUser({id: userID}).catch((err) => {
-        console.error(err)
-        return {}
-    })
-    if(user.app_metadata.handle_verified) {
-        if(citizen = await syncCitizen(user.app_metadata.handle)) {
-            return {success: true, citizen: citizen}
-        } else {
-            return {success: false, error: "Sync failed. Flint probably broke something :("}
-        }
-    } else {
-        return {success: false, error: "Your account is not yet verified! Please verify and try again."}
-    }
-}
-
-async function purgeCitizen(handle) {
-    sql = "DELETE FROM citizen_sync WHERE handle=?"
-    await executeSQL(sql, [handle])
-}
-
-async function removeCitizen(handle) {
-    await executeSQL("DELETE FROM citizen WHERE handle=?", [handle])
-}
-
 async function createCitizen(handle) {
-
     console.log("Creating citizen: " + handle)
     // try to load citizen from DB
-    sql = "SELECT * FROM citizen WHERE handle=?"
-    const rows = await executeSQL(sql, [handle])
+    const rows = await executeSQL("SELECT * FROM citizen WHERE handle=?", [handle])
 
     if(rows.length === 0) {
         // if no record, add new record
-        sql = "INSERT INTO citizen (handle) values (?)"
-        await executeSQL(sql, [handle])
-        if(verified) {
-            await syncCitizen(handle)
-        } else {
-            purgeCitizen(handle)
-        }
+        await executeSQL("INSERT INTO citizen (handle) values (?)", [handle])
+        await syncCitizen(handle)
     }
 }
 
@@ -232,8 +153,5 @@ module.exports = {
     getShips,
     getLocation,
     setLocation,
-    createCitizen,
-    removeCitizen,
-    syncCitizen,
-    startSync
-};
+    createCitizen
+}

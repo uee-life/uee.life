@@ -33,7 +33,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
     layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
@@ -45,7 +44,7 @@ export default {
     },
     methods: {
         async getResults() {
-            axios({
+            this.$axios({
                 url: `https://api.uee.life/citizens/${this.input}/info`,
                 method: "GET"
             }).then((data) => {

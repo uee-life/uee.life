@@ -5,6 +5,7 @@ const {
     getSystems,
     getSystem, 
     getPlanets, 
+    getLocations,
     getPlanet, 
     getSatellites, 
     getSatellite, 
@@ -22,6 +23,10 @@ router.get('/systems/:code', cache(60), async (req, res) => {
 
 router.get('/systems/:code/planets', cache(60), async (req, res) => {
     res.send(await getPlanets(req.params.code));
+})
+
+router.get('/systems/:code/locations', cache(60), async (req, res) => {
+    res.send(await getLocations(req.params.code));
 })
 
 router.get('/systems/:code/pois', cache(60), async (req, res) => {

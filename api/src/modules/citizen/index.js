@@ -7,9 +7,12 @@ const {
     getLocation,
     getShips,
     setLocation,
-    verifyCitizen,
     startSync
 } = require('./model');
+
+const {
+    verifyCitizen
+} = require('../verification')
 
 
 // retrieve citizen basic info
@@ -31,17 +34,7 @@ router.get('/citizens/:handle/location', cache(600), async(req, res) => {
 
 // Protected
 router.put("/citizens/:handle/location", checkJwt, async (req, res) => {
-    res.send(await setLocation(req.headers.authorization, req.params.handle, req.body))
+    res.send(await setLocation(req.user, req.params.handle, req.body))
 })
-
-// Protected
-router.get("/citizens/:handle/verify", checkJwt, async (req, res) => {
-    res.send(await verifyCitizen(req.headers.authorization, req.params.handle));
-});
-
-// Protected
-router.get("/citizens/:handle/sync", checkJwt, async (req, res) => {
-    res.send(await startSync(req.headers.authorization))
-});
 
 module.exports = router
