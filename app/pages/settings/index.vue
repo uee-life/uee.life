@@ -1,10 +1,8 @@
 <template>
   <div class="profile">
-    <portal to="leftDock">
-    <profile-info v-if="user" :user="user"/>
-    </portal>
     <template v-if="user">
       <profile-verify v-if="!verified || debug" :user="user" :errors="errors.verification" @verify="verifyHandle"/>
+      <profile-info v-if="user" :user="user"/>
       <main-panel title="Settings">More coming soon...</main-panel>
     </template>
     <template v-else>

@@ -7,10 +7,8 @@
             <br />
           <div class="line-item"><div>Handle: </div> <div> {{user.app_metadata.handle}}</div></div>
           <div class="line-item"><div>Verified: </div> <div> {{ isVerified(user.app_metadata.handle_verified) }}</div></div>
+          <div class="line-item"><div>New Handle: </div> <input type="text"></div>
       </div>
-      <div v-else class="info-loading">
-          <h3>Loading...</h3>
-        </div>
   </main-panel>
 </template>
 
