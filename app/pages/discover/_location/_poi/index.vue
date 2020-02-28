@@ -3,7 +3,7 @@
         <portal to="leftDock">
             <dock-item title="nav">
             <div v-if="poi" class="left-nav-button"><router-link :to="systemLink">System: {{poi.system}}</router-link></div>
-            <div v-if="poi" class="left-nav-button"><router-link :to="planetLink">Planet: {{poi.parent}}</router-link></div>
+            <div v-if="poi" class="left-nav-button"><router-link :to="planetLink">Location: {{poi.parent}}</router-link></div>
             <div class="left-nav-button"><a target="_blank" :href="starmapLink">Open in Starmap</a></div>
             </dock-item>
         </portal>
@@ -43,17 +43,21 @@ export default {
     },
     computed: {
         starmapLink() {
-            if(this.poi) {
-                return `https://robertsspaceindustries.com/starmap?location=${this.poi.code}&system=${this.poi.system}`
+            if(this.poi.system) {
+                return `https://robertsspaceindustries.com/starmap?location=${this.poi.code}&system=${this.poi.system.toUpperCase()}`
             } else {
                 return ""
             }
         },
         systemLink() {
-            return `/system/${this.poi.system}`
+            if(this.poi) {
+                return `/discover/${this.poi.system}`
+            } else {
+                return ''
+            }
         },
         planetLink() {
-            return `/planet/${this.poi.parent}`
+            return `/discover/${this.poi.system}/${this.poi.parent}`
         }
     },
     mounted() {
@@ -73,6 +77,5 @@ export default {
     .poi {
         width: 100%;
         display: flex;
-        margin: 20px 10px 0;
     }
 </style>

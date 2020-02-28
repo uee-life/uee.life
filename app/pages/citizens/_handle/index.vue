@@ -29,7 +29,7 @@
                     SHIPS ({{ citizen.ships.length }})
                 </template>
                 <template slot="tab-content-ships">
-                    <fleet-view :ships="citizen.ships"/>
+                    <fleet-view :isOwner="isOwner" :ships="citizen.ships" @add="addShip" @remove="removeShip"/>
                 </template>
 
                 <template v-if="$auth.loggedIn && isOwner" slot="tab-title-location">
@@ -72,6 +72,7 @@ export default {
                 links: []
             },
             editing: false,
+            showModal: true,
             loading: true
         }
     },
@@ -94,9 +95,6 @@ export default {
                 return true
             }
             return false
-        },
-        saving() {
-            return this.$store.state.saving
         }
     },
     methods: {
@@ -105,6 +103,34 @@ export default {
         },
         save() {
             this.editing = false
+            this.refresh()
+        },
+        async addShip(ship) {
+            console.log("adding ship", ship)
+            this.$axios({
+                url: `https://api.uee.life/citizens/${this.$route.params.handle}/ships`,
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json; charset=utf-8'
+                },
+                data: ship 
+            }).then((res) => {
+                this.getShips()
+            }).catch((err) => {
+                console.error(err)
+            })
+        },
+        async removeShip(ship) {
+            console.log("removing ship", ship)
+            this.$axios({
+                url: `https://api.uee.life/citizens/${this.$route.params.handle}/ships/${ship}`,
+                method: 'DELETE'
+            }).then((res) => {
+                console.log('done')
+                this.getShips()
+            }).catch((err) => {
+                console.error(err)
+            })
         },
         async getCitizen(skipcache=false) {
             let headers = {}
@@ -170,12 +196,6 @@ export default {
             if(this.$route.params && this.$route.params.handle) {
                 this.getCitizen()
                 this.getShips()
-            }
-        },
-        saving() {
-            console.log("refreshing after save")
-            if(!this.saving) {
-                this.refresh()
             }
         }
     }

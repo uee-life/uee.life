@@ -8,6 +8,9 @@
                 <input class="filter-box" type="text" v-model="search" placeholder="Filter list..." />
             </div>
         </div>
+        <main-panel v-if="isOwner" class="add-ship" @click="showModal = true">
+            ADD SHIP
+        </main-panel>
         <div v-if="filteredShips.length > 0" class="ships">
             <template v-if="isMobile || display == 'small'">
                 <ship-summary-small @selected="selected" v-for="(s, index) in filteredShips" :key="s.id" :ship="s" :index="index" />
@@ -16,12 +19,15 @@
                 <ship-table  @selected="selected" :ships="filteredShips" />
             </template>
             <template v-else>
-                <ship-summary @selected="selected" v-for="(s, index) in filteredShips" :key="s.id" :ship="s" :index="index" />
+                <ship-summary @selected="selected" v-for="(s, index) in filteredShips" :key="s.id" :ship="s" :index="index" :isOwner="isOwner" @remove="removeShip"/>
             </template>
         </div>
         <div v-else class="no-ships">
             No ships currently listed
         </div>
+        <modal v-if="showModal" title="Add Ship" @close="showModal = false">
+            <ship-form @add="addShip" />
+        </modal>
     </div>
 </template>
 
@@ -30,13 +36,15 @@ import { gsap } from 'gsap'
 import ShipSummary from '@/components/fleet/ShipSummary'
 import ShipSummarySmall from '@/components/fleet/ShipSummarySmall'
 import ShipTable from '@/components/fleet/ShipTable'
+import ShipForm from '@/components/fleet/ShipForm'
 
 export default {
     name: "fleet-view",
     components: {
         ShipSummary,
         ShipSummarySmall,
-        ShipTable
+        ShipTable,
+        ShipForm
     },
     props: {
         ships: {
@@ -44,12 +52,17 @@ export default {
             default: function () {
                 return []
             }
+        },
+        isOwner: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
         return {
             display: 'large',
-            search: ''
+            search: '',
+            showModal: false
         }
     },
     methods: {
@@ -58,6 +71,13 @@ export default {
         },
         selected(ship) {
             this.$emit('selected', ship)
+        },
+        addShip(ship) {
+            this.showModal = false
+            this.$emit('add', ship)
+        },
+        removeShip(ship) {
+            this.$emit('remove', ship)
         }
     },
     computed: {
@@ -83,6 +103,11 @@ export default {
         justify-content: space-between;
     }
     .display-style {
+    }
+    .add-ship {
+        margin: 6px;
+        text-align: center;
+        cursor: pointer;
     }
     .fleet-view {
         position: relative;

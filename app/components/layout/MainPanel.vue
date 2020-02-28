@@ -1,5 +1,5 @@
 <template>
-    <div class="main-panel">
+    <div class="main-panel" @click="$emit('click')">
         <section-title v-if="title" :text="title" :size="titleSize" />
         <slot></slot>
         <span class="corner top left"></span>
@@ -28,6 +28,7 @@ export default {
 <style>
     .main-panel {
         position: relative;
+        box-sizing: border-box;
         flex-grow: 1;
         padding: 15px;
         margin-top: 20px;
