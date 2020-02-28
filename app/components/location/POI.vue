@@ -39,7 +39,7 @@ export default {
     computed: {
         starmapLink() {
             if(this.poi) {
-                return `https://robertsspaceindustries.com/starmap?location=${this.poi.code}&system=${this.poi.system}`
+                return `https://robertsspaceindustries.com/starmap?location=${this.poi.code}&system=${this.poi.system.toUpperCase()}`
             } else {
                 return ""
             }

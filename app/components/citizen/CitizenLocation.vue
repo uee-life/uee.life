@@ -1,42 +1,40 @@
 <template>
     <div class="citizen-location">
-        <div class="labels">
-            <span>System:</span>
-            <span>Location:</span>
-            <span>Base:</span>
+        <div class="location-row">
+            <span class="label">System:</span>
+            <template v-if="editing">
+                <select v-model="system">
+                    <option disabled value="">Select System</option>
+                    <option value="">Not Selected</option>
+                    <option v-for="loc in data.systems" :key="loc.id" :value="{id: loc.id, code: loc.code, name: loc.name}">{{ loc.name }}</option>
+                </select>
+            </template>
+            <span v-else-if="home.system"><router-link :to="systemLink">{{home.system.name}}</router-link></span>
+            <span v-else>Unknown</span>
         </div>
-        <div class="data">
-                <template v-if="editing">
-                    <select v-model="system">
-                        <option disabled value="">Select System</option>
-                        <option value="">Not Selected</option>
-                        <option v-for="loc in data.systems" :key="loc.id" :value="{id: loc.id, name: loc.name}">{{ loc.name }}</option>
-                    </select>
-                </template>
-                <span v-else-if="home.system"><router-link :to="systemLink">{{home.system.name}}</router-link></span>
-                <span v-else>Unknown</span>
-            <span>
-                <template v-if="editing">
-                    <select v-if="system && data.locations.length" v-model="location">
-                        <option disabled value="">Select Location</option>
-                        <option value="">Not Selected</option>
-                        <option v-for="loc in data.locations" :key="loc.id" :value="{id: loc.id, name: loc.name}">{{ loc.name }}</option>
-                    </select>
-                </template>
-                <div v-else-if="home.location"><router-link :to="locationLink">{{home.location.name}}</router-link></div>
-                <div v-else>Unknown</div>
-            </span>
-            <span>
-                <template v-if="editing">
-                    <select v-if="location && data.bases.length" v-model="base">
-                        <option disabled value="">Select Home Base</option>
-                        <option value="">Not Selected</option>
-                        <option v-for="loc in data.bases" :key="loc.id" :value="{id: loc.id, name: loc.name}">{{ loc.name }}</option>
-                    </select>
-                </template>
-                <div v-else-if="home.base"><router-link :to="baseLink">{{home.base.name}}</router-link></div>
-                <div v-else>Unknown</div>
-            </span>
+        <div class="location-row">
+            <span class="label">Location:</span>
+            <template v-if="editing">
+                <select v-if="system && data.locations.length" v-model="location">
+                    <option disabled value="">Select Location</option>
+                    <option value="">Not Selected</option>
+                    <option v-for="loc in data.locations" :key="loc.id" :value="{id: loc.id, code: loc.code, name: loc.name}">{{ loc.name }}</option>
+                </select>
+            </template>
+            <div v-else-if="home.location"><router-link :to="locationLink">{{home.location.name}}</router-link></div>
+            <div v-else>Unknown</div>
+        </div>
+        <div class="location-row">
+            <span class="label">Base:</span>
+            <template v-if="editing">
+                <select v-if="location && data.bases.length" v-model="base">
+                    <option disabled value="">Select Home Base</option>
+                    <option value="">Not Selected</option>
+                    <option v-for="loc in data.bases" :key="loc.id" :value="{id: loc.id, name: loc.name}">{{ loc.name }}</option>
+                </select>
+            </template>
+            <div v-else-if="home.base"><router-link :to="baseLink">{{home.base.name}}</router-link></div>
+            <div v-else>Unknown</div>
         </div>
     </div>
 </template>
@@ -74,9 +72,6 @@ export default {
         }
     },
     methods: {
-        ...mapMutations({
-            setSaving: 'SET_SAVING'
-        }),
         ...mapActions([
             'setCitizen'
         ]),
@@ -97,7 +92,7 @@ export default {
         loadLocations() {
             if(this.system) {
                 this.$axios({
-                    url: `https://api.uee.life/systems/${this.system.name}/planets`,
+                    url: `https://api.uee.life/locations/${this.system.name}/locations`,
                     method: 'GET'
                 }).then((res) => {
                     this.data.locations = res.data
@@ -114,7 +109,7 @@ export default {
         loadPOIs() {
             if(this.location) {
                 this.$axios({
-                    url: `https://api.uee.life/planets/${this.location.name}/pois`,
+                    url: `https://api.uee.life/locations/${this.location.code}/pois`,
                     method: 'GET'
                 }).then((res) => {
                     this.data.bases = res.data
@@ -128,15 +123,14 @@ export default {
                 })
             }
         },
-        save() {
+        async save() {
             console.log('saving location data...')
-            this.setSaving(true)
             const data = {
                 system: this.system,
                 location: this.location,
                 base: this.base
             }
-            this.$axios({
+            await this.$axios({
                 url: `https://api.uee.life/citizens/${this.user['https://uee.life/app_metadata'].handle}/location`,
                 method: 'PUT',
                 headers: {
@@ -146,7 +140,6 @@ export default {
             }).then((res) => {
                 console.log(res.data.user.citizen)
                 this.setCitizen(res.data.user.citizen)
-                this.setSaving(false)
             }).catch((err) => {
                 console.error(err)
             })
@@ -181,6 +174,14 @@ export default {
 <style scoped>
     .citizen-location {
         display: flex;
+        flex-direction: column;
+    }
+    .location-row {
+        display: flex;
+        flex-grow: 1;
+    }
+    .location-row .label {
+        width: 70px;
     }
     .citizen-location .labels {
         display: flex;
