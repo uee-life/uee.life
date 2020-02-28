@@ -147,6 +147,7 @@ opacity: 0;
 
 .loading {
   display: flex;
+  box-sizing: border-box;
   width: 100%;
   justify-content: center;
   padding: 25px;

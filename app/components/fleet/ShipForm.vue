@@ -70,7 +70,6 @@ export default {
     display: flex;
     flex-direction: column;
     max-width: 400px;
-    width: 350px;
 }
 input {
     margin-bottom: 5px;

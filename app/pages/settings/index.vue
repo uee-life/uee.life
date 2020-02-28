@@ -1,9 +1,9 @@
 <template>
   <div class="profile">
     <template v-if="user">
-      <profile-verify v-if="!verified || debug" :user="user" :errors="errors.verification" @verify="verifyHandle"/>
-      <profile-info v-if="user" :user="user"/>
-      <main-panel title="Settings">More coming soon...</main-panel>
+      <profile-verify class="profile-panel" v-if="!verified || debug" :user="user" :errors="errors.verification" @verify="verifyHandle"/>
+      <profile-info class="profile-panel" v-if="user" :user="user" @refresh="getUser" />
+      <main-panel class="profile-panel" title="Settings">More coming soon...</main-panel>
     </template>
     <template v-else>
     <div class="loading">
@@ -95,12 +95,17 @@ export default {
 <style scoped>
   .profile {
     position: relative;
-    width: 100%;
     display: flex;
+    flex-direction: column;
     width: 100%;
     padding: 0 10px;
     box-sizing: border-box;
     flex-wrap: wrap;
+    align-content: center;
+  }
+
+  .profile-panel {
+    max-width: 800px;
   }
 
   .debug {

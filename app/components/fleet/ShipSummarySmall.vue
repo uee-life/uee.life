@@ -12,13 +12,14 @@
         <span class="corner top right"></span>
         <span class="corner bottom left"></span>
         <span class="corner bottom right"></span>
+        <input v-if="isOwner" type="button" class="remove-ship" @click="$emit('remove', ship.id)" value="X" />
     </div>
 </template>
 
 <script>
 export default {
     name: 'ship-summary',
-    props: ["ship"],
+    props: ["ship", "isOwner"],
     computed: {
         shipImage: function() {
             return `/images/ships/${this.ship.short_name}.jpg`
@@ -72,5 +73,13 @@ export default {
         align-self: center;
         width: 70px;
         opacity: 0.8;
+    }
+
+    .remove-ship {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        z-index: 20;
+        font-size: 12px;
     }
 </style>

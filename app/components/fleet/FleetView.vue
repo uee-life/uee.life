@@ -13,7 +13,7 @@
         </main-panel>
         <div v-if="filteredShips.length > 0" class="ships">
             <template v-if="isMobile || display == 'small'">
-                <ship-summary-small @selected="selected" v-for="(s, index) in filteredShips" :key="s.id" :ship="s" :index="index" />
+                <ship-summary-small @selected="selected" v-for="(s, index) in filteredShips" :key="s.id" :ship="s" :index="index" :isOwner="isOwner" @remove="removeShip" />
             </template>
             <template v-else-if="display == 'table'">
                 <ship-table  @selected="selected" :ships="filteredShips" />

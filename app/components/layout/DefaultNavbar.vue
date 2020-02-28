@@ -19,7 +19,6 @@
 </template>
 
 <script>
-const config = require('~/config.json')
 
 export default {
   name: 'navbar',
@@ -33,6 +32,7 @@ export default {
       this.$auth.loginWith('auth0')
     },
     logout() {
+      const config = require('~/config.json')
       this.$auth.logout()
       window.location = `https://ueelife.auth0.com/v2/logout?returnTo=http%3A%2F%2Flocalhost:3000&client_id=${config.AUTH0_CLIENT_ID}`
     }

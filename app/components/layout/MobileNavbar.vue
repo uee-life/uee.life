@@ -11,10 +11,10 @@
         <nuxt-link class="nav-button" to="/orgs">Org Registry</nuxt-link>
         <nuxt-link class="nav-button" to="/system/stanton">System Directory</nuxt-link>
         <br>
-        <nuxt-link v-if="isAuthenticated" class="nav-button" :to="citizenLink">My Profile</nuxt-link>
-        <nuxt-link v-if="isAuthenticated" class="nav-button" to="/settings">settings</nuxt-link>
-        <nuxt-link v-if="!isAuthenticated" class="nav-button" to="/auth/sign-in">Sign In</nuxt-link>
-        <nuxt-link v-else to="/auth/sign-off" class="nav-button">Sign Off</nuxt-link>
+        <nuxt-link v-if="$auth.loggedIn" class="nav-button" :to="citizenLink">My Profile</nuxt-link>
+        <nuxt-link v-if="$auth.loggedIn" class="nav-button" to="/settings">settings</nuxt-link>
+        <a v-if="!$auth.loggedIn" class="nav-button" @click="login()">Sign In</a>
+        <a v-else @click="logout()" class="nav-button">Sign Off</a>
       </Slide>
     </client-only>
   </div>
@@ -26,12 +26,23 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'navbar',
   computed: {
-    ...mapGetters([
-      'isAuthenticated',
-      'loggedUser'
-    ]),
     citizenLink() {
-      return `/citizens/${this.loggedUser.app_metadata.handle}`
+      console.log(this.$auth.user)
+      if(this.$auth.user) {
+        return `/citizens/${this.$auth.user['https://uee.life/app_metadata'].handle}`
+      } else {
+        return `/citizens`
+      }
+    }
+  },
+  methods: {
+    login() {
+      this.$auth.loginWith('auth0')
+    },
+    logout() {
+      const config = require('~/config.json')
+      this.$auth.logout()
+      window.location = `https://ueelife.auth0.com/v2/logout?returnTo=http%3A%2F%2Flocalhost:3000&client_id=${config.AUTH0_CLIENT_ID}`
     }
   }
 }

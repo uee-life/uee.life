@@ -44,11 +44,7 @@ export default {
                     this.$swal.fire('Success!', 'Profile successfully synchronized!', 'success')
                     this.$emit('syncSuccess', res.data.citizen)
                 } else {
-                    const options = {
-                        position: 'top-center',
-                        duration: 3000
-                    }
-                    this.$toasted.show(res.data.error, options)
+                    this.$swal.fire('error', res.data.error, 'error')
                     this.$emit('syncSuccess')
                 }
             }).catch((err) => {

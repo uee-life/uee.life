@@ -8,6 +8,7 @@
 const config = require('~/config.json')
 
 export default {
+  layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
   methods: {
     sanitize(s) {
       var chars = {'<':'&lt;','>':'&gt;','"':'&quot;', '&':'&amp;', "'": '&#x27;', '/': '&#x2f;'};
