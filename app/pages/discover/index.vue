@@ -7,7 +7,7 @@
 
 <script>
 import Geolocate from '@/components/discover/Geolocate'
-import LatestPois from '@/components/discover/latestPOIs'
+import LatestPois from '@/components/discover/LatestPOIs'
 export default {
     name: 'Explore',
     components: {
