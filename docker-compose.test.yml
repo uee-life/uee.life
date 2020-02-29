@@ -5,8 +5,6 @@ services:
         build: ./app/
         container_name: uee-life-test
         restart: unless-stopped
-        ports:
-            - "4000:3000"
         command:
             "npm run start"
     
