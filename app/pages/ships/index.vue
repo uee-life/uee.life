@@ -1,6 +1,6 @@
 <template>
     <div class="org-main" id="org-main">
-        <form class="input-form" @submit.prevent="addShip">
+        <form v-if="$auth.hasScope('admin:all')" class="input-form" @submit.prevent="addShip">
             <span>short_name <input v-model="ship.name" /></span></span>
             <span>manufacturer: <select v-model="ship.make">
                 <option v-for="f in makes" :key="f.id" :value="f.id">{{ f.name }}</option>
@@ -19,7 +19,6 @@
             </select></span>
             <button type="submit">Add Ship</button>
         </form>
-        <div>{{ship.name}}, {{ship.make}}, {{ship.model}}, {{ship.size}}, {{ship.crew}}, {{ship.cargo}}, {{ship.type}}, {{ship.focus}}</div>
         <fleet-view :ships="ships"/>
     </div>
 </template>
@@ -31,6 +30,7 @@ import FleetView from '@/components/fleet/FleetView.vue'
 
 export default {
     layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
+    middleware: 'auth',
     name: "ships",
     components: {
         FleetView
