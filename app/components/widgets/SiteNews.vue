@@ -1,50 +1,26 @@
 <template>
     <main-panel title="Site News" class="site-news" id="site-news" :style="newsHeight">
         <div class="content">
-            <div class="title">
-                <h3>UEE.life v0.2.2  - Bug Patch</h3>
-                <div class="date"><i>Updated: 13 Feb 2950</i></div>
-            </div>
-            <div>v0.2.2 Bug fix patch:
-                <ul>
-                    <li>Fixed a critical issue where expired credentials caused a 500 error</li>
-                </ul>
-            </div>
-            <div>v0.2.1 Bug fix patch:
-                <ul>
-                    <li>Session management fix preventing infinite refresh loops</li>
-                    <li>Layout and visual fixes</li>
-                    <li>Updated libraries</li>
-                </ul>
-            </div>
-            <div>New features:
-                <ul>
-                    <li>Comletely re-written site using NUXT.js</li>
-                    <li>Verified citizen now have a fancy verified badge on their portrait: <img style="width: 30px; margin-bottom: -10px;" src="~assets/verified.png" />
-                    <li>Org member/affiliate lists now work! (With pagination for large orgs! *cough*TEST*cough*)</li>
-                    <li>Pick your home! You visit your profile page once verified, click the "Edit Profile" option then choose your home! (Currently limited to the Stanton system)</li>
-                    <li>New in-site authentication dialog!</li>
-                    <li>Moons updated to Planet Tech v4 images! (thanks to /r/Ilunes for the photograhy!)</li>
-                    <li>Many Visual and bug fixes!</li>
-                    <li>Full mobile browser support!</li>
-                    <li>Even! More! Exclamations!!!</li>
-                </ul>
-            </div>
-            <div>
-                Coming Soon:
-                <ul>
-                    <li>Fleet Management!</li>
-                    <li>Event Calendar!</li>
-                    <li>Org Management!</li>
-                    <li>Enhanced location information!</li>
-                </ul>
-            </div>
-            <p>Come back regularly to keep up with all updates.</p>
-            <p>And don't forget to visit your settings page <nuxt-link to="/settings">here</nuxt-link> to verify your account!</p>
-            <p>This site is by the community, for the community, so if you have any thoughts on what
-                you would like to see here, please let me know at: 
-                <a href="mailto:capnflinttv@gmail.com">capnflinttv@gmail.com</a>
-            </p>
+            <template v-if="data.content">
+                <template v-if="editing">
+                    <div class="edit-button"><input type="button" @click="editing = false" value="CANCEL"></div>
+                    <form class="edit" @submit.prevent="update">
+                    <div>Title: <input class="titleInput" v-model="data.title"></div>
+                    <div>Content:</div>
+                    <textarea v-model="data.content" class="contentInput"></textarea>
+                    <br />
+                    <input type="submit" value="Update">
+                    </form>
+                </template>
+                <template v-else>
+                    <div class="edit-button" v-if="$auth.hasScope('write:site_content')"><input type="button" @click="() => {editing = true; if(!showing) toggleNews()}" value="EDIT"></div>
+                    <div class="title">
+                    <h1 v-if="data.title" v-text="data.title"></h1>
+                    <div v-if="data.updated" class="date"><i>Updated: <span>{{ postedDate }}</span></i></div>
+                    </div>
+                    <div v-html="$md.render(data.content)"></div>
+                </template>
+            </template>
             <div class="read-more" @click="toggleNews()">{{buttonText}}</div>
         </div>
     </main-panel>
@@ -59,6 +35,22 @@ export default {
             newsHeight: "height: 100px",
             buttonText: "Read More",
             showing: false,
+            data: {
+                title: null,
+                content: "",
+                updated: null
+            },
+            editing: false
+        }
+    },
+    computed: {
+        postedDate() {
+        const d = new Date(this.data.updated);
+        const year = d.getFullYear();
+        const month = d.getMonth();
+        const day = d.getDate();
+        const date = new Date(year + 930, month, day).toDateString();
+        return date
         }
     },
     methods: {
@@ -74,8 +66,36 @@ export default {
                 this.showing = true;
             }
         },
+        async getContent() {
+            this.$axios({
+                url: 'https://api.uee.life/content/site-news',
+                method: 'GET'
+            }).then((res) => {
+                this.data = res.data
+            }).catch((err) => {
+                console.error(err)
+            })
+        },
+        async update() {
+            this.$axios({
+                url: 'https://api.uee.life/content/site-news',
+                method: 'PUT',
+                headers: {
+                'Content-type': 'application/json; charset=utf-8'
+                },
+                data: this.data
+            }).then((res) => {
+                this.$swal.fire('success', "Content Updated!", 'success')
+                this.editing = false
+                this.getContent()
+            }).catch((error) => {
+                this.$swal.fire('error', error, 'warning')
+            })
+        }
     },
-
+    mounted() {
+        this.getContent()
+    }
 }
 </script>
 
@@ -91,7 +111,7 @@ export default {
         margin-bottom: 20px;
     }
 
-    .site-news .title h3 {
+    .site-news .title h1 {
         margin: 0px;
         font-size: calc(14px + (18 - 14) * ((100vw - 300px) / (1600 - 300)));
         line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));
@@ -124,5 +144,24 @@ export default {
     .site-news>.content>.read-more:hover {
         color: #dbf3ff;
         cursor: pointer;
+    }
+        .edit-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    .edit {
+      display: flex;
+      flex-direction: column;
+      margin: 20px;
+    }
+
+    .edit .titleInput {
+      width: 100%;
+    }
+
+    .edit .contentInput {
+      height: 400px;
     }
 </style>
