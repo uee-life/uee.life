@@ -1,12 +1,10 @@
 version: "3"
 
 services:
-    nuxt:
+    app:
         build: ./app/
         container_name: uee-life
         restart: unless-stopped
-        ports:
-            - "3000:3000"
         command:
             "npm run start"
     
@@ -18,4 +16,4 @@ services:
         volumes:
             - ./nginx/nginx.conf:/etc/nginx/nginx.conf
         depends_on:
-            - nuxt
+            - app
