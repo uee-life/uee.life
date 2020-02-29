@@ -65,7 +65,9 @@ export default {
             tabs: ['info', 'ships'],
             initialTab: 'info', 
             citizen: {
-                info: {},
+                info: {
+                    handle: ''
+                },
                 home: {},
                 ships: [],
                 org: null,
