@@ -5,7 +5,7 @@ ENV APP_ROOT /src
 RUN mkdir ${APP_ROOT}
 WORKDIR ${APP_ROOT}
 COPY package*.json ./
-RUN npm install
+RUN npm install -f
 ADD . ${APP_ROOT}
 RUN npm run build
 
