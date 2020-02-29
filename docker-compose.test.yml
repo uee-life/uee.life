@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+    nuxt:
+        build: ./app/
+        container_name: uee-life-test
+        restart: unless-stopped
+        ports:
+            - "3001:3000"
+        command:
+            "npm run start"
+    
+    nginx:
+        image: nginx
+        container_name: uee-life-test-nginx
+        ports:
+            - "8090:80"
+        volumes:
+            - ./nginx/nginx.test.conf:/etc/nginx/nginx.conf
+        depends_on:
+            - nuxt
