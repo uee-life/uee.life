@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-    nuxt:
+    app:
         build: ./app/
         container_name: uee-life-test
         restart: unless-stopped
@@ -18,4 +18,4 @@ services:
         volumes:
             - ./nginx/nginx.test.conf:/etc/nginx/nginx.conf
         depends_on:
-            - nuxt
+            - app
