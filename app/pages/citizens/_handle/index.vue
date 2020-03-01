@@ -93,7 +93,7 @@ export default {
             return `https://robertsspaceindustries.com/citizens/${this.$route.params.handle}`
         },
         isOwner() {
-            if(this.$auth.loggedIn && this.user['https://uee.life/app_metadata'].handle.toLowerCase() == this.citizen.info.handle.toLowerCase() && this.user['https://uee.life/app_metadata'].handle_verified) {
+            if(this.$auth.loggedIn && this.user.app_metadata.handle_verified && this.user.app_metadata.handle.toLowerCase().trim() === this.citizen.info.handle.toLowerCase().trim()) {
                 return true
             }
             return false
