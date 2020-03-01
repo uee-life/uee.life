@@ -65,8 +65,8 @@ export default {
           const handle = this.user.app_metadata.handle
 
           this.$axios({
-            url: `https://api.uee.life/citizens/${handle}/verify`,
-            method: 'GET'
+            url: `https://api.uee.life/user/verify`,
+            method: 'POST'
           }).then((res) => {
             // eslint-disable-next-line
             console.log(res)
