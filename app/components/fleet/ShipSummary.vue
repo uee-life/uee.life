@@ -5,21 +5,11 @@
         <img class="manufacturer" :src="manufacturerImage" />
         <div class="ship-info">
             <h5>{{ ship.model }}</h5>
-            <div>
-                <div class="info">
-                    <span>Designation:</span>
-                    <span class="info">Type:</span>
-                    <span class="info">Focus:</span>
-                    <span class="info">Ship &nbsp; ID:</span>
-                </div>
-                <div class="data">
-                    <span>{{ ship.name || '--' }}</span>
-                    <span class="data">{{ ship.type }}</span>
-                    <span class="data">{{ ship.focus }}</span>
-                    <span class="data">{{ 'UES-' + ('00' + ship.id.toString(16).toUpperCase()).substr(-6) }}</span>
-                </div>
+            <div class="info">
+                <div><span class="label">Ship &nbsp; ID:</span><span class="data">{{ 'UES-' + ('00' + ship.id.toString(16).toUpperCase()).substr(-6) }}</span></div>
+                <div><span class="label">Type:</span><span class="data">{{ ship.type }} - {{ ship.focus }}</span></div>
+                <div v-if="ship.owner">Owner: <nuxt-link :to="citizenLink">{{ship.owner}}</nuxt-link></div>
             </div>
-            <div v-if="ship.owner">Owner: <nuxt-link :to="citizenLink">{{ship.owner}}</nuxt-link></div>
         </div>
         <span class="corner top left"></span>
         <span class="corner top right"></span>
@@ -81,25 +71,22 @@ export default {
         z-index: 2;
         flex-grow: 1;
     }
-    
-    .ship-info div {
-        display: flex;
-        max-width: 300px;
-    }
 
-    .ship-info div div.info {
+    .ship-info .info {
         display: flex;
         flex-direction: column;
+        font-size: 12px;
+    }
+
+    .ship-info .info .label {
+        width: 95px;
         text-transform: uppercase;
         font-family: 'Michroma';
-        font-size: 12px;
-        width: 125px;
     }
 
-    .ship-info div div.data {
+    .ship-info .info .data {
         margin-left: 5px;
         display: flex;
-        flex-direction: column;
         font-size: 14px;
         line-height: 19.5px;
         min-width: 100px;
