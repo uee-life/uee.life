@@ -49,6 +49,7 @@ export default {
     .ship-summary {
         display: flex;
         flex-grow: 1;
+        flex-basis: 400px;
         margin: 5px;
         margin-bottom: 10px;
         padding: 9px;
