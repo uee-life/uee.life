@@ -6,7 +6,7 @@
         <div class="ship-info">
             <h5>{{ ship.model }}</h5>
             <div>{{ ship.type }} - {{ ship.focus }}</div>
-            <div v-if="ship.owner">Owner: <nuxt-link :to="citizenLink">{{ship.owner}}</nuxt-link></div>
+            <div v-if="ship.owner">Owner: <nuxt-link :to="citizenLink">{{ship.owner.name}}</nuxt-link></div>
         </div>
         <span class="corner top left"></span>
         <span class="corner top right"></span>
@@ -28,7 +28,7 @@ export default {
             return `/images/manufacturers/${this.ship.make_abbr}.png`
         },
         citizenLink: function () {
-            return `/citizens/${this.ship.owner}`
+            return `/citizens/${this.ship.owner.handle}`
         }
     },
     methods: {

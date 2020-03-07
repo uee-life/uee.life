@@ -8,7 +8,7 @@
             <div class="info">
                 <div><span class="label">Ship &nbsp; ID:</span><span class="data">{{ 'UES-' + ('00' + ship.id.toString(16).toUpperCase()).substr(-6) }}</span></div>
                 <div><span class="label">Type:</span><span class="data">{{ ship.type }} - {{ ship.focus }}</span></div>
-                <div v-if="ship.owner">Owner: <nuxt-link :to="citizenLink">{{ship.owner}}</nuxt-link></div>
+                <div v-if="ship.owner"><span class="label">Owner:</span><span class="data"><nuxt-link :to="citizenLink">{{ship.owner.name}}</nuxt-link></span></div>
             </div>
         </div>
         <span class="corner top left"></span>
@@ -31,7 +31,7 @@ export default {
             return `/images/manufacturers/${this.ship.make_abbr}.png`
         },
         citizenLink: function () {
-            return `/citizens/${this.ship.owner}`
+            return `/citizens/${this.ship.owner.handle}`
         }
     },
     methods: {

@@ -121,18 +121,30 @@ export default {
                 console.error(error)
             })
         },
+        async getOrgShips() {
+            this.$axios({
+                url: "https://api.uee.life/orgs/mcbane/ships",
+                method: "GET"
+            }).then((res) => {
+                this.fleet = res.data
+            }).catch((err) => {
+                this.$swal.fire('error', 'Error getting ships!', 'error')
+            })
+        }
     },
     mounted() {
         this.getOrg()
         this.getOrgMembers()
         this.getOrgAffiliates()
+        this.getOrgShips()
     },
     watch: {
         route: {
             handler: function () {
-                this.getOrg();
-                this.getOrgMembers();
-                this.getOrgAffiliates();
+                this.getOrg()
+                this.getOrgMembers()
+                this.getOrgAffiliates()
+                this.getOrgShips()
             }
         },
         org: {
