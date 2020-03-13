@@ -123,7 +123,7 @@ export default {
         },
         async getOrgShips() {
             this.$axios({
-                url: "https://api.uee.life/orgs/mcbane/ships",
+                url: `https://api.uee.life/orgs/${this.$route.params.org}/ships`,
                 method: "GET"
             }).then((res) => {
                 this.fleet = res.data
