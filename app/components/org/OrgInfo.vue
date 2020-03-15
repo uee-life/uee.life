@@ -23,13 +23,9 @@
                 </ul>
               </main-panel>
               <main-panel title="founders" class="info-panel">
-                <ul class="info-items">
-                  <li v-for="f in org.founders" :key="f.handle" class="line-item">
-                    <router-link :to="citizenLink(f.handle)">
-                      {{f.name}}
-                    </router-link>
-                  </li>
-                </ul>
+                <div class="founders">
+                  <portrait v-for="f in founders" :key="f.handle" :handle="f.handle" size="small" :showName="true" />
+                </div>
               </main-panel>
             </div>
         </template>
@@ -65,20 +61,58 @@
 </template>
 
 <script>
+import Portrait from '@/components/citizen/Portrait'
 
 export default {
   name: 'org-info',
   props: ['org'],
+  components: {
+    Portrait
+  },
   data() {
     return {
       tabs: ["overview", "history", "manifesto", "charter"],
-      initialTab: "overview"
+      initialTab: "overview",
+      founders: []
     }
   },
   methods: {
     citizenLink(handle) {
       return `/citizens/${handle}`
     },
+    async getCitizen(handle) {
+      return await this.$axios({
+        url: `https://api.uee.life/citizens/${handle}/info`,
+        method: 'GET'
+      }).then((res) => {
+        if(res.status == 200) {
+          return res.data
+        } else {
+          return ''
+        }
+      }).catch((err) => {
+        console.error(err)
+      })
+    },
+    async loadFounders() {
+      const founders = this.org.founders
+      console.log(founders)
+      for (let i in founders) {
+        console.log(founders[i].handle)
+        const citizen = this.getCitizen(founders[i].handle)
+        founders[i].portrait = await this.getCitizen(founders[i].handle)
+      }
+      this.founders = founders
+    }
+  },
+  watch: {
+    org: {
+        handler: function () {
+          if(this.org.founders.length > 0) {
+            this.loadFounders()
+          }
+        }
+    }
   }
 }
 </script>
@@ -121,5 +155,24 @@ export default {
 
     .org-intro {
       text-align: center;
+    }
+
+    .founders {
+      display: flex;
+    }
+
+    .founders .portrait {
+      margin: 5px 10px;
+    }
+
+    .founder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 5px;
+    }
+
+    .founder img {
+      width: 100px;
     }
 </style>

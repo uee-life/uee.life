@@ -1,8 +1,9 @@
 <template>
     <div id="citizen-info" :class="componentClass">
-        <div class="portrait" id="portrait">
-            <img class="portrait-img" :src="citizen.info.portrait" />
-            <span class="verified"><img v-if="citizen.info.verified" src="~assets/verified.png" /></span>
+        <div class="citizen-portrait" id="portrait">
+            <portrait :citizen="citizen.info" />
+            <!--img class="portrait-img" :src="citizen.info.portrait" />
+            <span class="verified"><img v-if="citizen.info.verified" src="~assets/verified.png" /></span-->
             <span class="corner top left"></span>
             <span class="corner top right"></span>
             <span class="corner bottom left"></span>
@@ -60,12 +61,11 @@ export default {
                 if(this.isMobile) {
                     size = "200px"
                 } else {
-                    size = "150px"
+                    size = "180px"
                 }
-                gsap.to(".portrait", {duration: 0.5, opacity: 1})
-                gsap.to(".portrait", {duration: 0.5, width: size, height: size})
-                gsap.to(".portrait img", {duration: 0.5, delay: 1, opacity: 1})
-                gsap.to(".portrait .verified", {duration: 0.5, delay: 1.5, opacity: 1})
+                gsap.to(".citizen-portrait", {duration: 0.5, opacity: 1})
+                gsap.to(".citizen-portrait", {duration: 0.5, width: size, height: size})
+                gsap.to(".citizen-portrait div", {duration: 0.5, delay: 1, opacity: 1})
                 gsap.to(".citizen-info .info", {duration: 0.5, delay: 1.5, opacity: 1})
             }
         }
@@ -85,7 +85,8 @@ export default {
         justify-content: center;
     }
 
-    .portrait{
+    .citizen-portrait{
+        display: flex;
         box-sizing: border-box;
         width: 50px;
         height: 50px;
@@ -96,15 +97,21 @@ export default {
         position: relative;
         opacity: 0;
         align-self: auto;
+        align-items: center;
+        justify-content: center;
     }
 
-    .portrait img {
+    .citizen-portrait .portrait {
+        opacity: 0;
+    }
+
+    .citizen-portrait img {
         width: 100%;
         height: 100%;
         opacity: 0;
     }
 
-    .portrait .verified {
+    .citizen-portrait .verified {
         position: absolute;
         bottom: 0;
         right: 8px;
@@ -112,7 +119,7 @@ export default {
         opacity: 0;
     }
 
-    .portrait .verified>img {
+    .citizen-portrait .verified>img {
         opacity: 1;
         width: 100%;
         height: auto;

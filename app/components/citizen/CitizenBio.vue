@@ -50,6 +50,7 @@ export default {
         position: relative;
         height: 50px;
         width: 105px;
+        max-width: calc(100vw - 50px);
         opacity: 0;
         overflow: auto;
         align-self: flex-start;
@@ -58,20 +59,21 @@ export default {
     /* width */
     ::-webkit-scrollbar {
     width: 5px;
+    height: 5px;
     }
 
     /* Track */
     ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+    background: #dbf3ff; 
     }
     
     /* Handle */
     ::-webkit-scrollbar-thumb {
-    background: #888; 
+    background: #546f84; 
     }
 
     /* Handle on hover */
     ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
+    background: #39ced8; 
     }
 </style>

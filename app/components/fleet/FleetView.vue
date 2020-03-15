@@ -1,5 +1,6 @@
 <template>
     <div id="fleet-view" class="fleet-view">
+        <fleet-summary />
         <div class="view-controls">
             <div class="display-style">
                 <template v-if="!isMobile">Display: <a @click="show('large')">Large</a> | <a @click="show('small')">Small</a> | <a @click="show('table')">Table</a></template>
@@ -37,6 +38,7 @@ import ShipSummary from '@/components/fleet/ShipSummary'
 import ShipSummarySmall from '@/components/fleet/ShipSummarySmall'
 import ShipTable from '@/components/fleet/ShipTable'
 import ShipForm from '@/components/fleet/ShipForm'
+import FleetSummary from '@/components/fleet/FleetSummary'
 
 export default {
     name: "fleet-view",
@@ -44,7 +46,8 @@ export default {
         ShipSummary,
         ShipSummarySmall,
         ShipTable,
-        ShipForm
+        ShipForm,
+        FleetSummary
     },
     props: {
         ships: {

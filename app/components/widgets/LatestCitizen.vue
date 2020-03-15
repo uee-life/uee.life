@@ -1,7 +1,8 @@
 <template>
     <dock-item title="Latest Citizen" class="latest-citizen">
       <div class="content">
-        <div v-if="citizen" >
+        <portrait v-if="handle" :handle="handle" :showName="true" />
+        <!--div v-if="citizen" >
           <nuxt-link class="portrait" :to="citizenLink">
             <img class="image" :src="citizen.portrait" />
             <img class="verified" src="~assets/verified.png" />
@@ -12,7 +13,7 @@
           <div class="cit-handle">
             {{ citizen.handle }}
           </div>
-        </div>
+        </div-->
       </div>
     </dock-item>
 </template>
@@ -22,7 +23,7 @@ import { gsap } from "gsap"
 
 export default {
     name: "latest-citizen",
-    props: ["citizen"],
+    props: ["handle"],
     data() {
       return {}
     },
@@ -32,14 +33,17 @@ export default {
         }
     },
     watch: {
-      citizen() {
+      handle() {
         gsap.to(".latest-citizen", {duration: 1, opacity: 1})
       }
+    },
+    mounted() {
+      gsap.to(".latest-citizen", {duration: 1, opacity: 1})
     }
 }
 </script>
 
-<style>
+<style scoped>
   .latest-citizen {
     opacity: 0;
     transition-property: all;
@@ -48,50 +52,7 @@ export default {
   .latest-citizen .content div {
     display: flex;
     flex-direction: Column;
-    align-items: center;
+    margin: auto;
     opacity: 1;
-  }
-  .portrait {
-    position: relative;
-    width: 165px;
-    height: 165px; 
-    align-self: center;
-    margin: 10px;
-  }
-
-  .portrait .image {
-    width: 165px;
-  }
-
-  .portrait .verified {
-    position: absolute;
-    bottom: 0;
-    right: 5px;
-    bottom: 8px;
-    width: 45px;
-  }
-  .cit-name {
-    align-self: center;
-    font-size: 18px;
-  }
-  .cit-handle {
-    align-self: center;
-    font-size: 12px;
-  }
-
-  .latest-citizen .content div.citizen-stats {
-    align-items: start;
-  }
-
-  .latest-citizen .content div.citizen-stats h3 {
-    align-self: center;
-  }
-
-  .citizen-stat {
-    align-self: left;
-  }
-
-  .stat-header {
-    margin: 5px;
   }
 </style>

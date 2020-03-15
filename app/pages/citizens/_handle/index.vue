@@ -1,16 +1,21 @@
 <template>
   <div class='citizen'>
     <portal to="leftDock">
-      <left-nav />
+        <dock-item title="Navigation" class="left-nav">
+            <div class="left-nav-button"><router-link to="/citizens">Search Citizens</router-link></div>
+            <div class="left-nav-button"><a :href="dossierLink" target="_blank">Official Dossier</a></div>
+        </dock-item>
+        <dock-item v-if="citizen.links.length > 0" title="Citizen links">
+            <div v-for="link in citizen.links" :key="link.url" class="link">
+                <div class="left-nav-button"><a :href="link.url" target="_blank">{{link.text}}</a></div>
+            </div>
+        </dock-item>
     </portal>
     <portal to="rightDock">
         <citizen-tools v-if="isOwner" @syncSuccess="refresh" @edit="edit" @save="save" :editing="editing"/>
         <citizen-org v-if="citizen.org" :citizen="citizen"/>
     </portal>
-    <portal to="navigationPane">
-      <div class="left-nav-button"><router-link to="/citizens">Search Citizens</router-link></div>
-      <div class="left-nav-button"><a :href="dossierLink" target="_blank">Official Dossier</a></div>
-    </portal>
+
     <div v-if="loading" class="loading">
         <img src="~/assets/loading.gif" >
     </div>

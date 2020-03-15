@@ -51,6 +51,7 @@ module.exports = {
   ** Global Components
   */
   plugins: [
+    { src: '~/plugins/gsap', ssr: false },
     '~/plugins/layout.js',
     '~/plugins/widgets.js',
     '~/plugins/isMobile.js',

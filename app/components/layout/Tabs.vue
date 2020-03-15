@@ -57,7 +57,7 @@ export default {
     .tab-title {
         display: inline-block;
         margin: 0 5px;
-        font-size: 14px;
+        font-size: calc(12px + 4 * ((100vw - 300px) / 4000));
         font-family: 'Michroma';
         letter-spacing: 0.8px;
         text-decoration: none;

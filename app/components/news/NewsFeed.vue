@@ -1,7 +1,6 @@
 <template>
     <div class="news-feed" id="news-feed">
-        <portal to="navigationPane">
-            <div class="nav-title">Filter View</div>
+        <portal to="news-filter">
             <div v-for="source in sources" v-on:click="search = source.search; title = source.name" :key="source.id" class="left-nav-button">
                 <router-link to="/">{{ source.name }}</router-link>
             </div>
@@ -114,7 +113,6 @@ export default {
                 return !this.article_ids.includes(item.id)
             })
             for (let i in filtered) {
-                console.log(filtered[i])
                 this.article_ids.push(filtered[i].id)
             }
             return filtered

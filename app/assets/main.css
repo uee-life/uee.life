@@ -79,7 +79,6 @@ p, ol, ul, dl, table {
 }
 a {
   color: #dbf3ff;
-  padding-bottom: 2px;
   text-decoration: none;
   font-weight: 400;
   transition: border-bottom .2s;

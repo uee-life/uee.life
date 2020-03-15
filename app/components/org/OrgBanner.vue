@@ -43,10 +43,12 @@ export default {
     .org-banner {
       position: relative;
       width: 100%;
-      border: 1px solid grey;
+      max-width: calc(100vw - 20px);
+      border: 1px solid #546f84;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
       margin-bottom: 10px;
       margin-top: 20px;
+      overflow: hidden;
     }
 
     .org-banner .mask {
@@ -64,7 +66,7 @@ export default {
       width: 100%;
       height: 250px;
       opacity: 0.8 !important;
-      border-bottom: 1px dashed grey;
+      border-bottom: 1px dashed #546f84;
       display: block;
       background-size: cover;
       background-position: center center;
@@ -90,14 +92,12 @@ export default {
       height: fit-content;
       opacity: 0;
       font-family: 'Michroma';
-      font-size: 1.45em;
       letter-spacing: 1px;
       color: #dbf3ff;
       margin: 0;
     }
 
     .org-banner h1 .tag {
-        font-size: 18px;
         color: #fff000;
     }
 

@@ -56,12 +56,12 @@ export default {
     methods: {
         toggleNews() {
             if(this.showing) {
-                gsap.to(".site-news", 0.5, {height: '100px'})
+                gsap.to(".site-news", {duration: 0.5, height: '100px'})
                 //this.newsHeight = "height: 100px";
                 this.buttonText = "Read More";
                 this.showing = false;
             } else {
-                gsap.fromTo(".site-news", 0.5, {height: '100px'}, {height: 'auto'})
+                gsap.fromTo(".site-news", {duration: 0.5, height: '100px'}, {height: 'auto'})
                 this.buttonText = "Hide";
                 this.showing = true;
             }
@@ -107,7 +107,7 @@ export default {
     }
 
     .site-news .title {
-        margin-top: 15px;
+        margin-top: 25px;
         margin-bottom: 20px;
     }
 

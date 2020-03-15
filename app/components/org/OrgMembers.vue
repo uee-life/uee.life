@@ -16,6 +16,7 @@
                         </div>
                     </div>
                     <div :class='checkRedaction(member, "mask")'></div>
+                    <img v-if="member.verified" class="verified" src="@/assets/verified.png" />
                 </router-link>
             </div>
         </div>
@@ -224,5 +225,12 @@ export default {
     .org-cell>a>.left>.identity>.symbol>.star {
         width: 20px;
         margin-bottom: -10px;
+    }
+
+    .verified {
+        position: absolute;
+        right: 3px;
+        bottom: 3px;
+        width: 25px;
     }
 </style>

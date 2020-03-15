@@ -1,6 +1,6 @@
 <template>
-  <dock-item title="nav" class="left-nav">
-    <portal-target name="navigationPane"></portal-target>
+  <dock-item title="News Source" class="news-filter">
+    <portal-target name="news-filter"></portal-target>
   </dock-item>
 </template>
 
@@ -8,15 +8,17 @@
 import { gsap } from 'gsap'
 
 export default {
-  name: "left-nav",
-  //props: ["links"],,
+  name: "news-filter",
   mounted() {
-    gsap.to('.left-nav', {duration: 0.5, opacity: 1})
+    gsap.to('.news-filter', {duration: 0.5, opacity: 1})
   }
 }
 </script>
 
 <style>
+    .news-filter {
+      opacity: 0;
+    }
 
     .left-nav-button::before {
       content: "> "

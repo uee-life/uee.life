@@ -24,14 +24,14 @@
                 </template>
 
                 <template slot="tab-title-members">
-                    MEMBERS ({{memberCount}})
+                    MEMBERS
                 </template>
                 <template slot="tab-content-members">
                     <org-members />
                 </template>
 
                 <template slot="tab-title-affiliates">
-                    AFFILIATES ({{affiliateCount}})
+                    AFFILIATES
                 </template>
                 <template slot="tab-content-affiliates">
                     <org-members :affiliate="true"/>
@@ -65,12 +65,6 @@ export default {
             org: {
                 tag: ""
             },
-            members: [],
-            memberCount: 0,
-            memberPage: 1,
-            affiliates: [],
-            affiliateCount: 0,
-            affiliatePage: 1,
             fleet: []
         }
     },
@@ -99,28 +93,6 @@ export default {
                 console.error(error)
             }
         },
-        async getOrgMembers() {
-            const sid = this.$route.params.org
-            await this.$axios.get(`https://api.uee.life/orgs/${sid}/members?page=1`).then((res) => {
-                if(res.status == 200) {
-                    this.memberCount = res.data.count
-                }
-            }).catch((error) => {
-                // eslint-disable-next-line
-                console.error(error)
-            })
-        },
-        async getOrgAffiliates() {
-            const sid = this.$route.params.org
-            await this.$axios.get(`https://api.uee.life/orgs/${sid}/affiliates?page=1`).then((res) => {
-                if(res.status == 200) {
-                    this.affiliateCount = res.data.count
-                }
-            }).catch((error) => {
-                // eslint-disable-next-line
-                console.error(error)
-            })
-        },
         async getOrgShips() {
             this.$axios({
                 url: `https://api.uee.life/orgs/${this.$route.params.org}/ships`,
@@ -134,16 +106,12 @@ export default {
     },
     mounted() {
         this.getOrg()
-        this.getOrgMembers()
-        this.getOrgAffiliates()
         this.getOrgShips()
     },
     watch: {
         route: {
             handler: function () {
                 this.getOrg()
-                this.getOrgMembers()
-                this.getOrgAffiliates()
                 this.getOrgShips()
             }
         },
