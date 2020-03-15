@@ -17,7 +17,10 @@
             class="t-group">
             <news-item v-for="(item, index) in articles" :key="item.id" :index="index" :item="item" />
         </transition-group>
-        <div class="more" v-if="more" @click="loadMore()">
+        <div v-if="articles.length == 0" class="loading">
+            <img src="~/assets/loading.gif" >
+        </div>
+        <div class="more" v-else-if="more" @click="loadMore()">
             Load More
             <div class="endcap left"></div>
             <div class="endcap right"></div>
@@ -34,20 +37,14 @@ export default {
     name: "news-feed",
     data() {
         return {
-            title: "All Articles",
+            title: "Verse Watch",
             articles: [],
+            article_ids: [],
             pages: 1,
             loading: 0,
             more: true,
-            search: {channel: "all", series: "all"},
+            search: {channel: "spectrum-dispatch", series: "news-update"},
             sources: [
-                {
-                    name: "All Articles",
-                    search: {
-                        channel: "all",
-                        series: "all"
-                    }
-                },
                 {
                     name: "Verse Watch",
                     search: {
@@ -56,9 +53,9 @@ export default {
                     }
                 },
                 {
-                    name: "Citizen Stories",
+                    name: "RSI News",
                     search: {
-                        channel: "serialized-fiction",
+                        channel: "transmission",
                         series: "all"
                     }
                 },
@@ -67,6 +64,13 @@ export default {
                     search: {
                         channel: "spectrum-dispatch", 
                         series: "time-capsule"
+                    }
+                },
+                {
+                    name: "Universe Fiction",
+                    search: {
+                        channel: "serialized-fiction",
+                        series: "all"
                     }
                 }
             ]
@@ -81,6 +85,7 @@ export default {
     methods: {
         clearNews() {
             this.articles = []
+            this.article_ids = []
             this.pages = 1
             this.more = true
         },
@@ -95,14 +100,24 @@ export default {
                 if(res.data.length < 10) {
                     this.more = false
                 }
-
-                this.articles = this.articles.concat(res.data)
+                const new_articles = this.checkIDs(res.data)
+                this.articles = this.articles.concat(new_articles)
                 this.pages += 1;
             }).catch((error) => {
                 // eslint-disable-next-line no-console
                 console.error(error) 
             })
             this.loading = false
+        },
+        checkIDs(arts) {
+            const filtered = arts.filter((item) => {
+                return !this.article_ids.includes(item.id)
+            })
+            for (let i in filtered) {
+                console.log(filtered[i])
+                this.article_ids.push(filtered[i].id)
+            }
+            return filtered
         },
         beforeEnter: function (el) {
             el.style.opacity = 0
@@ -155,7 +170,7 @@ export default {
         width: 100% - 20px;
         display: flex;
         justify-content: center;
-        font-size: 21px;
+        font-size: 18px;
         cursor: pointer;
         margin: 5px 10px 20px 10px;
         background: url('/images/fading-bars.png') repeat;

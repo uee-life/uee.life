@@ -113,8 +113,6 @@ export default {
 
     .site-news .title h1 {
         margin: 0px;
-        font-size: calc(14px + (18 - 14) * ((100vw - 300px) / (1600 - 300)));
-        line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));
     }
 
     .site-news .title .date {

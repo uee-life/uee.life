@@ -41,6 +41,8 @@ export default {
 .main {
   display: flex;
   flex-wrap: wrap;
+  max-width: 2000px;
+  margin: auto;
 }
 .app::before {
   position: fixed;

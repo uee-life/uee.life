@@ -2,16 +2,17 @@
     <div ref="newsitem" class="news-item" id="news-item">
         <a :href="item.link" style="text-decoration: none" target="blank">
             <div class="content">
-            <div class="background" :style="style"></div>
-            <div class="mask"></div>
-            <div class="article-image">
-                <img :src="item.image" />
+                <div class="background" :style="style"></div>
+                <div class="mask"></div>
+                <div class="article-image">
+                    <img :src="item.image" />
+                </div>
+                <div class="news-item-info">
+                    <div><b>{{ item.title }}</b></div>
+                    <div>Posted: {{ item.posted }}</div>
+                </div>
             </div>
-            <div class="news-item-info">
-                <div><b>{{ item.title }}</b></div>
-                <div>Posted: {{ item.posted }}</div>
-            </div>
-            </div>
+            <img class="source-img" :src="item.source_img" title="spectrum"/>
             <span class="corner top left"></span>
             <span class="corner top right"></span>
             <span class="corner bottom left"></span>
@@ -44,6 +45,14 @@ export default {
     .article-image>img {
         width: 100%;
         border: 2px solid black;
+    }
+
+    .source-img {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        bottom: 5px;
+        right: 5px;
     }
 
     .news-item {

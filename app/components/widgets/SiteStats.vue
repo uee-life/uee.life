@@ -2,13 +2,13 @@
     <dock-item title="Site Stats" class="site-stats">
       <div class="content">
         <div v-if="stats" class="citizen-stats">
-          <h3>Users</h3>
+          <h1>Users</h1>
           <ul>
           <li>Registered: <span class="stat">{{stats.users.total}}</span></li>
           <li>Active: <span class="stat">{{stats.users.active}}</span></li>
           <li>Verified: <span class="stat">{{stats.users.verified}}</span></li>
           </ul>
-          <h3>Ships</h3>
+          <h1>Ships</h1>
           <ul>
             <li>Registered: <span class="stat">{{stats.ships}}</span></li>
           </ul>
