@@ -20,7 +20,7 @@
                     FLEET
                 </template>
                 <template slot="tab-content-fleet">
-                    <fleet-view :ships="fleet"/>
+                    <fleet-view :ships="fleet" view="small"/>
                 </template>
 
                 <template slot="tab-title-members">

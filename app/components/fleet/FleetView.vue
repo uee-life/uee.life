@@ -1,6 +1,6 @@
 <template>
     <div id="fleet-view" class="fleet-view">
-        <fleet-summary />
+        <fleet-summary :fleet="ships"/>
         <div class="view-controls">
             <div class="display-style">
                 <template v-if="!isMobile">Display: <a @click="show('large')">Large</a> | <a @click="show('small')">Small</a> | <a @click="show('table')">Table</a></template>
@@ -24,7 +24,7 @@
             </template>
         </div>
         <div v-else class="no-ships">
-            No ships currently listed
+            No ships currently listed!
         </div>
         <modal v-if="showModal" title="Add Ship" @close="showModal = false">
             <ship-form @add="addShip" />
@@ -55,6 +55,10 @@ export default {
             default: function () {
                 return []
             }
+        },
+        view: {
+            type: String,
+            default: 'large'
         },
         isOwner: {
             type: Boolean,
@@ -88,11 +92,15 @@ export default {
             return this.ships.filter(ship => {
                 return ship.make.toLowerCase().includes(this.search.toLowerCase()) ||
                     ship.short_name.toLowerCase().includes(this.search.toLowerCase()) ||
-                    ship.model.toLowerCase().includes(this.search.toLowerCase())
+                    ship.model.toLowerCase().includes(this.search.toLowerCase()) ||
+                    ship.type.toLowerCase().includes(this.search.toLowerCase()) ||
+                    ship.focus.toLowerCase().includes(this.search.toLowerCase()) ||
+                    ship.size.toLowerCase().includes(this.search.toLowerCase())
             })
         }
     },
     mounted() {
+        this.display = this.view
         gsap.to(".ships", {duration: 1, opacity: 1})
     }
 }
