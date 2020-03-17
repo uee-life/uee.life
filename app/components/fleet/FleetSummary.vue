@@ -5,19 +5,18 @@
                 <div class="display-style">
                     <template v-if="!isMobile">
                         Summarize by: 
-                            <a @click="summarize('type')">type</a> | 
-                            <a @click="summarize('focus')">focus</a> | 
-                            <a @click="summarize('make')">make</a> | 
-                            <a @click="summarize('model')">model</a> | 
-                            <a @click="summarize('size')">size</a> | 
+                            <a class="select" @click="summarize('type')">type</a> | 
+                            <a class="select" @click="summarize('focus')">focus</a> | 
+                            <a class="select" @click="summarize('make')">make</a> | 
+                            <a class="select" @click="summarize('model')">model</a> | 
+                            <a class="select" @click="summarize('size')">size</a>
                     </template>
                 </div>
             </div>
-            Summary by {{ summary_type }}:
             <div class="summaries">
-                <ul v-if="summary"><li v-for="(val, key) in summary" :key="key">{{key}} - {{val}}</li></ul>
+                <div class="summary" @click="setFilter(key)" v-for="(val, key) in summary" :key="key"><span class="key">{{key}}: </span> <span class="value">{{val}}</span></div>
+                <div class="summary" @click="setFilter('')"><span class="key">Total: </span><span class="value">{{fleet.length}}</span></div>
             </div>
-            <div>Total Ships: {{ fleet.length }}</div>
         </main-panel>
     </div>
 </template>
@@ -52,8 +51,8 @@ export default {
                 }
             }
         },
-        filterBy(type) {
-            
+        setFilter(value) {
+            this.$emit('filter', value)
         }
     },
     mounted() {
@@ -62,9 +61,26 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.select {
+    cursor: pointer;
+}
 .summaries {
     display: flex;
     flex-wrap: wrap;
+}
+.summary {
+    display: flex;
+    flex-basis: 150px;
+    flex-grow: 1;
+    border: 1px solid #546f84;
+    margin: 5px;
+    padding: 5px;
+    font-family: 'Michroma';
+    justify-content: space-between;
+    white-space: nowrap;
+}
+.summary .value {
+    color: #dbf3ff;
 }
 </style>

@@ -49,13 +49,14 @@ export default {
     .ship-summary {
         display: flex;
         flex-grow: 1;
+        flex-basis: 300px;
         margin: 5px;
         margin-bottom: 10px;
         padding: 9px;
         position: relative;
         background: url('/images/fading-bars.png') repeat;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        cursor: pointer;
+        /*cursor: pointer;*/
     }
 
     .ship-info {

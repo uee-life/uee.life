@@ -1,6 +1,6 @@
 <template>
     <div id="fleet-view" class="fleet-view">
-        <fleet-summary :fleet="ships"/>
+        <fleet-summary @filter="setFilter" :fleet="ships"/>
         <div class="view-controls">
             <div class="display-style">
                 <template v-if="!isMobile">Display: <a @click="show('large')">Large</a> | <a @click="show('small')">Small</a> | <a @click="show('table')">Table</a></template>
@@ -85,6 +85,9 @@ export default {
         },
         removeShip(ship) {
             this.$emit('remove', ship)
+        },
+        setFilter(value) {
+            this.search = value
         }
     },
     computed: {
