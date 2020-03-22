@@ -18,12 +18,6 @@ export default {
         handle: {
             type: String
         },
-        citizen: {
-            type: Object,
-            default: function() {
-                return null
-            }
-        },
         size: {
             type: String,
             default: 'medium',
@@ -38,19 +32,20 @@ export default {
     },
     data() {
         return {
-            
+            citizen: null
         }
     },
     methods: {
         async getCitizen(handle) {
+            console.log('loading portrait for: ', handle)
             this.$axios({
-            url: `https://api.uee.life/citizens/${handle}/info`,
-            method: 'GET'
+                url: `https://api.uee.life/citizens/${handle}/info`,
+                method: 'GET'
             }).then((res) => {
-            this.citizen = res.data
+                this.citizen = res.data
             }).catch((error) => {
-            // eslint-disable-next-line
-            console.error(error)
+                // eslint-disable-next-line
+                console.error(error)
             });
         }
     },
@@ -62,8 +57,17 @@ export default {
             return `/citizens/${this.citizen.handle}`
         }
     },
-    mounted() {
-        if(!this.citizen) {
+    watch: {
+        handle: {
+            handler: function () {
+                if(this.handle) {
+                    this.getCitizen(this.handle)
+                }
+            }
+        }
+    },
+    mounted () {
+        if(this.handle) {
             this.getCitizen(this.handle)
         }
     }

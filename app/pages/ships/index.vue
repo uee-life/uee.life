@@ -1,105 +1,157 @@
 <template>
-    <div class="org-main" id="org-main">
-        <form v-if="$auth.hasScope('admin:all')" class="input-form" @submit.prevent="addShip">
-            <span>short_name <input v-model="ship.name" /></span></span>
-            <span>manufacturer: <select v-model="ship.make">
-                <option v-for="f in makes" :key="f.id" :value="f.id">{{ f.name }}</option>
-            </select></span>
-            <span>model        <input v-model="ship.model" /></span>
-            <span>size         <select v-model="ship.size">
-                <option v-for="s in sizes" :key="s.id" :value="s.id">{{ s.size }}</option>
-            </select></span>
-            <span>max_crew    <input v-model="ship.crew" /></span>
-            <span>cargo  <input v-model="ship.cargo" /></span>
-            <span>type   <select v-model="ship.type">
-                <option v-for="f in types" :key="f.id" :value="f.id">{{ f.type }}</option>
-            </select></span>
-            <span>focus: <select v-model="ship.focus">
-                <option v-for="f in focus" :key="f.id" :value="f.id">{{ f.focus }}</option>
-            </select></span>
-            <button type="submit">Add Ship</button>
-        </form>
-        <fleet-view :ships="ships"/>
-    </div>
+  <div class='ship-results'>
+      Ship Search coming soon...
+  </div>
 </template>
 
 <script>
-import { gsap } from 'gsap'
-
-import FleetView from '@/components/fleet/FleetView.vue'
 
 export default {
     layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
-    middleware: 'auth',
-    name: "ships",
-    components: {
-        FleetView
-    },
-    data() {
+    asyncData() {
         return {
-            ships: [],
-            search: '',
-            focus: null,
-            types: null,
-            makes: null,
-            sizes: null,
-            ship: {
-                name: null,
-                make: null,
-                model: null,
-                size: null,
-                crew: null,
-                cargo: null,
-                type: null,
-                focus: null,
-            }
+            result: "",
+            input: ""
         }
     },
     methods: {
-        getShips() {
+        async getResults() {
             this.$axios({
-                url: 'https://api.uee.life/ships',
-                method: 'GET'
-            }).then((res) => {
-                this.ships = res.data.ships
-                this.focus = res.data.focus
-                this.types = res.data.types
-                this.makes = res.data.makes
-                this.sizes = res.data.sizes
-            }).catch((err) => {
-                console.error(err)
-            })
-        },
-        addShip() {
-
-            this.$axios({
-                url: 'https://api.uee.life/ships',
-                method: 'POST',
-                headers: {
-                    'Content-Type': "application/json; charset=utf-8"
-                },
-                data: this.ship
-            }).then((res) => {
-                this.$swal.fire('Success!', 'Successfully added ship!', 'success')
-                this.getShips()
-            }).catch((err) => {
-                this.$swal.fire('Error!', err, 'error')
+                url: `https://api.uee.life/citizens/${this.input}/info`,
+                method: "GET"
+            }).then((data) => {
+                if(data.error) {
+                    this.result = '<div class="no-results"><span class="text big">No Results<div class="endcap left"></div><div class="endcap right"></div></span><span class="text small">That citizen was not found!</span></div>'
+                } else {
+                    console.log('Data: ', data)
+                    this.result = data.data
+                }
+            }).catch((error) => {
+                console.error(error)
             })
         }
     },
-    mounted() {
-        this.getShips()
+    computed: {
+        shipLink() {
+            return `/ships/${this.result.id}`;
+        }
     }
 }
 </script>
 
 <style scoped>
-    .input-form {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-    .input-form span {
+    .citizen-results {
+        position: relative;
         width: 100%;
+        padding: 10px;
+        padding-top: 20px;
     }
+
+    .no-results {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .no-results>.text {
+        position: relative;
+        width: fit-content;
+        padding-left: 20px;
+        padding-right: 20px;
+        margin: 20px;
+    }
+
+    .no-results>.text.big {
+        font-family: 'Michroma';
+        font-size: 25px;
+    }
+
+    .search-box .content .search-input {
+        margin: 5px;
+        width: calc(100% - 10px);
+        box-sizing: border-box;
+    }
+
+    .search-box .search-button {
+        margin: 5px;
+    }
+    .results {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .org-cell {
+        display: flex;
+        flex-grow: 1;
+        margin: 5px;
+    }
+
+    .org-cell>a {
+        display: flex;
+        align-items: center;
+        background: url('/images/fading-bars.png') repeat;
+        padding: 20px;
+        position: relative;
+        height: fit-content;
+        border: 1px solid #546f84;
+        flex-grow: 1;
+    }
+
+    .org-cell>a>.left {
+        display: flex;
+    }
+
+    .org-cell>a>.left>.thumb {
+        display: inline-block;
+        width: 70px;
+        height: 70px;
+        position: relative;
+    }
+
+    .org-cell>a>.left>.thumb>img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .org-cell>a>.left>.identity {
+        display: flex;
+        line-height: 16px;
+        max-width: 250px;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 20px;
+    }
+
+    .org-cell>a>.left>.identity>h3 {
+        font-size: 21px;
+        color: #dbf3ff;
+        margin: 0;
+        letter-spacing: 2px;
+    }
+
+    .org-cell>a>.left>.identity>.org {
+        font-size: 15px;
+        color: #739cb0;
+        margin-top: 15px;
+    }
+
+    .org-cell>a>.left>.identity>.symbol {
+        font-size: 15px;
+        color: #739cb0;
+        margin-top: 3px;
+    }
+
+    .org-cell>a>.right {
+        display: none;
+    }
+
+    .no-decor {
+        text-decoration: none;
+    }
+
 </style>

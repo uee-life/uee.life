@@ -1,6 +1,6 @@
 <template>
     <div id="fleet-view" class="fleet-view">
-        <fleet-summary @filter="setFilter" :fleet="ships"/>
+        <fleet-summary v-if="showSummary" @filter="setFilter" :fleet="ships"/>
         <div class="view-controls">
             <div class="display-style">
                 <template v-if="!isMobile">Display: <a @click="show('large')">Large</a> | <a @click="show('small')">Small</a> | <a @click="show('table')">Table</a></template>
@@ -61,6 +61,10 @@ export default {
             default: 'large'
         },
         isOwner: {
+            type: Boolean,
+            default: false
+        },
+        showSummary: {
             type: Boolean,
             default: false
         }

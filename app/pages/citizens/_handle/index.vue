@@ -21,15 +21,9 @@
     </div>
     <template v-else-if="citizen.info">
         <citizen-info :citizen="citizen" :editing="editing"/>
+        <citizen-bio :bio="citizen.info.bio"/>
         <div class="citizen-tabs">
             <tabs :tabs="tabs" :initialTab="initialTab">
-                <template slot="tab-title-info">
-                    INFO
-                </template>
-                <template slot="tab-content-info">
-                    <citizen-bio :bio="citizen.info.bio"/>
-                </template>
-
                 <template slot="tab-title-ships">
                     SHIPS ({{ citizen.ships.length }})
                 </template>
@@ -67,8 +61,8 @@ export default {
     name: 'citizen',
     data() {
         return {
-            tabs: ['info', 'ships'],
-            initialTab: 'info', 
+            tabs: ['ships'],
+            initialTab: 'ships', 
             citizen: {
                 info: {
                     handle: ''

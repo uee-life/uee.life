@@ -1,13 +1,13 @@
 <template>
-    <div class="ship-summary"  @click="selected">
+    <div class="ship-summary" :title="ship.model">
         <section-title v-if="ship.name" :text="ship.name"/>
-        <img :src="shipImage" />
+        <img  @click="selected" :src="shipImage" />
         <img class="manufacturer" :src="manufacturerImage" />
         <div class="ship-info">
-            <h5>{{ ship.model }}</h5>
+            <h5 @click="selected">{{ ship.model }}</h5>
             <div class="info">
-                <div><span class="label">Ship &nbsp; ID:</span><span class="data">{{ 'UES-' + ('00' + ship.id.toString(16).toUpperCase()).substr(-6) }}</span></div>
-                <div><span class="label">Type:</span><span class="data">{{ ship.type }} - {{ ship.focus }}</span></div>
+                <div @click="selected" style="cursor: pointer;"><span class="label">Ship &nbsp; ID:</span><span class="data">{{ shipID }}</span></div>
+                <div @click="selected"><span class="label">Type:</span><span class="data">{{ ship.type }} - {{ ship.focus }}</span></div>
                 <div v-if="ship.owner"><span class="label">Owner:</span><span class="data"><nuxt-link :to="citizenLink">{{ship.owner.name}}</nuxt-link></span></div>
             </div>
         </div>
@@ -15,7 +15,7 @@
         <span class="corner top right"></span>
         <span class="corner bottom left"></span>
         <span class="corner bottom right"></span>
-        <input v-if="isOwner" type="button" class="remove-ship" @click="$emit('remove', ship.id)" value="X" />
+        <img v-if="isOwner" title="Remove Ship" class="delete" @click="$emit('remove', ship.id)" src="~/assets/delete.png">
     </div>
 </template>
 
@@ -32,11 +32,14 @@ export default {
         },
         citizenLink: function () {
             return `/citizens/${this.ship.owner.handle}`
+        },
+        shipID: function () {
+            return `UES-${ ('00' + this.ship.id.toString(16).toUpperCase()).substr(-6)}`
         }
     },
     methods: {
         selected() {
-            this.$emit('selected', this.ship)
+            this.$router.push(`/ships/${this.shipID}`)
         }
     }
 }
@@ -61,7 +64,6 @@ export default {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         border-left: 1px solid #546f84;
         border-right: 1px solid #546f84;
-        cursor: pointer;
     }
 
     .ship-info {
@@ -105,10 +107,13 @@ export default {
         opacity: 0.8;
     }
 
-    .remove-ship {
+    .ship-summary .delete {
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: 5px;
+        right: 5px;
+        width: 20px;
+        height: 20px;
         z-index: 20;
+        cursor: pointer;
     }
 </style>

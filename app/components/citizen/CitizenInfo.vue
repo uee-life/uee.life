@@ -1,7 +1,9 @@
 <template>
     <div id="citizen-info" :class="componentClass">
         <div class="citizen-portrait" id="portrait">
-            <portrait :citizen="citizen.info" />
+            <div class="portrait-content">
+            <portrait :handle="citizen.info.handle" />
+            </div>
             <!--img class="portrait-img" :src="citizen.info.portrait" />
             <span class="verified"><img v-if="citizen.info.verified" src="~assets/verified.png" /></span-->
             <span class="corner top left"></span>
@@ -57,16 +59,21 @@ export default {
     watch: {
         'citizen.info': {
             handler: function() {
-                let size = ""
-                if(this.isMobile) {
-                    size = "200px"
-                } else {
-                    size = "180px"
+                if(this.citizen.info) {
+                    this.$nextTick(() => {
+                        let size = ""
+                        if(this.isMobile) {
+                            size = "200px"
+                        } else {
+                            size = "180px"
+                        }
+                        const tl = gsap.timeline()
+                        tl.to(".citizen-portrait", {duration: 0.5, opacity: 1})
+                        tl.to(".citizen-portrait", {duration: 0.5, width: size, height: size})
+                        tl.to(".citizen-portrait .portrait-content", {duration: 0.5, opacity: 1})
+                        tl.to(".citizen-info .info", {duration: 0.5, opacity: 1})
+                    })
                 }
-                gsap.to(".citizen-portrait", {duration: 0.5, opacity: 1})
-                gsap.to(".citizen-portrait", {duration: 0.5, width: size, height: size})
-                gsap.to(".citizen-portrait div", {duration: 0.5, delay: 1, opacity: 1})
-                gsap.to(".citizen-info .info", {duration: 0.5, delay: 1.5, opacity: 1})
             }
         }
     }
@@ -95,34 +102,14 @@ export default {
         margin-bottom: 10px;
         background: url('/images/fading-bars.png') repeat;
         position: relative;
-        opacity: 0;
         align-self: auto;
         align-items: center;
         justify-content: center;
-    }
-
-    .citizen-portrait .portrait {
         opacity: 0;
     }
 
-    .citizen-portrait img {
-        width: 100%;
-        height: 100%;
+    .portrait-content {
         opacity: 0;
-    }
-
-    .citizen-portrait .verified {
-        position: absolute;
-        bottom: 0;
-        right: 8px;
-        width: 35px;
-        opacity: 0;
-    }
-
-    .citizen-portrait .verified>img {
-        opacity: 1;
-        width: 100%;
-        height: auto;
     }
 
     .info {

@@ -12,7 +12,7 @@
         <span class="corner top right"></span>
         <span class="corner bottom left"></span>
         <span class="corner bottom right"></span>
-        <input v-if="isOwner" type="button" class="remove-ship" @click="$emit('remove', ship.id)" value="X" />
+        <img v-if="isOwner" title="Remove Ship" class="delete" @click="$emit('remove', ship.id)" src="~/assets/delete.png">
     </div>
 </template>
 
@@ -29,11 +29,14 @@ export default {
         },
         citizenLink: function () {
             return `/citizens/${this.ship.owner.handle}`
+        },
+        shipID: function () {
+            return `UES-${ ('00' + this.ship.id.toString(16).toUpperCase()).substr(-6)}`
         }
     },
     methods: {
         selected() {
-            this.$emit('selected', this.ship)
+            this.$router.push(`/ships/${this.shipID}`)
         }
     }
 }
@@ -56,10 +59,12 @@ export default {
         position: relative;
         background: url('/images/fading-bars.png') repeat;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        /*cursor: pointer;*/
+        cursor: pointer;
     }
 
     .ship-info {
+        display: flex;
+        flex-direction: column;
         margin-left: 10px;
         padding-right: 55px;
         flex-grow: 1;
@@ -76,11 +81,12 @@ export default {
         opacity: 0.8;
     }
 
-    .remove-ship {
+    .ship-summary .delete {
         position: absolute;
-        top: 5px;
-        right: 5px;
-        z-index: 20;
-        font-size: 12px;
+        top: -5px;
+        right: -5px;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
     }
 </style>
