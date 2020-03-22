@@ -21,27 +21,27 @@ h1 {
 }
 
 h2 {
-  font-size: calc(12px + (16 - 12) * ((100vw - 300px) / (1600 - 300)));
-  line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));
+  font-size: calc(12px + (16 - 12) * ((100vw - 300px) / 4000));
+  line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/ 4000));
 }
 
 h3 {
-  font-size: calc(11px + (15 - 11) * ((100vw - 300px) / (1600 - 300)));
+  font-size: calc(11px + (15 - 11) * ((100vw - 300px) / 4000));
   line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));
 }
 
 h4 {
-  font-size: calc(10px + (14 - 10) * ((100vw - 300px) / (1600 - 300)));
+  font-size: calc(10px + (14 - 10) * ((100vw - 300px) / 4000));
   line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));
 }
 
 h5 {
-  font-size: calc(10px + (14 - 10) * ((100vw - 300px) / (1600 - 300)));
+  font-size: calc(10px + (14 - 10) * ((100vw - 300px) / 4000));
   line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));
 }
 
 h6 {
-  font-size: calc(10px + (14 - 10) * ((100vw - 300px) / (1600 - 300)));
+  font-size: calc(10px + (14 - 10) * ((100vw - 300px) / 4000));
   line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));
 }
 
