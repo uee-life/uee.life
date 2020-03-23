@@ -48,7 +48,7 @@ export default {
   position: fixed;
   content: "";
   background: url("~assets/starfield.jpg") repeat center;
-  opacity: 0.5;
+  opacity: 0.6;
   top:0;
   left:0;
   bottom: 0;
