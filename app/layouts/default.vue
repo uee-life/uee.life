@@ -47,7 +47,7 @@ export default {
 .app::before {
   position: fixed;
   content: "";
-  background: url("~assets/nebula.jpg") repeat;
+  background: url("~assets/starfield.jpg") repeat center;
   opacity: 0.5;
   top:0;
   left:0;

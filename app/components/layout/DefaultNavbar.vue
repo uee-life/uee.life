@@ -1,6 +1,7 @@
 <template>
   <div class="nav-bar" id="nav-bar">
       <div class="nav-left">
+        <nuxt-link class="nav-button" to="/" exact>Home</nuxt-link>
         <nuxt-link class="nav-button" to="/about">About</nuxt-link>
         <nuxt-link class="nav-button" to="/citizens">Citizens</nuxt-link>
         <nuxt-link class="nav-button" to="/orgs">Organizations</nuxt-link>

@@ -109,9 +109,8 @@ export default {
 
     .portrait.small .verified {
         position: absolute;
-        bottom: 0;
-        right: 3px;
         top: 68px;
+        right: 0px;
         width: 30px;
     }
 

@@ -163,6 +163,7 @@ opacity: 0;
 
 .loading>img {
   width: 150px;
+  align-self: center;
 }
 
 select {

@@ -159,6 +159,7 @@ export default {
 
     .founders {
       display: flex;
+      flex-wrap: wrap;
     }
 
     .founders .portrait {
