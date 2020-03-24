@@ -67,7 +67,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .ship-form {
     display: flex;
     flex-direction: column;

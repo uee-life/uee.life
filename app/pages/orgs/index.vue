@@ -56,7 +56,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .search-main {
         position: relative;
         width: 100%;
