@@ -196,6 +196,7 @@ export default {
     height: 100px;
     padding: 20px;
     border: 1px dashed #546f84;
+    cursor: pointer;
 }
 
 .unassigned .bg {
