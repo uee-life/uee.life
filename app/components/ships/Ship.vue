@@ -41,7 +41,7 @@
             </div>
         </main-panel>
         <main-panel title="crew" class="crew">
-            <div v-for="c in crew" :key="c" class="crewman">
+            <div v-for="(c, i) in crew" :key="i" class="crewman">
                 <div v-if="c" class="assigned">
                     <h3 class="role">{{ c.role }}</h3>
                     <portrait :handle="c.citizen" size="small" :showName="true" />
@@ -50,17 +50,21 @@
                 <div v-else class="unassigned">
                     <h3 class="role">&nbsp;</h3>
                     <div class="bg"/>
-                    <img v-if="isOwner" src="~/assets/plus.png" class="add-new"/>
+                    <img v-if="isOwner" @click="showModal = true" src="~/assets/plus.png" class="add-new"/>
                     <div v-else class="add-new" />
                     <div class="name">Unassigned</div>
                 </div>
             </div>
         </main-panel>
+        <modal v-if="showModal" title="Add Crew" @close="showModal = false">
+            <crew-form @add="addCrew" />
+        </modal>
     </div>
 </template>
 
 <script>
 import ShipBanner from '@/components/ships/ShipBanner'
+import CrewForm from '@/components/ships/CrewForm'
 
 export default {
     props: {
@@ -72,11 +76,13 @@ export default {
     data () {
         return {
             ship: null,
-            crew: null
+            crew: null,
+            showModal: false
         }
     },
     components: {
-        ShipBanner
+        ShipBanner,
+        CrewForm
     },
     computed: {
         user() {
@@ -109,6 +115,10 @@ export default {
             }).catch((err) => {
                 console.error(err)
             })
+        },
+        addCrew(crew) {
+            console.log("Adding crewmate: ", crew)
+            this.showModal = false
         }
     },
     mounted() {

@@ -83,6 +83,10 @@ export default {
         align-items: center;
     }
 
+    .portrait a {
+        width: 100%;
+    }
+
     .portrait.medium {
         width: 165px;
         height: fit-content;

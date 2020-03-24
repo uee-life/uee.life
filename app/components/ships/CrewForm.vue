@@ -1,13 +1,8 @@
 <template>
-  <div class='citizen-results'>
-    <portal to="leftDock">
-        <dock-item title="find citizen" class="search-box">
-            <input class="search-input" @keyup.enter="getResults()" @input="autoGetResults()" v-model="input" placeholder="Citizen Handle"/>
-        </dock-item>
-    </portal>
-    <div v-if="result" class="results">
-        <div v-for="res in result" :key="res.handle" class="result">
-            <router-link class="no-decor" :to="citizenLink(res.handle)">
+    <form @submit.prevent="addCrew" class="ship-form">
+        <input class="search-input" @keyup.enter="getResults()" @input="autoGetResults()" v-model="input" placeholder="Citizen Handle"/>
+        <div v-if="result" class="results">
+            <div v-for="res in result" :key="res.handle" class="result" @click="addCrew(res.handle)">
                 <span class="thumb">
                     <img :src="res.portrait" />
                 </span>
@@ -16,30 +11,30 @@
                     <span class="symbol">{{res.handle}}</span>
                     <span v-if="res.org" class="org">Org: {{res.org}}</span>
                 </span>
-            </router-link>
+            </div>
         </div>
-    </div>
-    <div v-else class="no-results">
-        <span class="text big">
-            No Results
-            <div class="endcap left"></div>
-            <div class="endcap right"></div>
-        </span>
-    </div>
-  </div>
+    </form>
 </template>
 
 <script>
-
 export default {
-    layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
-    asyncData() {
+    name: 'CrewForm',
+    data() {
         return {
+            input: "",
             result: null,
-            input: ""
+            handle: null,
+            role: null
         }
     },
     methods: {
+        addCrew(handle) {
+            const crew = {
+                handle: handle,
+                role: this.role
+            }
+            this.$emit('add', crew)
+        },
         async autoGetResults() {
             if(this.input.length >= 3) {
                 this.getResults()
@@ -62,49 +57,27 @@ export default {
                 console.error(err)
             })
         },
-        citizenLink(handle) {
-            return `/citizens/${handle}`;
+        async getRoles() {
+
         }
+    },
+    mounted() {
+        this.getRoles()
     }
 }
 </script>
 
-<style scoped>
-    .citizen-results {
-        position: relative;
-        width: 100%;
-        padding-top: 14px;
-    }
-
-    .no-results {
-        display: flex;
-        width: 100%;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 20px;
-    }
-
-    .no-results>.text {
-        position: relative;
-        width: fit-content;
-        padding-left: 20px;
-        padding-right: 20px;
-        margin: 20px;
-    }
-
-    .no-results>.text.big {
-        font-family: 'Michroma';
-        font-size: 25px;
-    }
-
-    .search-box .search-input {
-        margin: 5px;
-        width: calc(100% - 10px);
-        box-sizing: border-box;
-    }
-
-    .search-box .search-button {
-        margin: 5px;
+<style>
+.ship-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+}
+input {
+    margin-bottom: 5px;
+}
+    .search-input {
+        width: calc(100% - 40px);
     }
     .results {
         position: relative;
@@ -115,9 +88,10 @@ export default {
         display: flex;
         flex-grow: 1;
         margin: 5px;
+        cursor: pointer;
     }
 
-    .result>a {
+    .result {
         display: flex;
         box-sizing: border-box;
         height: 100%;
@@ -130,14 +104,15 @@ export default {
         flex-grow: 1;
     }
 
-    .result>a>.thumb {
+    .result>.thumb {
         display: inline-block;
         width: 70px;
         height: 70px;
         position: relative;
+        flex-shrink: 0;
     }
 
-    .result>a>.thumb>img {
+    .result>.thumb>img {
         position: absolute;
         top: 0;
         left: 0;
@@ -145,7 +120,7 @@ export default {
         align-self: center;
     }
 
-    .result>a>.identity {
+    .result>.identity {
         display: flex;
         line-height: 16px;
         flex-direction: column;
@@ -153,24 +128,19 @@ export default {
         margin-left: 20px;
     }
 
-    .result>a>.identity>.org {
+    .result>.identity>.org {
         font-size: 0.9rem;
         color: #739cb0;
         margin-top: 2px;
     }
 
-    .result>a>.identity>.symbol {
+    .result>.identity>.symbol {
         font-size: 0.9rem;
         color: #739cb0;
         margin-top: 2px;
     }
 
-    .result>a>.right {
+    .result>.right {
         display: none;
     }
-
-    .no-decor {
-        text-decoration: none;
-    }
-
 </style>

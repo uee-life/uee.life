@@ -2,7 +2,7 @@
     <div class="search-main">
         <portal to="leftDock">
             <dock-item title="find orgs" class="search-box">
-                <input class="search-input" @keyup.enter="getResults()" v-model="input" placeholder="Org Handle"/>
+                <input class="search-input" @keyup.enter="getResults()" @input="autoGetResults()" v-model="input" placeholder="Org Handle"/>
             </dock-item>
         </portal>
         <div v-if="result" v-html="result" class="results">
@@ -13,7 +13,6 @@
                 <div class="endcap left"></div>
                 <div class="endcap right"></div>
             </span>
-            <span class="text small">Use the box on the left to search</span>
         </div>
     </div>
 </template>
@@ -30,6 +29,13 @@ export default {
         }
     },
     methods: {
+        async autoGetResults() {
+            if(this.input.length >= 3) {
+                this.getResults()
+            } else {
+                this.result = ""
+            }
+        },
         async getResults() {
             try {
                 const { data } = await this.$axios.get('https://api.uee.life/search/orgs', {
@@ -54,8 +60,7 @@ export default {
     .search-main {
         position: relative;
         width: 100%;
-        padding: 10px;
-        padding-top: 20px;
+        padding-top: 14px;
         margin-top: 30px;
     }
 
@@ -104,7 +109,7 @@ export default {
         display: flex;
         align-items: center;
         background: url('/images/fading-bars.png') repeat;
-        padding: 20px;
+        padding: 5px 10px;
         position: relative;
         height: fit-content;
         border: 1px solid #546f84;
@@ -133,20 +138,13 @@ export default {
     .org-cell>a>.left>.identity {
         display: flex;
         line-height: 16px;
-        max-width: 250px;
         flex-direction: column;
         justify-content: center;
         margin-left: 20px;
     }
 
-    .org-cell>a>.left>.identity>h3 {
-        font-size: 14px;
-        color: #dbf3ff;
-        margin: 0;
-    }
-
     .org-cell>a>.left>.identity>.symbol {
-        font-size: 11px;
+        font-size: 0.9rem;
         color: #739cb0;
     }
 
