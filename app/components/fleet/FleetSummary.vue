@@ -79,6 +79,7 @@ export default {
     font-family: 'Michroma';
     justify-content: space-between;
     white-space: nowrap;
+    cursor: pointer;
 }
 .summary .value {
     color: #dbf3ff;
