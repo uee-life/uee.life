@@ -50,7 +50,12 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'The Portal to your life in the UEE' }
+      { hid: 'description', name: 'description', content: 'The Portal to your life in the UEE' },
+      { name: 'og:title', property: 'og:title', content: 'UEE.life' },
+      { name: 'og:description', property: 'og:description', content: 'The Portal to your life in the UEE' },
+      { name: 'og:image', property: 'og:image', content: 'https://uee.life/images/uee.life.jpg' },
+      { name: 'og:url', property: 'og:url', content: 'https://uee.life' },
+      { name: 'twitter:card', property: 'twitter:card', content: 'https://uee.life/images/uee.life.jpg' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: 'https://uee.life/favicon.ico' },
