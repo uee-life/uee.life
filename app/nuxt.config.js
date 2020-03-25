@@ -55,7 +55,7 @@ module.exports = {
       { name: 'og:description', property: 'og:description', content: 'The Portal to your life in the UEE' },
       { name: 'og:image', property: 'og:image', content: 'https://uee.life/images/uee.life.jpg' },
       { name: 'og:url', property: 'og:url', content: 'https://uee.life' },
-      { name: 'twitter:card', property: 'twitter:card', content: 'https://uee.life/images/uee.life.jpg' },
+      { name: 'twitter:card', property: 'twitter:card', content: 'summary_large_image' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: 'https://uee.life/favicon.ico' },
