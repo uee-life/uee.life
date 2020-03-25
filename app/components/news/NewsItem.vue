@@ -12,7 +12,7 @@
                     <div>Posted: {{ item.posted }}</div>
                 </div>
             </div>
-            <img class="source-img" :src="item.source_img" title="spectrum"/>
+            <img class="source-img" :src="item.source_img" :title="item.source"/>
             <span class="corner top left"></span>
             <span class="corner top right"></span>
             <span class="corner bottom left"></span>
