@@ -1,20 +1,20 @@
 <template>
     <div class="content">
-      <portal to="leftDock">    
-        <site-news v-if="isMobile"/>
-        <news-filter v-if="!isMobile"/>
-        <official-links v-if="!isMobile" />
-        <community-links v-if="!isMobile" />
-        <news-filter v-if="isMobile"/>
-        <made-by v-if="!isMobile" />
-      </portal>
-      <portal to="rightDock">
-        <site-stats :stats="stats" />
-        <latest-citizen v-if="stats" :handle="stats.latestCitizen" />
-        <made-by v-if="isMobile" />
-      </portal>
-      <site-news v-if="!isMobile" style="margin-bottom: 30px"/>
-      <news-feed />
+        <portal to="leftDock">    
+            <site-news v-if="isMobile"/>
+            <news-filter v-if="!isMobile"/>
+            <official-links v-if="!isMobile" />
+            <community-links v-if="!isMobile" />
+            <news-filter v-if="isMobile"/>
+        </portal>
+        <portal to="rightDock">
+            <official-links v-if="isMobile" />
+            <community-links v-if="isMobile" />
+            <site-stats :stats="stats" />
+            <latest-citizen v-if="stats" :handle="stats.latestCitizen" />
+        </portal>
+        <site-news v-if="!isMobile" style="margin-bottom: 30px"/>
+        <news-feed />
     </div>
 </template>
 
@@ -27,7 +27,7 @@ import CommunityLinks from '@/components/widgets/CommunityLinks'
 import NewsFilter from '@/components/widgets/NewsFilter'
 import SiteStats from '@/components/widgets/SiteStats'
 import LatestCitizen from '@/components/widgets/LatestCitizen'
-import SiteNews from '@/components/widgets/SiteNews'
+import SiteNews from '@/components/content/SiteNews'
 import Discord from '@/components/widgets/Discord'
 import MadeBy from '@/components/widgets/MadeBy'
 

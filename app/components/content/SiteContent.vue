@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <main-panel class="content">
     <template v-if="data.content">
       <template v-if="editing">
         <div class="edit-button"><input type="button" @click="editing = false" value="CANCEL"></div>
@@ -25,13 +25,19 @@
         <img src="~/assets/loading.gif" >
       </div>
     </template>
-  </div>
+  </main-panel>
 </template>
 
 <script>
 export default {
   layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
-  name: 'about',
+  name: 'SiteContent',
+  props: {
+      tag: {
+          type: String,
+          required: true
+      }
+  },
   data() {
     return {
       data: {
@@ -55,7 +61,7 @@ export default {
   methods: {
     async getContent() {
       this.$axios({
-        url: 'https://api.uee.life/content/about',
+        url: `https://api.uee.life/content/${this.tag}`,
         method: 'GET'
       }).then((res) => {
         this.data = res.data
@@ -65,7 +71,7 @@ export default {
     },
     async update() {
       this.$axios({
-        url: 'https://api.uee.life/content/about',
+        url: `https://api.uee.life/content/${this.tag}`,
         method: 'PUT',
         headers: {
           'Content-type': 'application/json; charset=utf-8'
@@ -87,15 +93,12 @@ export default {
 </script>
 
 <style scoped>
-    .about {
+    .content {
         position: relative;
         display: flex;
         flex-direction: column;
-        width: 100%;
-        overflow: hidden;
         text-overflow: ellipsis;
-        margin-left: 10px;
-        margin-right: 10px;
+        padding: 0 15px;
     }
 
     .title {

@@ -45,7 +45,7 @@
                 <div v-if="c" class="assigned">
                     <h3 class="role">{{ c.role }}</h3>
                     <portrait :handle="c.citizen" size="small" :showName="true" />
-                    <img v-if="isOwner" class="delete" src="~/assets/delete.png">
+                    <img v-if="isOwner || isSelf(c.citizen)" class="delete" src="~/assets/delete.png">
                 </div>
                 <div v-else class="unassigned">
                     <h3 class="role">&nbsp;</h3>
@@ -99,6 +99,12 @@ export default {
         }
     },
     methods: {
+        isSelf(crewname) {
+            if (this.ship && this.$auth.loggedIn && this.user.app_metadata.handle_verified && this.user.app_metadata.handle.toLowerCase().trim() === crewname.toLowerCase().trim()) {
+                return true
+            }
+            return false
+        },
         loadShip() {
             this.$axios({
                 url: `https://api.uee.life/ships/${this.id}`,
