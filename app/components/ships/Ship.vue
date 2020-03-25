@@ -45,7 +45,7 @@
                 <div v-if="c" class="assigned">
                     <h3 class="role">{{ c.role }}</h3>
                     <portrait :handle="c.citizen" size="small" :showName="true" />
-                    <img v-if="isOwner || isSelf(c.citizen)" class="delete" src="~/assets/delete.png">
+                    <img v-if="isOwner || isSelf(c.citizen)" @click="removeCrew(c.id)" class="delete" src="~/assets/delete.png">
                 </div>
                 <div v-else class="unassigned">
                     <h3 class="role">&nbsp;</h3>
@@ -123,8 +123,12 @@ export default {
             })
         },
         addCrew(crew) {
-            console.log("Adding crewmate: ", crew)
+            crew.ship = this.id
+            console.log("Adding crewmen: ", crew)
             this.showModal = false
+        },
+        removeCrew(crew_id) {
+            console.log("Removing crewmen: ", crew_id)
         }
     },
     mounted() {
@@ -185,6 +189,7 @@ export default {
     right: -6px;
     width: 20px;
     height: 20px;
+    cursor: pointer;
 }
 
 .unassigned {

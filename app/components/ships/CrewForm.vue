@@ -1,6 +1,11 @@
 <template>
-    <form @submit.prevent="addCrew" class="ship-form">
-        <input class="search-input" @keyup.enter="getResults()" @input="autoGetResults()" v-model="input" placeholder="Citizen Handle"/>
+    <form @submit.prevent="addCrew" class="crew-form">
+        <label for="role">Select Role:</label>
+        <select class="input" id="role" v-model="role">
+            <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.role }}</option>
+        </select>
+        <label for="citizen">Select Citizen:</label>
+        <input class="input" id="citizen" @keyup.enter="getResults()" @input="autoGetResults()" v-model="input" placeholder="Citizen Search"/>
         <div v-if="result" class="results">
             <div v-for="res in result" :key="res.handle" class="result" @click="addCrew(res.handle)">
                 <span class="thumb">
@@ -24,7 +29,8 @@ export default {
             input: "",
             result: null,
             handle: null,
-            role: null
+            roles: [],
+            role: 99
         }
     },
     methods: {
@@ -42,6 +48,9 @@ export default {
                 this.result = null
             }
         },
+        async getRoles() {
+
+        },
         async getResults() {
             const data = {
                 query: this.input
@@ -58,7 +67,14 @@ export default {
             })
         },
         async getRoles() {
-
+            this.$axios({
+                url: `https://api.uee.life/ships/roles`,
+                method: 'GET'
+            }).then((res) => {
+                this.roles = res.data
+            }).catch((err) => {
+                console.log(err)
+            })
         }
     },
     mounted() {
@@ -68,16 +84,13 @@ export default {
 </script>
 
 <style scoped>
-.ship-form {
-    display: flex;
-    flex-direction: column;
-    max-width: 400px;
-}
-input {
-    margin-bottom: 5px;
-}
-    .search-input {
-        width: calc(100% - 40px);
+    .crew-form {
+        display: flex;
+        flex-direction: column;
+        max-width: 500px;
+    }
+    input {
+        margin: 2px;
     }
     .results {
         position: relative;

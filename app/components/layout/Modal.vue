@@ -5,7 +5,7 @@
                 <div class="modal-container">
                     <main-panel class="modal-body">
                         <section-title v-if="title" :text="title" />
-                        <input type="button" class="modal-close" @click="$emit('close')" value="X" />
+                        <input type="button" class="modal-close" @click="$emit('close')" value="cancel" />
                     <slot>
                         default body
                     </slot>
@@ -53,12 +53,13 @@ export default {
 .modal-body {
     background: rgba(13, 46, 66, 0.7);
     width: fit-content;
+    padding: 10px;
 }
 
 .modal-close {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 5px;
+    right: 5px;
 }
 
 .modal-enter {
