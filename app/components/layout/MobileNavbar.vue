@@ -6,7 +6,7 @@
     </div>
     <client-only placeholder="">
       <Slide class='slide'>
-        <nuxt-link class="nav-button" to="/">Home</nuxt-link>
+        <nuxt-link class="nav-button" to="/" exact>Home</nuxt-link>
         <nuxt-link class="nav-button" to="/about">About</nuxt-link>
         <nuxt-link class="nav-button" to="/citizens">Citizen Registry</nuxt-link>
         <nuxt-link class="nav-button" to="/orgs">Org Registry</nuxt-link>
