@@ -143,15 +143,27 @@ export default {
                 },
                 data: crew
             }).then((res) => {
-                console.log('foobar')
+                // todo: handle returned error codes
                 this.loadCrew()
                 this.$swal.fire('success', "Crewmen Added!", 'success')
             }).catch((err) => {
                 console.error(err)
             })
         },
-        removeCrew(crew_id) {
+        async removeCrew(crew_id) {
             console.log("Removing crewmen: ", crew_id)
+            // add confirm modal here
+
+            await this.$axios({
+                url: `https://api.uee.life/crew/${crew_id}`,
+                method: 'DELETE'
+            }).then(() => {
+                // todo: handle returned error codes
+                this.loadCrew()
+                this.$swal.fire('success', 'Crewmen Removed!', 'success')
+            }).catch((err) => {
+                console.error(err)
+            })
         }
     },
     mounted() {
