@@ -111,7 +111,17 @@ export default {
                 method: 'GET'
             }).then((res) => {
                 this.ship = res.data
-                this.crew = this.ship.crew
+                this.loadCrew()
+            }).catch((err) => {
+                console.error(err)
+            })
+        },
+        loadCrew() {
+            this.$axios({
+                url: `https://api.uee.life/ships/${this.id}/crew`,
+                method: 'GET'
+            }).then((res) => {
+                this.crew = res.data
                 if (this.crew.length < this.ship.max_crew) {
                     const pad = new Array(this.ship.max_crew - this.crew.length).fill(null)
                     console.log('expanding crew list!', this.crew, pad)
@@ -122,10 +132,23 @@ export default {
                 console.error(err)
             })
         },
-        addCrew(crew) {
-            crew.ship = this.id
+        async addCrew(crew) {
             console.log("Adding crewmen: ", crew)
             this.showModal = false
+            await this.$axios({
+                url: `https://api.uee.life/ships/${this.id}/crew`,
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json; charset=utf-8'
+                },
+                data: crew
+            }).then((res) => {
+                console.log('foobar')
+                this.loadCrew()
+                this.$swal.fire('success', "Crewmen Added!", 'success')
+            }).catch((err) => {
+                console.error(err)
+            })
         },
         removeCrew(crew_id) {
             console.log("Removing crewmen: ", crew_id)
