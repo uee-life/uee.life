@@ -4,7 +4,9 @@
             <div class="content">
                 <div class="background" :style="style"></div>
                 <div class="mask"></div>
-                <div class="article-image" :style="style"></div>
+                <div class="article-image" :style="style">
+                    <img src="/images/padimg.png">
+                </div>
                 <div class="news-item-info">
                     <div><b>{{ item.title }}</b></div>
                     <div>Posted: {{ item.posted }}</div>
@@ -35,12 +37,18 @@ export default {
 <style>
     .article-image {
         width: 170px;
-        height: 95px;
         max-width: 170px;
+        height: fit-content;
         flex-basis: 90%;
         flex-grow: 0;
         z-index: 2;
         border: 2px solid black;
+    }
+
+    .article-image img {
+        display: block;
+        width: 100%;
+        height: auto;
     }
 
     .source-img {
