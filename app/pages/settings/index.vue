@@ -60,6 +60,11 @@ export default {
           console.error(err)
         })
       },
+      logOut() {
+            const config = require('~/config.json')
+            this.$auth.logout()
+            window.location = `https://ueelife.auth0.com/v2/logout?returnTo=http%3A%2F%2Flocalhost:3000&client_id=${config.AUTH0_CLIENT_ID}`
+      },
       async verifyHandle() {
         if(this.user){
           const handle = this.user.app_metadata.handle
@@ -74,9 +79,16 @@ export default {
               this.errors.verification = "Unable to verify token. Did you copy it to your bio?"
               this.$swal.fire("FAILED", res.data.msg, 'error')
             } else {
-              this.$swal.fire("SUCCESS", res.data.msg, 'success')
-              this.errors.verification = ""
-              this.getUser()
+              this.$swal.fire({
+                  title: 'Success!', 
+                  text: 'You are now verified! You will now be logged out. Please log back in using your existing account.',
+                  icon: 'success',
+                  showCancelButton: false,
+                  confirmButtonColor: '#3085d6',
+                  confirmButtonText: 'OK'
+              }).then(() => {
+                  this.logOut()
+              })
             }
             this.$store.dispatch('setUser', res.data.user)
           }).catch(function(err) {

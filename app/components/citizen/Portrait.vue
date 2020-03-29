@@ -7,6 +7,7 @@
         <div v-if="showName" class="name">
             {{ citizen.name }}
         </div>
+        <slot></slot>
     </div>
 </template>
 
@@ -61,14 +62,18 @@ export default {
         handle: {
             handler: function () {
                 if(this.handle) {
-                    this.getCitizen(this.handle)
+                    this.getCitizen(this.handle).then(() => {
+                        this.$emit('finished')
+                    })
                 }
             }
         }
     },
-    mounted () {
+    async mounted () {
         if(this.handle) {
-            this.getCitizen(this.handle)
+            this.getCitizen(this.handle).then(() => {
+                this.$emit('finished')
+            })
         }
     }
 }
@@ -89,11 +94,13 @@ export default {
 
     .portrait.medium {
         width: 165px;
+        flex-basis: 165px;
         height: fit-content;
     }
 
     .portrait.small {
         width: 100px;
+        min-height: 100px;
         height: fit-content;
     }
 
@@ -120,8 +127,10 @@ export default {
 
     .portrait.medium .name {
         font-size: 16px;
+        text-align: center;
     }
     .portrait.small .name {
         font-size: 12px;
+        text-align: center;
     }
 </style>

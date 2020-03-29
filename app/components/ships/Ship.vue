@@ -6,15 +6,29 @@
             </dock-item>
         </portal>
         <ship-banner v-if="ship" :ship="ship" />
-        <main-panel v-if="ship" title="info">
+        <div class="ship-info">
+        <main-panel v-if="ship" title="Registration" class="info-panel">
             <div class="info-item">
                 <span class="label">Ship ID:</span>
                 <span class="value">{{ shipID }}</span>
             </div>
             <div class="info-item">
-                <span class="label">Name:</span>
-                <span class="value">{{ ship.name }}</span>
+                <span class="label">Reg Date:</span>
+                <span class="value">{{ ueeDate(ship.registered) }}</span>
             </div>
+            <div class="info-item">
+                <span class="label">Name:</span>
+                <span v-if="edit.name" class="value">
+                    <input type="text" v-model="name" maxlength="20" />
+                    <img @click="updateName" class="submit" title="submit" src="~/assets/tick.png">
+                    <img @click="edit.name = false" class="cancel" title="cancel" src="~/assets/delete.png">
+                </span>
+                <span v-else class="value">
+                    {{ ship.name }}<img v-if="isOwner" @click="edit.name = true" class="edit" src="~/assets/edit.png">
+                </span>
+            </div>
+        </main-panel>
+        <main-panel v-if="ship" title="Hull Info" class="info-panel">
             <div class="info-item">
                 <span class="label">Manufacturer:</span>
                 <span class="value">{{ ship.make }}</span>
@@ -31,6 +45,8 @@
                 <span class="label">Role:</span>
                 <span class="value">{{ `${ship.type} - ${ship.focus}` }}</span>
             </div>
+        </main-panel>
+        <main-panel v-if="ship" title="Metrics" class="info-panel">
             <div class="info-item">
                 <span class="label">Max Crew:</span>
                 <span class="value">{{ ship.max_crew }}</span>
@@ -40,31 +56,14 @@
                 <span class="value">{{ ship.cargo }}</span>
             </div>
         </main-panel>
-        <main-panel title="crew" class="crew">
-            <div v-for="(c, i) in crew" :key="i" class="crewman">
-                <div v-if="c" class="assigned">
-                    <h3 class="role">{{ c.role }}</h3>
-                    <portrait :handle="c.citizen" size="small" :showName="true" />
-                    <img v-if="isOwner || isSelf(c.citizen)" @click="removeCrew(c.id)" class="delete" src="~/assets/delete.png">
-                </div>
-                <div v-else class="unassigned">
-                    <h3 class="role">&nbsp;</h3>
-                    <div class="bg"/>
-                    <img v-if="isOwner" @click="showModal = true" src="~/assets/plus.png" class="add-new"/>
-                    <div v-else class="add-new" />
-                    <div class="name">Unassigned</div>
-                </div>
-            </div>
-        </main-panel>
-        <modal v-if="showModal" title="Add Crew" @close="showModal = false">
-            <crew-form @add="addCrew" />
-        </modal>
+        </div>
+        <crew-list v-if="ship" :ship="ship" />
     </div>
 </template>
 
 <script>
 import ShipBanner from '@/components/ships/ShipBanner'
-import CrewForm from '@/components/ships/CrewForm'
+import CrewList from '@/components/ships/CrewList'
 
 export default {
     props: {
@@ -76,13 +75,15 @@ export default {
     data () {
         return {
             ship: null,
-            crew: null,
-            showModal: false
+            name: '',
+            edit: {
+                name: false
+            }
         }
     },
     components: {
         ShipBanner,
-        CrewForm
+        CrewList
     },
     computed: {
         user() {
@@ -99,11 +100,8 @@ export default {
         }
     },
     methods: {
-        isSelf(crewname) {
-            if (this.ship && this.$auth.loggedIn && this.user.app_metadata.handle_verified && this.user.app_metadata.handle.toLowerCase().trim() === crewname.toLowerCase().trim()) {
-                return true
-            }
-            return false
+        showCrewmember(c) {
+            console.log(c)
         },
         loadShip() {
             this.$axios({
@@ -111,56 +109,30 @@ export default {
                 method: 'GET'
             }).then((res) => {
                 this.ship = res.data
-                this.loadCrew()
+                this.name = res.data.name
             }).catch((err) => {
                 console.error(err)
             })
         },
-        loadCrew() {
+        updateName() {
+            console.log("updating ship name to: ", this.name)
+            this.edit.name = false
             this.$axios({
-                url: `https://api.uee.life/ships/${this.id}/crew`,
-                method: 'GET'
-            }).then((res) => {
-                this.crew = res.data
-                if (this.crew.length < this.ship.max_crew) {
-                    const pad = new Array(this.ship.max_crew - this.crew.length).fill(null)
-                    console.log('expanding crew list!', this.crew, pad)
-                    this.crew = this.crew.concat(pad)
-                    console.log(this.crew)
-                }
-            }).catch((err) => {
-                console.error(err)
-            })
-        },
-        async addCrew(crew) {
-            console.log("Adding crewmen: ", crew)
-            this.showModal = false
-            await this.$axios({
-                url: `https://api.uee.life/ships/${this.id}/crew`,
-                method: 'POST',
+                url: `https://api.uee.life/ships/${this.id}`,
+                method: 'PUT',
                 headers: {
-                    'Content-type': 'application/json; charset=utf-8'
+                    'Content-Type': 'application/json; charset=utf-8'
                 },
-                data: crew
+                data: {
+                    name: this.name
+                }
             }).then((res) => {
-                // todo: handle returned error codes
-                this.loadCrew()
-                this.$swal.fire('success', "Crewmen Added!", 'success')
-            }).catch((err) => {
-                console.error(err)
-            })
-        },
-        async removeCrew(crew_id) {
-            console.log("Removing crewmen: ", crew_id)
-            // add confirm modal here
-
-            await this.$axios({
-                url: `https://api.uee.life/crew/${crew_id}`,
-                method: 'DELETE'
-            }).then(() => {
-                // todo: handle returned error codes
-                this.loadCrew()
-                this.$swal.fire('success', 'Crewmen Removed!', 'success')
+                if(res.data.success) {
+                    this.$swal.fire('success', res.data.msg, 'success')
+                    this.loadShip()
+                } else {
+                    this.$swal.fire('warning', res.data.msg, 'warning')
+                }
             }).catch((err) => {
                 console.error(err)
             })
@@ -196,70 +168,39 @@ export default {
     width: 110px;
 }
 
+.info-item .value .edit {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.info-item .value .submit {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.info-item .value .cancel {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    margin-left: 30px;
+    cursor: pointer;
+}
+
 .owner {
     display: flex;
     justify-content: center;
 }
 
-.crew {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.crewman {
-    margin: 10px;
-}
-
-.assigned {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.assigned .delete {
-    position: absolute;
-    top: 15px;
-    right: -6px;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-}
-
-.unassigned {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.unassigned .add-new {
-    display: block;
-    position: relative;
-    box-sizing: border-box;
-    width: 100px;
-    height: 100px;
-    padding: 20px;
-    border: 1px dashed #546f84;
-    cursor: pointer;
-}
-
-.unassigned .bg {
-    content: "";
-    background: url('https://robertsspaceindustries.com/rsi/static/images/account/avatar_default_big.jpg');
-    background-size: 100px 100px;
-    background-repeat: no-repeat;
-    background-position-y: 22px;
-    opacity: 0.4;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: absolute;
-}
-
-.unassigned .name {
-    font-size: 12px;
-}
+    .org-info .info .info-panel {
+      flex-basis: 250px;
+      margin-left: 10px;
+      margin-right: 10px;
+      flex-grow: 1;
+    }
 </style>

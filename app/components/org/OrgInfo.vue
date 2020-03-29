@@ -24,7 +24,7 @@
               </main-panel>
               <main-panel title="founders" class="info-panel">
                 <div class="founders">
-                  <portrait v-for="f in founders" :key="f.handle" :handle="f.handle" size="small" :showName="true" />
+                  <portrait class="founder" v-for="f in founders" :key="f.handle" :handle="f.handle" size="small" :showName="true" />
                 </div>
               </main-panel>
             </div>
@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import { gsap } from 'gsap'
 import Portrait from '@/components/citizen/Portrait'
 
 export default {
@@ -107,11 +108,18 @@ export default {
   },
   watch: {
     org: {
-        handler: function () {
+        handler: async function () {
           if(this.org.founders.length > 0) {
+            gsap.fromTo(".founders", {duration: 1, height: '20px'}, {'height': '145px'})
             this.loadFounders()
           }
         }
+    }
+  },
+  mounted() {
+    if(this.org && this.org.founders && this.org.founders.length > 0) {
+      gsap.fromTo(".founders", {duration: 1, height: '20px'}, {'height': '145px'})
+      this.loadFounders()
     }
   }
 }
@@ -160,17 +168,11 @@ export default {
     .founders {
       display: flex;
       flex-wrap: wrap;
+      height: 20px;
     }
 
     .founders .portrait {
       margin: 5px 10px;
-    }
-
-    .founder {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 5px;
     }
 
     .founder img {

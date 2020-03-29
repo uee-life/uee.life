@@ -35,7 +35,7 @@ export default {
   position: relative;
   min-height: 100vh;
   max-width: 100vw;
-  padding-bottom: 90px;
+  padding-bottom: 100px;
   font-family: Electrolize;
 }
 .main {

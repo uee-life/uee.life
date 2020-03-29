@@ -99,7 +99,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .site-news {
         display: flex;
         box-sizing: border-box;

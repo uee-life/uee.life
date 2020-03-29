@@ -1,9 +1,7 @@
 <template>
     <form @submit.prevent="addCrew" class="crew-form">
         <label for="role">Select Role:</label>
-        <select class="input" id="role" v-model="role">
-            <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.role }}</option>
-        </select>
+        <input class="input" id="role" v-model="role" maxlength="20" placeholder="Crewmen"/>
         <label for="citizen">Select Citizen:</label>
         <input class="input" id="citizen" @keyup.enter="getResults()" @input="autoGetResults()" v-model="input" placeholder="Citizen Search"/>
         <div v-if="result" class="results">
@@ -29,15 +27,14 @@ export default {
             input: "",
             result: null,
             handle: null,
-            roles: [],
-            role: 99
+            role: ""
         }
     },
     methods: {
         addCrew(handle) {
             const crew = {
                 handle: handle,
-                role: this.role
+                role: this.role ? this.role : "Crewmen"
             }
             this.$emit('add', crew)
         },
@@ -47,9 +44,6 @@ export default {
             } else {
                 this.result = null
             }
-        },
-        async getRoles() {
-
         },
         async getResults() {
             const data = {
@@ -65,20 +59,7 @@ export default {
             }).catch((err) => {
                 console.error(err)
             })
-        },
-        async getRoles() {
-            this.$axios({
-                url: `https://api.uee.life/ships/roles`,
-                method: 'GET'
-            }).then((res) => {
-                this.roles = res.data
-            }).catch((err) => {
-                console.log(err)
-            })
         }
-    },
-    mounted() {
-        this.getRoles()
     }
 }
 </script>

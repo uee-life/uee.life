@@ -50,12 +50,7 @@ export default {
   },
   computed: {
     postedDate() {
-      const d = new Date(this.data.updated);
-      const year = d.getFullYear();
-      const month = d.getMonth();
-      const day = d.getDate();
-      const date = new Date(year + 930, month, day).toDateString();
-      return date
+      return this.ueeDate(this.data.updated);
     }
   },
   methods: {

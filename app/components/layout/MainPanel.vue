@@ -30,7 +30,7 @@ export default {
         position: relative;
         box-sizing: border-box;
         flex-grow: 1;
-        padding: 10px 5px 5px;
+        padding: 10px;
         margin-top: 20px;
         min-width: 240px;
         background: url('/images/fading-bars.png') repeat;
