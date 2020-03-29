@@ -19,7 +19,7 @@
             <div class="info-item">
                 <span class="label">Name:</span>
                 <span v-if="edit.name" class="value">
-                    <input type="text" v-model="name" maxlength="20" />
+                    <input type="text" v-model="name" maxlength="30" />
                     <img @click="updateName" class="submit" title="submit" src="~/assets/tick.png">
                     <img @click="edit.name = false" class="cancel" title="cancel" src="~/assets/delete.png">
                 </span>
