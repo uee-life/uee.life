@@ -8,6 +8,7 @@
             <news-filter v-if="isMobile"/>
         </portal>
         <portal to="rightDock">
+            <giveaway />
             <official-links v-if="isMobile" />
             <community-links v-if="isMobile" />
             <site-stats :stats="stats" />
@@ -28,8 +29,7 @@ import NewsFilter from '@/components/widgets/NewsFilter'
 import SiteStats from '@/components/widgets/SiteStats'
 import LatestCitizen from '@/components/widgets/LatestCitizen'
 import SiteNews from '@/components/content/SiteNews'
-import Discord from '@/components/widgets/Discord'
-import MadeBy from '@/components/widgets/MadeBy'
+import Giveaway from '@/components/widgets/Giveaway'
 
 export default {
     layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
@@ -41,8 +41,7 @@ export default {
         SiteStats,
         LatestCitizen,
         SiteNews,
-        Discord,
-        MadeBy
+        Giveaway
     },
     asyncData() {
         return {
