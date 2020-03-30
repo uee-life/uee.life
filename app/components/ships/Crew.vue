@@ -6,10 +6,10 @@
                 <span class="label">Role:</span>
                 <span v-if="edit.role" class="value">
                     <input type="text" v-model="role" maxlength="20" />
-                    <img @click="update" class="submit" title="save" src="~/assets/tick.png">
-                    <img @click="edit.role = false" class="cancel" title="cancel" src="~/assets/delete.png">
+                    <img @click="update" class="edit-button save" title="save" src="~/assets/tick.png">
+                    <img @click="edit.role = false" class="edit-button cancel" title="cancel" src="~/assets/delete.png">
                 </span>
-                <span v-else class="value">{{ crew.role }}<img v-if="canEdit" @click="edit.role = true" class="edit" src="~/assets/edit.png"></span>
+                <span v-else class="value">{{ crew.role }}<img v-if="canEdit" @click="edit.role = true" class="edit-button edit" src="~/assets/edit.png"></span>
             </div>
             <div class="info-item">
                 <span class="label">Joined:</span>

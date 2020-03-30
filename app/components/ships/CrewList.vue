@@ -121,7 +121,7 @@ export default {
             await this.$axios({
                 url: `https://api.uee.life/crew/${crew_id}`,
                 method: 'DELETE'
-            }).then(() => {
+            }).then((res) => {
                 if (res.data.success) {
                     this.loadCrew()
                     this.$swal.fire('success', res.data.msg, 'success')
@@ -145,7 +145,7 @@ export default {
                 data: {
                     role: role
                 }
-            }).then(() => {
+            }).then((res) => {
                 if (res.data.success) {
                     this.loadCrew()
                     this.$swal.fire('success', res.data.msg, 'success')
