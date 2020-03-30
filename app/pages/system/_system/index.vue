@@ -45,43 +45,72 @@ export default {
             tabs: ["planets", "pois"],
             initialTab: "planets",
             system: {},
+            systems: {},
             planets: [],
             pois: []
         }
     },
     methods: {
-        async getSystem() {
-            const sid = this.$route.params.system
-            this.$axios.get(`https://api.uee.life/systems/${sid}`).then(res => {
-                if(res.status == 200) {
-                    this.system = res.data
+        async getSystems() {
+            await this.$axios({
+                url: 'https://api.uee.life/systems',
+                method: 'GET'
+            }).then((res) => {
+                console.log('loaded systems')
+                this.systems = {}
+                for (let s in res.data) {
+                    const sys = res.data[s]
+                    this.systems[sys.name] = sys
                 }
-            }).catch(error => {
-                // eslint-disable-next-line
-                console.error(error)
-            });
+            }).catch((err) => {
+                console.error(err)
+            })
+        },
+        async getSystem() {
+            console.log('getting system')
+            const sys_name = this.$route.params.system
+            console.log(this.systems, this.sys_name)
+            if (Object.keys(this.systems).includes(sys_name)) {
+                const sid = this.systems[sys_name].id
+                this.$axios.get(`https://api.uee.life/locations/${sid}`).then((res) => {
+                    console.log(res.data)
+                    if(res.status == 200) {
+                        this.system = res.data
+                    }
+                }).catch(error => {
+                    // eslint-disable-next-line
+                    console.error(error)
+                });
+            }
+            
         },
         async getPlanets() {
-            const sid = this.$route.params.system
-            this.$axios.get(`https://api.uee.life/systems/${sid}/planets`).then(res => {
-                if(res.status == 200) {
-                    this.planets = res.data
-                }
-            }).catch(error => {
-                //eslint-disable-next-line
-                console.error(error)
-            });
+            const sys_name = this.$route.params.system
+            if (Object.keys(this.systems).includes(sys_name)) {
+                const sid = this.systems[sys_name].id
+                this.$axios.get(`https://api.uee.life/locations/${sid}/locations`).then((res) => {
+                    if(res.status == 200) {
+                        this.planets = res.data
+                    }
+                }).catch(error => {
+                    //eslint-disable-next-line
+                    console.error(error)
+                });
+            }
         },
         async getPOIs() {
-            const sid = this.$route.params.system
-            this.$axios.get(`https://api.uee.life/systems/${sid}/pois`).then(res => {
-                if(res.status == 200) {
-                    this.pois = res.data
-                }
-            }).catch(error => {
-                // eslint-disable-next-line
-                console.error(error)
-            })
+            const sys_name = this.$route.params.system
+            if (Object.keys(this.systems).includes(sys_name)) {
+                const sid = this.systems[sys_name].id
+                this.$axios.get(`https://api.uee.life/locations/${sid}/pois`).then((res) => {
+                    if(res.status == 200) {
+                        this.pois = res.data
+                    }
+                }).catch(error => {
+                    // eslint-disable-next-line
+                    console.error(error)
+                })
+            }
         }
     },
     computed: {
@@ -97,16 +126,20 @@ export default {
         }
     },
     mounted() {
-        this.getSystem()
-        this.getPlanets()
-        this.getPOIs()
+        this.getSystems().then(() => {
+            this.getSystem()
+            this.getPlanets()
+            this.getPOIs()
+        })
     },
     watch: {
         $route: {
             handler: function () {
-                this.getSystem()
-                this.getPlanets()
-                this.getPOIs()
+                this.getSystems().then(() => {
+                    this.getSystem()
+                    this.getPlanets()
+                    this.getPOIs()
+                })
             }
         }
     }

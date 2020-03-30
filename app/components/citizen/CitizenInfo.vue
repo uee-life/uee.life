@@ -27,7 +27,7 @@
                 </div>
             </div>
             <br>
-        <citizen-location :home="citizen.home" :editing="editing"/>
+        <citizen-location :isOwner="isOwner" :home="citizen.home" @refresh="refresh" />
         </div>
   </div>
 </template>
@@ -38,8 +38,8 @@ import { gsap } from "gsap"
 import CitizenLocation from '@/components/citizen/CitizenLocation'
 
 export default {
-    name: "citizen-info",
-    props: ["citizen", "editing"],
+    name: 'citizen-info',
+    props: ['citizen', 'isOwner'],
     components: {
         CitizenLocation
     },
@@ -50,10 +50,15 @@ export default {
     computed: {
         componentClass() {
             if(this.isMobile) {
-                return "citizen-info mobile"
+                return 'citizen-info mobile'
             } else {
-                return "citizen-info"
+                return 'citizen-info'
             }
+        }
+    },
+    methods: {
+        refresh() {
+            this.$emit('refresh')
         }
     },
     watch: {

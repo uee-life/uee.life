@@ -2,39 +2,54 @@
     <div class="citizen-location">
         <div class="location-row">
             <span class="label">System:</span>
-            <template v-if="editing">
+            <span v-if="edit.system">
                 <select v-model="system">
                     <option disabled value="">Select System</option>
                     <option value="">Not Selected</option>
-                    <option v-for="loc in data.systems" :key="loc.id" :value="{id: loc.id, code: loc.code, name: loc.name}">{{ loc.name }}</option>
+                    <option v-for="(sys, name) in data.systems" :key="sys.id" :value="{id: sys.id, name: sys.name}">{{ name }}</option>
                 </select>
-            </template>
-            <span v-else-if="home.system"><router-link :to="systemLink">{{home.system.name}}</router-link></span>
-            <span v-else>Unknown</span>
+                <img @click="updateSystem" class="edit-button save" title="submit" src="~/assets/tick.png">
+                <img @click="edit.system = false" class="edit-button cancel" title="cancel" src="~/assets/delete.png">
+            </span>
+            <span v-else-if="system">
+                <router-link :to="systemLink">{{system.name}}</router-link>
+                <img v-if="isOwner && !editing" @click="edit.system = true" class="edit-button edit" src="~/assets/edit.png">
+            </span>
+            <span v-else>Unknown<img v-if="isOwner && !editing" @click="edit.system = true" class="edit-button edit" src="~/assets/edit.png"></span>
         </div>
         <div class="location-row">
             <span class="label">Location:</span>
-            <template v-if="editing">
-                <select v-if="system && data.locations.length" v-model="location">
+            <span v-if="edit.location">
+                <select v-if="system && hasOptions(data.locations)" v-model="location">
                     <option disabled value="">Select Location</option>
                     <option value="">Not Selected</option>
-                    <option v-for="loc in data.locations" :key="loc.id" :value="{id: loc.id, code: loc.code, name: loc.name}">{{ loc.name }}</option>
+                    <option v-for="(loc, name) in data.locations" :key="loc.id" :value="{id: loc.id, name: loc.name}">{{ name }}</option>
                 </select>
-            </template>
-            <div v-else-if="home.location"><router-link :to="locationLink">{{home.location.name}}</router-link></div>
-            <div v-else>Unknown</div>
+                <img @click="updateLocation" class="edit-button save" title="submit" src="~/assets/tick.png">
+                <img @click="edit.location = false" class="edit-button cancel" title="cancel" src="~/assets/delete.png">
+            </span>
+            <div v-else-if="location">
+                <router-link :to="locationLink">{{location.name}}</router-link>
+                <img v-if="isOwner && !editing && hasOptions(data.bases)" @click="edit.location = true" class="edit-button edit" src="~/assets/edit.png">
+            </div>
+            <div v-else>Unknown<img v-if="isOwner && !editing && hasOptions(data.locations)" @click="edit.location = true" class="edit-button edit" src="~/assets/edit.png"></div>
         </div>
         <div class="location-row">
-            <span class="label">Base:</span>
-            <template v-if="editing">
-                <select v-if="location && data.bases.length" v-model="base">
+            <span class="label">Base:</span> 
+            <span v-if="edit.base">
+                <select v-if="location && hasOptions(data.bases)" v-model="base">
                     <option disabled value="">Select Home Base</option>
                     <option value="">Not Selected</option>
                     <option v-for="loc in data.bases" :key="loc.id" :value="{id: loc.id, name: loc.name}">{{ loc.name }}</option>
                 </select>
-            </template>
-            <div v-else-if="home.base"><router-link :to="baseLink">{{home.base.name}}</router-link></div>
-            <div v-else>Unknown</div>
+                <img @click="updateBase" class="edit-button save" title="submit" src="~/assets/tick.png">
+                <img @click="edit.base = false" class="edit-button cancel" title="cancel" src="~/assets/delete.png">
+            </span>
+            <div v-else-if="base">
+                <router-link :to="baseLink">{{base.name}}</router-link>
+                <img v-if="isOwner && !editing && hasOptions(data.bases)" @click="edit.base = true" class="edit-button edit" src="~/assets/edit.png">
+            </div>
+            <div v-else>Unknown<img v-if="isOwner && !editing && hasOptions(data.bases)" @click="edit.base = true" class="edit-button edit" src="~/assets/edit.png"></div>
         </div>
     </div>
 </template>
@@ -44,16 +59,22 @@ import { mapActions, mapMutations } from 'vuex'
 
 export default {
     name: 'citizen-location',
-    props: ['home', 'editing'],
+    props: ['home', 'isOwner'],
     data() {
         return {
             system: null,
             location: null,
             base: null,
             data: {
-                systems: [],
-                locations: [],
-                bases: []
+                systems: null,
+                locations: null,
+                bases: null
+            },
+            editing: false,
+            edit: {
+                system: false,
+                location: false,
+                base: false
             }
         }
     },
@@ -62,28 +83,39 @@ export default {
             return this.$auth.user
         },
         systemLink() {
-            return `/system/${this.home.system.name}`
+            return `#`
         },
         locationLink() {
-            return `/planet/${this.home.location.name}`
+            return `#`
         },
         baseLink() {
-            return `/poi/${this.home.base.name}`
+            return `#`
         }
     },
     methods: {
         ...mapActions([
             'setCitizen'
         ]),
+        hasOptions(obj) {
+            if (obj && Object.keys(obj).length) {
+                return true
+            } else {
+                return false
+            }
+        },
         loadSystems() {
             this.$axios({
                 url: 'https://api.uee.life/systems',
                 method: 'GET'
             }).then((res) => {
-                this.data.systems = res.data
-                if(this.home.system) {
-                    console.log('setting system')
-                    this.system = this.home.system
+                console.log('loaded systems')
+                this.data.systems = {}
+                for (let s in res.data) {
+                    const sys = res.data[s]
+                    this.data.systems[sys.name] = sys
+                    if (this.home.system && sys.name === this.home.system.name) {
+                        this.system = this.home.system
+                    }
                 }
             }).catch((err) => {
                 console.error(err)
@@ -92,14 +124,18 @@ export default {
         loadLocations() {
             if(this.system) {
                 this.$axios({
-                    url: `https://api.uee.life/locations/${this.system.name}/locations`,
+                    url: `https://api.uee.life/locations/${this.system.id}/locations`,
                     method: 'GET'
                 }).then((res) => {
-                    this.data.locations = res.data
-                    if(this.home.location) {
-                        this.location = this.home.location
-                    } else {
-                        this.location = null
+                    this.data.locations = {}
+                    this.location = null
+                    this.base = null
+                    for (let l in res.data) {
+                        const loc = res.data[l]
+                        this.data.locations[loc.name] = loc
+                        if (this.home.location && loc.name === this.home.location.name) {
+                            this.location = this.home.location
+                        }
                     }
                 }).catch((err) => {
                     console.error(err)
@@ -109,18 +145,43 @@ export default {
         loadPOIs() {
             if(this.location) {
                 this.$axios({
-                    url: `https://api.uee.life/locations/${this.location.code}/pois`,
+                    url: `https://api.uee.life/locations/${this.location.id}/pois`,
                     method: 'GET'
                 }).then((res) => {
-                    this.data.bases = res.data
-                    if(this.home.base) {
-                        this.base = this.home.base
-                    } else {
-                        this.base = null
+                    this.data.bases = {}
+                    this.base = null
+                    for (let i in res.data) {
+                        const base = res.data[i]
+                        this.data.bases[base.name] = base
+                        if (this.home.base && base.name === this.home.base.name) {
+                            this.base = this.home.base
+                        }
                     }
                 }).catch((err) => {
                     console.error(err)
                 })
+            }
+        },
+        updateSystem() {
+            this.edit.system = false
+            if (this.home.system === null || this.system.name !== this.home.system.name) {
+                this.location = null
+                this.base = null
+                this.save()
+            }
+        },
+        updateLocation() {
+            this.edit.location = false
+            console.log(this.home.location)
+            if (this.home.location === null || this.location.name !== this.home.location.name) {
+                this.base = null
+                this.save()
+            }
+        },
+        updateBase() {
+            this.edit.base = false
+            if (this.home.base === null || this.base.name !== this.home.base.name) {
+                this.save()
             }
         },
         async save() {
@@ -138,8 +199,7 @@ export default {
                 },
                 data: data
             }).then((res) => {
-                console.log(res.data.user.citizen)
-                this.setCitizen(res.data.user.citizen)
+                this.$emit('refresh')
             }).catch((err) => {
                 console.error(err)
             })
@@ -153,19 +213,23 @@ export default {
             if(this.system) {
                 this.loadLocations()
             }
-            this.location = null
-            this.base = null
         },
         location: function() {
             if(this.location) {
                 this.loadPOIs()
             }
-            this.base = null
         },
-        editing: function() {
-            if(!this.editing) {
-                this.save()
-            }
+        edit: {
+            handler: function (val, oldVal) {
+                // prevents editing more than one thing at a time!
+                this.editing = false
+                for (let i in val) {
+                    if (val[i]) {
+                        this.editing = true
+                    }
+                }
+            },
+            deep: true
         }
     }
 }

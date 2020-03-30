@@ -12,7 +12,7 @@
         </dock-item>
     </portal>
     <portal to="rightDock">
-        <citizen-tools v-if="isOwner" @syncSuccess="refresh" @edit="edit" @save="save" :editing="editing"/>
+        <citizen-tools v-if="isOwner" @syncSuccess="refresh" />
         <citizen-org v-if="citizen.org" :citizen="citizen"/>
     </portal>
 
@@ -20,7 +20,7 @@
         <img src="~/assets/loading.gif" >
     </div>
     <template v-else-if="citizen.info">
-        <citizen-info :citizen="citizen" :editing="editing"/>
+        <citizen-info :isOwner="isOwner" :citizen="citizen" @refresh="refresh" />
         <citizen-bio :bio="citizen.info.bio"/>
         <div class="citizen-tabs">
             <tabs :tabs="tabs" :initialTab="initialTab">

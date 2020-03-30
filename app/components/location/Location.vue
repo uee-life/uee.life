@@ -1,6 +1,6 @@
 <template>
     <div class="location">
-        <main-panel class="location-panel">
+        <main-panel v-if="location" class="location-panel">
             <div class="content">
             <div v-if="location.thumbnail" class="location-image">
                 <img :src="location.thumbnail"/>
@@ -18,6 +18,7 @@
             </div>
             </div>
         </main-panel>
+        <div v-else>Location not found</div>
         <slot></slot>
         <div v-if="debug">{{ JSON.stringify(location, null, 2) }}</div>
     </div>

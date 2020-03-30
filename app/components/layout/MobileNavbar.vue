@@ -10,7 +10,7 @@
         <nuxt-link class="nav-button" to="/about">About</nuxt-link>
         <nuxt-link class="nav-button" to="/citizens">Citizen Registry</nuxt-link>
         <nuxt-link class="nav-button" to="/orgs">Org Registry</nuxt-link>
-        <nuxt-link class="nav-button" to="/system/stanton">System Directory</nuxt-link>
+        <!--nuxt-link class="nav-button" to="/system/stanton">System Directory</nuxt-link-->
         <br>
         <nuxt-link v-if="$auth.loggedIn" class="nav-button" :to="citizenLink">My Profile</nuxt-link>
         <nuxt-link v-if="$auth.loggedIn" class="nav-button" to="/settings">settings</nuxt-link>

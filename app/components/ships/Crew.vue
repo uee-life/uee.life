@@ -69,8 +69,8 @@ export default {
 .crew-record {
     box-sizing: border-box;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
     opacity: 0;
     width: 300px;
     height: 20px;

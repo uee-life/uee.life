@@ -183,3 +183,22 @@ select option {
 .swal2-content {
   color: #dbf3ff !important;
 }
+
+.edit-button {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  cursor: pointer; 
+}
+
+.edit-button.edit {
+  margin-left: 5px;
+}
+
+.edit-button.save {
+  margin-left: 5px;
+}
+
+.edit-button.cancel {
+  margin-left: 30px;;
+}

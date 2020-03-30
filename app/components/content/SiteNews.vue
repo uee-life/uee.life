@@ -3,8 +3,8 @@
         <div class="content">
             <template v-if="data.content">
                 <template v-if="editing">
-                    <div class="edit-button"><input type="button" @click="editing = false" value="CANCEL"></div>
-                    <form class="edit" @submit.prevent="update">
+                    <div class="edit"><input type="button" @click="editing = false" value="CANCEL"></div>
+                    <form class="edit-form" @submit.prevent="update">
                     <div>Title: <input class="titleInput" v-model="data.title"></div>
                     <div>Content:</div>
                     <textarea v-model="data.content" class="contentInput"></textarea>
@@ -13,7 +13,7 @@
                     </form>
                 </template>
                 <template v-else>
-                    <div class="edit-button" v-if="$auth.hasScope('write:site_content')"><input type="button" @click="() => {editing = true; if(!showing) toggleNews()}" value="EDIT"></div>
+                    <div class="edit" v-if="$auth.hasScope('write:site_content')"><input type="button" @click="() => {editing = true; if(!showing) toggleNews()}" value="EDIT"></div>
                     <div class="title">
                     <h1 v-if="data.title" v-text="data.title"></h1>
                     <div v-if="data.updated" class="date"><i>Updated: <span>{{ postedDate }}</span></i></div>
@@ -143,23 +143,24 @@ export default {
         color: #dbf3ff;
         cursor: pointer;
     }
-        .edit-button {
+
+    .edit {
       position: absolute;
       top: 10px;
       right: 10px;
     }
 
-    .edit {
+    .edit-form {
       display: flex;
       flex-direction: column;
       margin: 20px;
     }
 
-    .edit .titleInput {
+    .edit-form .titleInput {
       width: 100%;
     }
 
-    .edit .contentInput {
+    .edit-form .contentInput {
       height: 400px;
     }
 </style>

@@ -20,7 +20,7 @@
                 <span class="label">Name:</span>
                 <span v-if="edit.name" class="value">
                     <input type="text" v-model="name" maxlength="30" />
-                    <img @click="updateName" class="submit" title="submit" src="~/assets/tick.png">
+                    <img @click="updateName" class="save" title="submit" src="~/assets/tick.png">
                     <img @click="edit.name = false" class="cancel" title="cancel" src="~/assets/delete.png">
                 </span>
                 <span v-else class="value">
@@ -176,7 +176,7 @@ export default {
     cursor: pointer;
 }
 
-.info-item .value .submit {
+.info-item .value .save {
     position: absolute;
     width: 20px;
     height: 20px;

@@ -35,8 +35,7 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: 'https://uee.life/favicon.ico' },
       { rel: 'stylesheet', type: 'text/css', href: '//fonts.googleapis.com/css?family=Electrolize|Orbitron:400,500,700|Share+Tech+Mono'},
       { rel: 'stylesheet', type: 'text/css', href: '//fonts.googleapis.com/css?family=Michroma&display=swap'},
-      //{ rel: 'stylesheet', type: 'text/scss', href: 'sweetalert2/src/sweetalert2.scss'}
-      { rel: 'stylesheet', type: 'text/scss', href: '~@sweetalert2/theme-borderless/borderless.scss' }
+      { rel: 'stylesheet', type: 'text/scss', href: 'sweetalert2/src/sweetalert2.scss'}
     ]
   },
   /*
