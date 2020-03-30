@@ -80,8 +80,7 @@ module.exports = {
       {
         confirmButtonColor: '#41b882',
         cancelButtonColor: '#ff7674',
-        background: 'rgba(13, 46, 66, 0.7)',
-        color: 'white'
+        background: 'rgba(13, 46, 66, 0.7)'
       }
     ]
   ],

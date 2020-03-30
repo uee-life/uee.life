@@ -103,9 +103,12 @@ export default {
                 },
                 data: crewmen
             }).then((res) => {
-                // todo: handle returned error codes
-                this.loadCrew()
-                this.$swal.fire('success', "Crewmen Added!", 'success')
+                if (res.data.success) {
+                    this.loadCrew()
+                    this.$swal.fire('success', res.data.msg, 'success')
+                } else {
+                    this.$swal.fire('error', res.data.msg, 'error')
+                }
             }).catch((err) => {
                 console.error(err)
             })
@@ -119,9 +122,12 @@ export default {
                 url: `https://api.uee.life/crew/${crew_id}`,
                 method: 'DELETE'
             }).then(() => {
-                // todo: handle returned error codes
-                this.loadCrew()
-                this.$swal.fire('success', 'Crewmen Removed!', 'success')
+                if (res.data.success) {
+                    this.loadCrew()
+                    this.$swal.fire('success', res.data.msg, 'success')
+                } else {
+                    this.$swal.fire('error', res.data.msg, 'error')
+                }
             }).catch((err) => {
                 console.error(err)
             })
@@ -140,8 +146,12 @@ export default {
                     role: role
                 }
             }).then(() => {
-                this.loadCrew()
-                this.$swal.fire('success', 'Crewmen Updated!', 'success')
+                if (res.data.success) {
+                    this.loadCrew()
+                    this.$swal.fire('success', res.data.msg, 'success')
+                } else {
+                    this.$swal.fire('error', res.data.msg, 'error')
+                }
             }).catch((err) => {
                 console.error(err)
             })
