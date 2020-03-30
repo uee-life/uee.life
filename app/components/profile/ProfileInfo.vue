@@ -2,8 +2,16 @@
   <main-panel id="profile-info" title="User Profile" class="profile-info">
       <div v-if="user" class="info">
             <h3>User</h3>
-            <div class="line-item"><div class="label">Username: </div> <div> {{user.username}}</div></div>
-            <div class="line-item"><div class="label">Email: </div> <div> {{user.email}}</div>&nbsp;&nbsp;&nbsp; <div v-if="isVerified(user.email_verified)">(verified)</div></div>
+            <div class="line-item">
+                <div class="label">Username: </div> 
+                <div> {{user.username}}</div>
+            </div>
+            <div class="line-item">
+                <div class="label">Email: <a v-if="showEmail" @click="showEmail = false">(hide)</a><a v-else @click="showEmail = true">(show)</a></div> 
+                <div v-if="showEmail">{{user.email}}</div>
+                <div v-else>***************</div>
+                &nbsp;&nbsp;<div v-if="isVerified(user.email_verified)">(verified)</div>
+            </div>
             <div class="line-item"><div class="label">Created: </div> <div> {{new Date(user.created_at).toDateString()}} @ {{new Date(user.created_at).toLocaleTimeString()}}</div></div>
             <div class="line-item"><div class="label">Last Login: </div> <div> {{new Date(user.last_login).toDateString()}} @ {{new Date(user.last_login).toLocaleTimeString()}}</div></div>
             <br />
@@ -24,7 +32,8 @@ export default {
     props: ["user"],
     data() {
         return {
-            handle: null
+            handle: null,
+            showEmail: false
         }
     },
     mounted() {
