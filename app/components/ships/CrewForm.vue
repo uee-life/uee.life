@@ -1,7 +1,9 @@
 <template>
     <form @submit.prevent="addCrew" class="crew-form">
+        <template v-if="roleSelect">
         <label for="role">Select Role:</label>
         <input class="input" id="role" v-model="role" maxlength="20" placeholder="Crewmen"/>
+        </template>
         <label for="citizen">Select Citizen:</label>
         <input class="input" id="citizen" @keyup.enter="getResults()" @input="autoGetResults()" v-model="input" placeholder="Citizen Search"/>
         <div v-if="result" class="results">
@@ -22,6 +24,12 @@
 <script>
 export default {
     name: 'CrewForm',
+    props: {
+        roleSelect: {
+            type: Boolean,
+            default: true
+        }
+    },
     data() {
         return {
             input: "",

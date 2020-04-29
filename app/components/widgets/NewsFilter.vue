@@ -15,26 +15,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .news-filter {
       opacity: 0;
-    }
-
-    .left-nav-button::before {
-      content: "> "
-    }
-    .left-nav-button {
-        margin-left: 10px;
-        margin-right: 0px;
-        margin-bottom: 3px;
-        overflow:hidden;
-    }
-    .left-nav-button a {
-      text-decoration: none;
-      color: #39ced8;
-    }
-
-    .left-nav-button a:hover {
-      color: #dbf3ff;
     }
 </style>

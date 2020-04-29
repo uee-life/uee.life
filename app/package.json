@@ -15,11 +15,11 @@
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.6.5",
     "@nuxtjs/auth": "^4.9.0",
-    "@nuxtjs/axios": "^5.9.6",
+    "@nuxtjs/axios": "^5.9.7",
     "@nuxtjs/markdownit": "^1.2.9",
     "@sweetalert2/theme-borderless": "^3.1.4",
-    "auth0-js": "^9.13.0",
-    "auth0-lock": "^11.22.5",
+    "auth0-js": "^9.13.1",
+    "auth0-lock": "^11.23.0",
     "axios": "^0.19.2",
     "cookie-universal-nuxt": "^2.1.3",
     "core-js": "^2.0.0",
@@ -29,14 +29,15 @@
     "js-cookie": "^2.2.1",
     "jwt-decode": "2.2.0",
     "normalize.css": "^8.0.1",
-    "nuxt": "^2.12.1",
+    "nuxt": "^2.12.2",
     "nuxt-sweetalert2": "^1.0.0",
     "portal-vue": "^2.1.7",
     "sweetalert": "^2.1.2",
     "uuid": "^3.4.0",
     "vue-burger-menu": "^2.0.5",
     "vue-good-table": "^2.19.1",
-    "vue-notifications": "^1.0.2"
+    "vue-notifications": "^1.0.2",
+    "vue-organization-chart": "^1.1.6"
   },
   "devDependencies": {
     "@babel/runtime-corejs2": "^7.9.2",

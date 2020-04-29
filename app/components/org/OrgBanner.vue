@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { gsap } from 'gsap'
+
 export default {
   name: 'org-banner',
   props: ["org"],
@@ -35,6 +37,12 @@ export default {
       }
     }
   },
+  mounted() {
+      gsap.to(".org-banner", {duration: 0.5, opacity: 1})
+        gsap.to(".org-logo", {duration: 1, opacity: 1})
+        gsap.to(".org-logo img", {duration: 1, opacity: 1})
+        gsap.to(".org-banner h1", {duration: 1, opacity: 1})   
+  }
 }
 </script>
 
@@ -49,6 +57,7 @@ export default {
       margin-bottom: 10px;
       margin-top: 20px;
       overflow: hidden;
+      opacity: 0;
     }
 
     .org-banner .mask {

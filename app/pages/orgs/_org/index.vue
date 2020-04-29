@@ -20,6 +20,7 @@
                     FLEET
                 </template>
                 <template slot="tab-content-fleet">
+                    <org-fleet-view :org="org" :isOwner="isOwner"/>
                     <fleet-view :ships="fleet" view="small" :showSummary="true"/>
                 </template>
 
@@ -44,10 +45,11 @@
 <script>
 import { gsap } from 'gsap'
 
-import OrgBanner from '@/components/org/OrgBanner.vue'
-import OrgInfo from '@/components/org/OrgInfo.vue'
-import FleetView from '@/components/fleet/FleetView.vue'
-import OrgMembers from '@/components/org/OrgMembers.vue'
+import OrgBanner from '@/components/org/OrgBanner'
+import OrgInfo from '@/components/org/OrgInfo'
+import OrgFleetView from '@/components/fleet/OrgFleetView'
+import FleetView from '@/components/fleet/FleetView'
+import OrgMembers from '@/components/org/OrgMembers'
 
 export default {
     layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
@@ -55,6 +57,7 @@ export default {
     components: {
         OrgBanner,
         OrgInfo,
+        OrgFleetView,
         FleetView,
         OrgMembers
     },
@@ -71,6 +74,13 @@ export default {
     computed: {
         spectrumLink() {
             return `https://robertsspaceindustries.com/spectrum/community/${this.org.tag}`
+        },
+        isOwner() {
+            const owners = []
+            for (let f in this.org.founders) {
+                owners.push(this.org.founders[f].handle)
+            }
+            return !!this.$auth.user && owners.includes(this.$auth.user.app_metadata.handle)
         }
     },
     methods: {
@@ -113,13 +123,6 @@ export default {
             handler: function () {
                 this.getOrg()
                 this.getOrgShips()
-            }
-        },
-        org: {
-            handler: function () {
-                gsap.to(".org-logo", {duration: 0.5, opacity: 1})
-                gsap.to(".org-logo img", {duration: 0.5, opacity: 1})
-                gsap.to(".org-banner h1", {duration: 0.5, opacity: 1})
             }
         }
     }

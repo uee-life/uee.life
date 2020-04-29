@@ -23,7 +23,7 @@ export default {
             type: String,
             default: 'medium',
             validator: function (value) {
-                return ['small', 'medium'].indexOf(value) !== -1
+                return ['tiny', 'small', 'medium'].indexOf(value) !== -1
             }
         },
         showName: {
@@ -98,9 +98,20 @@ export default {
         height: fit-content;
     }
 
+    .portrait.medium .image {
+        width: 165px;
+        height: 165px;
+    }
+
     .portrait.small {
         width: 100px;
         min-height: 100px;
+        height: fit-content;
+    }
+
+    .portrait.tiny {
+        width: 40px;
+        min-height: 40px;
         height: fit-content;
     }
 
@@ -123,6 +134,10 @@ export default {
         top: 68px;
         right: 0px;
         width: 30px;
+    }
+
+    .portrait.tiny .verified {
+        display: none;
     }
 
     .portrait.medium .name {

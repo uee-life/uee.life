@@ -31,7 +31,8 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
   display: table;
   transition: opacity 0.3s ease;
 }

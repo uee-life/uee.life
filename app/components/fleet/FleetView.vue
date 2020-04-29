@@ -96,6 +96,7 @@ export default {
     },
     computed: {
         filteredShips() {
+            console.log(this.ships)
             return this.ships.filter(ship => {
                 return ship.make.toLowerCase().includes(this.search.toLowerCase()) ||
                     ship.short_name.toLowerCase().includes(this.search.toLowerCase()) ||
