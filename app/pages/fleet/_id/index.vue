@@ -85,12 +85,16 @@ export default {
                 url: `https://api.uee.life/fleet/${this.$route.params.id}`,
                 method: 'GET'
             }).then(async (res) => {
-                this.selected = selected
-                this.fleet = res.data
-                this.loadOrg(this.fleet.org_tag)
-                this.fleet.children = await this.getSubgroups(this.$route.params.id)
-                this.chart = this.fleet
-                this.loading = false
+                if (res.data.id) {
+                    this.selected = selected
+                    this.fleet = res.data
+                    this.loadOrg(this.fleet.org_tag)
+                    this.fleet.children = await this.getSubgroups(this.$route.params.id)
+                    this.chart = this.fleet
+                    this.loading = false
+                } else {
+                    this.$router.push('/')
+                }
             }).catch((err) => {
                 console.error(err)
             })
@@ -160,7 +164,11 @@ export default {
                         'Group has been deleted!',
                         'success'
                     )
-                    this.loadFleet(parseInt(this.$route.params.id))
+                    if (groupID == this.$route.params.id) {
+                        this.$router.push(`/orgs/${this.org.tag}`)
+                    } else {
+                        this.loadFleet(parseInt(this.$route.params.id))
+                    }
                 }
             }).catch((err) => {
                 console.error(err)

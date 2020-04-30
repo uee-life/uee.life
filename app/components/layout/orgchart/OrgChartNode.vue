@@ -9,7 +9,7 @@
               <i class="fa fa-users symbol"></i>
               {{ datasource.name }}
             </div>
-            <div class="content">{{ datasource.title }}</div>
+            <div class="content">{{ datasource.purpose }}</div>
             <portrait v-if="datasource.cmdr" :handle="datasource.cmdr" size="tiny"  class="node-cmdr"/>
             <div v-else class="node-no-cmdr"></div>
           </slot>
