@@ -62,6 +62,7 @@ module.exports = {
     '~/plugins/widgets.js',
     '~/plugins/isMobile.js',
     '~/plugins/ueeDate.js',
+    '~/plugins/shipID.js',
     { src: '~/plugins/vue-good-table', ssr: false },
     { src: '~/plugins/hamburger', ssr: false },
   ],

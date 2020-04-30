@@ -3,10 +3,25 @@
         <portal to="leftDock">
             <org-panel v-if="fleet" :org_tag="fleet.org_tag" />
         </portal>
+        <template v-if="loading">
+            <div class="loading">
+                <img src="~/assets/loading.gif" >
+            </div>
+        </template>
+        <template v-else>
         <main-panel v-if="fleet" title="Fleet Hierarchy" class="fleet-chart">
             <organization-chart v-if="chart" :datasource="chart" @node-click="clicked" :selected="selected" @removeGroup="removeGroup"></organization-chart>
         </main-panel>
-        <fleet-group :groupID="selected" :isOwner="isOwner" @addGroup="addGroup" @removeGroup="removeGroup" :shipPool="shipPool" />
+        <fleet-group 
+            :groupID="selected" 
+            :isOwner="isOwner" 
+            @addGroup="addGroup" 
+            @removeGroup="removeGroup" 
+            @addShip="addShip"
+            @removeShip="removeShip"
+            @updateCommander="updateCommander"
+            :shipPool="shipPool" />
+        </template>
     </div>
 </template>
 
@@ -31,6 +46,7 @@ export default {
     },
     data () {
         return {
+            loading: true,
             fleet: null,
             org: null,
             shipPool: null,
@@ -48,7 +64,11 @@ export default {
             }
         },
         isOwner() {
-            return true
+            if (this.org && this.$auth.user && this.org.founders.some((elem) => elem.handle == this.$auth.user.app_metadata.handle)) {
+                return true
+            } else {
+                return false
+            }
         }
     },
     methods: {
@@ -59,16 +79,18 @@ export default {
             console.log(data)
             this.selected = parseInt(data.id)
         },
-        loadFleet() {
+        loadFleet(selected) {
+            this.loading = true
             this.$axios({
                 url: `https://api.uee.life/fleet/${this.$route.params.id}`,
                 method: 'GET'
             }).then(async (res) => {
-                this.selected = parseInt(this.$route.params.id)
+                this.selected = selected
                 this.fleet = res.data
                 this.loadOrg(this.fleet.org_tag)
                 this.fleet.children = await this.getSubgroups(this.$route.params.id)
                 this.chart = this.fleet
+                this.loading = false
             }).catch((err) => {
                 console.error(err)
             })
@@ -112,7 +134,7 @@ export default {
                 data: params.data
             }).then((res) => {
                 if (res.data.success) {
-                    this.loadFleet()
+                    this.loadFleet(this.selected)
                     this.$swal.fire('success', 'Group added!', 'success')
                 } else {
                     this.$swal.fire('error', 'Could not add group :(', 'error')
@@ -138,17 +160,77 @@ export default {
                         'Group has been deleted!',
                         'success'
                     )
-                    this.loadFleet()
+                    this.loadFleet(parseInt(this.$route.params.id))
                 }
             }).catch((err) => {
                 console.error(err)
             })
         },
         async addShip(params) {
+            console.log('adding ship', params)
             // add the ship
+            const data = {
+                group: params.group,
+                ship: params.ship
+            }
+            this.$axios({
+                url: `https://api.uee.life/fleet/${this.fleet.id}/ships`,
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: data
+            }).then((res) => {
+                if (res.data.success) {
+                    this.loadFleet(this.selected)
+                    this.$swal.fire('success', 'Ship added!', 'success')
+                } else {
+                    this.$swal.fire('error', 'Could not add ship :(', 'error')
+                }
+            }).catch((err) => {
+                console.error(err)
+            })
 
             // reload ship pool
             this.loadShipPool()
+        },
+        async removeShip(id) {
+            console.log('removing ship', id)
+            this.$axios({
+                url: `https://api.uee.life/fleet/${this.fleet.id}/ships/${id}`,
+                method: 'DELETE'
+            }).then((res) => {
+                if (res.data.success) {
+                    this.loadFleet(this.selected)
+                    this.loadShipPool()
+                    this.$swal.fire('success', 'Ship removed!', 'success')
+                } else {
+                    this.$swal.fire('error', 'Could not remove ship :(', 'error')
+                }
+            }).catch((err) => {
+                console.error(err)
+            })
+        },
+        async updateCommander(data) {
+            this.$axios({
+                url: `https://api.uee.life/fleet/${data.group}`,
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: {
+                    cmdr: data.handle
+                }
+            }).then((res) => {
+                if(res.data.success) {
+                    this.$swal.fire('success', res.data.msg, 'success')
+                } else {
+                    this.$swal.fire('error', res.data.msg, 'error')
+                }
+                this.loadFleet(this.selected)
+            }).catch((err) => {
+                console.log(err)
+            })
         },
         loadOrg(tag) {
             this.$axios({
@@ -168,7 +250,7 @@ export default {
     },
     mounted() {
         this.setPageData({})
-        this.loadFleet()
+        this.loadFleet(parseInt(this.$route.params.id))
         this.selected = parseInt(this.$route.params.id)
     }
 }

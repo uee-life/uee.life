@@ -2,21 +2,20 @@
     <div v-if="group" class="fleet-group">
         <div class="info">    
             <div class="info-panel">
-                <main-panel :title="group.name" class="tools">
+                <main-panel v-if="isOwner" :title="group.name" class="tools">
                     <input class="tool-button" @click="removeGroup" type="button" value="Delete Group"></input>
                     <input class="tool-button" @click="modals.group = true" type="button" value="Add Subgroup"></input>
                     <input class="tool-button" @click="modals.ship = true" type="button" value="Add Ship"></input>
                 </main-panel>
-                <fleet-view class="fleet-list" v-if="ships" :ships="ships" :isOwner="true" @add="addShip"/>
+                <ship-list class="fleet-list" v-if="ships" :ships="ships" :isOwner="isOwner" @selected="showShip" @remove="removeShip"/>
             </div>
             <div class="info-panel no-grow">
                 <main-panel class="commander">
                     <div v-if="group.cmdr" class="assigned">
                         <h5>{{ group.type }} Commander</h5>
                         <portrait :handle="group.cmdr" :showName="true">
-                            <div class="mask"  @click="showCrewmember(c)"></div>
-                            <img v-if="isOwner" @click="showCrewmember(c)" class="edit" src="~/assets/edit.png">
-                            <img v-else-if="isSelf(group.cmdr)" @click="removeCrew(c.id)" class="edit" src="~/assets/delete.png">
+                            <div class="mask"></div>
+                            <img v-if="isOwner" @click="updateCommander({handle: ''})" class="edit" src="~/assets/delete.png">
                         </portrait>
                     </div>
                     <div v-else class="unassigned">
@@ -33,25 +32,43 @@
         <modal v-if="modals.group" title="Crew Record" @close="modals.group = false">
             <fleet-form @add="addGroup" :shipPool="shipPool"/>
         </modal>
+        <modal v-if="modals.ship" title="Add Ship" @close="modals.ship = false">
+            <ship-list class="ship-modal" :ships="shipPool" view="small" :showControls="false" @selected="addShip"></ship-list>
+        </modal>
         <modal v-if="modals.crew" title="Add Crew" @close="modals.crew = false">
             <crew-form @add="addCrew" />
         </modal>
         <modal v-if="modals.commander" title="Select Commander" @close="modals.commander = false">
-            <crew-form @add="addCommander" :roleSelect="false" />
+            <crew-form @add="updateCommander" :roleSelect="false" />
         </modal>
     </div>
 </template>
 
 <script>
-import FleetView from '@/components/fleet/FleetView'
+import ShipList from '@/components/fleet/ShipList'
 import FleetForm from '@/components/fleet/FleetForm'
 import CrewForm from '@/components/ships/CrewForm'
 
 export default {
     name: 'FleetGroup',
-    props: ["groupID", "shipPool", "isOwner"],
+    props: {
+        groupID: {
+            type: Number,
+            required: true
+        },
+        shipPool: {
+            type: Array,
+            default: function () {
+                return []
+            }
+        },
+        isOwner: {
+            type: Boolean,
+            default: false
+        }
+    },
     components: {
-        FleetView,
+        ShipList,
         FleetForm,
         CrewForm
     },
@@ -63,7 +80,8 @@ export default {
             modals: {
                 group: false,
                 crew: false,
-                commander: false
+                commander: false,
+                ship: false
             },
             edit: {
                 group: false,
@@ -111,32 +129,25 @@ export default {
                 }
             })
         },
-        addCommander(data) {
+        updateCommander(data) {
+            data.group = this.groupID
             this.modals.commander = false
-            console.log(data)
-            this.$axios({
-                url: `https://api.uee.life/fleet/${this.groupID}`,
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: {
-                    cmdr: data.handle
-                }
-            }).then((res) => {
-                console.log(res)
-                if(res.data.success) {
-                    this.$swal.fire('success', res.data.msg, 'success')
-                    this.loadGroup()
-                } else {
-                    this.$swal.fire('error', res.data.msg, 'error')
-                }
-            }).catch((err) => {
-                console.log(err)
-            })
+            this.$emit('updateCommander', data)
         },
-        addShip(data) {
-            console.log('Add Ship', data)
+        addShip(id) {
+            this.modals.ship = false
+            const data = {
+                ship: id,
+                group: this.groupID
+            }
+            console.log('Add Ship', id, 'to group', this.groupID)
+            this.$emit('addShip', data)
+        },
+        removeShip(id) {
+            this.$emit('removeShip', id)
+        },
+        showShip(data) {
+            console.log('Show Ship', data)
         },
         addCrew(data) {
             console.log(data)
@@ -147,7 +158,15 @@ export default {
             handler: function() {
                 this.loadGroup()
             }
+        },
+        shipPool: {
+            handler: function () {
+                this.loadGroup()
+            }
         }
+    },
+    mounted() {
+        this.loadGroup()
     }
 }
 </script>
@@ -160,6 +179,12 @@ export default {
     margin-left: -10px;
     margin-right: -10px;
     opacity: 1;
+}
+
+.ship-modal {
+    padding: 15px;
+    max-height: 75vh;
+    overflow-y: scroll;
 }
 
 .fleet .info .info-panel {
@@ -178,12 +203,14 @@ export default {
 
 .fleet .info .commander {
     height: fit-content;
+    max-height: fit-content;
 }
 
 .fleet .info .tools {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
+    max-height: 70px;
 }
 
 .fleet .info .tools .tool-button {
@@ -216,7 +243,6 @@ export default {
     left: 0;
     bottom: 0;
     right: 0;
-    cursor: pointer;
 }
 
 .assigned {

@@ -13,14 +13,13 @@
                     INFO
                 </template>
                 <template slot="tab-content-info">
-                    <org-info :org="org" />
+                    <org-info :org="org" :isOwner="isOwner"/>
                 </template>
 
-                <template slot="tab-title-fleet">
-                    FLEET
+                <template slot="tab-title-ships">
+                    SHIPS
                 </template>
-                <template slot="tab-content-fleet">
-                    <org-fleet-view :org="org" :isOwner="isOwner"/>
+                <template slot="tab-content-ships">
                     <fleet-view :ships="fleet" view="small" :showSummary="true"/>
                 </template>
 
@@ -63,7 +62,7 @@ export default {
     },
     asyncData() {
         return {
-            tabs: ["info", "fleet", "members", "affiliates"],
+            tabs: ["info", "ships", "members", "affiliates"],
             initialTab: "info",
             org: {
                 tag: ""

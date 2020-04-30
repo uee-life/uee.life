@@ -28,6 +28,7 @@
                 </div>
               </main-panel>
             </div>
+            <org-fleet-view v-if="org" :org="org" :isOwner="isOwner"/>
         </template>
 
         <template slot="tab-title-history">
@@ -62,13 +63,13 @@
 
 <script>
 import { gsap } from 'gsap'
-import Portrait from '@/components/citizen/Portrait'
+import OrgFleetView from '@/components/fleet/OrgFleetView'
 
 export default {
   name: 'org-info',
-  props: ['org'],
+  props: ['org', 'isOwner'],
   components: {
-    Portrait
+    OrgFleetView
   },
   data() {
     return {
@@ -125,7 +126,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .org-info {
       position: relative;
         display: flex;
@@ -168,7 +169,7 @@ export default {
     .founders {
       display: flex;
       flex-wrap: wrap;
-      height: 20px;
+      height: fit-content;
     }
 
     .founders .portrait {

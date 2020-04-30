@@ -10,7 +10,7 @@
         <main-panel v-if="ship" title="Registration" class="info-panel">
             <div class="info-item">
                 <span class="label">Ship ID:</span>
-                <span class="value">{{ shipID }}</span>
+                <span class="value">{{ shipID(ship.id) }}</span>
             </div>
             <div class="info-item">
                 <span class="label">Reg Date:</span>
@@ -88,9 +88,6 @@ export default {
     computed: {
         user() {
             return this.$auth.user
-        },
-        shipID() {
-            return `UES-${('00' + this.ship.id.toString(16).toUpperCase()).substr(-6)}`
         },
         isOwner() {
             if(this.ship && this.$auth.loggedIn && this.user.app_metadata.handle_verified && this.user.app_metadata.handle.toLowerCase().trim() === this.ship.owner.toLowerCase().trim()) {

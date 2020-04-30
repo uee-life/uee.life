@@ -6,7 +6,7 @@
         <div class="ship-info">
             <h5 @click="selected">{{ ship.model }}</h5>
             <div class="info">
-                <div @click="selected" style="cursor: pointer;"><span class="label">Ship &nbsp; ID:</span><span class="data">{{ shipID }}</span></div>
+                <div @click="selected" style="cursor: pointer;"><span class="label">Ship &nbsp; ID:</span><span class="data">{{ shipID(ship.id) }}</span></div>
                 <div @click="selected"><span class="label">Type:</span><span class="data">{{ ship.type }} - {{ ship.focus }}</span></div>
                 <div v-if="ship.owner"><span class="label">Owner:</span><span class="data"><nuxt-link :to="citizenLink">{{ship.owner.name}}</nuxt-link></span></div>
             </div>
@@ -15,7 +15,7 @@
         <span class="corner top right"></span>
         <span class="corner bottom left"></span>
         <span class="corner bottom right"></span>
-        <img v-if="isOwner" title="Remove Ship" class="delete" @click="$emit('remove', ship.id)" src="~/assets/delete.png">
+        <img v-if="isOwner" title="Remove Ship" class="delete" @click="remove" src="~/assets/delete.png">
     </div>
 </template>
 
@@ -32,14 +32,15 @@ export default {
         },
         citizenLink: function () {
             return `/citizens/${this.ship.owner.handle}`
-        },
-        shipID: function () {
-            return `UES-${ ('00' + this.ship.id.toString(16).toUpperCase()).substr(-6)}`
         }
     },
     methods: {
         selected() {
-            this.$router.push(`/ships/${this.shipID}`)
+            this.$emit('selected', this.ship.id)
+        },
+        remove() {
+            console.log('remove clicked')
+            this.$emit('remove', this.ship.id)
         }
     }
 }
@@ -70,6 +71,7 @@ export default {
         display: flex;
         flex-direction: column;
         margin-left: 10px;
+        margin-top: -10px;
         z-index: 2;
         flex-grow: 1;
     }

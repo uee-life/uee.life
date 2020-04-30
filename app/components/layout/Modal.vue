@@ -43,7 +43,7 @@ export default {
 }
 
 .modal-container {
-  width: 300px;
+  width: fit-content;
   margin: 0px auto;
   padding: 20px 30px;
   border-radius: 2px;

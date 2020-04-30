@@ -7,7 +7,7 @@
             <img :src="manufacturerLogo" />
           </div>
           <div class="ship-summary">
-              <h1>{{shipID}} <span v-if="ship.name">/  <span class="tag">{{ ship.name }}</span></span></h1>
+              <h1>{{shipID(ship.id)}} <span v-if="ship.name">/  <span class="tag">{{ ship.name }}</span></span></h1>
               <div class="ship-model">{{ `${ship.make} ${ship.model}` }}</div>
           </div>
         </div>
@@ -28,9 +28,6 @@ export default {
         },
         shipImage() {
             return `/images/ships/${this.ship.hull_name}.jpg`
-        },
-        shipID() {
-            return `UES-${('00' + this.ship.id.toString(16).toUpperCase()).substr(-6)}`
         },
         style () {
             return 'background: url("' + this.shipImage + '") center center / cover'

@@ -29,14 +29,11 @@ export default {
         },
         citizenLink: function () {
             return `/citizens/${this.ship.owner.handle}`
-        },
-        shipID: function () {
-            return `UES-${ ('00' + this.ship.id.toString(16).toUpperCase()).substr(-6)}`
         }
     },
     methods: {
         selected() {
-            this.$router.push(`/ships/${this.shipID}`)
+            this.$emit('selected', this.ship.id)
         }
     }
 }

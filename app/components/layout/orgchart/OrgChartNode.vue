@@ -92,9 +92,8 @@ export default {
   display: inline-block;
   position: relative;
   margin: 0 30px;
-  padding: 1px;
   border: 2px dashed transparent;
-  border-radius: 4px 4px 0 0;
+  border-radius: 6px;
   text-align: center;
   width: 150px;
   box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
@@ -111,8 +110,8 @@ export default {
 }
 
 .orgchart .node.selected {
-  background-color: rgba(219, 243, 255, 0.5) !important;
-  box-shadow: 0 0 6px rgba(219, 243, 255, 1) !important;
+  background-color: rgba(219, 243, 255, 0.45) !important;
+  box-shadow: 0 0 16px rgba(219, 243, 255, 1) !important;
 }
 
 .orgchart .node > .spinner {
@@ -124,8 +123,8 @@ export default {
   color: rgba(68, 157, 68, 0.8);
 }
 .orgchart .node:hover {
-  background-color: rgba(57, 206, 216, 0.5);
-  box-shadow: 0 0 6px rgba(57, 206, 216, 1);
+  background-color: rgba(57, 206, 216, 0.45);
+  box-shadow: 0 0 16px rgba(57, 206, 216, 1);
   transition: 0.5s;
   cursor: pointer;
   z-index: 20;

@@ -5,8 +5,8 @@
             <input class="input" type="text" v-model="name" maxlength="16">
         </div>
         <div>
-            Role:
-            <input class="input" type="text" v-model="title">
+            Purpose:
+            <input class="input" type="text" v-model="purpose">
         </div>
         <input type="submit" value="Add" />
     </form>
@@ -19,14 +19,14 @@ export default {
     data() {
         return {
             name: '',
-            title: ''
+            purpose: ''
         }
     },
     methods: {
         addFleet() {
             const fleet = {
                 name: this.name,
-                title: this.title
+                purpose: this.purpose
             }
             this.$emit('add', fleet)
         }
