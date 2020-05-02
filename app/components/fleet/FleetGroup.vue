@@ -215,9 +215,9 @@ export default {
 
 .fleet .info .tools .tool-button {
     margin: 5px;
-    padding: 0 15px;
-    height: 40px;
-    line-height: 40px;
+    padding: 0 5px;
+    height: 30px;
+    line-height: 30px;
     flex-basis: 120px;
 }
 

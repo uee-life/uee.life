@@ -183,7 +183,7 @@ export default {
   position: relative;
   display: inline-block;
   height: fit-content;
-  width: calc(100% - 24px);
+  width: 100%;
   border-radius: 5px;
   overflow: auto;
   text-align: center;
