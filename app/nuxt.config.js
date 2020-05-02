@@ -102,6 +102,10 @@ module.exports = {
     }
   },
 
+  axios: {
+    baseURL: 'https://api.uee.life'
+  },
+
   markdownit: {
     injected: true,
     breaks: true,

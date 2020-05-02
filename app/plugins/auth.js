@@ -1,6 +1,6 @@
 const jwtDecode = require('jwt-decode');
 
-export default function ({ $auth }) {
+export default function ({ $auth, store }) {
     $auth.onError((error, name, endpoint) => {
         console.error(name, error)
     })
@@ -16,6 +16,7 @@ export default function ({ $auth }) {
     if(process.browser) {
       // apply permissions to scope
       $auth.user.scope = jwtDecode(localStorage.getItem('auth._token.auth0').substr(7)).permissions
+      store.dispatch('loadCitizen', $auth.user)
     } else {
       $auth.user.scope = []
     }

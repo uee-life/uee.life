@@ -14,7 +14,7 @@
         </main-panel>
         <fleet-group 
             :groupID="selected" 
-            :isOwner="isOwner" 
+            :isOwner="isAdmin" 
             @addGroup="addGroup" 
             @removeGroup="removeGroup" 
             @addShip="addShip"
@@ -58,15 +58,25 @@ export default {
         ...mapGetters('fleet',[
             'pageData'
         ]),
+        ...mapGetters({
+            citizen: 'loggedCitizen'
+        }),
         spectrumLink() {
             if (this.fleet) {
                 return `https://robertsspaceindustries.com/spectrum/community/${this.fleet.org_tag}`
             }
         },
-        isOwner() {
+        isAdmin() {
+            // if is a founder
             if (this.org && this.$auth.user && this.org.founders.some((elem) => elem.handle == this.$auth.user.app_metadata.handle)) {
                 return true
             } else {
+                // if is a director
+                console.log(this.org, this.citizen.info.org, this.citizen.info.orgRank)
+                if (this.org && this.citizen && this.citizen.info.org === this.org.tag && this.citizen.info.orgRank === 5) {
+                    console.log('Director found!')
+                    return true
+                }
                 return false
             }
         }
