@@ -2,26 +2,26 @@
     <div v-if="group" class="fleet-group">
         <div class="info">    
             <div class="info-panel">
-                <main-panel v-if="isOwner" :title="group.name" class="tools">
+                <main-panel v-if="isAdmin" :title="group.name" class="tools">
                     <input class="tool-button" @click="removeGroup" type="button" value="Delete Group"></input>
                     <input class="tool-button" @click="modals.group = true" type="button" value="Add Subgroup"></input>
                     <input class="tool-button" @click="modals.ship = true" type="button" value="Add Ship"></input>
                 </main-panel>
-                <ship-list class="fleet-list" v-if="ships" :ships="ships" :isOwner="isOwner" @selected="showShip" @remove="removeShip"/>
+                <ship-list class="fleet-list" v-if="ships" :ships="ships" :isAdmin="isAdmin" @selected="showShip" @remove="removeShip"/>
             </div>
             <div class="info-panel no-grow">
                 <main-panel class="commander">
                     <div v-if="group.cmdr" class="assigned">
-                        <h5>{{ group.type }} Commander</h5>
+                        <h5>Group Commander</h5>
                         <portrait :handle="group.cmdr" :showName="true">
                             <div class="mask"></div>
-                            <img v-if="isOwner" @click="updateCommander({handle: ''})" class="edit" src="~/assets/delete.png">
+                            <img v-if="isAdmin" @click="updateCommander({handle: ''})" class="edit" src="~/assets/delete.png">
                         </portrait>
                     </div>
                     <div v-else class="unassigned">
                         <h5>Commander</h5>
                         <div class="bg">
-                        <img v-if="isOwner" @click="modals.commander = true" src="~/assets/plus.png" class="add-new"/>
+                        <img v-if="isAdmin" @click="modals.commander = true" src="~/assets/plus.png" class="add-new"/>
                         <div v-else class="add-new" />
                         </div>
                         <div class="name">Unassigned</div>
@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import ShipList from '@/components/fleet/ShipList'
 import FleetForm from '@/components/fleet/FleetForm'
 import CrewForm from '@/components/ships/CrewForm'
@@ -61,10 +63,6 @@ export default {
             default: function () {
                 return []
             }
-        },
-        isOwner: {
-            type: Boolean,
-            default: false
         }
     },
     components: {
@@ -89,10 +87,15 @@ export default {
             }
         }
     },
+    computed: {
+        ...mapGetters('fleet',[
+            'isAdmin'
+        ]),
+    },
     methods: {
         loadGroup() {
             this.$axios({
-                url: `https://api.uee.life/fleet/${this.groupID}`,
+                url: `https://api.uee.life/fleets/${this.groupID}`,
                 method: 'GET'
             }).then((res) => {
                 this.group = res.data
@@ -104,7 +107,7 @@ export default {
         },
         loadShips() {
             this.$axios({
-                url: `https://api.uee.life/fleet/${this.groupID}/ships`,
+                url: `https://api.uee.life/fleets/${this.groupID}/ships`,
                 method: 'GET'
             }).then((res) => {
                 this.ships = res.data
@@ -148,6 +151,7 @@ export default {
         },
         showShip(data) {
             console.log('Show Ship', data)
+            this.$emit('showShip', data)
         },
         addCrew(data) {
             console.log(data)

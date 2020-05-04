@@ -1,14 +1,14 @@
 export const strict = false
 
 const initialState = () => ({
-  fleet: null
+  isAdmin: false
 })
 
 export const state = initialState
 
 export const getters = {
-    pageData (state) {
-      return state.data
+    isAdmin (state) {
+      return state.isAdmin
     }
   }
 
@@ -19,8 +19,8 @@ export const mutations = {
       state[key] = newState[key]
     })
   },
-  SET_DATA (state, data) {
-    state.data = data || null
+  SET_ADMIN (state, admin) {
+    state.isAdmin = admin || null
   }
 }
 
@@ -28,12 +28,8 @@ export const actions = {
   reset({ commit }) {
     commit('RESET')
   },
-  loadFleet({ commit }, fleetID) {
-    
-  },
-  setPageData ({ commit }, data) {
-    if(data){
-      commit('SET_DATA', data)
-    }
+  setAdmin ({ commit }, admin) {
+    commit('SET_ADMIN', admin)
   }
 }
+

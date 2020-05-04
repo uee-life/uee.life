@@ -46,7 +46,6 @@ import { gsap } from 'gsap'
 
 import OrgBanner from '@/components/org/OrgBanner'
 import OrgInfo from '@/components/org/OrgInfo'
-import OrgFleetView from '@/components/fleet/OrgFleetView'
 import FleetView from '@/components/fleet/FleetView'
 import OrgMembers from '@/components/org/OrgMembers'
 
@@ -56,7 +55,6 @@ export default {
     components: {
         OrgBanner,
         OrgInfo,
-        OrgFleetView,
         FleetView,
         OrgMembers
     },

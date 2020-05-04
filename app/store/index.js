@@ -13,7 +13,6 @@ export const mutations = {
     state.user = user || null
   },
   SET_CITIZEN (state, citizen) {
-    console.log('setting citizen', state, citizen)
     state.citizen = citizen || null
   },
   SET_MOBILE (state, isMobile) {
@@ -30,12 +29,10 @@ export const actions = {
   },
 
   async loadCitizen({ commit }, user) {
-    console.log('loadCitizen called: ', user.app_metadata.handle)
     await this.$axios({
       url: `https://api.uee.life/citizens/${user.app_metadata.handle}`,
       method: 'GET'
     }).then((res) => {
-        console.log("loaded: ", res.data)
         commit('SET_CITIZEN', res.data)
     }).catch((err) => {
         //eslint-disable-next-line

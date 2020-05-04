@@ -10,13 +10,13 @@
         </div>
         <div v-if="ships.length > 0" class="ships">
             <template v-if="isMobile || display == 'small'">
-                <ship-summary-small @selected="selected" v-for="(s, index) in filteredShips" :key="s.id" :ship="s" :index="index" :isOwner="isOwner" @remove="remove" />
+                <ship-summary-small @selected="selected" v-for="(s, index) in filteredShips" :key="s.id" :ship="s" :index="index" :isAdmin="isAdmin" @remove="remove" />
             </template>
             <template v-else-if="display == 'table'">
                 <ship-table  @selected="selected" :ships="filteredShips" />
             </template>
             <template v-else>
-                <ship-summary @selected="selected" v-for="(s, index) in filteredShips" :key="s.id" :ship="s" :index="index" :isOwner="isOwner" @remove="remove"/>
+                <ship-summary @selected="selected" v-for="(s, index) in filteredShips" :key="s.id" :ship="s" :index="index" :isAdmin="isAdmin" @remove="remove"/>
             </template>
         </div>
         <div v-else class="no-ships">
@@ -49,10 +49,6 @@ export default {
             type: String,
             default: 'large'
         },
-        isOwner: {
-            type: Boolean,
-            default: false
-        },
         showControls: {
             type: Boolean,
             default: true
@@ -60,6 +56,14 @@ export default {
         showFilter: {
             type: Boolean,
             default: true
+        },
+        showOwner: {
+            type: Boolean,
+            default: true
+        },
+        isAdmin: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
@@ -76,7 +80,9 @@ export default {
                     ship.model.toLowerCase().includes(this.search.toLowerCase()) ||
                     ship.type.toLowerCase().includes(this.search.toLowerCase()) ||
                     ship.focus.toLowerCase().includes(this.search.toLowerCase()) ||
-                    ship.size.toLowerCase().includes(this.search.toLowerCase())
+                    ship.size.toLowerCase().includes(this.search.toLowerCase()) ||
+                    ship.owner.name.toLowerCase().includes(this.search.toLowerCase()) ||
+                    ship.owner.handle.toLowerCase().includes(this.search.toLowerCase())
             })
         }
     },

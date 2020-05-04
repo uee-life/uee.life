@@ -57,7 +57,7 @@
             </div>
         </main-panel>
         </div>
-        <crew-list v-if="ship" :ship="ship" />
+        <crew-list v-if="ship" :ship="ship" :fleet="fleet"/>
     </div>
 </template>
 
@@ -70,6 +70,10 @@ export default {
         id: {
             type: Number,
             required: true
+        },
+        fleet: {
+            type: Number,
+            default: 0
         }
     },
     data () {

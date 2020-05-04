@@ -1,7 +1,9 @@
 <template>
     <div class="fleet">
         <portal to="leftDock">
-            <org-panel v-if="fleet" :org_tag="fleet.org_tag" />
+            <org-panel v-if="fleet && fleet.type == 1" :org_tag="fleet.org_tag" />
+            <citizen-panel v-if="fleet && fleet.type == 2" :handle="fleet.handle" />
+            <!-- add panels for other fleet types (personal, event) -->
         </portal>
         <template v-if="loading">
             <div class="loading">
@@ -14,10 +16,10 @@
         </main-panel>
         <fleet-group 
             :groupID="selected" 
-            :isOwner="isAdmin" 
             @addGroup="addGroup" 
             @removeGroup="removeGroup" 
             @addShip="addShip"
+            @showShip="showShip"
             @removeShip="removeShip"
             @updateCommander="updateCommander"
             :shipPool="shipPool" />
@@ -29,8 +31,8 @@
 import { mapGetters, mapActions } from 'vuex'
 import OrganizationChart from '@/components/layout/orgchart/OrgChartContainer'
 
-import OrgBanner from '@/components/org/OrgBanner'
 import OrgPanel from '@/components/org/OrgPanel'
+import CitizenPanel from '@/components/citizen/CitizenPanel'
 import FleetGroup from '@/components/fleet/FleetGroup'
 import FleetTools from '@/components/fleet/FleetTools'
 
@@ -39,8 +41,8 @@ export default {
     name: 'Fleet',
     components: {
         OrganizationChart,
-        OrgBanner,
         OrgPanel,
+        CitizenPanel,
         FleetGroup,
         FleetTools
     },
@@ -48,7 +50,6 @@ export default {
         return {
             loading: true,
             fleet: null,
-            org: null,
             shipPool: null,
             chart: null,
             selected: 0,
@@ -56,7 +57,7 @@ export default {
     },
     computed: {
         ...mapGetters('fleet',[
-            'pageData'
+            'isAdmin'
         ]),
         ...mapGetters({
             citizen: 'loggedCitizen'
@@ -65,26 +66,32 @@ export default {
             if (this.fleet) {
                 return `https://robertsspaceindustries.com/spectrum/community/${this.fleet.org_tag}`
             }
-        },
-        isAdmin() {
-            // if is a founder
-            if (this.org && this.$auth.user && this.org.founders.some((elem) => elem.handle == this.$auth.user.app_metadata.handle)) {
-                return true
-            } else {
-                // if is a director
-                console.log(this.org, this.citizen.info.org, this.citizen.info.orgRank)
-                if (this.org && this.citizen && this.citizen.info.org === this.org.tag && this.citizen.info.orgRank === 5) {
-                    console.log('Director found!')
-                    return true
-                }
-                return false
-            }
         }
     },
     methods: {
         ...mapActions('fleet',[
-            'setPageData'
+            'setAdmin'
         ]),
+        checkAdmin() {
+            console.log('checking admin status')
+            // Org Fleet
+            if (this.fleet && this.fleet.type == 1) {
+                console.log('fleet admin?')
+                // if is a director
+                if (this.citizen && this.citizen.info.org === this.fleet.org_tag && this.citizen.info.orgRank >= 5) {
+                    console.log('Director found!')
+                    this.setAdmin(true)
+                    return true
+                }
+                return false
+            } else if (this.fleet && this.fleet.type == 2) {
+                // personal fleet
+                if (this.$auth.user && this.fleet.handle === this.$auth.user.app_metadata.handle) {
+                    this.setAdmin(true)
+                    return true
+                }
+            }
+        },
         clicked(data) {
             console.log(data)
             this.selected = parseInt(data.id)
@@ -92,15 +99,16 @@ export default {
         loadFleet(selected) {
             this.loading = true
             this.$axios({
-                url: `https://api.uee.life/fleet/${this.$route.params.id}`,
+                url: `https://api.uee.life/fleets/${this.$route.params.id}`,
                 method: 'GET'
             }).then(async (res) => {
-                if (res.data.id) {
+                if (res.data.id && res.data.parent === 0) {
                     this.selected = selected
                     this.fleet = res.data
-                    this.loadOrg(this.fleet.org_tag)
                     this.fleet.children = await this.getSubgroups(this.$route.params.id)
                     this.chart = this.fleet
+                    await this.loadShipPool()
+                    this.checkAdmin()
                     this.loading = false
                 } else {
                     this.$router.push('/')
@@ -110,8 +118,15 @@ export default {
             })
         },
         loadShipPool() {
+            console.log('loading ship pool...')
+            let url = ''
+            if (this.fleet.type == 1) {
+                url = `https://api.uee.life/orgs/${this.fleet.org_tag}/ships/${this.fleet.id}`
+            } else if (this.fleet.type == 2) {
+                url = `https://api.uee.life/citizens/${this.fleet.handle}/ships`
+            }
             this.$axios({
-                url: `https://api.uee.life/orgs/${this.org.tag}/ships/${this.$route.params.id}`,
+                url: url,
                 method: 'GET'
             }).then((res) => {
                 this.shipPool = res.data
@@ -121,7 +136,7 @@ export default {
         },
         async getSubgroups(groupID) {
             return await this.$axios({
-                url: `https://api.uee.life/fleet/${groupID}/groups`,
+                url: `https://api.uee.life/fleets/${groupID}/groups`,
                 method: 'GET'
             }).then(async (res) => {
                 const groups = []
@@ -137,10 +152,10 @@ export default {
             })
         },
         async addGroup(params) {
-            params.data.org = this.fleet.org
+            params.data.owner = this.fleet.owner
 
             this.$axios({
-                url: `https://api.uee.life/fleet/${params.groupID}/groups`,
+                url: `https://api.uee.life/fleets/${params.groupID}/groups`,
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -165,7 +180,7 @@ export default {
             }
             console.log("Removing: ", groupID)
             this.$axios({
-                url: `https://api.uee.life/fleet/${groupID}`,
+                url: `https://api.uee.life/fleets/${groupID}`,
                 method: 'DELETE'
             }).then((res) => {
                 if (!iter && res.data.success) {
@@ -192,7 +207,7 @@ export default {
                 ship: params.ship
             }
             this.$axios({
-                url: `https://api.uee.life/fleet/${this.fleet.id}/ships`,
+                url: `https://api.uee.life/fleets/${this.fleet.id}/ships`,
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -212,10 +227,14 @@ export default {
             // reload ship pool
             this.loadShipPool()
         },
+        showShip(data) {
+            console.log('showShip', this.shipID(data))
+            this.$router.push(`/fleet/${this.fleet.id}/ship/${this.shipID(data)}`)
+        },
         async removeShip(id) {
             console.log('removing ship', id)
             this.$axios({
-                url: `https://api.uee.life/fleet/${this.fleet.id}/ships/${id}`,
+                url: `https://api.uee.life/fleets/${this.fleet.id}/ships/${id}`,
                 method: 'DELETE'
             }).then((res) => {
                 if (res.data.success) {
@@ -231,7 +250,7 @@ export default {
         },
         async updateCommander(data) {
             this.$axios({
-                url: `https://api.uee.life/fleet/${data.group}`,
+                url: `https://api.uee.life/fleets/${data.group}`,
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -250,15 +269,6 @@ export default {
                 console.log(err)
             })
         },
-        loadOrg(tag) {
-            this.$axios({
-                url: `https://api.uee.life/orgs/${tag}`,
-                method: 'GET'
-            }).then((res) => {
-                this.org = res.data
-                this.loadShipPool()
-            })
-        },
         isSelf(crewname) {
             if (this.ship && this.$auth.loggedIn && this.user.app_metadata.handle_verified && this.user.app_metadata.handle.toLowerCase().trim() === crewname.toLowerCase().trim()) {
                 return true
@@ -267,9 +277,18 @@ export default {
         },
     },
     mounted() {
-        this.setPageData({})
+        //this.setPageState({})
         this.loadFleet(parseInt(this.$route.params.id))
         this.selected = parseInt(this.$route.params.id)
+    },
+    watch: {
+        fleet: {
+            handler: function () {
+                if (this.fleet) {
+                    this.checkAdmin()
+                }
+            }
+        }
     }
 }
 </script>

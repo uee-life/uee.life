@@ -63,7 +63,7 @@
 
 <script>
 import { gsap } from 'gsap'
-import OrgFleetView from '@/components/fleet/OrgFleetView'
+import OrgFleetView from '@/components/org/OrgFleetView'
 
 export default {
   name: 'org-info',

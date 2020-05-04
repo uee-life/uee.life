@@ -8,18 +8,30 @@
             <div>{{ ship.type }} - {{ ship.focus }}</div>
             <div v-if="ship.owner">Owner: <nuxt-link :to="citizenLink">{{ship.owner.name}}</nuxt-link></div>
         </div>
+        <div class="mask" @click="$emit('selected', ship.id)"></div>
         <span class="corner top left"></span>
         <span class="corner top right"></span>
         <span class="corner bottom left"></span>
         <span class="corner bottom right"></span>
-        <img v-if="isOwner" title="Remove Ship" class="delete" @click="$emit('remove', ship.id)" src="~/assets/delete.png">
+        <img v-if="isAdmin" title="Remove Ship" class="delete" @click="$emit('remove', ship.id)" src="~/assets/delete.png">
     </div>
 </template>
 
 <script>
 export default {
     name: 'ship-summary',
-    props: ["ship", "isOwner"],
+    props: {
+        ship: {
+            type: Object,
+            default: function() {
+                return {}
+            }
+        },
+        isAdmin: {
+            type: Boolean,
+            default: false
+        }
+    },
     computed: {
         shipImage: function() {
             return `/images/ships/${this.ship.short_name}.jpg`
@@ -60,6 +72,15 @@ export default {
         cursor: pointer;
     }
 
+    .ship-summary .mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 10;
+    }
+
     .ship-info {
         display: flex;
         flex-direction: column;
@@ -89,6 +110,7 @@ export default {
         right: -5px;
         width: 20px;
         height: 20px;
+        z-index: 20;
         cursor: pointer;
     }
 </style>

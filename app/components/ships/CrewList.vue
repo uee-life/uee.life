@@ -32,7 +32,18 @@ import CrewForm from '@/components/ships/CrewForm'
 
 export default {
     name: 'CrewList',
-    props: ['ship'],
+    props: {
+        ship: {
+            type: Object,
+            default: function () {
+                return {}
+            }
+        },
+        fleet: {
+            type: Number,
+            default: 0
+        }
+    },
     data () {
         return {
             showModal: false,
@@ -68,8 +79,14 @@ export default {
             return false
         },
         loadCrew() {
+            let url = ''
+            if (this.fleet) {
+                url = `/fleets/${this.fleet}/ships/${this.ship.id}/crew`
+            } else {
+                url = `/ships/${this.ship.id}/crew`
+            }
             this.$axios({
-                url: `https://api.uee.life/ships/${this.ship.id}/crew`,
+                url: url,
                 method: 'GET'
             }).then((res) => {
                 this.crew = res.data
@@ -95,8 +112,14 @@ export default {
                 }
             }
             console.log("Adding crewmen: ", crewmen)
+            let url = ''
+            if(this.fleet) {
+                url = `/fleets/${this.fleet}/ships/${this.ship.id}/crew`
+            } else {
+                url = `https://api.uee.life/ships/${this.ship.id}/crew`
+            }
             await this.$axios({
-                url: `https://api.uee.life/ships/${this.ship.id}/crew`,
+                url: url,
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json; charset=utf-8'

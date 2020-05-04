@@ -21,7 +21,7 @@ import FleetForm from '@/components/fleet/FleetForm'
 import FleetPanel from '@/components/fleet/FleetPanel'
 
 export default {
-    name: 'FleetBuilder',
+    name: 'OrgFleetView',
     props: {
         org: {
             type: Object,
@@ -49,7 +49,7 @@ export default {
     methods: {
         fetchFleets() {
             this.$axios({
-                url: `https://api.uee.life/orgs/${this.org.id}/fleets`,
+                url: `https://api.uee.life/orgs/${this.org.tag}/fleets`,
                 method: 'GET'
             }).then((res) => {
                 this.fleets = res.data
