@@ -2,12 +2,12 @@
     <div v-if="group" class="fleet-group">
         <div class="info">    
             <div class="info-panel">
-                <main-panel v-if="isAdmin" :title="group.name" class="tools">
-                    <input class="tool-button" @click="removeGroup" type="button" value="Delete Group"></input>
+                <main-panel v-if="canEdit" :title="group.name" class="tools">
+                    <input v-if="isAdmin" class="tool-button" @click="removeGroup" type="button" value="Delete Group"></input>
                     <input class="tool-button" @click="modals.group = true" type="button" value="Add Subgroup"></input>
                     <input class="tool-button" @click="modals.ship = true" type="button" value="Add Ship"></input>
                 </main-panel>
-                <ship-list class="fleet-list" v-if="ships" :ships="ships" :isAdmin="isAdmin" @selected="showShip" @remove="removeShip"/>
+                <ship-list class="fleet-list" v-if="ships" :ships="ships" :isAdmin="canEdit" @selected="showShip" @remove="removeShip"/>
             </div>
             <div class="info-panel no-grow">
                 <main-panel class="commander">
@@ -73,6 +73,7 @@ export default {
     data () {
         return {
             group: null,
+            commanders: null,
             ships: null,
             selected: null,
             modals: {
@@ -91,6 +92,21 @@ export default {
         ...mapGetters('fleet',[
             'isAdmin'
         ]),
+        ...mapGetters({
+            citizen: 'loggedCitizen'
+        }),
+        isCommander() {
+            if (this.commanders.includes(this.citizen.info.handle)) {
+                return true
+            }
+            return false
+        },
+        canEdit() {
+            if (this.isCommander || this.isAdmin) {
+                return true
+            }
+            return false
+        }
     },
     methods: {
         loadGroup() {
@@ -99,10 +115,21 @@ export default {
                 method: 'GET'
             }).then((res) => {
                 this.group = res.data
+                this.loadCommanders()
                 this.loadShips()
             }).catch((err) => {
                 console.log(err)
                 this.group = null
+            })
+        },
+        loadCommanders() {
+            this.$axios({
+                url: `/fleets/${this.groupID}/commanders`,
+                method: 'GET'
+            }).then((res) => {
+                this.commanders = res.data
+            }).catch((err) => {
+                console.error(err)
             })
         },
         loadShips() {
