@@ -18,6 +18,15 @@ export default {
             type: String,
             default: ""
         }
+    },
+    computed: {
+        divClass() {
+            if (this.isMobile) {
+                return 'dock-item mobile'
+            } else {
+                return 'dock-item'
+            }
+        }
     }
 }
 </script>
@@ -27,8 +36,9 @@ export default {
         position: relative;
         box-sizing: border-box;
         height: fit-content;
-        width: 100%;
+        width: 240px;
         min-width: 240px;
+        margin: 10px;
         margin-top: 20px;
         padding: 15px 10px;
         background: url('/images/fading-bars.png') repeat;

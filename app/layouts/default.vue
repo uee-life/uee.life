@@ -5,7 +5,7 @@
     <div class="main">
       <dock name="leftDock" class="leftDock"/>
       <nuxt class="content" />
-      <dock name="rightDock" />
+      <dock name="rightDock" class="rightDock"/>
     </div>
     <default-footer />
   </div>
@@ -74,10 +74,16 @@ export default {
 }
  
  .dock {
-   max-width: 240px;
+   max-width: 260px;
+   margin: 0 auto;
  }
 
  /*.leftDock {
    min-width: 240px;
  }*/
+ .vue-portal-target {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+ }
 </style>

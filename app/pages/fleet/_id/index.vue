@@ -1,6 +1,6 @@
 <template>
     <div class="fleet">
-        <portal to="leftDock">
+        <portal to="rightDock">
             <org-panel v-if="fleet && fleet.type == 1" :org_tag="fleet.org_tag" />
             <citizen-panel v-if="fleet && fleet.type == 2" :handle="fleet.handle" />
             <!-- add panels for other fleet types (personal, event) -->
@@ -231,10 +231,10 @@ export default {
             console.log('showShip', this.shipID(data))
             this.$router.push(`/fleet/${this.fleet.id}/ship/${this.shipID(data)}`)
         },
-        async removeShip(id) {
-            console.log('removing ship', id)
+        async removeShip(params) {
+            console.log('removing ship', params.ship)
             this.$axios({
-                url: `https://api.uee.life/fleets/${this.fleet.id}/ships/${id}`,
+                url: `https://api.uee.life/fleets/${params.group}/ships/${params.ship}`,
                 method: 'DELETE'
             }).then((res) => {
                 if (res.data.success) {

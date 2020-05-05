@@ -1,8 +1,10 @@
 <template>
     <div class="news-feed" id="news-feed">
         <portal to="news-filter">
+            <div>
             <div v-for="source in sources" v-on:click="search = source.search; title = source.name" :key="source.id" class="left-nav-button">
                 <router-link to="/">{{ source.name }}</router-link>
+            </div>
             </div>
         </portal>
         <section-title :text="title" size="medium"/>

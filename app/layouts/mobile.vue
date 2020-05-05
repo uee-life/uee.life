@@ -72,3 +72,11 @@ export default {
    width: 100%;
  }
 </style>
+
+<style>
+.vue-portal-target {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+ }
+</style>

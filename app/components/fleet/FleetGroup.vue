@@ -1,32 +1,32 @@
 <template>
     <div v-if="group" class="fleet-group">
-        <div class="info">    
-            <div class="info-panel">
-                <main-panel v-if="canEdit" :title="group.name" class="tools">
-                    <input v-if="isAdmin" class="tool-button" @click="removeGroup" type="button" value="Delete Group"></input>
-                    <input class="tool-button" @click="modals.group = true" type="button" value="Add Subgroup"></input>
-                    <input class="tool-button" @click="modals.ship = true" type="button" value="Add Ship"></input>
-                </main-panel>
-                <ship-list class="fleet-list" v-if="ships" :ships="ships" :isAdmin="canEdit" @selected="showShip" @remove="removeShip"/>
-            </div>
+        <div class="info">  
             <div class="info-panel no-grow">
                 <main-panel class="commander">
                     <div v-if="group.cmdr" class="assigned">
                         <h5>Group Commander</h5>
                         <portrait :handle="group.cmdr" :showName="true">
                             <div class="mask"></div>
-                            <img v-if="isAdmin" @click="updateCommander({handle: ''})" class="edit" src="~/assets/delete.png">
+                            <img v-if="canEdit" @click="updateCommander({handle: ''})" class="edit" src="~/assets/delete.png">
                         </portrait>
                     </div>
                     <div v-else class="unassigned">
                         <h5>Commander</h5>
                         <div class="bg">
-                        <img v-if="isAdmin" @click="modals.commander = true" src="~/assets/plus.png" class="add-new"/>
+                        <img v-if="canEdit" @click="modals.commander = true" src="~/assets/plus.png" class="add-new"/>
                         <div v-else class="add-new" />
                         </div>
                         <div class="name">Unassigned</div>
                     </div>
                 </main-panel>
+            </div>  
+            <div class="info-panel">
+                <main-panel v-if="canEdit" :title="group.name" class="tools">
+                    <input v-if="isAdmin || (canEdit && (!group.cmdr || citizen.info.handle.toLowerCase() !== group.cmdr.toLowerCase()))" class="tool-button" @click="removeGroup" type="button" value="Delete Group"></input>
+                    <input class="tool-button" @click="modals.group = true" type="button" value="Add Subgroup"></input>
+                    <input class="tool-button" @click="modals.ship = true" type="button" value="Add Ship"></input>
+                </main-panel>
+                <ship-list class="fleet-list" v-if="ships" :ships="ships" :isAdmin="canEdit" @selected="showShip" @remove="removeShip"/>
             </div>
         </div>
         <modal v-if="modals.group" title="Crew Record" @close="modals.group = false">
@@ -96,13 +96,13 @@ export default {
             citizen: 'loggedCitizen'
         }),
         isCommander() {
-            if (this.commanders.includes(this.citizen.info.handle)) {
+            if (this.citizen && this.commanders.includes(this.citizen.info.handle)) {
                 return true
             }
             return false
         },
         canEdit() {
-            if (this.isCommander || this.isAdmin) {
+            if (this.isAdmin || this.isCommander) {
                 return true
             }
             return false
@@ -174,7 +174,11 @@ export default {
             this.$emit('addShip', data)
         },
         removeShip(id) {
-            this.$emit('removeShip', id)
+            const data = {
+                ship: id,
+                group: this.groupID
+            }
+            this.$emit('removeShip', data)
         },
         showShip(data) {
             console.log('Show Ship', data)
@@ -187,6 +191,7 @@ export default {
     watch: {
         groupID: {
             handler: function() {
+                this.commanders = []
                 this.loadGroup()
             }
         },
@@ -197,6 +202,7 @@ export default {
         }
     },
     mounted() {
+        this.commanders = []
         this.loadGroup()
     }
 }
@@ -222,8 +228,7 @@ export default {
     display: flex;
     flex-direction: column;
     flex-basis: 250px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: 10px;
     flex-grow: 1;
 }
 
@@ -235,12 +240,12 @@ export default {
 .fleet .info .commander {
     height: fit-content;
     max-height: fit-content;
+    margin: 20px 10px;
 }
 
 .fleet .info .tools {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
     max-height: 70px;
 }
 
@@ -258,6 +263,7 @@ export default {
 
 .info-panel.no-grow {
   flex-grow: 0 !important;
+  margin: 10px auto !important;
 }
 
     .info-panel.group-info {
