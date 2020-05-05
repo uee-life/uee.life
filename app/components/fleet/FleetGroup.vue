@@ -73,8 +73,8 @@ export default {
     data () {
         return {
             group: null,
-            commanders: null,
-            ships: null,
+            commanders: [],
+            ships: [],
             selected: null,
             modals: {
                 group: false,
