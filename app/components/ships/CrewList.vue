@@ -163,8 +163,15 @@ export default {
             this.showCrew = false
             console.log("Updating Crewmen: ", crew_id, role)
 
+            let url = ''
+            if(this.fleet) {
+                url = `/fleets/${this.fleet}/ships/${this.ship.id}/crew/${crew_id}`
+            } else {
+                url = `/crew/${crew_id}`
+            }
+
             await this.$axios({
-                url: `https://api.uee.life/crew/${crew_id}`,
+                url: url,
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json; charset=utf-8'

@@ -52,7 +52,7 @@ export default {
 .fleet-panel {
     display: flex;
     flex-grow: 1;
-    margin: 20px 10px;
+    margin: 20px 10px 0;
     padding: 9px;
     position: relative;
     background: url('/images/fading-bars.png') repeat;

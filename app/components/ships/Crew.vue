@@ -11,7 +11,7 @@
                 </span>
                 <span v-else class="value">{{ crew.role }}<img v-if="canEdit" @click="edit.role = true" class="edit-button edit" src="~/assets/edit.png"></span>
             </div>
-            <div class="info-item">
+            <div v-if="crew.joined" class="info-item">
                 <span class="label">Joined:</span>
                 <span class="value">{{ ueeDate(crew.joined) }}</span>
             </div>

@@ -1,7 +1,15 @@
 <template>
     <div v-if="group" class="fleet-group">
-        <div class="info">  
-            <div class="info-panel no-grow">
+        <div class="info">
+            <div v-if="isMobile && canEdit" class="info-panel">
+                <main-panel :title="group.name" class="tools">
+                    <input v-if="isAdmin || (canEdit && (!group.cmdr || citizen.info.handle.toLowerCase() !== group.cmdr.toLowerCase()))" class="tool-button" @click="removeGroup" type="button" value="Delete Group">
+                    <input v-if="isAdmin || (canEdit && (!group.cmdr || citizen.info.handle.toLowerCase() !== group.cmdr.toLowerCase()))" class="tool-button" @click="modals.edit = true" type="button" value="Edit Group">
+                    <input class="tool-button" @click="modals.group = true" type="button" value="Add Subgroup">
+                    <input class="tool-button" @click="modals.ship = true" type="button" value="Add Ship">
+                </main-panel>
+            </div>
+            <div :class="panelClass">
                 <main-panel class="commander">
                     <div v-if="group.cmdr" class="assigned">
                         <h5>Group Commander</h5>
@@ -20,9 +28,9 @@
                     </div>
                 </main-panel>
                 <slot name="assignment"></slot>
-            </div>  
+            </div> 
             <div class="info-panel">
-                <main-panel v-if="canEdit" :title="group.name" class="tools">
+                <main-panel v-if="!isMobile && canEdit" :title="group.name" class="tools">
                     <input v-if="isAdmin || (canEdit && (!group.cmdr || citizen.info.handle.toLowerCase() !== group.cmdr.toLowerCase()))" class="tool-button" @click="removeGroup" type="button" value="Delete Group">
                     <input v-if="isAdmin || (canEdit && (!group.cmdr || citizen.info.handle.toLowerCase() !== group.cmdr.toLowerCase()))" class="tool-button" @click="modals.edit = true" type="button" value="Edit Group">
                     <input class="tool-button" @click="modals.group = true" type="button" value="Add Subgroup">
@@ -108,6 +116,13 @@ export default {
                 return true
             }
             return false
+        },
+        panelClass() {
+            if (this.isMobile) {
+                return "info-panel"
+            } else {
+                return "info-panel no-grow"
+            }
         }
     },
     methods: {
@@ -280,7 +295,8 @@ export default {
 .fleet .info .tools {
     display: flex;
     justify-content: center;
-    max-height: 70px;
+    flex-grow: 0;
+    flex-wrap: wrap;
 }
 
 .fleet .info .tools .tool-button {
@@ -357,6 +373,7 @@ export default {
 }
 
 .unassigned .bg {
+    position: relative;
     content: "";
     background: url('https://robertsspaceindustries.com/rsi/static/images/account/avatar_default_big.jpg');
     background-size: 165px 165px;

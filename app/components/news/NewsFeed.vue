@@ -1,10 +1,10 @@
 <template>
     <div class="news-feed" id="news-feed">
         <portal to="news-filter">
-            <div>
-            <div v-for="source in sources" v-on:click="search = source.search; title = source.name" :key="source.id" class="left-nav-button">
-                <router-link to="/">{{ source.name }}</router-link>
-            </div>
+            <div class="sources">
+                <div v-for="source in sources" v-on:click="search = source.search; title = source.name" :key="source.id" class="left-nav-button">
+                    <router-link to="/">{{ source.name }}</router-link>
+                </div>
             </div>
         </portal>
         <section-title :text="title" size="medium"/>
@@ -157,6 +157,10 @@ export default {
         margin-top: 20px;
         margin-left: -10px;
         margin-right: -10px;
+    }
+
+    .news-filter .sources {
+        width: 100%;
     }
 
     .news-feed>.t-group {
