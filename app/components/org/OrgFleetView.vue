@@ -2,7 +2,7 @@
     <div class="org-fleet-view">
         <section-title text="Org Fleets" size="medium"/>
         <template  v-if="fleets.length > 0">
-            <fleet-panel v-for="f in fleets" :key="f.id" :fleet="f" />
+            <fleet-panel v-for="f in fleets" :key="f.id" :fleetID="f.id" />
         </template>
         <template v-else>
             No fleets configured
@@ -83,14 +83,16 @@ export default {
     watch: {
         org: {
             handler: async function () {
-                if(this.org) {
+                if(this.org.tag) {
                     this.fetchFleets()
                 }
             }
         }
     },
     mounted() {
-        this.fetchFleets()
+        if(this.org.tag) {
+            this.fetchFleets()
+        }
     }
 }
 </script>
@@ -98,8 +100,11 @@ export default {
 <style>
 .org-fleet-view {
     position: relative;
-    margin-top: 25px;
-    margin-bottom: 30px;
+    margin: 25px -10px 30px;
     padding-top: 10px;
+}
+
+.add-fleet {
+    margin: 10px;
 }
 </style>

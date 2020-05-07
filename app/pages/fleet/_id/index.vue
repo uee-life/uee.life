@@ -1,7 +1,7 @@
 <template>
     <div class="fleet">
         <portal to="rightDock">
-            <org-panel v-if="fleet && fleet.type == 1" :org_tag="fleet.org_tag" />
+            <!--org-panel v-if="fleet && fleet.type == 1" :org_tag="fleet.org_tag" /-->
             <citizen-panel v-if="fleet && fleet.type == 2" :handle="fleet.handle" />
             <!-- add panels for other fleet types (personal, event) -->
         </portal>
@@ -11,18 +11,26 @@
             </div>
         </template>
         <template v-else>
-        <main-panel v-if="fleet" title="Fleet Hierarchy" class="fleet-chart">
-            <organization-chart v-if="chart" :datasource="chart" @node-click="clicked" :selected="selected" @removeGroup="removeGroup"></organization-chart>
-        </main-panel>
-        <fleet-group 
-            :groupID="selected" 
-            @addGroup="addGroup" 
-            @removeGroup="removeGroup" 
-            @addShip="addShip"
-            @showShip="showShip"
-            @removeShip="removeShip"
-            @updateCommander="updateCommander"
-            :shipPool="shipPool" />
+            <nuxt-link :to="orgLink"><org-banner v-if="org" :org="org"><template v-slot:tag>{{fleet.name}}</template>{{fleet.purpose}}</org-banner></nuxt-link>
+            <main-panel v-if="fleet" title="Fleet Hierarchy" class="fleet-chart">
+                <organization-chart v-if="chart" :datasource="chart" @node-click="clicked" :selected="selected" @removeGroup="removeGroup"></organization-chart>
+            </main-panel>
+            <fleet-group 
+                :groupID="selected" 
+                @addGroup="addGroup"
+                @updateGroup="updateGroup"
+                @removeGroup="removeGroup" 
+                @addShip="addShip"
+                @showShip="showShip"
+                @removeShip="removeShip"
+                :shipPool="shipPool">
+                <template v-if="$auth.loggedIn" v-slot:assignment>
+                    <fleet-assignment :assignment="crewAssignment"></fleet-assignment>
+                </template>
+                <template v-else v-slot:assignment>
+                    <main-panel style="margin:10px; text-align:center" title="Assignment">Log in to view assignment</main-panel>
+                </template>
+            </fleet-group>
         </template>
     </div>
 </template>
@@ -32,9 +40,11 @@ import { mapGetters, mapActions } from 'vuex'
 import OrganizationChart from '@/components/layout/orgchart/OrgChartContainer'
 
 import OrgPanel from '@/components/org/OrgPanel'
+import OrgBanner from '@/components/org/OrgBanner'
 import CitizenPanel from '@/components/citizen/CitizenPanel'
 import FleetGroup from '@/components/fleet/FleetGroup'
 import FleetTools from '@/components/fleet/FleetTools'
+import FleetAssignment from '@/components/fleet/FleetAssignment'
 
 export default {
     layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
@@ -42,15 +52,19 @@ export default {
     components: {
         OrganizationChart,
         OrgPanel,
+        OrgBanner,
         CitizenPanel,
         FleetGroup,
-        FleetTools
+        FleetTools,
+        FleetAssignment
     },
     data () {
         return {
             loading: true,
             fleet: null,
+            org: null,
             shipPool: null,
+            crew: null,
             chart: null,
             selected: 0,
         }
@@ -66,6 +80,22 @@ export default {
             if (this.fleet) {
                 return `https://robertsspaceindustries.com/spectrum/community/${this.fleet.org_tag}`
             }
+        },
+        orgLink() {
+            if (this.org) {
+                return `/orgs/${this.org.tag}`
+            } else {
+                return '/orgs'
+            }
+        },
+        crewAssignment() {
+            if(this.$auth.user && this.crew) {
+                const assignment = this.crew.filter(e => e.citizen.toLowerCase() == this.$auth.user.app_metadata.handle.toLowerCase())
+                if (assignment.length > 0) {
+                    return assignment[0]
+                }
+            }
+            return null
         }
     },
     methods: {
@@ -107,12 +137,37 @@ export default {
                     this.fleet = res.data
                     this.fleet.children = await this.getSubgroups(this.$route.params.id)
                     this.chart = this.fleet
+                    await this.getOrg(this.fleet.org_tag)
                     await this.loadShipPool()
-                    this.checkAdmin()
+                    await this.getPersonnel()
+                    await this.checkAdmin()
                     this.loading = false
                 } else {
                     this.$router.push('/')
                 }
+            }).catch((err) => {
+                console.error(err)
+            })
+        },
+        getOrg(org_tag) {
+            this.$axios({
+                url: `https://api.uee.life/orgs/${org_tag}`,
+                method: 'GET'
+            }).then((res) => {
+                if(res.status == 200) {
+                    this.org = res.data
+                }
+            }).catch(err => {
+                // eslint-disable-next-line
+                console.error(err)
+            }); 
+        },
+        getPersonnel() {
+            this.$axios({
+                url: `https://api.uee.life/fleets/${this.fleet.id}/crew`,
+                method: 'GET'
+            }).then((res) => {
+                this.crew = res.data
             }).catch((err) => {
                 console.error(err)
             })
@@ -248,7 +303,7 @@ export default {
                 console.error(err)
             })
         },
-        async updateCommander(data) {
+        async updateGroup(data) {
             this.$axios({
                 url: `https://api.uee.life/fleets/${data.group}`,
                 method: 'PUT',
@@ -256,7 +311,9 @@ export default {
                     'Content-Type': 'application/json'
                 },
                 data: {
-                    cmdr: data.handle
+                    cmdr: data.cmdr,
+                    name: data.name,
+                    purpose: data.purpose
                 }
             }).then((res) => {
                 if(res.data.success) {

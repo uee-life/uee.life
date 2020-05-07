@@ -5,20 +5,20 @@
                 <h5 class="role">{{ c.role }}</h5>
                 <portrait :handle="c.citizen" size="small" :showName="true">
                     <div class="mask"  @click="showCrewmember(c)"></div>
-                    <img v-if="isOwner" @click="showCrewmember(c)" class="edit" src="~/assets/edit.png">
+                    <img v-if="edit" @click="showCrewmember(c)" class="edit" src="~/assets/edit.png">
                     <img v-else-if="isSelf(c.citizen)" @click="removeCrew(c.id)" class="edit" src="~/assets/delete.png">
                 </portrait>
             </div>
             <div v-else class="unassigned">
                 <h5 class="role">&nbsp;</h5>
                 <div class="bg"/>
-                <img v-if="isOwner" @click="showModal = true" src="~/assets/plus.png" class="add-new"/>
+                <img v-if="edit" @click="showModal = true" src="~/assets/plus.png" class="add-new"/>
                 <div v-else class="add-new" />
                 <div class="name">Unassigned</div>
             </div>
         </div>
         <modal v-if="showCrew" title="Crew Record" @close="showCrew = false">
-            <crew :crew="selected" @remove="removeCrew" @update="updateCrew" :canEdit="isOwner"/>
+            <crew :crew="selected" @remove="removeCrew" @update="updateCrew" :canEdit="edit"/>
         </modal>
         <modal v-if="showModal" title="Add Crew" @close="showModal = false">
             <crew-form @add="addCrew"/>
@@ -42,6 +42,10 @@ export default {
         fleet: {
             type: Number,
             default: 0
+        },
+        edit: {
+            type: Boolean,
+            default: false
         }
     },
     data () {
@@ -59,12 +63,6 @@ export default {
     computed: {
         user() {
             return this.$auth.user
-        },
-        isOwner() {
-            if(this.ship && this.$auth.loggedIn && this.user.app_metadata.handle_verified && this.user.app_metadata.handle.toLowerCase().trim() === this.ship.owner.toLowerCase().trim()) {
-                return true
-            }
-            return false
         }
     },
     methods: {
@@ -140,9 +138,15 @@ export default {
             this.showCrew = false
             console.log("Removing crewmen: ", crew_id)
             // add confirm modal here
+            let url = ''
+            if(this.fleet) {
+                url = `/fleets/${this.fleet}/ships/${this.ship.id}/crew/${crew_id}`
+            } else {
+                url = `/crew/${crew_id}`
+            }
 
             await this.$axios({
-                url: `https://api.uee.life/crew/${crew_id}`,
+                url: url,
                 method: 'DELETE'
             }).then((res) => {
                 if (res.data.success) {
@@ -258,7 +262,7 @@ export default {
     background: url('https://robertsspaceindustries.com/rsi/static/images/account/avatar_default_big.jpg');
     background-size: 100px 100px;
     background-repeat: no-repeat;
-    background-position-y: 22px;
+    background-position-y: 25px;
     opacity: 0.4;
     top: 0;
     left: 0;

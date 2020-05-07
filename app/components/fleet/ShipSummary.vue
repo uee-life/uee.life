@@ -6,9 +6,10 @@
         <div class="ship-info">
             <h5 @click="selected">{{ ship.model }}</h5>
             <div class="info">
-                <div @click="selected" style="cursor: pointer;"><span class="label">Ship &nbsp; ID:</span><span class="data">{{ shipID(ship.id) }}</span></div>
-                <div @click="selected"><span class="label">Type:</span><span class="data">{{ ship.type }} - {{ ship.focus }}</span></div>
-                <div v-if="ship.owner"><span class="label">Owner:</span><span class="data"><nuxt-link :to="citizenLink">{{ship.owner.name}}</nuxt-link></span></div>
+                <div class="line-item"><span class="label">Ship &nbsp; ID:</span><span class="data">{{ shipID(ship.id) }}</span></div>
+                <div class="line-item"><span class="label">Type:</span><span class="data">{{ ship.type }} - {{ ship.focus }}</span></div>
+                <div v-if="ship.owner" class="line-item"><span class="label">Owner:</span><span class="data"><nuxt-link :to="citizenLink">{{ship.owner.name}}</nuxt-link></span></div>
+                <div v-if="ship.crew >= 0" class="line-item"><span class="label">Crew:</span><span class="data">{{ ship.crew }} / {{ ship.max_crew }}</span></div>
             </div>
         </div>
         <div class="mask" @click="$emit('selected', ship.id)"></div>
@@ -107,15 +108,19 @@ export default {
         font-size: 12px;
     }
 
-    .ship-info .info .label {
-        width: 95px;
-        text-transform: uppercase;
-        font-family: 'Michroma';
+    .ship-info .info .line-item {
+        display: flex;
     }
 
-    .ship-info .info .data {
+    .ship-info .info .line-item .label {
+        width: 80px;
+        text-transform: uppercase;
+        font-family: 'Michroma';
+        flex-shrink: 0;
+    }
+
+    .ship-info .info .line-item .data {
         margin-left: 5px;
-        display: flex;
         font-size: 14px;
         line-height: 19.5px;
         min-width: 100px;

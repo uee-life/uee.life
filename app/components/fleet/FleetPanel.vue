@@ -1,10 +1,9 @@
 <template>
-    <main-panel class="fleet-panel">
+    <main-panel v-if="fleet" class="fleet-panel">
         <section-title :text="fleet.name" />
         <div class="info">
             <div class="info-item"><span class="label">Purpose:</span><span class="value">{{ fleet.purpose }}</span></div>
             <div class="info-item"><span class="label">Commander:</span><span v-if="fleet.cmdr" class="value">{{ fleet.cmdr }}</span><span v-else class="value">Unassigned</span></div>
-            <div class="info-item"><span class="label">Ships:</span><span class="value">{{ fleet.ships }}</span></div>
         </div>
         <div class="mask" @click="clicked(fleet.id)"></div>
     </main-panel>
@@ -14,24 +13,37 @@
 export default {
     name: "FleetPanel",
     props: {
-        fleet: {
-            type: Object,
-            required: true,
-            default: function () {
-                return {
-                    name: '',
-                    purpose: '',
-                    cmdr: '',
-                    ships: 0
-                }
-            }
+        fleetID: {
+            type: Number,
+            required: true
+        }
+    },
+    data() {
+        return {
+            fleet: null
         }
     },
     methods: {
-        clicked(id) {
-            console.log('clicked', id)
-            this.$router.push(`/fleet/${id}`)
+        loadFleet() {
+            this.loading = true
+            this.$axios({
+                url: `https://api.uee.life/fleets/${this.fleetID}`,
+                method: 'GET'
+            }).then(async (res) => {
+                if (res.data.id && res.data.parent === 0) {
+                    this.fleet = res.data
+                    this.loading = false
+                }
+            }).catch((err) => {
+                console.error(err)
+            })
+        },
+        clicked() {
+            this.$router.push(`/fleet/${this.fleetID}`)
         }
+    },
+    mounted() {
+        this.loadFleet()
     }
 }
 </script>
@@ -39,9 +51,8 @@ export default {
 <style scoped>
 .fleet-panel {
     display: flex;
-    flex-basis: 400px;
     flex-grow: 1;
-    margin: 15px 0;
+    margin: 20px 10px;
     padding: 9px;
     position: relative;
     background: url('/images/fading-bars.png') repeat;
@@ -61,10 +72,6 @@ export default {
 
 .fleet-panel .fleet-cmdr {
     margin: 15px 0 0 15px;
-}
-
-.fleet-panel .info {
-    margin: 5px 10px;
 }
 
 .fleet-panel .info .info-item {

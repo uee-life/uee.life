@@ -1,12 +1,6 @@
 <template>
     <div class="org-main" id="org-main">
-        <portal to="leftDock">
-            <dock-item title="nav">
-            <div class="left-nav-button"><router-link to="/orgs">Search Orgs</router-link></div>
-            <div class="left-nav-button"><a :href="spectrumLink">Spectrum</a></div>
-            </dock-item>
-        </portal>
-        <org-banner :org="org" />
+        <org-banner :org="org"></org-banner>
         <div class="org-tabs">
             <tabs :tabs="tabs" :initialTab="initialTab">
                 <template slot="tab-title-info">

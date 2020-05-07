@@ -7,7 +7,7 @@
                         <h5>Group Commander</h5>
                         <portrait :handle="group.cmdr" :showName="true">
                             <div class="mask"></div>
-                            <img v-if="canEdit" @click="updateCommander({handle: ''})" class="edit" src="~/assets/delete.png">
+                            <img v-if="canEdit" @click="removeCommander()" class="edit" src="~/assets/delete.png">
                         </portrait>
                     </div>
                     <div v-else class="unassigned">
@@ -19,27 +19,29 @@
                         <div class="name">Unassigned</div>
                     </div>
                 </main-panel>
+                <slot name="assignment"></slot>
             </div>  
             <div class="info-panel">
                 <main-panel v-if="canEdit" :title="group.name" class="tools">
-                    <input v-if="isAdmin || (canEdit && (!group.cmdr || citizen.info.handle.toLowerCase() !== group.cmdr.toLowerCase()))" class="tool-button" @click="removeGroup" type="button" value="Delete Group"></input>
-                    <input class="tool-button" @click="modals.group = true" type="button" value="Add Subgroup"></input>
-                    <input class="tool-button" @click="modals.ship = true" type="button" value="Add Ship"></input>
+                    <input v-if="isAdmin || (canEdit && (!group.cmdr || citizen.info.handle.toLowerCase() !== group.cmdr.toLowerCase()))" class="tool-button" @click="removeGroup" type="button" value="Delete Group">
+                    <input v-if="isAdmin || (canEdit && (!group.cmdr || citizen.info.handle.toLowerCase() !== group.cmdr.toLowerCase()))" class="tool-button" @click="modals.edit = true" type="button" value="Edit Group">
+                    <input class="tool-button" @click="modals.group = true" type="button" value="Add Subgroup">
+                    <input class="tool-button" @click="modals.ship = true" type="button" value="Add Ship">
                 </main-panel>
                 <ship-list class="fleet-list" v-if="ships" :ships="ships" :isAdmin="canEdit" @selected="showShip" @remove="removeShip"/>
             </div>
         </div>
-        <modal v-if="modals.group" title="Crew Record" @close="modals.group = false">
-            <fleet-form @add="addGroup" :shipPool="shipPool"/>
+        <modal v-if="modals.group" title="Add Subgroup" @close="modals.group = false">
+            <fleet-form @add="addGroup"/>
         </modal>
         <modal v-if="modals.ship" title="Add Ship" @close="modals.ship = false">
             <ship-list class="ship-modal" :ships="shipPool" view="small" :showControls="false" @selected="addShip"></ship-list>
         </modal>
-        <modal v-if="modals.crew" title="Add Crew" @close="modals.crew = false">
-            <crew-form @add="addCrew" />
-        </modal>
         <modal v-if="modals.commander" title="Select Commander" @close="modals.commander = false">
             <crew-form @add="updateCommander" :roleSelect="false" />
+        </modal>
+        <modal v-if="modals.edit" title="Edit Group" @close="modals.edit = false">
+            <fleet-form :group="group" @update="updateGroup"/>
         </modal>
     </div>
 </template>
@@ -78,9 +80,9 @@ export default {
             selected: null,
             modals: {
                 group: false,
-                crew: false,
                 commander: false,
-                ship: false
+                ship: false,
+                edit: false
             },
             edit: {
                 group: false,
@@ -146,6 +148,16 @@ export default {
             this.modals.group = false
             this.$emit('addGroup', {groupID: this.groupID, data: data})
         },
+        updateGroup(data) {
+            this.modals.edit = false
+            const newdata = {
+                cmdr: this.group.cmdr,
+                name: data.name,
+                purpose: data.purpose,
+                group: this.groupID
+            }
+            this.$emit('updateGroup', newdata)
+        },
         removeGroup() {
             this.$swal.fire({
                 title: 'Are you sure?',
@@ -159,10 +171,32 @@ export default {
                 }
             })
         },
+        removeCommander() {
+            if (this.$auth.loggedIn && this.$auth.user.app_metadata.handle.toLowerCase() === this.group.cmdr.toLowerCase()) {
+                this.$swal.fire({
+                    title: 'Are you sure?',
+                    text: 'Do you really wish to resign your commission? You will not be able to undo this...',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'I Resign!'
+                }).then((res) => {
+                    if(res.value) {
+                        this.updateCommander({handle: ''})
+                    }
+                })
+            } else {
+                this.updateCommander({handle: ''})
+            }
+        },
         updateCommander(data) {
-            data.group = this.groupID
+            const newdata = {
+                cmdr: data.handle,
+                name: this.group.name,
+                purpose: this.group.purpose,
+                group: this.groupID
+            }
             this.modals.commander = false
-            this.$emit('updateCommander', data)
+            this.$emit('updateGroup', newdata)
         },
         addShip(id) {
             this.modals.ship = false

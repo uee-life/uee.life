@@ -1,6 +1,9 @@
 <template>
     <div>
         <portal to="leftDock">
+            <fleet-panel v-if="fleet" title="fleet" class="fleet" :fleetID="fleet">
+
+            </fleet-panel>
             <dock-item v-if="ship" title="owner" class="owner">
                 <portrait :handle="ship.owner" :showName="true"/>
             </dock-item>
@@ -57,13 +60,14 @@
             </div>
         </main-panel>
         </div>
-        <crew-list v-if="ship" :ship="ship" :fleet="fleet"/>
+        <crew-list v-if="ship" :ship="ship" :fleet="fleet" :edit="canEdit"/>
     </div>
 </template>
 
 <script>
 import ShipBanner from '@/components/ships/ShipBanner'
 import CrewList from '@/components/ships/CrewList'
+import FleetPanel from '@/components/fleet/FleetPanel'
 
 export default {
     props: {
@@ -74,6 +78,12 @@ export default {
         fleet: {
             type: Number,
             default: 0
+        },
+        cmdrs: {
+            type: Array,
+            default: function () {
+                return []
+            }
         }
     },
     data () {
@@ -87,7 +97,8 @@ export default {
     },
     components: {
         ShipBanner,
-        CrewList
+        CrewList,
+        FleetPanel
     },
     computed: {
         user() {
@@ -95,6 +106,16 @@ export default {
         },
         isOwner() {
             if(this.ship && this.$auth.loggedIn && this.user.app_metadata.handle_verified && this.user.app_metadata.handle.toLowerCase().trim() === this.ship.owner.toLowerCase().trim()) {
+                return true
+            }
+            return false
+        },
+        canEdit() {
+            if(this.fleet) {
+                if (this.user && this.cmdrs.length > 0 && this.cmdrs.includes(this.user.app_metadata.handle)) {
+                    return true
+                }
+            } else if (isOwner) {
                 return true
             }
             return false

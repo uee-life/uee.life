@@ -7,8 +7,8 @@
             <img :src="org.logo" />
           </div>
           <div class="org-summary">
-              <h1>{{org.name}} /  <span class="tag">{{ tag }}</span></h1>
-              <div class="org-model">{{org.model}}</div>
+              <h1>{{org.name}} /  <span class="tag"><slot name="tag">{{ tag }}</slot></span></h1>
+              <slot><div class="org-model">{{org.model}}</div></slot>
           </div>
         </div>
       </div>
@@ -108,6 +108,7 @@ export default {
 
     .org-banner h1 .tag {
         color: #fff000;
+        text-transform: uppercase;
     }
 
     .org-logo img {

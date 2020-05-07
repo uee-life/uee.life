@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="addFleet" class="fleet-form">
+    <form @submit.prevent="submit" class="fleet-form">
         <div>
             Name: <br />
             <input class="input" type="text" v-model="name" maxlength="16">
@@ -8,14 +8,21 @@
             Purpose:
             <input class="input" type="text" v-model="purpose">
         </div>
-        <input type="submit" value="Add" />
+        <input type="submit" value="Submit" />
     </form>
 </template>
 
 <script>
 export default {
     name: 'FleetForm',
-    props: ['shipPool'],
+    props: {
+        group: {
+            type: Object,
+            default: function () {
+                return null
+            }
+        }
+    },
     data() {
         return {
             name: '',
@@ -23,12 +30,32 @@ export default {
         }
     },
     methods: {
+        submit() {
+            if (this.group) {
+                this.updateFleet()
+            } else {
+                this.addFleet()
+            }
+        },
         addFleet() {
             const fleet = {
                 name: this.name,
                 purpose: this.purpose
             }
             this.$emit('add', fleet)
+        },
+        updateFleet() {
+            const fleet = {
+                name: this.name,
+                purpose: this.purpose
+            }
+            this.$emit('update', fleet)
+        }
+    },
+    mounted() {
+        if (this.group) {
+            this.name = this.group.name
+            this.purpose = this.group.purpose
         }
     }
 }

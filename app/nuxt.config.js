@@ -61,6 +61,7 @@ module.exports = {
     '~/plugins/layout.js',
     '~/plugins/widgets.js',
     '~/plugins/isMobile.js',
+    '~/plugins/isVerified.js',
     '~/plugins/ueeDate.js',
     '~/plugins/shipID.js',
     { src: '~/plugins/vue-good-table', ssr: false },
