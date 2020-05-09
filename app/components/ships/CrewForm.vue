@@ -1,13 +1,13 @@
 <template>
-    <form @submit.prevent="addCrew" class="crew-form">
+    <form @submit.prevent="submit" class="crew-form">
         <template v-if="roleSelect">
         <label for="role">Select Role:</label>
         <input class="input" id="role" v-model="role" maxlength="20" placeholder="Crewmen"/>
         </template>
         <label for="citizen">Select Citizen:</label>
-        <input class="input" id="citizen" @keyup.enter="getResults()" @input="autoGetResults()" v-model="input" placeholder="Citizen Search"/>
+        <input class="input" id="citizen" @keyup.enter="getResults()" @input="autoGetResults()" v-model="search" placeholder="Citizen Search"/>
         <div v-if="result" class="results">
-            <div v-for="res in result" :key="res.handle" class="result" @click="addCrew(res.handle)">
+            <div v-for="res in result" :key="res.handle" :class="resultClass(res)" @click="selectResult(res)">
                 <span class="thumb">
                     <img :src="res.portrait" />
                 </span>
@@ -18,6 +18,7 @@
                 </span>
             </div>
         </div>
+        <input type="submit" value="Submit" />
     </form>
 </template>
 
@@ -32,22 +33,25 @@ export default {
     },
     data() {
         return {
-            input: "",
+            search: "",
             result: null,
             handle: null,
             role: ""
         }
     },
     methods: {
-        addCrew(handle) {
+        submit() {
+            this.addCrew()
+        },
+        addCrew() {
             const crew = {
-                handle: handle,
+                handle: this.handle,
                 role: this.role ? this.role : "Crewmen"
             }
             this.$emit('add', crew)
         },
         async autoGetResults() {
-            if(this.input.length >= 3) {
+            if(this.search.length >= 3) {
                 this.getResults()
             } else {
                 this.result = null
@@ -55,7 +59,7 @@ export default {
         },
         async getResults() {
             const data = {
-                query: this.input
+                query: this.search
             }
             this.$axios({
                 url: `https://api.uee.life/citizen/search`,
@@ -67,6 +71,19 @@ export default {
             }).catch((err) => {
                 console.error(err)
             })
+        },
+        selectResult(res) {
+            console.log('selected', res)
+            this.handle = res.handle
+            this.search = res.handle
+            this.getResults()
+        },
+        resultClass(res) {
+            if (res.handle === this.handle) {
+                return "result selected"
+            } else {
+                return "result"
+            }
         }
     }
 }
@@ -86,14 +103,10 @@ export default {
         display: flex;
         flex-wrap: wrap;
     }
-    .result {
-        display: flex;
-        flex-grow: 1;
-        margin: 5px;
-        cursor: pointer;
-    }
 
     .result {
+        margin: 5px;
+        cursor: pointer;
         display: flex;
         box-sizing: border-box;
         height: 100%;
@@ -104,6 +117,10 @@ export default {
         height: fit-content;
         border: 1px solid #546f84;
         flex-grow: 1;
+    }
+
+    .result.selected {
+        border: 1px solid green;
     }
 
     .result>.thumb {

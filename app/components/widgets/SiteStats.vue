@@ -11,6 +11,7 @@
           <h1>Ships</h1>
           <ul>
             <li>Registered: <span class="stat">{{stats.ships}}</span></li>
+            <li>Org Fleets: <span class="stat">{{ stats.fleets }}</span></li>
           </ul>
         </div>
       </div>
