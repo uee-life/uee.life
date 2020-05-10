@@ -106,5 +106,6 @@ export default {
 
 .add-fleet {
     margin: 10px;
+    cursor: pointer;
 }
 </style>
