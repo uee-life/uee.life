@@ -115,7 +115,7 @@ export default {
                 if (this.user && this.cmdrs.length > 0 && this.cmdrs.includes(this.user.app_metadata.handle)) {
                     return true
                 }
-            } else if (isOwner) {
+            } else if (this.isOwner) {
                 return true
             }
             return false
