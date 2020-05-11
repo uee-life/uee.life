@@ -6,7 +6,7 @@
           {{ citizen.org.name }}
         </div>
         <div class="org-title">
-          Title: {{ citizen.info.orgrank }}
+          Title: {{ citizen.info.orgTitle }}
         </div>
       </div>
   </dock-item>
