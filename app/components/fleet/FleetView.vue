@@ -1,7 +1,7 @@
 <template>
     <div id="fleet-view" class="fleet-view">
         <fleet-summary v-if="showSummary" @filter="setFilter" :fleet="ships"/>
-        <ship-list :ships="filteredShips" @selected="selected" />
+        <ship-list :ships="filteredShips" @selected="selected" @remove="removeShip" :isAdmin="isOwner"/>
         <main-panel v-if="isOwner" class="add-ship" @click="showModal = true">
             ADD SHIP
         </main-panel>
