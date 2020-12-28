@@ -1,7 +1,7 @@
 <template>
     <div class="org-main" id="org-main">
         <form v-if="$auth.hasScope('admin:all')" class="input-form" @submit.prevent="addShip">
-            <span>short_name <input v-model="ship.name" /></span></span>
+            <span>short_name <input v-model="shipName" disabled/></span></span>
             <span>manufacturer: <select v-model="ship.make">
                 <option v-for="f in makes" :key="f.id" :value="f.id">{{ f.name }}</option>
             </select></span>
@@ -19,21 +19,21 @@
             </select></span>
             <button type="submit">Add Ship</button>
         </form>
-        <fleet-view :ships="ships"/>
+        <ship-list :ships="ships" :isAdmin="$auth.hasScope('admin:all')"/>
     </div>
 </template>
 
 <script>
 import { gsap } from 'gsap'
 
-import FleetView from '@/components/fleet/FleetView.vue'
+import ShipList from '@/components/admin/ships/ShipList.vue'
 
 export default {
     layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
     middleware: 'auth',
     name: "ships",
     components: {
-        FleetView
+        ShipList
     },
     data() {
         return {
@@ -89,6 +89,15 @@ export default {
     },
     mounted() {
         this.getShips()
+    },
+    computed: {
+        shipName() {
+            if(this.makes && this.ship.make && this.ship.model) {
+                return (this.makes[this.ship.make - 1].abbr + "_" + this.ship.model.split(" ").join("_")).toUpperCase()
+            } else {
+                return "<select options below>"
+            }
+        }
     }
 }
 </script>
