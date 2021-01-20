@@ -25,7 +25,7 @@
     "core-js": "^2.0.0",
     "date-fns": "^2.11.1",
     "date-fns-tz": "^1.0.10",
-    "gsap": "^3.2.6",
+    "gsap": "^3.6.0",
     "js-cookie": "^2.2.1",
     "jwt-decode": "2.2.0",
     "normalize.css": "^8.0.1",
