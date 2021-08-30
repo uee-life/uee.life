@@ -32,7 +32,7 @@
 import { gsap } from 'gsap'
 import ShipSummary from '@/components/admin/ships/ShipSummary'
 import ShipSummarySmall from '@/components/fleet/ShipSummarySmall'
-import ShipTable from '@/components/fleet/ShipTable'
+import ShipTable from '@/components/admin/ships/ShipTable'
 import Ship from '@/components/admin/ships/Ship'
 
 export default {
@@ -87,9 +87,7 @@ export default {
                     ship.model.toLowerCase().includes(this.search.toLowerCase()) ||
                     ship.type.toLowerCase().includes(this.search.toLowerCase()) ||
                     ship.focus.toLowerCase().includes(this.search.toLowerCase()) ||
-                    ship.size.toLowerCase().includes(this.search.toLowerCase()) ||
-                    ship.owner.name.toLowerCase().includes(this.search.toLowerCase()) ||
-                    ship.owner.handle.toLowerCase().includes(this.search.toLowerCase())
+                    ship.size.toLowerCase().includes(this.search.toLowerCase())
             })
         }
     },

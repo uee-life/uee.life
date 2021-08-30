@@ -123,5 +123,12 @@ module.exports = {
   layout: {
     name: 'layout',
     mode: 'out-in'
+  },
+
+  babel: {
+    "presets": [ "@babel/preset-env" ],
+    "plugins": [
+      ["@babel/transform-runtime"]
+    ]
   }
 }

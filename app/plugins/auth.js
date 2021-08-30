@@ -1,4 +1,4 @@
-const jwtDecode = require('jwt-decode');
+import jwtDecode from "jwt-decode"
 
 export default function ({ $auth, store }) {
     $auth.onError((error, name, endpoint) => {
