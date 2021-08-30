@@ -64,7 +64,7 @@ export default {
         },
         showOwner: {
             type: Boolean,
-            default: true
+            default: false
         },
         isAdmin: {
             type: Boolean,
