@@ -4,7 +4,7 @@
             <main-panel v-if="ship" title="Hull Info" class="info-panel">
                 <div class="info-item">
                     <span class="label">Manufacturer:</span>
-                    <span class="value">{{ ship.make }}</span>
+                    <span class="value">{{ ship.make_text }}</span>
                 </div>
                 <div class="info-item">
                     <span class="label">Model:</span>
@@ -16,7 +16,7 @@
                 </div>
                 <div class="info-item">
                     <span class="label">Role:</span>
-                    <span class="value">{{ `${ship.type} - ${ship.focus}` }}</span>
+                    <span class="value">{{ `${ship.type_text} - ${ship.focus_text}` }}</span>
                 </div>
             </main-panel>
             <main-panel v-if="ship" title="Metrics" class="info-panel">
@@ -27,6 +27,22 @@
                 <div class="info-item">
                     <span class="label">Max Cargo:</span>
                     <span class="value">{{ ship.cargo }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Max Cargo:</span>
+                    <span class="value">{{ ship.cargo }}</span>
+                </div>
+            </main-panel>
+            <main-panel v-if="ship" title="Equipment" class="info-panel">
+                <div class="info-item" v-for="t in Object.keys(ship.equipment)" :key="t">
+                    {{t}}: <span v-for="i in Object.keys(ship.equipment[t])" :key="i">
+                        <span v-if="ship.equipment[t][i] > 0">{{ship.equipment[t][i]}}x{{i.toUpperCase()}} </span>
+                    </span>
+                </div>
+            </main-panel>
+            <main-panel v-if="ship" title="Performance" class="info-panel">
+                <div class="info-item" v-for="t in Object.keys(ship.performance)" :key="t">
+                    {{t}}: {{ship.performance[t]}}
                 </div>
             </main-panel>
         </div>

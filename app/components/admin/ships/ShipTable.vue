@@ -26,7 +26,7 @@ export default {
                 },
                 {
                     label: 'Maker',
-                    field: 'make'
+                    field: 'make_text'
                 },
                 {
                     label: 'Model',
@@ -34,11 +34,11 @@ export default {
                 },
                 {
                     label: 'Role',
-                    field: 'type'
+                    field: 'type_text'
                 },
                 {
                     label: 'Focus',
-                    field: 'focus'
+                    field: 'focus_text'
                 },
                 {
                     label: 'Crew',

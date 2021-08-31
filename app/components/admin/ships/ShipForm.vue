@@ -1,5 +1,5 @@
 <template>
-    <form v-if="$auth.hasScope('admin:all')" class="input-form" @submit.prevent="addShip">
+    <form v-if="$auth.hasScope('admin:all')" class="input-form" @submit.prevent="addShip()">
         <div class="panels">
         <main-panel class="modal-panel" title="Basic Info">
             <span>short_name <input class="modal-input" v-model="shipName" disabled/></span></span>
@@ -20,10 +20,10 @@
                 <option v-for="s in sizes" :key="s.id" :value="s.id">{{ s.size }}</option>
             </select></span>
             <span>Cargo <input class="modal-input" v-model.number="ship_data.cargo" type="number" /></span>
-            <span>Speed <input class="modal-input" v-model.number="ship_data.speed" type="number" /></span>
-            <span>Yaw <input class="modal-input" v-model.number="ship_data.yaw" type="number" /></span>
-            <span>Pitch <input class="modal-input" v-model.number="ship_data.pitch" type="number" /></span>
-            <span>Roll <input class="modal-input" v-model.number="ship_data.roll" type="number" /></span>
+            <span>Speed <input class="modal-input" v-model.number="ship_data.performance.speed" type="number" /></span>
+            <span>Yaw <input class="modal-input" v-model.number="ship_data.performance.yaw" type="number" /></span>
+            <span>Pitch <input class="modal-input" v-model.number="ship_data.performance.pitch" type="number" /></span>
+            <span>Roll <input class="modal-input" v-model.number="ship_data.performance.roll" type="number" /></span>
         </main-panel>
         <main-panel class="modal-panel" title="Ship Equipment">
             <span>Weapons 
@@ -79,9 +79,18 @@
 export default {
     layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
     middleware: 'auth',
-    name: 'AddShip',
+    name: 'ShipForm',
     props: {
-
+        ship: {
+            type: Object,
+            default: function() {
+                return {}
+            }
+        },
+        editing: {
+            type: Boolean,
+            default: false
+        }
     },
     data() {
         return {
@@ -91,23 +100,26 @@ export default {
             types: null,
             sizes: null,
             ship_data: {
+                id: 0,
                 name: null,
-                make: null,
+                make: 1,
                 model: null,
                 size: null,
-                crew: null,
+                crew: 1,
                 cargo: 0,
                 type: null,
                 focus: null,
-                speed: 0,
-                yaw: 0,
-                pitch: 0,
-                roll: 0,
                 equipment: {
-                    weapons: {s1: 0, s2: 0, s3: 0, s4: 0, s5: 0, s6: 0, s7: 0},
-                    turrets: {s1: 0, s2: 0, s3: 0, s4: 0, s5: 0, s6: 0, s7: 0},
-                    missiles: { s1: 0, s2: 0, s3: 0, s4: 0, s5: 0, s9: 0},
-                    shields: {s1: 0, s2: 0, s3: 0, s4: 0, s5: 0},
+                    weapons: {emp: 0, s1: 0, s2: 0, s3: 0, s4: 0, s5: 0, s6: 0, s7: 0, s8: 0, s9: 0, s10: 0},
+                    turrets: {s1: 0, s2: 0, s3: 0, s4: 0, s5: 0, s6: 0, s7: 0, s8: 0, s9: 0, s10: 0},
+                    missiles: {s1: 0, s2: 0, s3: 0, s4: 0, s5: 0, s9: 0},
+                    shields: {s1: 0, s2: 0, s3: 0, s4: 0, s5: 0, s6: 0},
+                },
+                performance: {
+                    speed: 0,
+                    yaw: 0,
+                    pitch: 0,
+                    roll: 0,
                 }
             },
             edit: {
@@ -120,8 +132,13 @@ export default {
     },
     methods: {
         addShip() {
+            console.log('submit clicked')
             this.ship_data.name = this.shipName
-            this.$emit('add', this.ship_data)
+            if (this.editing) {
+                this.$emit('edit', this.ship_data)
+            } else {
+                this.$emit('add', this.ship_data)
+            }
         },
         getShips() {
             this.$axios({
@@ -129,6 +146,10 @@ export default {
                 method: 'GET'
             }).then((res) => {
                 this.ships = res.data.ships
+                for(var s in this.ships) {
+                    this.ships[s].performance = JSON.parse(this.ships[s].performance)
+                    this.ships[s].equipment = JSON.parse(this.ships[s].equipment)
+                }
                 this.focus = res.data.focus
                 this.types = res.data.types
                 this.makes = res.data.makes
@@ -155,7 +176,9 @@ export default {
     },
     computed: {
         shipName() {
-            if(this.makes && this.ship_data.make && this.ship_data.model) {
+            if (this.ship_data.make_abbr) {
+                return (this.ship_data.make_abbr + "_" + this.ship_data.model.split(" ").join("_")).toUpperCase()
+            } else if(this.makes && this.ship_data.make && this.ship_data.model) {
                 return (this.makes[this.ship_data.make - 1].abbr + "_" + this.ship_data.model.split(" ").join("_")).toUpperCase()
             } else {
                 return "<select options below>"
@@ -163,6 +186,9 @@ export default {
         }
     },
     mounted() {
+        if (this.editing) {
+            this.ship_data = this.ship
+        }
         this.getShips()
     }
 }

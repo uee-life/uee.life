@@ -1,14 +1,12 @@
 <template>
     <div class="ship-summary" :title="ship.model">
-        <section-title v-if="ship.name" :text="ship.name"/>
         <img  @click="selected" :src="shipImage" />
         <img class="manufacturer" :src="manufacturerImage" />
         <div class="ship-info">
             <h5 @click="selected">{{ ship.model }}</h5>
             <div class="info">
                 <div class="line-item"><span class="label">Ship &nbsp; ID:</span><span class="data">{{ ship.id }}</span></div>
-                <div class="line-item"><span class="label">Type:</span><span class="data">{{ ship.type }} - {{ ship.focus }}</span></div>
-                <div v-if="ship.owner" class="line-item"><span class="label">Owner:</span><span class="data"><nuxt-link :to="citizenLink">{{ship.owner.name}}</nuxt-link></span></div>
+                <div class="line-item"><span class="label">Type:</span><span class="data">{{ ship.type_text }} - {{ ship.focus_text }}</span></div>
                 <div v-if="ship.crew >= 0" class="line-item"><span class="label">Crew:</span><span class="data">{{ ship.crew }} / {{ ship.max_crew }}</span></div>
             </div>
         </div>
@@ -17,6 +15,7 @@
         <span class="corner top right"></span>
         <span class="corner bottom left"></span>
         <span class="corner bottom right"></span>
+        <img v-if="isAdmin" title="Edit Ship" class="edit" @click="edit" src="~/assets/edit.png">
         <img v-if="isAdmin" title="Remove Ship" class="delete" @click="remove" src="~/assets/delete.png">
     </div>
 </template>
@@ -46,18 +45,19 @@ export default {
         },
         manufacturerImage: function () {
             return `/images/manufacturers/${this.ship.make_abbr}.png`
-        },
-        citizenLink: function () {
-            return `/citizens/${this.ship.owner.handle}`
         }
     },
     methods: {
         selected() {
-            this.$emit('selected', this.ship.id)
+            this.$emit('selected', this.ship)
         },
         remove() {
             console.log('remove clicked')
-            this.$emit('remove', this.ship.id)
+            this.$emit('remove', this.ship)
+        },
+        edit() {
+            console.log('edit clicked')
+            this.$emit('edit', this.ship)
         }
     }
 }
@@ -143,6 +143,16 @@ export default {
         position: absolute;
         top: 5px;
         right: 5px;
+        width: 20px;
+        height: 20px;
+        z-index: 20;
+        cursor: pointer;
+    }
+
+    .ship-summary .edit {
+        position: absolute;
+        top: 5px;
+        right: 30px;
         width: 20px;
         height: 20px;
         z-index: 20;
