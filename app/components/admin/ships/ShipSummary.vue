@@ -7,7 +7,11 @@
             <div class="info">
                 <div class="line-item"><span class="label">Ship &nbsp; ID:</span><span class="data">{{ ship.id }}</span></div>
                 <div class="line-item"><span class="label">Type:</span><span class="data">{{ ship.type_text }} - {{ ship.focus_text }}</span></div>
-                <div v-if="ship.crew >= 0" class="line-item"><span class="label">Crew:</span><span class="data">{{ ship.crew }} / {{ ship.max_crew }}</span></div>
+                <div class="line-item" v-for="t in Object.keys(ship.equipment)" :key="t">
+                    <span class="label">{{t}}:</span> <span v-for="i in Object.keys(ship.equipment[t])" :key="i">
+                        <span class="data" v-if="ship.equipment[t][i] > 0">{{ship.equipment[t][i]}}x{{i.toUpperCase()}} </span>
+                    </span>
+                </div>
             </div>
         </div>
         <div class="mask" @click="$emit('selected', ship.id)"></div>
@@ -113,7 +117,7 @@ export default {
     }
 
     .ship-info .info .line-item .label {
-        width: 80px;
+        width: 100px;
         text-transform: uppercase;
         font-family: 'Michroma';
         flex-shrink: 0;

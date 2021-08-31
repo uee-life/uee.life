@@ -8,7 +8,7 @@
                 <input class="filter-box" type="text" v-model="search" placeholder="Filter list..." />
             </div>
         </div>
-        <main-panel class="add-ship" @click="modals.add = true">
+        <main-panel class="add-ship" @click="showAdd">
             ADD SHIP
         </main-panel>
         <div v-if="ship_data.ships.length > 0" class="ships">
@@ -19,7 +19,7 @@
                 <ship-table  @selected="showShip(s)" :ships="filteredShips" />
             </template>
             <template v-else>
-                <ship-summary @selected="showShip(s)" v-for="(s, index) in filteredShips" :key="s.id" :ship="s" :index="index" :isAdmin="isAdmin" @remove="remove" @edit="modals.edit = true" />
+                <ship-summary @selected="showShip(s)" v-for="(s, index) in filteredShips" :key="s.id" :ship="s" :index="index" :isAdmin="isAdmin" @remove="remove" @edit="showEdit" />
             </template>
         </div>
         <div v-else class="no-ships">
@@ -169,6 +169,13 @@ export default {
             this.selected = ship
             this.modals.edit = false
             console.log(ship)
+        },
+        showAdd() {
+            this.modals.add = true
+        },
+        showEdit(s) {
+            this.selected = s
+            this.modals.edit = true
         },
         showShip(s) {
             this.selected = s

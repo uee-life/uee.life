@@ -17,7 +17,7 @@
         </main-panel>
         <main-panel class="modal-panel" title="Ship Stats">
             <span>size <select class="modal-input" v-model="ship_data.size">
-                <option v-for="s in sizes" :key="s.id" :value="s.id">{{ s.size }}</option>
+                <option v-for="s in sizes" :key="s.id" :value="s.id">{{s.id}} - {{ s.size }}</option>
             </select></span>
             <span>Cargo <input class="modal-input" v-model.number="ship_data.cargo" type="number" /></span>
             <span>Speed <input class="modal-input" v-model.number="ship_data.performance.speed" type="number" /></span>
