@@ -140,7 +140,7 @@ export default {
             console.log("updating ship name to: ", this.name)
             this.edit.name = false
             this.$axios({
-                url: `https://api.uee.life/ships/${this.id}`,
+                url: `https://api.uee.life/ships/${this.id}/name`,
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json; charset=utf-8'

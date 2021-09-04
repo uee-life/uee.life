@@ -2,8 +2,8 @@
     <form v-if="$auth.hasScope('admin:all')" class="input-form" @submit.prevent="addShip()">
         <div class="panels">
         <main-panel class="modal-panel" title="Basic Info">
-            <span>short_name <input class="modal-input" v-model="shipName" disabled/></span></span>
-            <span>manufacturer: <select class="modal-input" v-model="ship_data.make">
+            <span>short_name <input class="modal-input" v-model="shipName" disabled/></span>
+            <span>manufacturer: <select class="modal-input" v-model="ship_data.make" :disabled="editing">
                 <option v-for="f in makes" :key="f.id" :value="f.id">{{ f.name }}</option>
             </select></span>
             <span>model        <input class="modal-input" v-model="ship_data.model" /></span>
