@@ -23,7 +23,7 @@ export default {
             const handle = this.user['https://uee.life/app_metadata'].handle
             this.$axios({
                 url: `https://api.uee.life/user/sync`,
-                method: 'GET'
+                method: 'POST'
             }).then((res) => {
                 // eslint-disable-next-line
                 console.log(res.data)

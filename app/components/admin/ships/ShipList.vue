@@ -11,7 +11,7 @@
         <main-panel class="add-ship" @click="showAdd">
             ADD SHIP
         </main-panel>
-        <div v-if="ship_data.ships.length > 0" class="ships">
+        <div v-if="ship_data.ships && ship_data.ships.length > 0" class="ships">
             <template v-if="isMobile || display == 'small'">
                 <ship-summary-small @selected="showShip(s)" v-for="(s, index) in filteredShips" :key="s.id" :ship="s" :index="index" :isAdmin="isAdmin"/>
             </template>
@@ -111,11 +111,11 @@ export default {
                 name: null,
                 make: 1,
                 model: null,
-                size: null,
-                crew: null,
+                size: 1,
+                max_crew: 1,
                 cargo: 0,
-                type: null,
-                focus: null,
+                type: 1,
+                focus: 1,
                 performance: {
                     speed: 0,
                     yaw: 0,
@@ -127,7 +127,8 @@ export default {
                     turrets: {s1: 0, s2: 0, s3: 0, s4: 0, s5: 0, s6: 0, s7: 0},
                     missiles: { s1: 0, s2: 0, s3: 0, s4: 0, s5: 0, s9: 0},
                     shields: {s1: 0, s2: 0, s3: 0, s4: 0, s5: 0},
-                }
+                },
+                modifier: 1
             },
         }
     },
@@ -147,14 +148,10 @@ export default {
     methods: {
         getShips() {
             this.$axios({
-                url: 'https://api.uee.life/ships',
+                url: 'https://api.uee.life/ships/extra',
                 method: 'GET'
             }).then((res) => {
                 this.ship_data = res.data
-                for(var s in this.ship_data.ships) {
-                    this.ship_data.ships[s].performance = JSON.parse(this.ship_data.ships[s].performance)
-                    this.ship_data.ships[s].equipment = JSON.parse(this.ship_data.ships[s].equipment)
-                }
             }).catch((err) => {
                 console.error(err)
             })
@@ -162,13 +159,54 @@ export default {
         show(display) {
             this.display = display
         },
+        addShip(ship) {
+            this.modals.add = false
+            console.log(ship)
+            // need to make sure correct values
+            this.$axios({
+                url: 'https://api.uee.life/admin/ships',
+                method: 'POST',
+                headers: {
+                    'Content-Type': "application/json; charset=utf-8"
+                },
+                data: ship
+            }).then((res) => {
+                this.$swal.fire('Success!', 'Successfully added ship!', 'success')
+                this.getShips()
+            }).catch((err) => {
+                this.$swal.fire('Error!', err, 'error')
+            })
+        },
         remove(ship) {
-            this.$emit('remove', ship)
+            console.log(ship)
+            //TODO: add a confirmation here...
+            this.$axios({
+                url: `https://api.uee.life/admin/ships/${ship.id}`,
+                method: 'DELETE'
+            }).then((res) => {
+                this.$swal.fire('Success!', 'Successfully deleted ship!', 'success')
+                this.getShips()
+            }).catch((err) => {
+                this.$swal.fire('Error!', err, 'error')
+            })
         },
         edit(ship) {
             this.selected = ship
             this.modals.edit = false
             console.log(ship)
+            this.$axios({
+                url: `https://api.uee.life/admin/ships/${ship.id}`,
+                method: 'PUT',
+                headers: {
+                    'Content-Type': "application/json; charset=utf-8"
+                },
+                data: ship
+            }).then((res) => {
+                this.$swal.fire('Success!', 'Successfully updated ship!', 'success')
+                this.getShips()
+            }).catch((err) => {
+                this.$swal.fire('Error!', err, 'error')
+            })
         },
         showAdd() {
             this.modals.add = true
@@ -180,25 +218,6 @@ export default {
         showShip(s) {
             this.selected = s
             this.modals.info = true
-        },
-        addShip(ship) {
-            this.modals.add = false
-            console.log(ship)
-            return
-            /* add the ship
-            this.$axios({
-                url: 'https://api.uee.life/ships',
-                method: 'POST',
-                headers: {
-                    'Content-Type': "application/json; charset=utf-8"
-                },
-                data: ship
-            }).then((res) => {
-                this.$swal.fire('Success!', 'Successfully added ship!', 'success')
-                this.getShips()
-            }).catch((err) => {
-                this.$swal.fire('Error!', err, 'error')
-            })*/
         }
     },
     mounted() {
