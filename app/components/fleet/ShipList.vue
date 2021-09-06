@@ -75,12 +75,13 @@ export default {
     computed: {
         filteredShips() {
             return this.ships.filter(ship => {
-                return ship.make.toLowerCase().includes(this.search.toLowerCase()) ||
-                    ship.short_name.toLowerCase().includes(this.search.toLowerCase()) ||
+                return ship.short_name.toLowerCase().includes(this.search.toLowerCase()) ||
+                    ship.name.toLowerCase().includes(this.search.toLowerCase()) ||
+                    ship.make_text.toLowerCase().includes(this.search.toLowerCase()) ||
                     ship.model.toLowerCase().includes(this.search.toLowerCase()) ||
-                    ship.type.toLowerCase().includes(this.search.toLowerCase()) ||
-                    ship.focus.toLowerCase().includes(this.search.toLowerCase()) ||
-                    ship.size.toLowerCase().includes(this.search.toLowerCase()) ||
+                    ship.type_text.toLowerCase().includes(this.search.toLowerCase()) ||
+                    ship.focus_text.toLowerCase().includes(this.search.toLowerCase()) ||
+                    ship.size_text.toLowerCase().includes(this.search.toLowerCase()) ||
                     ship.owner.name.toLowerCase().includes(this.search.toLowerCase()) ||
                     ship.owner.handle.toLowerCase().includes(this.search.toLowerCase())
             })

@@ -71,12 +71,12 @@ export default {
         filteredShips() {
             console.log(this.ships)
             return this.ships.filter(ship => {
-                return ship.make.toLowerCase().includes(this.search.toLowerCase()) ||
-                    ship.short_name.toLowerCase().includes(this.search.toLowerCase()) ||
+                return ship.short_name.toLowerCase().includes(this.search.toLowerCase()) ||
+                    ship.make_text.toLowerCase().includes(this.search.toLowerCase()) ||
                     ship.model.toLowerCase().includes(this.search.toLowerCase()) ||
-                    ship.type.toLowerCase().includes(this.search.toLowerCase()) ||
-                    ship.focus.toLowerCase().includes(this.search.toLowerCase()) ||
-                    ship.size.toLowerCase().includes(this.search.toLowerCase())
+                    ship.type_text.toLowerCase().includes(this.search.toLowerCase()) ||
+                    ship.focus_text.toLowerCase().includes(this.search.toLowerCase()) ||
+                    ship.size_text.toLowerCase().includes(this.search.toLowerCase())
             })
         }
     }
@@ -84,8 +84,6 @@ export default {
 </script>
 
 <style scoped>
-    .display-style {
-    }
     .add-ship {
         margin: 6px;
         text-align: center;
