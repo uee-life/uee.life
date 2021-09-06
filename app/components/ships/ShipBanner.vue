@@ -8,7 +8,7 @@
           </div>
           <div class="ship-summary">
               <h1>{{shipID(ship.id)}} <span v-if="ship.name">/  <span class="tag">{{ ship.name }}</span></span></h1>
-              <div class="ship-model">{{ `${ship.make} ${ship.model}` }}</div>
+              <div class="ship-model">{{ `${ship.make_text} ${ship.model}` }}</div>
           </div>
         </div>
       </div>

@@ -34,7 +34,7 @@
         <main-panel v-if="ship" title="Hull Info" class="info-panel">
             <div class="info-item">
                 <span class="label">Manufacturer:</span>
-                <span class="value">{{ ship.make }}</span>
+                <span class="value">{{ ship.make_text }}</span>
             </div>
             <div class="info-item">
                 <span class="label">Model:</span>
@@ -42,11 +42,11 @@
             </div>
             <div class="info-item">
                 <span class="label">Size:</span>
-                <span class="value">{{ ship.size }}</span>
+                <span class="value">{{ ship.size_text }}</span>
             </div>
             <div class="info-item">
                 <span class="label">Role:</span>
-                <span class="value">{{ `${ship.type} - ${ship.focus}` }}</span>
+                <span class="value">{{ `${ship.type_text} - ${ship.focus_text}` }}</span>
             </div>
         </main-panel>
         <main-panel v-if="ship" title="Metrics" class="info-panel">
