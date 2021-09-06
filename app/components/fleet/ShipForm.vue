@@ -35,7 +35,7 @@ export default {
     computed: {
         filteredShips() {
             return this.ships.filter(ship => {
-                return ship.make.toLowerCase().includes(this.make.toLowerCase())
+                return ship.make_text.toLowerCase().includes(this.make.toLowerCase())
             })
         }
     },

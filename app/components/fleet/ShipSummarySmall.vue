@@ -5,7 +5,7 @@
         <img class="manufacturer" :src="manufacturerImage" />
         <div class="ship-info">
             <h5>{{ ship.model }}</h5>
-            <div>{{ ship.type }} - {{ ship.focus }}</div>
+            <div>{{ ship.type_text }} - {{ ship.focus_text }}</div>
             <div v-if="ship.owner">Owner: <nuxt-link :to="citizenLink">{{ship.owner.name}}</nuxt-link></div>
         </div>
         <div class="mask" @click="$emit('selected', ship.id)"></div>
