@@ -10,6 +10,9 @@
                 <div class="left-nav-button"><a :href="link.url" target="_blank">{{link.text}}</a></div>
             </div>
         </dock-item>
+        <dock-item title="Bio">
+            {{citizen.info.bio}}
+        </dock-item>
     </portal>
     <portal to="rightDock">
         <citizen-tools v-if="isOwner" @syncSuccess="refresh" />
@@ -21,9 +24,14 @@
     </div>
     <template v-else-if="citizen.info">
         <citizen-info :isOwner="isOwner" :citizen="citizen" @refresh="refresh" />
-        <citizen-bio :bio="citizen.info.bio"/>
         <div class="citizen-tabs">
             <tabs :tabs="tabs" :initialTab="initialTab">
+                <template slot="tab-title-wall">
+                    WALL
+                </template>
+                <template slot="tab-content-wall">
+                    <citizen-wall />
+                </template>
                 <template slot="tab-title-ships">
                     SHIPS ({{ citizen.ships.length }})
                 </template>
@@ -53,6 +61,7 @@ import CitizenInfo from '@/components/citizen/CitizenInfo'
 import CitizenBio from '@/components/citizen/CitizenBio'
 import CitizenOrg from '@/components/citizen/CitizenOrg'
 import CitizenTools from '@/components/citizen/CitizenTools'
+import CitizenWall from '@/components/citizen/CitizenWall.vue'
 
 import FleetView from '@/components/fleet/FleetView'
 
@@ -61,8 +70,8 @@ export default {
     name: 'citizen',
     data() {
         return {
-            tabs: ['ships'],
-            initialTab: 'ships', 
+            tabs: ['wall','ships'],
+            initialTab: 'wall', 
             citizen: {
                 info: {
                     handle: ''
@@ -82,6 +91,7 @@ export default {
         CitizenBio,
         CitizenOrg,
         CitizenTools,
+        CitizenWall,
         FleetView
     },
     computed: {
