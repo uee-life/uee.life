@@ -27,7 +27,7 @@
         <div class="citizen-tabs">
             <tabs :tabs="tabs" :initialTab="initialTab">
                 <template slot="tab-title-wall">
-                    WALL
+                    UPDATES
                 </template>
                 <template slot="tab-content-wall">
                     <citizen-wall />

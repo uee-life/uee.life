@@ -18,15 +18,19 @@ export default {
                     id: 2,
                     user: 'Flint McBane',
                     portrait: 'https://robertsspaceindustries.com/media/4v5c0bivhvd6qr/heap_infobox/FlintMcBane7.jpg',
-                    date: '5 minutes ago',
-                    content: 'This is a longer test post!'
+                    date: new Date(2021, 11, 10),
+                    content: 'This is a longer test post!',
+                    likes: 5,
+                    visibility: 'private'
                 },
                 {
                     id: 1,
                     user: 'Flint McBane',
                     portrait: 'https://robertsspaceindustries.com/media/4v5c0bivhvd6qr/heap_infobox/FlintMcBane7.jpg',
-                    date: '1 hour ago',
-                    content: 'This is a test post'
+                    date: new Date(2021,10,30),
+                    content: 'This is a test post',
+                    likes: 21,
+                    visibility: 'private'
                 }
             ]
         }

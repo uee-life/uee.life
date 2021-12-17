@@ -4,18 +4,24 @@
             <img class="portrait" :src="data.portrait"/>
             <div class="post-info">
                 <div class="user">{{data.user}}</div>
-                <div class="date">{{data.date}}</div>
+                <div class="date">{{fuzzydate}} ago - {{data.visibility}}</div>
             </div>
         </div>
         <div class="content">{{data.content}}</div>
+        <div class="likes">{{data.likes}} likes</div>
     </main-panel>
 </template>
 
 <script>
-
+import { formatDistance, formatRelative } from 'date-fns'
 
 export default {
     props: ['data'],
+    computed: {
+        fuzzydate() {
+            return formatDistance(this.data.date, new Date())
+        }
+    }
 }
 </script>
 
