@@ -27,3 +27,12 @@ Connect:
 * Create and share events with your Organization or to all
 * Build and manage your personal crew
 * Build and manage your Organizations fleet
+
+
+# Dev Env Setup
+
+Required installs:
+* Git client (github desktop)
+* VSCode
+* NodeJS
+* Docker (Docker Desktop)
