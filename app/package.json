@@ -30,7 +30,7 @@
     "js-cookie": "^3.0.0",
     "jwt-decode": "^3.1.2",
     "normalize.css": "^8.0.1",
-    "nuxt": "^2.15.8",
+    "nuxt": "^2.17.2",
     "nuxt-sweetalert2": "^1.0.0",
     "portal-vue": "^2.1.7",
     "regenerator-runtime": "^0.13.9",
